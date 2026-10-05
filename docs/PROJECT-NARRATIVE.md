@@ -992,16 +992,15 @@ Automerge semantics
 
 Self-hosted LFCP server не нуждается в полноценной системе регистрации.
 
-При первом запуске он может показать:
+При первом запуске он создаёт одноразовый pairing code и записывает его в файл `<state_dir>/setup-code` с правами 0600.
+
+В stdout и в лог код не попадает: container runtimes их сохраняют (`docker logs`). В лог пишется только путь:
 
 ```text
-Admin pairing code:
-
-X7KM-P9LA
-
-Open:
-/setup
+pairing code written to /var/lib/lfcp/setup-code (expires in 60 minutes; pair an LFCP Principal at /setup/pair)
 ```
+
+Оператор читает код из этого файла и открывает `/setup`. После pairing файл удаляется.
 
 Пользователь открывает web page и связывает свой LFCP Principal с server administrator role.
 
