@@ -765,6 +765,15 @@ parses Markdown task
 - [ ] Prepare API contract <!-- lfcp-ref: lfcp1:RESOURCE#task:OBJECT -->
 ```
 
+или, в равнозначной child-line форме:
+
+```md
+- [ ] Prepare API contract
+  <!-- lfcp-ref: lfcp1:RESOURCE#task:OBJECT -->
+```
+
+Обе формы (inline и immediate child-line) conforming по `MARKDOWN-REFS-01`; для Obsidian по умолчанию рекомендуется child-line.
+
 Remote peer может вставить тот же shared Task в свой локальный документ.
 
 Теперь изменения распространяются через LFCP.
@@ -791,7 +800,7 @@ LFCP metadata должна быть минимальной и portable.
 <!-- lfcp-ref: ... -->
 ```
 
-Точная грамматика будет зафиксирована отдельно в `MARKDOWN-REFS-01`.
+Точная грамматика зафиксирована в `MARKDOWN-REFS-01`: comment допустим как inline в конце Task line, так и на immediate child-line; обе формы семантически эквивалентны.
 
 ---
 
@@ -1014,7 +1023,7 @@ Hosted public server позже может добавить email/OAuth/passkeys
 
 Существует `LFCP-WIRE-01`, определяющий wire protocol.
 
-Существует `LFCP-WIRE-01.1`, исправляющий byte-level неоднозначности.
+Бывшие errata `LFCP-WIRE-01.1`, исправлявшие byte-level неоднозначности, уже встроены в `LFCP-WIRE-01`; отдельного активного документа `LFCP-WIRE-01.1` нет.
 
 Существует `LFCP-TEST-VECTORS-01`.
 
