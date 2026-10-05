@@ -44,7 +44,7 @@ limitations in the release notes.
 | L2 | low | sdk-ts | Hosting credentials are plain `Uint8Array` fields with no redaction wrapper (none are logged today) | routed |
 | L3 | low | sdk-ts, sdk-rs | Copies of exported key bytes are not zeroed | known limitation |
 | L4 | low | sdk-ts storage-node | Secrets in 0600 files; a crash can leave a `.tmp-*` file holding a secret | routed |
-| L5 | low | server | The setup-code hash is unsalted (about 40-bit code); the database files use the default umask (only `server-id` is 0600) | routed |
+| L5 | low | server | The setup-code hash is unsalted (about 40-bit code); the database files use the default umask (only `server-id` is 0600) | **partly fixed: server 83f9a33** (permissions); the unsalted setup-code hash remains routed |
 | L6 | low | server | Anyone can burn the five pairing attempts; pairing then needs a restart | routed |
 | L7 | low | sdk-ts, sdk-rs, server | No count caps on objects per batch, Have entries or held/pending/quarantined units (bounded by message size and authorization) | known limitation |
 | L8 | low | obsidian | The invitation link stays on the OS clipboard after "Copy link" | known limitation |
@@ -199,6 +199,9 @@ tracing subscriber share stdout. Under Docker the code stays in
   each for 5 minutes. Past that, `POST /admin/challenge` answers 429.
 - **M4, server 11e1fb2:** a coordinator slot is created only for a hosted
   Resource. An unknown ID costs one store lookup and leaves nothing.
+- **L5, server 83f9a33:** the state directory the server creates is 0700;
+  the database with its `-wal` and `-shm` files is 0600, tightened at
+  start if older files are looser.
 - **M6, server 7e61710:** the code is written to `<state_dir>/setup-code`
   (mode 0600) and removed by the pairing; the log says only where it is.
   - It is not printed on a terminal either: `docker run -t` captures
@@ -227,7 +230,6 @@ tracing subscriber share stdout. Under Docker the code stays in
 - **The challenge cap can be exhausted:** an unauthenticated flood can fill
   the 1024 challenges and delay an administrator's login by up to 5
   minutes.
-- **No owner-only permissions on the database files** (L5).
 
 ## sdk-rs (M1, M7, M8, L9)
 
