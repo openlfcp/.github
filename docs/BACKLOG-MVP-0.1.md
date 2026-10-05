@@ -852,7 +852,7 @@ Depends on: `LFCP-041`, `LFCP-042`.
 
 ## LFCP-044 - Bootstrap LFCP reference server
 
-Create `openlfcp/server` as a TypeScript/Node application. The server does not depend on `sdk-rs`; `sdk-rs` remains the independent Rust interoperability implementation (`LFCP-040`…`LFCP-043`, `LFCP-069`, `LFCP-070`).
+Create `openlfcp/server` in Rust, on `sdk-rs`. The server uses the `lfcp` crate's protocol core without its `shared-objects` feature, so it never links Automerge or Task semantics.
 
 Acceptance:
 
