@@ -67,12 +67,37 @@ Create collaboration · Join collaboration · Share task under cursor ·
 Insert shared object · Invite collaborator · Resource status · Detach
 shared task · Resolve shared task conflict
 
+## Demos
+
+- **Two vaults in real Obsidian** (obsidian 3a4f935): Alice and Bob share
+  one Task between two vaults through the reference server. Walkthrough:
+  `obsidian: docs/demos/two-vault-demo.md`. `node scripts/demo-vaults.mjs`
+  (0a9ad70) prepares both vaults outside the repository. The same
+  storyline runs as the two-vault E2E, and prints a narrated reference
+  transcript with:
+
+  ```sh
+  LFCP_REQUIRE_LIVE=1 LFCP_E2E_NARRATE=1 pnpm vitest run test/e2e/two-vaults.test.ts --reporter=verbose
+  ```
+- **Headless Todo** (examples 2ca182f): one command runs the whole
+  storyline with `lfcp-todo`, prints a readable transcript and checks the
+  outcome. See `examples: docs/demos/headless-todo.md`.
+
 ## Security notes
 
 - A crafted Automerge change that skipped its actor's next sequence number
   could crash an sdk-rs receiver, and corrupt a JS document. It is now
   rejected before the engine (Shared Objects §14.1, baseline.6) in both
   SDKs.
+- Hardening from the pre-release review:
+  - a `DATA_HAVE` announcing a huge span of sequences no longer hangs a
+    client: Have ranges stay intervals end to end (H2; sdk-ts 9d5edf7,
+    sdk-rs 6aab900);
+  - a received change nesting maps thousands deep no longer overflows the
+    sdk-rs stack. An object's values nest at most 64 levels; a deeper one
+    is `INVALID_FIELD_TYPE` (M7; sdk-rs bb43a78);
+  - merging another replica in sdk-rs goes through the same §14.1
+    admission and engine guard as received changes (M8; sdk-rs b99f85c).
 - The server is a synchronization peer, not the root of trust. Clients
   verify signatures, capabilities, epochs and AEAD themselves.
 - The pre-release security review is
@@ -92,8 +117,9 @@ shared task · Resolve shared task conflict
 - The Docker deployment of the server is not yet verified end to end
   (_TBD_, LFCP-055).
 - Mobile (iOS, Android) is not tested.
-- sdk-rs copies a document once per received change as rollback insurance.
-  This is fine at MVP sizes; optimizing it is a follow-up.
+- sdk-rs copies a document once per apply call as rollback insurance; a
+  batch of changes counts once, but a Data Unit applied on its own costs a
+  copy. This is fine at MVP sizes.
 - Invitations are copied as links; there is no QR code. A copied link
   stays on the system clipboard.
 - The reference server has no connection limits, rate limits or storage
