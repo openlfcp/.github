@@ -98,6 +98,11 @@ shared task · Resolve shared task conflict
     is `INVALID_FIELD_TYPE` (M7; sdk-rs bb43a78);
   - merging another replica in sdk-rs goes through the same §14.1
     admission and engine guard as received changes (M8; sdk-rs b99f85c).
+- Untrusted text is parsed in linear time. A collaborator's long Task title
+  could freeze the Obsidian editor through super-linear Task-suffix
+  regexes; the suffix, code spans and comments are now scanned in linear
+  time (H3, M9; obsidian c73c46d, 0bded76). Writer URLs are checked in
+  linear time too (sdk-ts af2954d).
 - Server hardening (the full list is in the security review, "Follow-up:
   server hardening"):
   - `DATA_GET` with more than 256 ranges and `KEY_PACKAGE_GET` with more
@@ -128,8 +133,8 @@ shared task · Resolve shared task conflict
 - The pre-release security review is
   [security-review-mvp-0.1.md](security-review-mvp-0.1.md): findings by
   severity, what was fixed, what is routed, and the dependency audit.
-  H2 and H4 are fixed, and H5 and H6 are accepted as known limitations
-  (below). _TBD_: H1 and H3 are fixed or accepted before release.
+  H2, H3 and H4 are fixed, and H5 and H6 are accepted as known
+  limitations (below). _TBD_: H1 is fixed or accepted before release.
 
 ## Known limitations
 
