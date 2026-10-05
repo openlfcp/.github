@@ -121,6 +121,10 @@ shared task · Resolve shared task conflict
     past that, the server answers 429 (M3; server a7f3461).
   - Coordinator slots exist only for hosted Resources (M4; server
     11e1fb2).
+  - A state directory the server creates is owner-only (0700), and the
+    database files are 0600, tightened at every start (L5; server
+    83f9a33). An existing directory, such as the Docker volume, keeps its
+    mode.
   - The first-run pairing code is written to `<state_dir>/setup-code`
     (mode 0600), never to stdout or the Docker logs (M6; server 7e61710).
     Under Docker, read it with:
