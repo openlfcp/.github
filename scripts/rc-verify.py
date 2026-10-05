@@ -181,9 +181,14 @@ def gates(rc: Path, target_dir: Path) -> list[dict]:
     base.pop("LFCP_SERVER_BIN", None)
     cargo = dict(base, CARGO_TARGET_DIR=str(target_dir))
     spec_env = dict(base)
+    # The spec's .bundle/config installs gems into vendor/bundle (and wins
+    # over BUNDLE_PATH): link the main checkout's gems there instead of
+    # installing them again.
     vendored = ROOT / "spec" / "vendor" / "bundle"
-    if vendored.is_dir():
-        spec_env["BUNDLE_PATH"] = str(vendored)  # reuse the gems of the main checkout
+    link = rc / "spec" / "vendor" / "bundle"
+    if vendored.is_dir() and not link.exists():
+        link.parent.mkdir(parents=True, exist_ok=True)
+        link.symlink_to(vendored)
     vitest_json = rc / "logs" / "obsidian-vitest.json"
     return [
         {"name": "spec", "cwd": rc / "spec", "env": spec_env, "steps": [
