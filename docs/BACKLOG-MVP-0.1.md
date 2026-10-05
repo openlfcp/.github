@@ -783,6 +783,49 @@ Depends on: `LFCP-033`, `LFCP-035`.
 
 ---
 
+## LFCP-039a - TypeScript client WebSocket transport and sync session
+
+Implement the client side of WIRE-01 §63–§69 in sdk-ts: drive the
+connection, session and per-Resource state machines over a real
+WebSocket against the reference server.
+
+Acceptance:
+
+- binary frames only, one LFCP message per WebSocket message, size limits;
+- HELLO / CHALLENGE / AUTH / READY through the handshake of `LFCP-027`;
+- RESOURCE_OPEN / OPENED / CLOSE and the §65 per-Resource state machine;
+- Control and Data catch-up with the Have Vectors of `LFCP-028`, then live
+  sync;
+- pending outbound queue (`LFCP-036`) flushed and acknowledged;
+- reconnect with backoff; connection loss closes every open Resource
+  (§65);
+- no Obsidian dependency.
+
+Depends on: `LFCP-026`, `LFCP-027`, `LFCP-028`, `LFCP-033`, `LFCP-036`.
+
+---
+
+## LFCP-039b - TypeScript invite URI and invitation-secret codec
+
+Implement the WIRE-01 §18.2 invitation URI in sdk-ts.
+
+Acceptance:
+
+- `lfcp://join/<resource-b64url>?endpoint=…&grant=…` with one or more
+  endpoints, and the bearer form with `#secret=…`;
+- canonical unpadded Base64url Resource and grant IDs;
+- endpoint percent-encoding of everything outside the RFC 3986
+  unreserved set, upper-case hex (G-RS4);
+- the deterministic CBOR invite secret, and recomputation of the
+  Invitation Principal descriptor, which must match the subject of the
+  referenced Invitation Grant before the secret is used;
+- the secret is never logged or sent to a server;
+- the `invite_uri` vector reproduced byte for byte.
+
+Depends on: `LFCP-014`, `LFCP-021`, `LFCP-024`.
+
+---
+
 # M3. Rust protocol core and reference server
 
 ## LFCP-040 - Bootstrap Rust SDK
@@ -1029,7 +1072,7 @@ Invitation Principal
 
 Second claim against a one-time invitation must fail deterministically.
 
-Depends on: `LFCP-021`, `LFCP-024`, `LFCP-049`, `LFCP-051`.
+Depends on: `LFCP-021`, `LFCP-024`, `LFCP-039a`, `LFCP-039b`, `LFCP-049`, `LFCP-051`.
 
 ---
 
@@ -1075,7 +1118,7 @@ Scenario:
 - converge;
 - server never receives Task plaintext.
 
-Depends on: `LFCP-039`, `LFCP-053`, `LFCP-055`.
+Depends on: `LFCP-039`, `LFCP-039a`, `LFCP-053`, `LFCP-055`.
 
 ---
 
@@ -1093,7 +1136,7 @@ Include randomized or table-driven:
 - AEAD failure;
 - stale previous-epoch write.
 
-Depends on: `LFCP-056`.
+Depends on: `LFCP-039a`, `LFCP-056`.
 
 ---
 
@@ -1391,11 +1434,14 @@ Approximate critical path:
                     030 → 031 → 033
                            │
                     034 → 035 → 036 → 039
+                                 │
+                    026/027/028/033/036 → 039a   (TS client transport)
+                    014/021/024 → 039b           (TS invite URI codec)
 
 040 → 041 → 042 → 043 → 044 → 045 → 047 → 048 → 049 → 050 → 051
                                                          │
                                                          ▼
-                                                      053 → 056 → 057
+                                       039a + 039b → 053 → 056 → 057
 
 058 → 059 → 060 → 061 → 062 → 064 → 065 → 066 → 067 → 068
 
