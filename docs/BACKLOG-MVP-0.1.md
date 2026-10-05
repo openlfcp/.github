@@ -245,7 +245,7 @@ Acceptance:
 - Markdown refs have two conforming placements;
 - implementation agents have one unambiguous source-of-truth set.
 
-Current baseline: `spec` tag `mvp-0.1-baseline.5` (SPEC-PATCH-05, `spec: adr/0004-mvp-0.1-protocol-decisions-4.md`), which supersedes `mvp-0.1-baseline.4`. Implementations move to it deliberately; no vector value changed. Actor chains link across abandoned sequences (G-DP1-GAP), invalid Automerge bytes are `INVALID_AUTOMERGE_BYTES`, and new `actor_chain` and `invite_uri` validation cases and corpus negatives need handlers. Items other than G-DP1-GAP await owner review.
+Current baseline: `spec` tag `mvp-0.1-baseline.6` (SPEC-PATCH-06, `spec: adr/0005-mvp-0.1-protocol-decisions-5.md`), which supersedes `mvp-0.1-baseline.5`. Implementations move to it deliberately; no vector value changed. Writers name their latest own unit still accepted as `previous`, clients retransmit after a request timeout, and new Shared Objects scenarios S15 and S16 and Automerge corpus `validations` need runners. All items await owner review.
 
 Depends on: `LFCP-008`, `LFCP-009`.
 

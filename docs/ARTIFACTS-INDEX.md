@@ -408,7 +408,7 @@ This index.
 
 ### `MVP-0.1-BASELINE.md`
 
-**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.5`)
+**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.6`)
 **Status:** GUIDE
 
 **Purpose:** The exact set of documents, vectors, generators, CDDL files and schemas that MVP 0.1 implementations build against. It is not a Stable publication.
@@ -440,6 +440,13 @@ This index.
 **Status:** ARCHITECTURE
 
 **Purpose:** The fourth batch of MVP 0.1 protocol decisions (SPEC-PATCH-05): G-DP1-GAP (actor chains across abandoned sequences), approved by the project owner, and orchestrator decisions pending owner review (Snapshot cutoff rebuild, invitation query parameters, claimant Key Packages, server and message clarifications, per-value profile diagnostics, `INVALID_AUTOMERGE_BYTES`), each with its status, sections and vectors.
+
+### `adr/0005-mvp-0.1-protocol-decisions-5.md`
+
+**Location:** `spec: adr/0005-mvp-0.1-protocol-decisions-5.md`
+**Status:** ARCHITECTURE
+
+**Purpose:** The fifth batch of MVP 0.1 protocol decisions (SPEC-PATCH-06), all orchestrator decisions pending owner review: the writer's previous unit is its latest own unit still accepted, clients retransmit after a request timeout, the invitation read rule uses the §25.2 active grant, scalar conflicts stay profile-valid (S15, S16), SO-STRINGS pointer cases in the Automerge corpus, and Obsidian plugin state kept out of the vault-synced folder, each with its status, sections and vectors.
 
 ---
 
