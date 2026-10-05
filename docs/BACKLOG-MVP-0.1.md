@@ -245,7 +245,7 @@ Acceptance:
 - Markdown refs have two conforming placements;
 - implementation agents have one unambiguous source-of-truth set.
 
-Current baseline: `spec` tag `mvp-0.1-baseline.3` (SPEC-PATCH-03, `spec: adr/0002-mvp-0.1-protocol-decisions-2.md`), which supersedes `mvp-0.1-baseline.2`. Implementations move to it deliberately; the Key Package vectors changed (G-KP2).
+Current baseline: `spec` tag `mvp-0.1-baseline.4` (SPEC-PATCH-04, `spec: adr/0003-mvp-0.1-protocol-decisions-3.md`), which supersedes `mvp-0.1-baseline.3`. Implementations move to it deliberately; `hpke_recipient_mismatch_KP0` changed (KP-1), four negatives now name a code, and the Data Epoch rules G-EP1 to G-EP7 are normative.
 
 Depends on: `LFCP-008`, `LFCP-009`.
 
