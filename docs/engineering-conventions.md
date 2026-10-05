@@ -83,7 +83,7 @@ owner**, taken per repository when its remote is created.
 | `spec` | `pnpm install --frozen-lockfile && bundle install && ./scripts/validate.sh` |
 | `.github` | `./scripts/validate.sh` |
 | `sdk-ts`, `obsidian`, `examples` | `pnpm install --frozen-lockfile && pnpm run build && pnpm test` |
-| `sdk-rs` | `cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace` |
+| `sdk-rs` | `cargo fmt --all --check && cargo clippy --workspace --all-targets --all-features -- -D warnings && cargo clippy --workspace --all-targets --no-default-features -- -D warnings && cargo test --workspace --all-features` |
 | `server` | `cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace`, with `sdk-rs` (at `sdk-rs.lock`) and `spec` checked out next to it |
 
 `spec` also needs its full Git history, because it checks vector values
