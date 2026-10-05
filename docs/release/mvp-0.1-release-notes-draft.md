@@ -75,6 +75,11 @@ shared task · Resolve shared task conflict
   SDKs.
 - The server is a synchronization peer, not the root of trust. Clients
   verify signatures, capabilities, epochs and AEAD themselves.
+- The pre-release security review is
+  [security-review-mvp-0.1.md](security-review-mvp-0.1.md): findings by
+  severity, what was fixed, what is routed, and the dependency audit.
+  _TBD_: the high findings still open (H1–H6) are fixed or accepted before
+  release.
 
 ## Known limitations
 
@@ -89,7 +94,15 @@ shared task · Resolve shared task conflict
 - Mobile (iOS, Android) is not tested.
 - sdk-rs copies a document once per received change as rollback insurance.
   This is fine at MVP sizes; optimizing it is a follow-up.
-- Invitations are copied as links; there is no QR code.
+- Invitations are copied as links; there is no QR code. A copied link
+  stays on the system clipboard.
+- The reference server has no connection limits, rate limits or storage
+  quotas yet, and hosting is open by default. Run it for known users with
+  the allow-list hosting policy, behind the Caddy proxy (see the security
+  review).
+- Decrypted shared tasks are stored unencrypted on each device (IndexedDB
+  or SQLite), and Obsidian's `secretStorage` is shared by every plugin on
+  the device.
 
 ## Upgrading
 

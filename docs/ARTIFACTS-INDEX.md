@@ -466,6 +466,7 @@ This index.
 | Deferred WIRE-01 features | `.github: docs/release/deferred-wire-01-features.md` | What MVP 0.1 does not implement, or implements partly, and how it behaves instead (LFCP-072 draft) |
 | RC verification | `.github: scripts/rc-verify.py`, `docs/release/rc-verification.md` | Local release-candidate check: pins every repository, checks their locks agree, runs every release-blocking gate, writes a report (LFCP-072) |
 | README scope statements | `.github: docs/release/readme-scope-statements.md` | The "Scope" section each repository README carries (LFCP-072 draft) |
+| Security review (MVP 0.1) | `.github: docs/release/security-review-mvp-0.1.md` | Pre-release security review: findings by severity, fixed vs routed, server hostile-client limits, dependency audit |
 
 ---
 
