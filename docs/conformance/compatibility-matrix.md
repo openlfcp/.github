@@ -1,19 +1,19 @@
 # OpenLFCP compatibility matrix
 
-Generated 2026-10-05T21:11:02.413Z by examples/conformance (LFCP-070).
+Generated 2026-10-05T22:00:17.594Z by examples/conformance (LFCP-070).
 
-- Spec baseline: mvp-0.1-baseline.5 (spec dfd5db24c8cade7397737145a062c1ba5bc8a354).
-- sdk-rs: 170629577f21a6c7cc074c26e7271abcbe539962.
-- sdk-ts: eb3581782a99f4da81c7bf6ec058619a98bda252.
-- pins.json: sdk-rs 1706295, sdk-ts eb35817, spec dfd5db2 (strict run: the SDKs are these commits).
+- Spec baseline: mvp-0.1-baseline.6 (spec c13aef1245c3f4d433fc2a07635ad92e7552841b).
+- sdk-rs: 7ae47c408fc40682dc31af9dbfb30b2880d80084.
+- sdk-ts: c074ed0ca74e8a8103542d4fd66e1926652a67da.
+- pins.json: sdk-rs 7ae47c4, sdk-ts c074ed0, spec c13aef1 (strict run: the SDKs are these commits).
 
 ## A. Official vectors (byte-exact where the vectors fix every input)
 
 | SDK | Suites | Result | Source |
 | --- | --- | --- | --- |
-| ts | LFCP-TEST-VECTORS-01/01 | PASS 116/116 | sdk-ts conformance runner at mvp-0.1-baseline.5 (584/584 checks) |
-| ts | SHARED-OBJECTS-TEST-VECTORS-01/01 | PASS 29/29 | sdk-ts conformance runner at mvp-0.1-baseline.5 (80/80 checks) |
-| rust | LFCP-TEST-VECTORS-01, SHARED-OBJECTS-TEST-VECTORS-01, corpus, schema fixtures | PASS 215/215 | sdk-rs cargo test --all-features (every test; vectors read at spec.lock) |
+| ts | LFCP-TEST-VECTORS-01/01 | PASS 116/116 | sdk-ts conformance runner at mvp-0.1-baseline.6 (584/584 checks) |
+| ts | SHARED-OBJECTS-TEST-VECTORS-01/01 | PASS 31/31 | sdk-ts conformance runner at mvp-0.1-baseline.6 (90/90 checks) |
+| rust | LFCP-TEST-VECTORS-01, SHARED-OBJECTS-TEST-VECTORS-01, corpus, schema fixtures | PASS 222/222 | sdk-rs cargo test --all-features (every test; vectors read at spec.lock) |
 
 ## B and C. Cross-consumption, negatives and Shared Objects
 
@@ -79,6 +79,7 @@ by logical state and conflict sets, never by bytes.
 | shared_objects.negative.change_signer | shared_objects | PASS | PASS | PASS | PASS |
 | shared_objects.negative.change_checksum | shared_objects | PASS | PASS | PASS | PASS |
 | shared_objects.negative.snapshot_change_chunk | shared_objects | PASS | PASS | PASS | PASS |
+| shared_objects.negative.change_equivocation | shared_objects | PASS | PASS | PASS | PASS |
 | shared_objects.negative.state_problems | shared_objects | PASS | N/A | PASS | N/A |
 
 ## Known gaps
