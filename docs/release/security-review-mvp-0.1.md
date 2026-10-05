@@ -27,15 +27,15 @@ limitations in the release notes.
 | H1 | high | sdk-ts, sdk-rs, spec | Automerge decompression bomb: compressed change chunks (§11) and Snapshot columns inflate without an output cap | routed: spec decision |
 | H2 | high | sdk-ts client | A server-supplied Have range is expanded one sequence at a time: one `DATA_HAVE` hangs the client | routed |
 | H3 | high | obsidian | Task-suffix regex (recurrence) is super-linear: a collaborator's long title freezes the editor | routed |
-| H4 | high | server | `DATA_GET` / `KEY_PACKAGE_GET` load every requested range/epoch before deduplicating, with no count cap | routed |
+| H4 | high | server | `DATA_GET` / `KEY_PACKAGE_GET` load every requested range/epoch before deduplicating, with no count cap | **fixed: server eb1323f** |
 | H5 | high | server | Open hosting by default and no quotas: any keypair can host Resources and fill the disk | routed (known limitation) |
-| H6 | high | server | GET replies are built fully in memory; the outbound queue can hold about 2 GiB per connection | routed |
+| H6 | high | server | GET replies are built fully in memory; the outbound queue can hold about 2 GiB per connection | routed (known limitation) |
 | M1 | medium | sdk-ts, sdk-rs | A client adopts the server's `READY.maxMessageBytes` with no local upper bound | routed |
-| M2 | medium | server | No connection cap, no HTTP header timeout, no handshake deadline; PING before AUTH keeps a connection alive | routed (known limitation) |
-| M3 | medium | server | `POST /admin/challenge` is unauthenticated and its map is unbounded | routed |
-| M4 | medium | server | The coordinator's per-Resource slot map grows for any requested Resource ID | routed |
-| M5 | medium | server | Full CBOR decode of every frame before AUTH: about 30× memory amplification | routed (known limitation) |
-| M6 | medium | server | The pairing code is printed to stdout, the same stream as the tracing log (so `docker logs` keeps it) | routed |
+| M2 | medium | server | No connection cap, no HTTP header timeout, no handshake deadline; PING before AUTH keeps a connection alive | **fixed: server 65f148d, 625dbd9** (rate limits remain a known limitation) |
+| M3 | medium | server | `POST /admin/challenge` is unauthenticated and its map is unbounded | **fixed: server a7f3461** (bounded; still unauthenticated by design) |
+| M4 | medium | server | The coordinator's per-Resource slot map grows for any requested Resource ID | **fixed: server 11e1fb2** |
+| M5 | medium | server | Full CBOR decode of every frame before AUTH: about 30× memory amplification | **partly fixed: server 65f148d** (before READY); after READY a known limitation |
+| M6 | medium | server | The pairing code is printed to stdout, the same stream as the tracing log (so `docker logs` keeps it) | **fixed: server 7e61710** |
 | M7 | medium | sdk-rs | `values::read` recursion has no depth limit (stack overflow on deeply nested `extensions`) | routed |
 | M8 | medium | sdk-rs | `SharedObjects::merge` has no §14.1 sequence check and no panic guard | routed |
 | M9 | medium | obsidian | Other task-suffix regexes are quadratic on long whitespace runs | routed (with H3) |
@@ -174,6 +174,60 @@ match an anchored suffix) belongs with the projection owner.
 tracing subscriber share stdout. Under Docker the code stays in
 `docker logs` for its one-hour lifetime. Use stderr or a file with mode
 0600, or state the behaviour in the README.
+
+### Follow-up: server hardening
+
+**Fixed** (cheap, safe caps; each has tests):
+- **H4, server eb1323f:**
+  - a `DATA_GET` with more than 256 ranges (§49) is refused before any
+    lookup, as is a `KEY_PACKAGE_GET` with more than 256 distinct epochs;
+    both get `NACK(MALFORMED_MESSAGE)`;
+  - repeated epochs are looked up once;
+  - overlapping ranges of one actor are merged.
+- **M2, M5 (before READY), server 65f148d:**
+  - a connection must reach READY within `handshake_timeout_ms` (default
+    10 s), else it is closed with 1008; `PING` does not extend this;
+  - before READY, at most 16 messages are read (the 17th gets
+    `ERROR(RATE_LIMITED)`);
+  - before READY, no message over 64 KiB is decoded
+    (`ERROR(MESSAGE_TOO_LARGE)`);
+  - HTTP request headers get the same timeout.
+- **M2, server 625dbd9:** `max_connections` (default 1024) counts every TCP
+  connection, a WebSocket included. Past it, a connection gets HTTP 503
+  with `Retry-After` and is closed.
+- **M3, server a7f3461:** at most 1024 admin challenges are outstanding,
+  each for 5 minutes. Past that, `POST /admin/challenge` answers 429.
+- **M4, server 11e1fb2:** a coordinator slot is created only for a hosted
+  Resource. An unknown ID costs one store lookup and leaves nothing.
+- **M6, server 7e61710:** the code is written to `<state_dir>/setup-code`
+  (mode 0600) and removed by the pairing; the log says only where it is.
+  - It is not printed on a terminal either: `docker run -t` captures
+    terminal output too.
+  - `deploy/check.sh` checks the file mode and that `docker logs` lacks
+    the code. That script was not run: Docker was unavailable.
+
+**Known limitations** (for the release notes):
+- **H5:** hosting is open by default, with no per-Principal or
+  per-Resource quotas; the `IngestPolicy` hook defaults to `Unlimited`.
+  Set the allow-list hosting policy.
+- **H6:** `DATA_GET`, `KEY_PACKAGE_GET` and `CONTROL_GET` replies are built
+  fully in memory, not streamed or paged.
+  - The outbound queue counts messages (256), not bytes, so one
+    connection can hold up to 256 × `max_message_bytes`.
+  - Lower `max_message_bytes` to lower this bound.
+- **M5 after READY:** an authenticated peer's message is fully decoded,
+  up to `max_message_bytes`.
+- **No rate limits** on WebSocket messages or admin HTTP beyond the caps
+  above.
+- **The connection cap is global, not per IP.** Behind Caddy every peer is
+  the proxy address anyway; use proxy-level limits.
+- **No body-read timeout:** admin request bodies (capped at 16 KiB) have no
+  read timeout of their own. A slow body holds one connection place until
+  the client gives up.
+- **The challenge cap can be exhausted:** an unauthenticated flood can fill
+  the 1024 challenges and delay an administrator's login by up to 5
+  minutes.
+- **No owner-only permissions on the database files** (L5).
 
 ## sdk-rs (M1, M7, M8, L9)
 
