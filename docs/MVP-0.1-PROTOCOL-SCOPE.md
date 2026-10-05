@@ -271,7 +271,7 @@ The following WIRE-01 features are not required for the first secure Obsidian MV
 
 ### Ownership transfer
 
-Deferred:
+Deferred: creating and driving a transfer (UI and flow):
 
 ```text
 owner.transfer-offer
@@ -279,7 +279,7 @@ owner.transfer-accept
 OWNER_TRANSFER_COMMIT
 ```
 
-The creator remains owner in MVP 0.1.
+The creator remains owner in MVP 0.1 as far as MVP clients are concerned. Verification is NOT deferred: an MVP 0.1 implementation MUST validate a received `OWNER_TRANSFER_COMMIT` and its offer and acceptance as LFCP-WIRE-01 §23 specifies, and apply the resulting owner change (project-owner decision of 2026-10-05, `spec: adr/0002-mvp-0.1-protocol-decisions-2.md`).
 
 ### Coordinator recovery
 
@@ -291,6 +291,8 @@ COORDINATOR_RECOVERY
 
 If the single MVP coordinator is permanently lost, manual recovery/recreation is acceptable during this milestone.
 
+An MVP 0.1 implementation MUST refuse a Control Chain that contains a `COORDINATOR_RECOVERY` (type 7) record, with `PROTOCOL_UNSUPPORTED` (DV1).
+
 ### Resource tombstone
 
 Deferred:
@@ -300,6 +302,8 @@ RESOURCE_TOMBSTONE
 ```
 
 Shared Object tombstones remain part of the Shared Objects Profile and are unrelated to this deferral.
+
+An MVP 0.1 implementation MUST refuse a Control Chain that contains a `RESOURCE_TOMBSTONE` (type 8) record, with `PROTOCOL_UNSUPPORTED` (DV1).
 
 ### Route migration and multi-home routing
 
