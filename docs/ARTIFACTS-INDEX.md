@@ -408,7 +408,7 @@ This index.
 
 ### `MVP-0.1-BASELINE.md`
 
-**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.2`)
+**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.3`)
 **Status:** GUIDE
 
 **Purpose:** The exact set of documents, vectors, generators, CDDL files and schemas that MVP 0.1 implementations build against. It is not a Stable publication.
@@ -419,6 +419,13 @@ This index.
 **Status:** ARCHITECTURE
 
 **Purpose:** The protocol decisions the project owner made for MVP 0.1 (2026-10-05), with the sections and vectors each one changed.
+
+### `adr/0002-mvp-0.1-protocol-decisions-2.md`
+
+**Location:** `spec: adr/0002-mvp-0.1-protocol-decisions-2.md`
+**Status:** ARCHITECTURE
+
+**Purpose:** The second batch of project-owner decisions for MVP 0.1 (2026-10-05, SPEC-PATCH-03), with the sections and vectors each one changed and the vector values that changed.
 
 ---
 
