@@ -1,0 +1,5 @@
+# Code owners for openlfcp/.github (LFCP-002).
+# Applies to this repository only; other repositories need their own file.
+# @apankov was verified as an active admin of the openlfcp organization
+# (read-only `gh api user/memberships/orgs/openlfcp`).
+* @apankov
