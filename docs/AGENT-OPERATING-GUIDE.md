@@ -234,6 +234,18 @@ Agents MUST use its current issue numbers and dependencies. The earlier `LFCP-00
 
 The backlog is planning authority, but it does not override normative protocol/profile specifications. If a backlog acceptance criterion conflicts with a normative spec, raise the inconsistency rather than coding to the backlog blindly.
 
+# 4.7 MVP 0.1 baseline
+
+The canonical document set for MVP 0.1 implementation is listed in:
+
+```text
+spec: MVP-0.1-BASELINE.md        (at spec tag mvp-0.1-baseline)
+```
+
+It names every normative document, vector suite, generator, CDDL file and schema that implementations build against. The protocol decisions applied to the Working Drafts for this baseline are recorded in `spec: adr/0001-mvp-0.1-protocol-decisions.md`.
+
+The baseline is an implementation baseline only. It is not a Stable publication of `LFCP-WIRE-01`, and it is not a full-conformance claim. The documents remain Working Drafts. A later approved correction produces a new tag (for example `mvp-0.1-baseline.2`); an existing tag is never moved.
+
 # 5. Repository model
 
 The intended GitHub organization is:

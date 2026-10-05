@@ -256,7 +256,8 @@ The first development slices may run without snapshots, but snapshots are part o
 Required:
 
 - `ACK` / `NACK` where specified;
-- `ERROR` and relevant error codes;
+- `ERROR` and relevant error codes, as LFCP-WIRE-01 assigns them to each rejection (decisions recorded in `spec: adr/0001-mvp-0.1-protocol-decisions.md`);
+- client-local rejection of Data Units that fail AEAD authentication and of Key Packages that do not open or do not match their commitment; these have no wire error code;
 - client connection state machine;
 - server session state machine;
 - per-Resource sync state machine;
@@ -359,6 +360,8 @@ Fully conforming LFCP-WIRE-01 implementation.
 ```
 
 Full WIRE-01 conformance is a later milestone.
+
+The exact documents, vectors and schemas that make up the MVP 0.1 baseline are listed in `spec: MVP-0.1-BASELINE.md` at the `spec` tag `mvp-0.1-baseline`.
 
 ---
 

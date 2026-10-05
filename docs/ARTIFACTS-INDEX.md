@@ -387,11 +387,52 @@ This should be provided to agents working on the project.
 
 ---
 
+### `engineering-conventions.md`
+
+**Location:** `.github: docs/engineering-conventions.md`
+**Status:** GUIDE
+
+**Purpose:** Branches, commits, validation commands, labels, versioning, the Working Draft change process and the spec-gap procedure.
+
+---
+
 ### `ARTIFACTS-INDEX.md`
 
 **Location:** `.github: docs/ARTIFACTS-INDEX.md`
 
 This index.
+
+---
+
+## 8a. MVP 0.1 baseline and decisions
+
+### `MVP-0.1-BASELINE.md`
+
+**Location:** `spec: MVP-0.1-BASELINE.md` (tag `mvp-0.1-baseline`)
+**Status:** GUIDE
+
+**Purpose:** The exact set of documents, vectors, generators, CDDL files and schemas that MVP 0.1 implementations build against. It is not a Stable publication.
+
+### `adr/0001-mvp-0.1-protocol-decisions.md`
+
+**Location:** `spec: adr/0001-mvp-0.1-protocol-decisions.md`
+**Status:** ARCHITECTURE
+
+**Purpose:** The protocol decisions the project owner made for MVP 0.1 (2026-10-05), with the sections and vectors each one changed.
+
+---
+
+## 8b. Machine-checkable artifacts
+
+| Artifact | Location | Purpose |
+| --- | --- | --- |
+| Extracted Wire CDDL | `spec: wire/LFCP-WIRE-01.cddl`, `wire/LFCP-WIRE-01.summary.cddl` | Generated from the CDDL blocks of `LFCP-WIRE-01.md` |
+| CDDL supplement | `spec: wire/LFCP-WIRE-01.supplement.cddl` | Typed signed-object, Control Record and message rules |
+| CDDL fixtures | `spec: wire/fixtures/` | Vector bytes and structural mismatches checked against the CDDL |
+| Vector format schema | `spec: schemas/lfcp-vector-format-1.schema.json` | `lfcp-vector-format/1` JSON Schema for both vector suites |
+| Vector format fixtures | `spec: schemas/fixtures/` | Format examples and validator self-tests |
+| Shared Objects state schema | `spec: profiles/shared-objects-01/schema/` | Structural contract for Shared Objects logical state, with fixtures |
+| Migration mapping | `spec: migrations/vector-format-1/` | Proof that the vector-format migration changed no value, plus approved changes |
 
 ---
 
