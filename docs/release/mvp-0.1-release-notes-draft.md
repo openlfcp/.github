@@ -98,13 +98,38 @@ shared task · Resolve shared task conflict
     is `INVALID_FIELD_TYPE` (M7; sdk-rs bb43a78);
   - merging another replica in sdk-rs goes through the same §14.1
     admission and engine guard as received changes (M8; sdk-rs b99f85c).
+- Server hardening (the full list is in the security review, "Follow-up:
+  server hardening"):
+  - `DATA_GET` with more than 256 ranges and `KEY_PACKAGE_GET` with more
+    than 256 distinct epochs are refused (`MALFORMED_MESSAGE`) before any
+    lookup. Repeated epochs and overlapping ranges are read once (H4;
+    server eb1323f).
+  - A connection that is not `READY` within `handshake_timeout_ms`
+    (default 10 s) is closed, and `PING` does not extend the deadline.
+    Before `READY`, a connection may send at most 16 messages, none of
+    them decoded beyond 64 KiB. HTTP headers have a read timeout (M2, M5;
+    server 65f148d).
+  - `max_connections` (default 1024) caps concurrent connections. Past
+    it, the server answers HTTP 503 with `Retry-After` (M2; server
+    625dbd9).
+  - At most 1024 admin challenges are outstanding, each for 5 minutes;
+    past that, the server answers 429 (M3; server a7f3461).
+  - Coordinator slots exist only for hosted Resources (M4; server
+    11e1fb2).
+  - The first-run pairing code is written to `<state_dir>/setup-code`
+    (mode 0600), never to stdout or the Docker logs (M6; server 7e61710).
+    Under Docker, read it with:
+
+    ```sh
+    docker compose -f deploy/compose.yaml cp lfcp-server:/var/lib/lfcp/setup-code - | tar -xO
+    ```
 - The server is a synchronization peer, not the root of trust. Clients
   verify signatures, capabilities, epochs and AEAD themselves.
 - The pre-release security review is
   [security-review-mvp-0.1.md](security-review-mvp-0.1.md): findings by
   severity, what was fixed, what is routed, and the dependency audit.
-  _TBD_: the high findings still open (H1–H6) are fixed or accepted before
-  release.
+  H2 and H4 are fixed, and H5 and H6 are accepted as known limitations
+  (below). _TBD_: H1 and H3 are fixed or accepted before release.
 
 ## Known limitations
 
@@ -122,10 +147,21 @@ shared task · Resolve shared task conflict
   copy. This is fine at MVP sizes.
 - Invitations are copied as links; there is no QR code. A copied link
   stays on the system clipboard.
-- The reference server has no connection limits, rate limits or storage
-  quotas yet, and hosting is open by default. Run it for known users with
-  the allow-list hosting policy, behind the Caddy proxy (see the security
-  review).
+- The reference server is for known users. Run it with the allow-list
+  hosting policy, behind the Caddy proxy (see the security review):
+  - Hosting is open by default, and there are no storage quotas (H5).
+  - Replies to `DATA_GET`, `KEY_PACKAGE_GET` and `CONTROL_GET` are built
+    fully in memory, not streamed. The outbound queue counts messages, not
+    bytes: up to 256 × `max_message_bytes` per connection (H6).
+  - After `READY`, a message is decoded in full, up to
+    `max_message_bytes` (M5).
+  - There are no rate limits on WebSocket sessions or the admin HTTP API.
+    The connection cap is global, not per IP; use the proxy's limits.
+  - Admin request bodies (at most 16 KiB) have no read timeout of their
+    own.
+  - An unauthenticated flood can fill the admin challenge cap and delay an
+    administrator's login by up to 5 minutes.
+  - The database files are not restricted to the owner (L5).
 - Decrypted shared tasks are stored unencrypted on each device (IndexedDB
   or SQLite), and Obsidian's `secretStorage` is shared by every plugin on
   the device.
