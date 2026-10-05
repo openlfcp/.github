@@ -32,6 +32,9 @@ Two files are *not* inherited by other repositories:
 - Every commit must pass the repository's validation command (section 4)
   **before** it is made: `./scripts/validate.sh && committer …`, never with
   `;`.
+- The validation runs on the working tree, not on the commit. After
+  committing, `git status` must show no leftover change that belongs to the
+  same logical change, such as a regenerated file left unstaged.
 - History is never rewritten: no amend, squash, rebase or force-push of
   published commits.
 - A commit that slips through red is not repaired by rewriting. It is fixed
@@ -41,6 +44,7 @@ Two files are *not* inherited by other repositories:
   | Repository | Commit | Fixed by |
   | --- | --- | --- |
   | `spec` | `12732bb` | `353c946` |
+  | `spec` | `bb81131` | `3e4cb79` |
 
 ### Target mode (later)
 
