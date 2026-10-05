@@ -317,7 +317,7 @@ It proves that LFCP is an interoperable protocol rather than a TypeScript conven
 
 Reference LFCP server.
 
-It may use `sdk-rs`, but MUST remain application-agnostic.
+It is implemented in TypeScript for Node.js and does not depend on `sdk-rs`, which remains the independent Rust interoperability implementation. It MUST remain application-agnostic.
 
 It MUST NOT understand:
 

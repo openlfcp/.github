@@ -322,7 +322,7 @@ This resolves placement without forcing every editor to spend an extra physical 
 - TypeScript crypto, Control Plane, Data Plane and handshake work;
 - Shared Objects/local-client work;
 - independent Rust protocol core;
-- Rust reference server;
+- TypeScript/Node reference server;
 - secure invitation, anti-entropy, snapshots and restart durability;
 - Obsidian projection tasks, with `LFCP-060` governed by `MARKDOWN-REFS-01`;
 - cross-language conformance;

@@ -1085,14 +1085,12 @@ same conflict semantics
 
                   protocol / wire / profiles
                             │
-             ┌──────────────┴──────────────┐
-             ▼                             ▼
+             ┌──────────────┼──────────────┐
+             ▼              ▼              ▼
 
-        TypeScript SDK                 Rust SDK
-             │                             │
-             │                             ▼
-             │                       LFCP Server
-             │
+        TypeScript SDK  LFCP Server     Rust SDK
+             │          (TS/Node)    (independent
+             │                       interop impl)
       ┌──────┼────────┐
       ▼      ▼        ▼
 
