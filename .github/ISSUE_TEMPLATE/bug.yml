@@ -1,0 +1,25 @@
+name: Bug
+description: Behavior that contradicts the specification, a vector or the documentation.
+labels: ["type:bug"]
+body:
+  - type: textarea
+    id: observed
+    attributes:
+      label: What happens
+      description: Observed behavior, with exact output or bytes.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What should happen
+      description: Expected behavior, citing the spec section or vector case id.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: How to reproduce
+      description: Minimal steps, repository and commit.
+    validations:
+      required: true

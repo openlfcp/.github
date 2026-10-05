@@ -1,0 +1,32 @@
+name: Implementation task
+description: A backlog item (LFCP-NNN) to implement.
+labels: ["type:feature"]
+body:
+  - type: input
+    id: issue
+    attributes:
+      label: LFCP issue
+      placeholder: LFCP-013
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What to build, with the repository and layer. Link the backlog entry.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Normative sources
+      description: Spec and profile sections and vector suites the work must follow.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: Copied from the backlog entry.
+    validations:
+      required: true

@@ -1,0 +1,28 @@
+name: Interoperability failure
+description: Two implementations, or an implementation and the vectors, disagree.
+labels: ["area:interop"]
+body:
+  - type: textarea
+    id: parties
+    attributes:
+      label: Implementations and versions
+      description: For example sdk-ts at commit X vs sdk-rs at commit Y, or sdk-ts vs LFCP-TEST-VECTORS-01 at spec tag Z.
+    validations:
+      required: true
+  - type: textarea
+    id: case
+    attributes:
+      label: Case
+      description: Vector case id or exact input bytes, and each side's output.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - byte-exact mismatch
+        - accept/reject mismatch
+        - behavioral (logical state) mismatch
+    validations:
+      required: true

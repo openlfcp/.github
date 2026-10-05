@@ -1,0 +1,25 @@
+name: Protocol / spec gap
+description: Normative text that is missing, ambiguous or contradicts a vector. The project owner decides.
+labels: ["needs-protocol-decision"]
+body:
+  - type: textarea
+    id: location
+    attributes:
+      label: Where
+      description: Document, section and line, plus any vector case or CDDL block involved.
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is missing or contradictory
+      description: Quote the exact text.
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options and recommendation
+      description: The smallest normative options, the one you recommend, and which artifacts each would change (doc, vectors, generators, CDDL, schemas).
+    validations:
+      required: true
