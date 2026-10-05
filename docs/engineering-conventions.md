@@ -79,7 +79,7 @@ owner**, taken per repository when its remote is created.
 | `spec` | `pnpm install --frozen-lockfile && bundle install && ./scripts/validate.sh` |
 | `.github` | `./scripts/validate.sh` |
 | `sdk-ts`, `server`, `obsidian`, `examples` | `pnpm install --frozen-lockfile && pnpm run build && pnpm test` |
-| `sdk-rs` | `cargo test --workspace` (blocked until a Rust toolchain is installed) |
+| `sdk-rs` | `cargo fmt --all --check && cargo clippy --workspace --all-targets -- -D warnings && cargo test --workspace` |
 
 `spec` also needs its full Git history, because it checks vector values
 against the commit they were migrated from.
