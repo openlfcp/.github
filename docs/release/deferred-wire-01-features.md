@@ -58,7 +58,6 @@ These are future extensions, not MVP gaps:
 | Capability UI | Only the Read and Read + Write invitation presets have UI. The other abilities exist in the SDKs but have no UI. Revocation and key rotation run in the SDKs and tests, without member-management UI (scope §3.8). | obsidian |
 | Snapshots in the Obsidian plugin | The plugin loads Snapshots but never publishes one. | obsidian |
 | Mobile | The plugin keeps mobile portability boundaries, but iOS and Android are not tested (LFCP-068). | obsidian |
-| Join progress | Join shows coarse stages: the SDK's claim flow reports no progress yet. | sdk-ts, obsidian |
 | Invitation sharing | No QR code or share sheet; copy only. | obsidian |
 | Deployment | The Docker deployment (`server: deploy/`) is written but not yet verified end to end. | server |
 

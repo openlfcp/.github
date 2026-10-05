@@ -1,0 +1,72 @@
+# Release-candidate verification (local)
+
+**Status:** LFCP-072 tooling. Until CI runs on the pushed repositories, this
+is the local evidence that every release-blocking check is green for one
+pinned set of commits.
+
+## Run
+
+From this repository, with the seven checkouts side by side (`spec`,
+`.github`, `sdk-ts`, `sdk-rs`, `server`, `examples`, `obsidian`):
+
+```sh
+scripts/rc-verify.py --from-heads --write-manifest /tmp/rc-manifest.json
+scripts/rc-verify.py --manifest docs/release/rc-manifest.json   # a pinned set
+scripts/rc-verify.py --from-heads --consistency-only            # pins only
+scripts/rc-verify.py --from-heads --only sdk-rs,server          # some gates
+```
+
+`--from-heads` pins every repository's committed HEAD (and the spec's
+`mvp-0.1-baseline.*` tag on it). Uncommitted work in a checkout is never
+part of the RC, because the gates run in separate worktrees at the pinned
+commits.
+
+## What it does
+
+1. **Disk check.** Stops if less than 3 GB is free, before and during the
+   run.
+2. **RC directory.** Uses ONE persistent directory, `$LFCP_RC_DIR` (default
+   `openlfcp-rc` next to the checkouts). It holds a git worktree of each
+   checkout, moved to the pinned commit only when clean; it never resets or
+   forces. Reruns reuse it, along with its `node_modules` and the shared
+   Cargo target.
+3. **Pins.** Every pin must name the RC commit, exist, and be an ancestor of
+   the local HEAD:
+   - `spec.lock` in sdk-ts, sdk-rs, server and obsidian;
+   - `sdk-rs.lock` in server;
+   - `sdk-ts.lock` and `server.lock` in obsidian;
+   - `conformance/pins.json` in examples.
+
+   Every pin that lags its repository's HEAD is listed with the commits in
+   the gap.
+4. **Gates.** Each runs in its worktree and is logged to `logs/<gate>.log`:
+
+   | Gate | Steps |
+   | --- | --- |
+   | spec | `pnpm install --frozen-lockfile`, `bundle check`, `scripts/validate.sh` |
+   | .github | `scripts/validate.sh` |
+   | sdk-rs | `cargo fmt --check`; `clippy -D warnings` and `test`, each with `--all-features` and `--no-default-features` |
+   | server | `cargo fmt --check`, `clippy -D warnings`, `test` |
+   | sdk-ts | install, build, typecheck, lint, `pnpm test` (live tests against the server included) |
+   | examples | install, build, typecheck, lint, test, `conformance/dist/run.js --strict` |
+   | obsidian | install, build, lint, typecheck, `vitest run`, the E2E included; it fails if any test is skipped |
+
+   Every gate runs with `LFCP_REQUIRE_LIVE=1`, so live tests may not skip,
+   and Cargo uses the shared target directory (`$LFCP_SERVER_TARGET_DIR`,
+   default `<tmp>/openlfcp-sdk-ts-server-target`). A gate fails if it leaves
+   a tracked file changed.
+5. **Report.** `report-<time>.md` and `.json` in the RC directory record:
+   - PASS or FAIL per gate, with its duration and log;
+   - the last lines of each failure;
+   - the pin table;
+   - every commit;
+   - the tool versions (OS, git, node, pnpm, rustc, cargo, ruby, python).
+
+The exit status is 0 only when the pins are consistent and every gate
+passed.
+
+## Requirements
+
+Python 3, git, Node 24 with pnpm, a Rust toolchain, and Ruby with bundler
+for the spec's CDDL check. The spec gate reuses the main checkout's
+`vendor/bundle` gems when they are there.

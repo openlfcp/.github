@@ -89,8 +89,7 @@ shared task · Resolve shared task conflict
 - Mobile (iOS, Android) is not tested.
 - sdk-rs copies a document once per received change as rollback insurance.
   This is fine at MVP sizes; optimizing it is a follow-up.
-- Join shows coarse progress stages (an SDK progress callback is in
-  progress). Invitations are copied as links; there is no QR code.
+- Invitations are copied as links; there is no QR code.
 
 ## Upgrading
 
