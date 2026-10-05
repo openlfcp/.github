@@ -166,7 +166,6 @@ shared task · Resolve shared task conflict
     own.
   - An unauthenticated flood can fill the admin challenge cap and delay an
     administrator's login by up to 5 minutes.
-  - The database files are not restricted to the owner (L5).
 - Decrypted shared tasks are stored unencrypted on each device (IndexedDB
   or SQLite), and Obsidian's `secretStorage` is shared by every plugin on
   the device.
