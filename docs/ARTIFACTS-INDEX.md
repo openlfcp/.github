@@ -408,7 +408,7 @@ This index.
 
 ### `MVP-0.1-BASELINE.md`
 
-**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.6`)
+**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.7`)
 **Status:** GUIDE
 
 **Purpose:** The exact set of documents, vectors, generators, CDDL files and schemas that MVP 0.1 implementations build against. It is not a Stable publication.
@@ -447,6 +447,13 @@ This index.
 **Status:** ARCHITECTURE
 
 **Purpose:** The fifth batch of MVP 0.1 protocol decisions (SPEC-PATCH-06), all orchestrator decisions pending owner review: the writer's previous unit is its latest own unit still accepted, clients retransmit after a request timeout, the invitation read rule uses the §25.2 active grant, a writer keeps writing after a rebuild removes its own changes, scalar conflicts stay profile-valid (S15, S16), SO-STRINGS pointer cases in the Automerge corpus, and Obsidian plugin state kept out of the vault-synced folder, each with its status, sections and vectors.
+
+### `adr/0006-mvp-0.1-protocol-decisions-6.md`
+
+**Location:** `spec: adr/0006-mvp-0.1-protocol-decisions-6.md`
+**Status:** ARCHITECTURE
+
+**Purpose:** The sixth batch of MVP 0.1 protocol decisions (SPEC-PATCH-07), all orchestrator decisions pending owner review: exact change expansion limits and structural checks before the Automerge engine, uncompressed changes only, local Snapshot limits with a floor, the value nesting bound, request bounds (KEY_PACKAGE_GET epochs, DATA_GET ranges) and the client receive limit, each with its status, sections and vectors.
 
 ---
 
