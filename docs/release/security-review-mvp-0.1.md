@@ -1,6 +1,6 @@
 # Pre-release security review: MVP 0.1
 
-**Status:** review of 2026-10-06, read-mostly. It covers sdk-ts, obsidian,
+**Status:** review of 2026-10-06, read-mostly; the Summary table's State column is kept current as fixes land. It covers sdk-ts, obsidian,
 server and sdk-rs at their main branches of that date:
 - sdk-ts 017d9c1;
 - obsidian 770832c;
@@ -24,21 +24,21 @@ limitations in the release notes.
 
 | ID | Severity | Area | Finding | State |
 | --- | --- | --- | --- | --- |
-| H1 | high | sdk-ts, sdk-rs, spec | Automerge decompression bomb: compressed change chunks (§11) and Snapshot columns inflate without an output cap | routed: spec decision |
-| H2 | high | sdk-ts client | A server-supplied Have range is expanded one sequence at a time: one `DATA_HAVE` hangs the client | routed |
-| H3 | high | obsidian | Task-suffix regex (recurrence) is super-linear: a collaborator's long title freezes the editor | routed |
+| H1 | high | sdk-ts, sdk-rs, spec | Automerge decompression bomb: compressed change chunks (§11) and Snapshot columns inflate without an output cap | **fixed in the spec: SPEC-PATCH-07, `mvp-0.1-baseline.7`** (ADR 0006; §11.1, §13.1); SDK alignment pending (ALIGN-TS-7, sdk-rs) |
+| H2 | high | sdk-ts client | A server-supplied Have range is expanded one sequence at a time: one `DATA_HAVE` hangs the client | **fixed: sdk-ts 9d5edf7, sdk-rs 6aab900** |
+| H3 | high | obsidian | Task-suffix regex (recurrence) is super-linear: a collaborator's long title freezes the editor | **fixed: obsidian c73c46d** |
 | H4 | high | server | `DATA_GET` / `KEY_PACKAGE_GET` load every requested range/epoch before deduplicating, with no count cap | **fixed: server eb1323f** |
 | H5 | high | server | Open hosting by default and no quotas: any keypair can host Resources and fill the disk | routed (known limitation) |
 | H6 | high | server | GET replies are built fully in memory; the outbound queue can hold about 2 GiB per connection | routed (known limitation) |
-| M1 | medium | sdk-ts, sdk-rs | A client adopts the server's `READY.maxMessageBytes` with no local upper bound | routed |
+| M1 | medium | sdk-ts, sdk-rs | A client adopts the server's `READY.maxMessageBytes` with no local upper bound | **fixed in the spec: WIRE §31, baseline.7**; SDK alignment pending |
 | M2 | medium | server | No connection cap, no HTTP header timeout, no handshake deadline; PING before AUTH keeps a connection alive | **fixed: server 65f148d, 625dbd9** (rate limits remain a known limitation) |
 | M3 | medium | server | `POST /admin/challenge` is unauthenticated and its map is unbounded | **fixed: server a7f3461** (bounded; still unauthenticated by design) |
 | M4 | medium | server | The coordinator's per-Resource slot map grows for any requested Resource ID | **fixed: server 11e1fb2** |
 | M5 | medium | server | Full CBOR decode of every frame before AUTH: about 30× memory amplification | **partly fixed: server 65f148d** (before READY); after READY a known limitation |
 | M6 | medium | server | The pairing code is printed to stdout, the same stream as the tracing log (so `docker logs` keeps it) | **fixed: server 7e61710** |
-| M7 | medium | sdk-rs | `values::read` recursion has no depth limit (stack overflow on deeply nested `extensions`) | routed |
-| M8 | medium | sdk-rs | `SharedObjects::merge` has no §14.1 sequence check and no panic guard | routed |
-| M9 | medium | obsidian | Other task-suffix regexes are quadratic on long whitespace runs | routed (with H3) |
+| M7 | medium | sdk-rs | `values::read` recursion has no depth limit (stack overflow on deeply nested `extensions`) | **fixed: sdk-rs bb43a78**; the nesting bound is normative (§30, baseline.7) |
+| M8 | medium | sdk-rs | `SharedObjects::merge` has no §14.1 sequence check and no panic guard | **fixed: sdk-rs b99f85c** |
+| M9 | medium | obsidian | Other task-suffix regexes are quadratic on long whitespace runs | **fixed: obsidian 0bded76, c73c46d** |
 | M10 | medium | sdk-ts storage | Decrypted Shared Objects state (checkpoints) is stored unencrypted on the device | known limitation |
 | L1 | low | sdk-ts core | A base64url error quoted the bad character; a corrupted key slot could show one key character in a Notice | **fixed: sdk-ts 017d9c1** |
 | L2 | low | sdk-ts | Hosting credentials are plain `Uint8Array` fields with no redaction wrapper (none are logged today) | routed |
@@ -49,6 +49,8 @@ limitations in the release notes.
 | L7 | low | sdk-ts, sdk-rs, server | No count caps on objects per batch, Have entries or held/pending/quarantined units (bounded by message size and authorization) | known limitation |
 | L8 | low | obsidian | The invitation link stays on the OS clipboard after "Copy link" | known limitation |
 | L9 | low | sdk-rs | `HostingCredential` derives `PartialEq` (not constant time) and `Clone` | routed |
+| M11 | medium | sdk-ts wire | The writer-URL check backtracked quadratically on a long URL ending in a fragment (5.8 s at 100k characters); found by the adversarial input-timing suite added for this review | **fixed: sdk-ts af2954d** |
+| M12 | medium | sdk-ts storage | Lost update of DEK references: a chain save in flight wrote back the epoch rows it had read, erasing a DEK reference a Key Package had just stored, so a client lost an epoch's key; found by the LFCP-071 release gate | **fixed: sdk-ts 1cfa89b** |
 
 Also fixed by this pre-release work (earlier commits):
 - **sdk-ts 27ab3e4:** a revoked member saw "NACK 4" instead of the
