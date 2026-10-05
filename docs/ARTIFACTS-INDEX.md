@@ -446,7 +446,7 @@ This index.
 **Location:** `spec: adr/0005-mvp-0.1-protocol-decisions-5.md`
 **Status:** ARCHITECTURE
 
-**Purpose:** The fifth batch of MVP 0.1 protocol decisions (SPEC-PATCH-06), all orchestrator decisions pending owner review: the writer's previous unit is its latest own unit still accepted, clients retransmit after a request timeout, the invitation read rule uses the §25.2 active grant, scalar conflicts stay profile-valid (S15, S16), SO-STRINGS pointer cases in the Automerge corpus, and Obsidian plugin state kept out of the vault-synced folder, each with its status, sections and vectors.
+**Purpose:** The fifth batch of MVP 0.1 protocol decisions (SPEC-PATCH-06), all orchestrator decisions pending owner review: the writer's previous unit is its latest own unit still accepted, clients retransmit after a request timeout, the invitation read rule uses the §25.2 active grant, a writer keeps writing after a rebuild removes its own changes, scalar conflicts stay profile-valid (S15, S16), SO-STRINGS pointer cases in the Automerge corpus, and Obsidian plugin state kept out of the vault-synced folder, each with its status, sections and vectors.
 
 ---
 
