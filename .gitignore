@@ -2,3 +2,6 @@
 .DS_Store
 .idea/
 .vscode/
+
+# Python bytecode (scripts/rc-verify.py)
+__pycache__/
