@@ -408,7 +408,7 @@ This index.
 
 ### `MVP-0.1-BASELINE.md`
 
-**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.4`)
+**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.5`)
 **Status:** GUIDE
 
 **Purpose:** The exact set of documents, vectors, generators, CDDL files and schemas that MVP 0.1 implementations build against. It is not a Stable publication.
@@ -433,6 +433,13 @@ This index.
 **Status:** ARCHITECTURE
 
 **Purpose:** The third batch of project-owner decisions for MVP 0.1 (2026-10-05, SPEC-PATCH-04): the Data Epoch rules, the general error-code rule, connection limits, Shared Objects validation and the Markdown reference grammar, with the sections and vectors each one changed and the vector values that changed.
+
+### `adr/0004-mvp-0.1-protocol-decisions-4.md`
+
+**Location:** `spec: adr/0004-mvp-0.1-protocol-decisions-4.md`
+**Status:** ARCHITECTURE
+
+**Purpose:** The fourth batch of MVP 0.1 protocol decisions (SPEC-PATCH-05): G-DP1-GAP (actor chains across abandoned sequences), approved by the project owner, and orchestrator decisions pending owner review (Snapshot cutoff rebuild, invitation query parameters, claimant Key Packages, server and message clarifications, per-value profile diagnostics, `INVALID_AUTOMERGE_BYTES`), each with its status, sections and vectors.
 
 ---
 

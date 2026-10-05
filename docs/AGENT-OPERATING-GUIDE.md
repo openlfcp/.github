@@ -239,12 +239,12 @@ The backlog is planning authority, but it does not override normative protocol/p
 The canonical document set for MVP 0.1 implementation is listed in:
 
 ```text
-spec: MVP-0.1-BASELINE.md        (at spec tag mvp-0.1-baseline.4; mvp-0.1-baseline, mvp-0.1-baseline.2 and mvp-0.1-baseline.3 are superseded)
+spec: MVP-0.1-BASELINE.md        (at spec tag mvp-0.1-baseline.5; mvp-0.1-baseline, mvp-0.1-baseline.2, mvp-0.1-baseline.3 and mvp-0.1-baseline.4 are superseded)
 ```
 
-It names every normative document, vector suite, generator, CDDL file and schema that implementations build against. The protocol decisions applied to the Working Drafts for this baseline are recorded in `spec: adr/0001-mvp-0.1-protocol-decisions.md`, `spec: adr/0002-mvp-0.1-protocol-decisions-2.md` and `spec: adr/0003-mvp-0.1-protocol-decisions-3.md`.
+It names every normative document, vector suite, generator, CDDL file and schema that implementations build against. The protocol decisions applied to the Working Drafts for this baseline are recorded in `spec: adr/0001-mvp-0.1-protocol-decisions.md`, `spec: adr/0002-mvp-0.1-protocol-decisions-2.md`, `spec: adr/0003-mvp-0.1-protocol-decisions-3.md` and `spec: adr/0004-mvp-0.1-protocol-decisions-4.md`.
 
-The baseline is an implementation baseline only. It is not a Stable publication of `LFCP-WIRE-01`, and it is not a full-conformance claim. The documents remain Working Drafts. A later approved correction produces a new tag (for example `mvp-0.1-baseline.5`); an existing tag is never moved.
+The baseline is an implementation baseline only. It is not a Stable publication of `LFCP-WIRE-01`, and it is not a full-conformance claim. The documents remain Working Drafts. A later approved correction produces a new tag (for example `mvp-0.1-baseline.6`); an existing tag is never moved.
 
 # 5. Repository model
 

@@ -245,7 +245,7 @@ Acceptance:
 - Markdown refs have two conforming placements;
 - implementation agents have one unambiguous source-of-truth set.
 
-Current baseline: `spec` tag `mvp-0.1-baseline.4` (SPEC-PATCH-04, `spec: adr/0003-mvp-0.1-protocol-decisions-3.md`), which supersedes `mvp-0.1-baseline.3`. Implementations move to it deliberately; `hpke_recipient_mismatch_KP0` changed (KP-1), four negatives now name a code, and the Data Epoch rules G-EP1 to G-EP7 are normative.
+Current baseline: `spec` tag `mvp-0.1-baseline.5` (SPEC-PATCH-05, `spec: adr/0004-mvp-0.1-protocol-decisions-4.md`), which supersedes `mvp-0.1-baseline.4`. Implementations move to it deliberately; no vector value changed. Actor chains link across abandoned sequences (G-DP1-GAP), invalid Automerge bytes are `INVALID_AUTOMERGE_BYTES`, and new `actor_chain` and `invite_uri` validation cases and corpus negatives need handlers. Items other than G-DP1-GAP await owner review.
 
 Depends on: `LFCP-008`, `LFCP-009`.
 
