@@ -239,7 +239,7 @@ The backlog is planning authority, but it does not override normative protocol/p
 The canonical document set for MVP 0.1 implementation is listed in:
 
 ```text
-spec: MVP-0.1-BASELINE.md        (at spec tag mvp-0.1-baseline)
+spec: MVP-0.1-BASELINE.md        (at spec tag mvp-0.1-baseline.2; mvp-0.1-baseline is superseded)
 ```
 
 It names every normative document, vector suite, generator, CDDL file and schema that implementations build against. The protocol decisions applied to the Working Drafts for this baseline are recorded in `spec: adr/0001-mvp-0.1-protocol-decisions.md`.

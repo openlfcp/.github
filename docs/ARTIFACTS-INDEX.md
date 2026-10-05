@@ -408,7 +408,7 @@ This index.
 
 ### `MVP-0.1-BASELINE.md`
 
-**Location:** `spec: MVP-0.1-BASELINE.md` (tag `mvp-0.1-baseline`)
+**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.2`)
 **Status:** GUIDE
 
 **Purpose:** The exact set of documents, vectors, generators, CDDL files and schemas that MVP 0.1 implementations build against. It is not a Stable publication.
