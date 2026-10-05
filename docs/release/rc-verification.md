@@ -70,3 +70,9 @@ passed.
 Python 3, git, Node 24 with pnpm, a Rust toolchain, and Ruby with bundler
 for the spec's CDDL check. The spec gate reuses the main checkout's
 `vendor/bundle` gems when they are there.
+
+## Runs
+
+| RC | Manifest | Result |
+| --- | --- | --- |
+| rc1 | [rc1-manifest.json](rc1-manifest.json) | All seven gates PASS on Darwin 25.5.0 arm64. The spec gate passed on a rerun after the bundler fix in rc-verify. Pins are consistent with no lag. Excludes in-flight LFCP-067 and LFCP-071 work. |
