@@ -45,7 +45,7 @@ Deferred features are listed in `MVP-0.1-PROTOCOL-SCOPE.md`.
 M0  Specification and vectors
 M1  TypeScript LFCP core/security
 M2  Shared Objects and local client
-M3  Rust protocol core and reference server
+M3  Reference server (TypeScript) and Rust protocol core
 M4  Obsidian product slice
 M5  Cross-language conformance and release
 ```
@@ -781,7 +781,7 @@ Depends on: `LFCP-033`, `LFCP-035`.
 
 ---
 
-# M3. Rust protocol core and reference server
+# M3. Reference server (TypeScript) and Rust protocol core
 
 ## LFCP-040 - Bootstrap Rust SDK
 
@@ -860,7 +860,7 @@ Acceptance:
 - health endpoint;
 - minimal dependency footprint.
 
-Depends on: `LFCP-043`.
+Depends on: `LFCP-011`.
 
 ---
 
@@ -918,7 +918,7 @@ Acceptance:
 - ping/pong;
 - connection cleanup.
 
-Depends on: `LFCP-043`, `LFCP-044`.
+Depends on: `LFCP-026`, `LFCP-044`.
 
 ---
 
@@ -933,7 +933,7 @@ Acceptance:
 - resource host/open/opened/close;
 - server ID persistence.
 
-Depends on: `LFCP-045`, `LFCP-047`.
+Depends on: `LFCP-027`, `LFCP-045`, `LFCP-047`.
 
 ---
 
@@ -952,7 +952,7 @@ Acceptance:
 
 Coordinator recovery is deferred.
 
-Depends on: `LFCP-042`, `LFCP-045`.
+Depends on: `LFCP-022`, `LFCP-045`.
 
 ---
 
@@ -970,7 +970,7 @@ Acceptance:
 - quotas/hosting policy remain separate;
 - no DEK or Task parsing required.
 
-Depends on: `LFCP-048`, `LFCP-049`.
+Depends on: `LFCP-021`, `LFCP-025`, `LFCP-048`, `LFCP-049`.
 
 ---
 
@@ -1390,10 +1390,12 @@ Approximate critical path:
                            │
                     034 → 035 → 036 → 039
 
-040 → 041 → 042 → 043 → 044 → 045 → 047 → 048 → 049 → 050 → 051
-                                                         │
-                                                         ▼
-                                                      053 → 056 → 057
+040 → 041 → 042 → 043   (Rust, feeds 069/070)
+
+011 → 044 → 045 → 047 → 048 → 049 → 050 → 051   (server consumes sdk-ts 021/022/025/026/027/028/029)
+                                       │
+                                       ▼
+                                    053 → 056 → 057
 
 058 → 059 → 060 → 061 → 062 → 064 → 065 → 066 → 067 → 068
 
