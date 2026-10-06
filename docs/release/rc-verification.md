@@ -55,7 +55,7 @@ commits.
    | docs | `scripts/doccheck.py` across the seven worktrees, each at its pinned commit (see [Documentation check](#documentation-check)) |
    | sdk-rs | `cargo fmt --check`; `clippy -D warnings` and `test`, each with `--all-features` and `--no-default-features` |
    | server | `cargo fmt --check`, `clippy -D warnings`, `test` |
-   | sdk-ts | install, build, typecheck, lint, `pnpm test` (live tests against the server included) |
+   | sdk-ts | install, build, typecheck, lint, `pnpm test` (live tests against the server included), `pnpm release:check` (pack, check and install the npm packages; nothing is published) |
    | examples | install, build, typecheck, lint, test, `conformance/dist/run.js --strict` |
    | obsidian | install, build, lint, typecheck, `vitest run`, the E2E included; it fails if any test is skipped |
 

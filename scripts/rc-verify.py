@@ -250,6 +250,10 @@ def gates(rc: Path, target_dir: Path) -> list[dict]:
             ["pnpm", "typecheck"],
             ["pnpm", "lint"],
             ["pnpm", "test"],
+            # The npm packages as they would be published (nothing is):
+            # clean build, pack, tarball contents and manifests, install the
+            # tarballs into a fresh project and import them.
+            ["pnpm", "release:check"],
         ]},
         {"name": "examples", "cwd": rc / "examples", "env": cargo, "steps": [
             ["pnpm", "install", "--frozen-lockfile"],
