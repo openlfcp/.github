@@ -172,6 +172,12 @@ shared task · Resolve shared task conflict
 - sdk-rs copies a document once per apply call as rollback insurance; a
   batch of changes counts once, but a Data Unit applied on its own costs a
   copy. This is fine at MVP sizes.
+- Two different Automerge changes with the same actor and sequence number
+  are refused (`ACTOR_EQUIVOCATION`). That happens only after a writer
+  equivocated or misbehaved. The refusal is safe: nothing is merged and
+  nothing crashes. But in that rare case one replica stops showing that
+  collaborator's later edits, with no notice. The owner decision is in
+  [open-decision-actor-seq-collision.md](open-decision-actor-seq-collision.md).
 - Invitations are copied as links; there is no QR code. A copied link
   stays on the system clipboard.
 - The reference server is for known users. Run it with the allow-list
