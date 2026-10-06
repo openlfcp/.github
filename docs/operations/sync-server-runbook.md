@@ -86,9 +86,10 @@ sudo grep '<time window>' /var/log/nginx/sync.openlfcp.org-access   # the client
 
 In server 0.1.0 the `peer` in "websocket open" is nginx's address, not the
 client's; the client's IP comes from the nginx access log at the same
-time. Once the server trusts nginx's `X-Forwarded-For` (POST-003,
-`trusted_proxies`), the server's own per-IP limits see the real address.
-[POST-003: check whether its log lines carry the client IP.]
+time. From the version with POST-003, with `trusted_proxies` set, the line
+reads `conn=<n> peer=<nginx> client=<client IP>`: correlate on `client=`.
+Refusals by the per-IP limits are logged as `per-IP connection limit;
+refusing` with the same two fields.
 
 ### 3. Act
 
