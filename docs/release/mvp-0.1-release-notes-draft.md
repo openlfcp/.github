@@ -13,7 +13,7 @@ Collaboration Protocol. Two people share tasks from their Obsidian vaults:
 - everything else in the notes stays local.
 
 It implements the OpenLFCP MVP 0.1 subset of LFCP-WIRE-01 at
-`spec: mvp-0.1-baseline.6`. It is not a full LFCP-WIRE-01 implementation; the
+`spec: mvp-0.1-baseline.8`. It is not a full LFCP-WIRE-01 implementation; the
 deferred features are listed in
 [deferred-wire-01-features.md](deferred-wire-01-features.md). The
 specifications remain Working Drafts.
@@ -24,7 +24,7 @@ specifications remain Working Drafts.
 
 | Repository | Version | What it provides |
 | --- | --- | --- |
-| `spec` | `mvp-0.1-baseline.6` (c13aef1) | LFCP-WIRE-01, SHARED-OBJECTS-PROFILE-01 and MARKDOWN-REFS-01 (Working Drafts); test vectors, the Automerge reference corpus, schemas; ADRs 0001–0005 |
+| `spec` | `mvp-0.1-baseline.8` (da3977f) | LFCP-WIRE-01, SHARED-OBJECTS-PROFILE-01 and MARKDOWN-REFS-01 (Working Drafts); test vectors, the Automerge reference corpus, schemas; ADRs 0001–0007 |
 | `sdk-ts` | _TBD_ (c074ed0 or later) | The TypeScript SDK: core, crypto, wire, storage (memory, IndexedDB, Node), Shared Objects on Automerge, the sync client with invitations, Key Packages, Snapshots and epoch rotation |
 | `sdk-rs` | _TBD_ (7ae47c4 or later) | An independent Rust implementation of the protocol core and the Shared Objects profile (feature `shared-objects`) |
 | `server` | _TBD_ (6e2dce6 or later) | The reference LFCP server in Rust: WebSocket sessions, Control Coordinator, durable SQLite store, first-run pairing; never decodes Shared Objects |
@@ -89,6 +89,24 @@ shared task · Resolve shared task conflict
   could crash an sdk-rs receiver, and corrupt a JS document. It is now
   rejected before the engine (Shared Objects §14.1, baseline.6) in both
   SDKs.
+- Automerge input is bounded before the engine sees it, in both SDKs
+  (Shared Objects §11.1, §11.2, §13.1; baseline.7 and baseline.8):
+  - a change is one uncompressed chunk within exact limits (16,384
+    values per column, 262,144 predecessor entries, 4 MiB of strings,
+    1,024 dependencies and other actors), checked from its run headers
+    without expanding them; writers send raw changes (H1);
+  - a Snapshot is checked against local limits of at least 32 MiB and
+    262,144 values, its deflated columns inflated under a running cap;
+  - a change naming an actor the document lacks is refused;
+  - no object of a document is deeper than 256 levels: Automerge JS traps
+    about 6,500 levels below the root and stops for the whole process;
+  - sdk-rs ca7f7f4, a3c7513, 18fe352, 50cb6bf; sdk-ts b6aa491, 68ce58d,
+    and b110fdd, which stops a client from retrying content that traps
+    the engine.
+- A client keeps its receive limit under its own maximum (at least
+  8 MiB), whatever the server's READY advertises (M1; sdk-rs b1d08bd,
+  sdk-ts 9b61644), and asks for at most 256 epochs per
+  `KEY_PACKAGE_GET` (sdk-ts 3069c33).
 - Hardening from the pre-release review:
   - a `DATA_HAVE` announcing a huge span of sequences no longer hangs a
     client: Have ranges stay intervals end to end (H2; sdk-ts 9d5edf7,
@@ -137,8 +155,8 @@ shared task · Resolve shared task conflict
 - The pre-release security review is
   [security-review-mvp-0.1.md](security-review-mvp-0.1.md): findings by
   severity, what was fixed, what is routed, and the dependency audit.
-  H2, H3 and H4 are fixed, and H5 and H6 are accepted as known
-  limitations (below). _TBD_: H1 is fixed or accepted before release.
+  H1–H4 are fixed, and H5 and H6 are accepted as known limitations
+  (below).
 
 ## Known limitations
 
@@ -183,5 +201,5 @@ explicit everywhere:
 - `sdk-rs.lock` in the server;
 - `server.lock` in the plugin's CI.
 
-A later spec baseline (`mvp-0.1-baseline.7` …) is adopted deliberately,
+A later spec baseline (`mvp-0.1-baseline.9` …) is adopted deliberately,
 never by moving a tag.

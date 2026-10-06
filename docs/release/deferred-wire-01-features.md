@@ -1,7 +1,7 @@
 # LFCP-WIRE-01 features deferred from MVP 0.1
 
 **Status:** draft for LFCP-072, not published. The owner decides.
-**Baseline:** `spec: mvp-0.1-baseline.6` (c13aef1).
+**Baseline:** `spec: mvp-0.1-baseline.8` (da3977f).
 
 MVP 0.1 implements the OpenLFCP MVP 0.1 subset of LFCP-WIRE-01, not full
 conformance (`MVP-0.1-PROTOCOL-SCOPE.md` §1, §5). This list is everything
@@ -66,7 +66,7 @@ These are future extensions, not MVP gaps:
 Every MVP 0.1 repository says, in its README:
 
 > Implements the OpenLFCP MVP 0.1 subset of LFCP-WIRE-01 at
-> `mvp-0.1-baseline.6`, not every deferred WIRE-01 feature. It does not
+> `mvp-0.1-baseline.8`, not every deferred WIRE-01 feature. It does not
 > claim full LFCP-WIRE-01 conformance.
 
 The wording per repository is in
