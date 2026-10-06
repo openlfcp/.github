@@ -1685,6 +1685,17 @@ Acceptance: 20 consecutive full `pnpm test` runs under parallel load pass.
 
 ## POST-011 - Obsidian plugin distribution
 
+**State:** prepared, not released. On obsidian main:
+- the rename to Shared Tasks / `shared-tasks` (ae3747a), with the
+  device-local state keys unchanged, so a 0.1.0 identity survives;
+- version 0.2.0 (3cc9279);
+- the release workflow for bare version tags (2953e19), with the 0.2.0 notes;
+- the install, release and directory-submission docs (289bf7a).
+
+Next, by the owner: push, tag `0.2.0`, run the BRAT beta, then submit to
+the directory (`obsidian: docs/devel/release.md`,
+`docs/devel/community-submission.md`).
+
 Source: `obsidian: manifest.json`, `versions.json`; the Obsidian community
 plugin submission rules.
 
