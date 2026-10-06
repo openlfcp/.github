@@ -26,3 +26,6 @@ catalogs every artifact across the repositories, with its status.
 | [release/rc7-manifest.json](release/rc7-manifest.json) | release | The pins of rc7, the MVP 0.1.0 release commits |
 | [release/security-review-mvp-0.1.md](release/security-review-mvp-0.1.md) | release | The MVP 0.1 pre-release security review: findings, fixes, known limitations |
 | [release/open-decision-actor-seq-collision.md](release/open-decision-actor-seq-collision.md) | owner | Open decision: two Automerge changes with the same actor and sequence number; options, recommendation, and what shipping as is means |
+| [operations/sync-server-privacy.md](operations/sync-server-privacy.md) | everyone | Privacy note of the public sync server sync.openlfcp.org: what it sees, stores and logs, with citations (draft, pending owner review) |
+| [operations/sync-server-terms.md](operations/sync-server-terms.md) | everyone | Terms of service of sync.openlfcp.org (draft, pending owner review) |
+| [operations/sync-server-runbook.md](operations/sync-server-runbook.md) | owner | Operating sync.openlfcp.org: where it runs, monitoring, external uptime check, abuse handling (draft) |
