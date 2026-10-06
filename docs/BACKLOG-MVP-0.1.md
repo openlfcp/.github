@@ -1504,7 +1504,7 @@ A CRDT demo without these properties is a useful development fixture but is not 
 
 # 6. Post-MVP 0.1 work
 
-Work decided for after MVP 0.1, each with its decision record.
+Work decided for after MVP 0.1, each with its decision record or source.
 
 ## POST-001 - Hold and retry Automerge (actor, seq) collisions
 
@@ -1536,3 +1536,217 @@ Acceptance:
 - no new abuse: a malicious writer still affects only its own history and
   the work built on it.
 
+## POST-002 - Manual Obsidian smoke on Windows, Linux and a cross-OS pair
+
+Source: `obsidian: docs/devel/testing/platform-smoke-runs.md` ("Status by
+platform") and `obsidian: docs/devel/testing/platform-smoke.md`.
+
+MVP 0.1.0 shipped with the manual checklist run on macOS only, through the
+two-vault demo. The automated platform smoke passes on all three systems.
+
+Deliver:
+
+- the manual checklist on Windows (CRLF check included) and on Linux;
+- one D and E run pairing two operating systems over `wss://`;
+- on macOS, the checks the demo did not exercise: A1, C1, C4, E1, E2 and
+  Paths;
+- a record per run in `platform-smoke-runs.md`.
+
+Acceptance:
+
+- every platform row reads PASS for both parts, with no NOT RUN left;
+- the cross-OS pair is recorded with both platform records.
+
+## POST-003 - Server hosting abuse limits
+
+Source: `.github: docs/release/security-review-mvp-0.1.md`, H5 and the
+known limitations under "Follow-up: server hardening".
+
+Hosting is open by default (`IngestPolicy` defaults to `Unlimited`), with no
+quotas. The connection cap is global, there are no rate limits, and a flood
+can fill the admin challenge cap.
+
+Deliver:
+
+- the allow-list hosting policy as the default, or quotas (Resources,
+  bytes) per hosting credential;
+- a per-IP connection cap that sees the client address behind the proxy;
+- rate limits on WebSocket messages and the admin HTTP API;
+- admin challenges that a flood cannot exhaust for the administrator.
+
+Acceptance:
+
+- a fresh server refuses hosting from an unknown key, or enforces its
+  quota, with tests;
+- each limit has a test that crosses it and gets the documented refusal.
+
+## POST-004 - Server memory bounds
+
+Source: `.github: docs/release/security-review-mvp-0.1.md`, H6 and M5 after
+READY.
+
+`DATA_GET`, `KEY_PACKAGE_GET` and `CONTROL_GET` replies are built fully in
+memory. The outbound queue counts 256 messages, not bytes, so a connection
+can hold up to 256 × `max_message_bytes`. Admin request bodies have no read
+timeout.
+
+Deliver:
+
+- streamed or paged GET replies;
+- outbound queue accounting in bytes, with a per-connection byte cap;
+- a read timeout for admin request bodies.
+
+Acceptance:
+
+- a test with a large Resource shows peak memory per connection bounded by
+  the configured byte cap;
+- a slow admin body is closed after the timeout.
+
+## POST-005 - Owner-only state files on Windows
+
+Source: `.github: docs/release/mvp-0.1-release-notes.md`, Known limitations
+("Windows: no owner-only state files").
+
+On Windows the server's state files (server ID, setup code, the database)
+inherit the state directory's ACL. On Unix the directory is 0700 and the
+files 0600.
+
+Deliver: the server restricts the state directory and files to its own
+user on Windows, at creation and at every start, as on Unix.
+
+Acceptance: a Windows CI test reads the ACLs and finds only the server's
+user (and SYSTEM, if Windows requires it).
+
+## POST-006 - Encrypt local checkpoints at rest
+
+Source: `.github: docs/release/security-review-mvp-0.1.md`, M10 and
+"Secret flow (sdk-ts, obsidian)".
+
+Decrypted Shared Objects state (checkpoints) is stored as plaintext in
+IndexedDB or SQLite.
+
+Deliver: checkpoints encrypted with a device key held in the secret store
+(Obsidian `secretStorage`, the Node `FileSecretStore`), in sdk-ts storage
+and the plugin; a migration of existing plaintext checkpoints.
+
+Acceptance: no task text appears in the IndexedDB or SQLite files (a test
+greps them); a lost device key means a resync, not a crash.
+
+## POST-007 - Snapshot publishing in the Obsidian plugin
+
+Source: `.github: docs/release/deferred-wire-01-features.md`, §4 "Partial in
+MVP 0.1 software" ("The plugin loads Snapshots but never publishes one").
+
+Deliver: the plugin publishes Snapshots through the SDK, on a documented
+trigger (size or change count), with the writer capability it requires.
+
+Acceptance: a new joiner catches up from the plugin's Snapshot in the
+two-vault E2E; the §4 row is removed from the deferred list.
+
+## POST-008 - Invitation URI codec in sdk-rs
+
+Source: `.github: docs/release/deferred-wire-01-features.md`, §4
+("Invitation URI codec in sdk-rs").
+
+sdk-rs checks an invitation URI's components but has no `lfcp://join`
+parser or writer, so its `invite_uri_*` validation vectors are skipped.
+
+Deliver: a parser and writer in sdk-rs; the skipped vectors enabled.
+
+Acceptance: every `invite_uri_*` vector passes in sdk-rs; the conformance
+harness exchanges invitation URIs between sdk-ts and sdk-rs in both
+directions.
+
+## POST-009 - Invitation sharing UX
+
+Source: `.github: docs/release/deferred-wire-01-features.md`, §4
+("Invitation sharing"); `obsidian: docs/OBSIDIAN-ARCHITECTURE-01.md`
+(copyable text, QR code, OS share sheet). Deferred from LFCP-065.
+
+Deliver: a QR code for the invitation link, and the OS share sheet where
+Obsidian offers one, without logging or storing the link.
+
+Acceptance: a second device joins by scanning the QR code; the link never
+appears in logs, settings or the vault.
+
+## POST-010 - Deterministic engine-trap test
+
+Source: `.github: docs/release/rc-verification.md`, the rc7 row.
+
+`sdk-ts: conformance/security/engine-trap.test.ts` can hit its 60 s
+child-process timeout on a loaded machine. The failure then shows no
+stderr.
+
+Deliver: a test that does not depend on machine load, for example a
+smaller trap input, a longer timeout reported as such, or its own
+serialized run; on timeout, the error says it timed out.
+
+Acceptance: 20 consecutive full `pnpm test` runs under parallel load pass.
+
+## POST-011 - Obsidian plugin distribution
+
+Source: `obsidian: manifest.json`, `versions.json`; the Obsidian community
+plugin submission rules.
+
+The plugin is released as source and commits only; users build it.
+
+Deliver:
+
+- a GitHub release per version with `main.js`, `manifest.json` and
+  `styles.css` as assets, built by CI from the tagged commit;
+- `manifest.json` and `versions.json` kept in step with each release;
+- a BRAT beta first, then a submission to the community plugin directory.
+
+Acceptance: a clean vault installs the plugin from the release (BRAT, then
+the directory) without building it.
+
+## POST-012 - Deprecate the npm placeholder versions (owner)
+
+Source: npm: `@openlfcp/crypto` and `@openlfcp/storage-idb` both have a
+`0.0.0-stage` version from before MVP 0.1.
+
+Deliver: `npm deprecate @openlfcp/<pkg>@0.0.0-stage "placeholder; use 0.1.0 or later"`
+for both packages.
+
+Acceptance: `npm view @openlfcp/<pkg>@0.0.0-stage deprecated` prints the
+message for both.
+
+## Launch track (owner-led, orchestrator assists)
+
+### LAUNCH-001 - GitHub organization profile
+
+Deliver: `openlfcp/.github` `profile/README.md`, the organization
+description and links, and the pinned repositories.
+
+Acceptance: the organization page explains OpenLFCP in one screen and
+links the spec, the SDKs, the server, the plugin and the release notes.
+
+### LAUNCH-002 - Marketing materials
+
+Deliver: landing page copy, a one-pager, and a demo video or GIF of the
+two-vault demo. Positioning: local-first, end-to-end encrypted, the server
+cannot read your tasks.
+
+Acceptance: every claim matches the release notes and their known
+limitations.
+
+### LAUNCH-003 - Public sync server
+
+A public server, for example `sync.openlfcp.org`. Depends on POST-003 and
+POST-004.
+
+Deliver:
+
+- a deployment from `server: deploy/` (Caddy, `wss://`);
+- a hosting policy and quotas;
+- backups, monitoring and uptime checks;
+- a privacy note and terms, stating the metadata the server sees;
+- an abuse contact;
+- the plugin settings docs on switching the default server.
+
+Acceptance: two vaults sync through it; restore from a backup is tested;
+the privacy note matches what the server stores.
+
+## Next MVP planning (owner)
+
+No entries yet.
