@@ -99,7 +99,7 @@ To see exactly what a command will upload before running it, add
   ```
 
 - [ ] Record the published versions and the sdk-ts commit in the release
-      notes ([mvp-0.1-release-notes-draft.md](mvp-0.1-release-notes-draft.md)).
+      notes ([mvp-0.1-release-notes.md](mvp-0.1-release-notes.md)).
 
 ## 5. If a publish fails midway
 
