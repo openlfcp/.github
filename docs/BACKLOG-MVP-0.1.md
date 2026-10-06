@@ -1864,7 +1864,9 @@ notice and the status.
 
 ## POST-018 - Share and insert many tasks at once
 
-**State:** open. Owner request 2026-10-07. Plugin only; no protocol change.
+**State:** done on obsidian main (b2779e9, 876d40a, c9a8b05, cc797dd,
+eeb6a99); ships in the next plugin release. Owner request 2026-10-07.
+Plugin only; no protocol change.
 
 A collaboration (Resource) already holds any number of Tasks, and one
 invitation covers all of them, including Tasks added later
