@@ -164,6 +164,9 @@ def consistency(rc: Path, manifest: dict) -> tuple[bool, list[dict]]:
     pin("server", "sdk-rs.lock", "commit", "sdk-rs", read_json(rc / "server" / "sdk-rs.lock")["commit"])
     pin("obsidian", "sdk-ts.lock", "commit", "sdk-ts", read_json(rc / "obsidian" / "sdk-ts.lock")["commit"])
     pin("obsidian", "server.lock", "commit", "server", read_json(rc / "obsidian" / "server.lock")["commit"])
+    # sdk-ts pins the server its live tests run against (absent before rc5).
+    if (rc / "sdk-ts" / "server.lock").exists():
+        pin("sdk-ts", "server.lock", "commit", "server", read_json(rc / "sdk-ts" / "server.lock")["commit"])
     pins_json = read_json(rc / "examples" / "conformance" / "pins.json")
     pin("examples", "conformance/pins.json", "sdk_rs", "sdk-rs", pins_json["sdk_rs"])
     pin("examples", "conformance/pins.json", "sdk_ts", "sdk-ts", pins_json["sdk_ts"])

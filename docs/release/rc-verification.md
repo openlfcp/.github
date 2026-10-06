@@ -37,6 +37,7 @@ commits.
    - `spec.lock` in sdk-ts, sdk-rs, server and obsidian;
    - `sdk-rs.lock` in server;
    - `sdk-ts.lock` and `server.lock` in obsidian;
+   - `server.lock` in sdk-ts (the server its live tests run against);
    - `conformance/pins.json` in examples.
 
    Spec commits after the pinned tag are listed in the report. ADRs and
