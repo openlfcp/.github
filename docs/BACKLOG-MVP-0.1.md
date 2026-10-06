@@ -1711,6 +1711,86 @@ for both packages.
 Acceptance: `npm view @openlfcp/<pkg>@0.0.0-stage deprecated` prints the
 message for both.
 
+## POST-013 - Recovery after server data loss (restore wedge)
+
+Source: `.github: docs/operations/sync-server-runbook.md` ("Gaps for the
+owner") and the restore drill in `devbox-asstnt: stacks/openlfcp/README.md`
+(2026-10-06).
+
+**Blocks the public server leaving POC/beta status (owner to confirm).**
+
+After a server is restored from a backup, the Data Units it had
+acknowledged after the backup are gone. The client that wrote them never
+re-sends them, because they were acknowledged. Its next unit is accepted
+over the sequence gap, and every other client stops at that actor with
+`NO_PROGRESS`, seeing neither the lost unit nor anything after it. In the
+drill the server held one actor's sequences 1, 2, 3 and 5.
+
+Deliver:
+
+- a spec design note with the options:
+  - (a) client anti-entropy: compare the server's per-actor heads with
+    its own and re-upload what the server is missing;
+  - (b) the server refuses a sequence gap with a defined error, which
+    triggers a re-upload;
+  - (c) both;
+- then a spec patch and a new baseline, and the alignment in sdk-ts and
+  sdk-rs;
+- a live interop test that reproduces the drill: back up, write, restore,
+  write again, and a second client catches up.
+
+Acceptance: the drill scenario converges, and no acknowledged unit that
+any client still holds is lost.
+
+## POST-014 - lfcp-admin CLI
+
+Source: `.github: docs/operations/sync-server-runbook.md` ("Gaps for the
+owner"); `server: README.md` ("Administration").
+
+Pairing and every `/admin` call need a COSE proof signed by the
+administrator's Principal. Today only the server's tests can produce one,
+with test-vector keys.
+
+Deliver: a CLI, run on a machine that holds the admin key, for the first-run
+pairing (`/setup/pair`) and signed admin calls: the hosting policy,
+per-Principal quota overrides, and status. It works over an SSH tunnel to
+the server's loopback port.
+
+Acceptance: a fresh server is paired with it and its hosting policy and a
+quota override are set and read back, in a test against the real server.
+
+## POST-015 - Ban and purge in the admin API
+
+Source: `.github: docs/operations/sync-server-runbook.md` ("Abuse
+handling", "Gaps for the owner").
+
+Server 0.1.0 has no ban and no delete. Today an IP is blocked in nginx, and
+a Resource is purged by hand with SQL while the server is stopped.
+
+Deliver: admin API calls to ban a Principal or an IP address (refused at
+connect or at authentication), and to purge a Resource (every row of it,
+in one transaction), replacing the manual SQL; `lfcp-admin` (POST-014)
+commands for them.
+
+Acceptance: tests for a banned Principal and a banned IP being refused, and
+for a purge, including a server restart after the purge with the other
+Resources intact.
+
+## POST-016 - Spec clarification: batched GET answers
+
+Source: the POST-004 work (streamed and paged GET replies in the server).
+
+`spec: wire/LFCP-WIRE-01.md` §49 says "A peer MAY answer in multiple
+`DATA_BATCH` messages." §45 (`CONTROL_GET`) and §52 (`KEY_PACKAGE_GET`) say
+nothing about it, though a paging server answers them in several
+`CONTROL_BATCH` and `KEY_PACKAGE_BATCH` messages too.
+
+Deliver: the same sentence in §45 and §52, as an informative
+clarification (no normative change, no new baseline needed on its own).
+
+Acceptance: §45, §49 and §52 read alike; the change log of the next spec
+revision lists it as informative.
+
 ## Launch track (owner-led, orchestrator assists)
 
 ### LAUNCH-001 - GitHub organization profile
