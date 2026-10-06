@@ -5,7 +5,12 @@ repository publishes automatically, and agents never run `npm publish` or
 `npm login`.
 
 **What:** the eight sdk-ts packages, `0.1.0-rc.1`, under the npm dist-tag
-`next`. They are never published as `latest` (see [Promotion](#promotion)).
+`next`. On a package's first publish npm also sets `latest`, whatever
+`--tag` says: `latest` always exists once a package does, and can only be
+moved, never removed (see [Promotion](#promotion)).
+
+**Published:** `0.1.0-rc.1` of all eight, from sdk-ts 98efaab, on
+2026-10-06. Being their first publish, `next` and `latest` both name it.
 
 ## 1. Prerequisites
 
@@ -69,7 +74,7 @@ To see exactly what a command will upload before running it, add
 
 ## 4. Verify
 
-- [ ] Each package is on `next`, not `latest`:
+- [ ] Each package is on `next`:
 
   ```sh
   for p in core crypto storage wire storage-node storage-idb shared-objects client; do
@@ -77,8 +82,9 @@ To see exactly what a command will upload before running it, add
   done
   ```
 
-  Expect `"next": "0.1.0-rc.1"` for each. There is no `latest` tag, or it
-  is unchanged if one existed.
+  Expect `"next": "0.1.0-rc.1"` for each. On a first publish expect
+  `"latest": "0.1.0-rc.1"` too (npm always creates `latest`); for a package
+  that already had a `latest`, it is unchanged.
 - [ ] The metadata looks right:
   `npm view @openlfcp/client@next version dependencies license repository`.
 - [ ] A fresh project installs and imports everything from the registry:
@@ -104,8 +110,8 @@ reused.
   in): fix the cause and run the same command again for that package, then
   continue with the next one in order. Nothing was published for it.
 - **Some packages are out, a later one cannot be published at all** (e.g.
-  a broken tarball): the ones already out are only on `next`, so `latest`
-  users are not affected.
+  a broken tarball): the ones already out are on `next`, and on a first
+  publish also on `latest`, so a plain `npm install` gets them too.
   - Do not unpublish.
   - Fix the cause in sdk-ts and move all eight packages to the next
     prerelease (`0.1.0-rc.2`), so versions stay aligned.
@@ -117,7 +123,8 @@ reused.
 
 ## Promotion
 
-`0.1.0-rc.1` stays on `next`. When MVP 0.1 is final:
+`0.1.0-rc.1` is on `next`, and, being the first publish, on `latest` too,
+which is harmless while it is the only version. When MVP 0.1 is final:
 1. Publish `0.1.0` the same way, in the same order.
 2. Then move `latest` to it, one package at a time:
 
@@ -125,5 +132,9 @@ reused.
    npm dist-tag add @openlfcp/<pkg>@0.1.0 latest --otp=<code>
    ```
 
-3. Check with `npm view @openlfcp/<pkg> dist-tags`. A release candidate is
-   never tagged `latest`.
+3. Check with `npm view @openlfcp/<pkg> dist-tags`: `latest` is `0.1.0`.
+
+A later release candidate of a package that is already published
+(`0.1.0-rc.2` …) goes out with `--tag next` as above, and then `latest`
+stays where it was: only the first publish of a package sets `latest`
+regardless of `--tag`.

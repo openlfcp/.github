@@ -25,15 +25,17 @@ specifications remain Working Drafts.
 | Repository | Version | What it provides |
 | --- | --- | --- |
 | `spec` | `mvp-0.1-baseline.8` (da3977f) | LFCP-WIRE-01, SHARED-OBJECTS-PROFILE-01 and MARKDOWN-REFS-01 (Working Drafts); test vectors, the Automerge reference corpus, schemas; ADRs 0001–0007 |
-| `sdk-ts` | _TBD_ (c074ed0 or later) | The TypeScript SDK: core, crypto, wire, storage (memory, IndexedDB, Node), Shared Objects on Automerge, the sync client with invitations, Key Packages, Snapshots and epoch rotation |
+| `sdk-ts` | npm `0.1.0-rc.1` (98efaab) | The TypeScript SDK: core, crypto, wire, storage (memory, IndexedDB, Node), Shared Objects on Automerge, the sync client with invitations, Key Packages, Snapshots and epoch rotation |
 | `sdk-rs` | _TBD_ (7ae47c4 or later) | An independent Rust implementation of the protocol core and the Shared Objects profile (feature `shared-objects`) |
 | `server` | _TBD_ (6e2dce6 or later) | The reference LFCP server in Rust: WebSocket sessions, Control Coordinator, durable SQLite store, first-run pairing; never decodes Shared Objects |
 | `obsidian` | _TBD_ | The Obsidian plugin: Markdown ↔ Shared Object projection and the collaboration commands |
 | `examples` | _TBD_ | `lfcp-todo` (a headless client) and the cross-language conformance harness |
 
 The sdk-ts packages (`@openlfcp/core`, `crypto`, `storage`, `wire`,
-`storage-node`, `storage-idb`, `shared-objects`, `client`) go to npm as
-`0.1.0-rc.1` under the dist-tag `next`, published by hand by the owner:
+`storage-node`, `storage-idb`, `shared-objects`, `client`) are on npm as
+`0.1.0-rc.1`, published by hand by the owner on 2026-10-06 from sdk-ts
+98efaab, under the dist-tag `next`. As their first publish, npm also set
+`latest` to it; `0.1.0` will take `latest` when MVP 0.1 is final. See
 [npm-publish-checklist.md](npm-publish-checklist.md).
 
 ## Highlights
