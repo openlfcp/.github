@@ -1697,6 +1697,11 @@ Deliver:
 - `manifest.json` and `versions.json` kept in step with each release;
 - a BRAT beta first, then a submission to the community plugin directory.
 
+- before submitting, decide the plugin's display name and ID: Obsidian's
+  rules forbid "Obsidian" and "Plugin" in the name and constrain the ID, and
+  both must be unique in the directory. Candidates are TBD; the current ID
+  is `openlfcp`.
+
 Acceptance: a clean vault installs the plugin from the release (BRAT, then
 the directory) without building it.
 
@@ -1812,8 +1817,17 @@ limitations.
 
 ### LAUNCH-003 - Public sync server
 
-A public server, for example `sync.openlfcp.org`. Depends on POST-003 and
-POST-004.
+A public server at `wss://sync.openlfcp.org/v1/ws`.
+
+Facts: the domain is `openlfcp.org` (owned by the project owner); the server
+host is `sync.openlfcp.org`, which the owner is setting up; the abuse and
+privacy contact is `abuse@openlfcp.org`. The deployment is prepared as the
+stack `openlfcp` of the owner's machine (`devbox-asstnt: stacks/openlfcp/`,
+nginx with getssl in front, the image from `ghcr.io/openlfcp/lfcp-server`),
+with drafts of the privacy note, terms and runbook in `docs/operations/`.
+
+Gated: open public hosting waits for POST-003 (quotas, per-IP limits) and
+POST-004 (memory bounds) in a released server image.
 
 Deliver:
 
@@ -1826,6 +1840,45 @@ Deliver:
 
 Acceptance: two vaults sync through it; restore from a backup is tested;
 the privacy note matches what the server stores.
+
+### LAUNCH-004 - Website openlfcp.org
+
+The domain is bought; there is no site yet. Hosting is TBD.
+
+Deliver: a landing page with:
+- the product promise, "Shared tasks inside your private notes";
+- the two-vault demo GIF;
+- two routes: Obsidian users and developers;
+- links to the spec, the SDKs and the server;
+- the status and the known limitations.
+
+Acceptance: every claim on the page matches the release notes and their
+known limitations; the page is reachable at `https://openlfcp.org`.
+
+### LAUNCH-005 - The Obsidian plugin README as the trust document
+
+Deliver: a user-facing README for `obsidian`:
+- a GIF of the plugin in use;
+- installing from zero, including how to get a sync server;
+- what is shared, what stays local, and what the server sees;
+- offline and conflict behaviour, with an example;
+- the tested Obsidian versions and platforms, and how it works with the
+  Tasks plugin;
+- the release limitations, with only verified claims;
+- support channels.
+
+Acceptance: a new user installs and shares a first task from the README
+alone; every claim in it is backed by a test, a smoke-run record or the
+release notes.
+
+### LAUNCH-006 - Visual identity
+
+Deliver: a logo or mark that stays readable as a small GitHub avatar; one
+accent colour that works in light and dark themes; the spelling
+"OpenLFCP" used consistently; a minimal set of README badges.
+
+Acceptance: the organization avatar, the website and the READMEs use the
+same mark, colour and spelling.
 
 ## Next MVP planning (owner)
 
