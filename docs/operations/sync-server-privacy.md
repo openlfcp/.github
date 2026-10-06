@@ -1,151 +1,140 @@
+<!-- Reviewed by the project, not by a lawyer. -->
+
 # Privacy note: sync.openlfcp.org
 
-**Status:** DRAFT, pending owner review. Not yet published. Bracketed
-`[owner: …]` items are decisions the owner still has to make.
+**Effective:** 2026-10-06. **Service status:** beta, a proof of concept.
 
-This note covers the public OpenLFCP sync server at
-`wss://sync.openlfcp.org` and what it can learn about you. The server runs
-the OpenLFCP reference server (`server`, version 0.1.0 at the time of
-writing) behind nginx, on a small machine operated by the OpenLFCP project.
-Contact: **abuse@openlfcp.org** (privacy and abuse).
+This note explains what the public OpenLFCP sync server at
+`wss://sync.openlfcp.org` learns about you, why, how long it keeps it, and
+your rights under the EU General Data Protection Regulation (GDPR).
 
-Every claim below cites the code or the specification it comes from:
-`server@v0.1.0: <path>:<line>` is the server repository at tag `v0.1.0`,
-and `WIRE-01 §n` is `spec: wire/LFCP-WIRE-01.md` at `mvp-0.1-baseline.8`.
-If a later server version changes any of this, this note changes with it.
-
-## In one paragraph
+## In short
 
 Your tasks are end-to-end encrypted on your device before they leave it.
 The server stores and forwards ciphertext it cannot decrypt, plus the
-protocol metadata it needs to do its job: public keys, Resource IDs,
-who may do what, sequence numbers and sizes. It also sees your IP address
-when you connect. It never sees task text, the keys that decrypt it, or the
-notes you did not share.
+protocol metadata it needs: public keys, Resource IDs, who may do what,
+sequence numbers and sizes. It sees your IP address when you connect. It
+never sees task text, the keys that decrypt it, or the notes you did not
+share. There are no accounts, cookies, analytics or ads.
 
-## What the server cannot see
+## Who is responsible
 
-- **Task content.** Changes travel as Data Units whose payload (field 6)
-  is ChaCha20-Poly1305 ciphertext (WIRE-01 `data-unit-payload`,
-  `spec: wire/LFCP-WIRE-01.md:1170-1180`). The server never decrypts and
-  never holds a Data Encryption Key; Data Unit, Key Package and Snapshot
-  ciphertexts stay opaque (`server@v0.1.0: crates/lfcp-server/src/ingest.rs:1-4`).
-  The DEK is never stored in plaintext on the server (WIRE-01,
-  `spec: wire/LFCP-WIRE-01.md:470`).
-- **The keys.** Keys reach other members sealed by HPKE to their own
-  public key (Key Packages); the server stores them but cannot open them
-  (WIRE-01 §§ on Key Packages, `spec: wire/LFCP-WIRE-01.md:1097-1107`).
-  Private keys stay on your device
-  (`.github: docs/release/security-review-mvp-0.1.md:280-283`).
-- **Invitation secrets.** The `#secret=` part of an invitation link must
-  never be sent to the server (`spec: wire/LFCP-WIRE-01.md:848`); the server
-  sees only the invitation's public key and the claim made with it
-  (see below).
-- **Everything you did not share.** Only the tasks you choose leave your
-  vault; the rest of your notes stays local
-  (`.github: docs/release/mvp-0.1-release-notes.md:9-12`). Names you give
-  collaborations stay on your device too: the headless demo checks that no
-  list name or item title appears in any server file
-  (`examples: todo-cli/demo/demo.mjs:127`).
+The controller is **Andrey Pankov**, an individual, Poland, who runs the
+service for the OpenLFCP project. Contact:
 
-## What the server stores
+- **privacy@openlfcp.org**: privacy questions and data protection requests;
+- **abuse@openlfcp.org**: abuse of the service;
+- **security@openlfcp.org**: security vulnerabilities.
 
-The server keeps one SQLite database. Every protocol object is stored as
-the exact signed bytes it received, next to index columns derived from
-those bytes (`server@v0.1.0: crates/lfcp-server/src/store.rs:16-19`). The
-tables (`server@v0.1.0: crates/lfcp-server/src/store/schema.rs`):
+No data protection officer is appointed. The operator may change in the
+future; we will announce it here before it happens.
 
-| What | Stored in the clear | Opaque | Where |
+## What the server processes, why, and on what basis
+
+| Data | Purpose | Legal basis | Kept for |
 | --- | --- | --- | --- |
-| Resources (a shared list or collaboration) | Resource ID, the ID of its first Control Record | — | `schema.rs:20-23` |
-| Control Records (the signed membership chain) | issuer Principal ID, sequence number, type; and the whole body: the owner's and each member's **public keys**, their abilities (read, write, invite …), revocations, key-epoch numbers, the coordinator and endpoint URLs | — | `schema.rs:28-45`; bodies: `spec: wire/LFCP-WIRE-01.md:625-633, 701-709, 730-734, 781-789, 868-886` |
-| Data Units (your changes) | Resource ID, author Principal ID, sequence number, key epoch, the previous unit's ID | the change itself (ciphertext) | `schema.rs:49-58` |
-| Key Packages | Resource ID, epoch, sender and recipient Principal IDs | the sealed key | `schema.rs:64-72` |
-| Snapshots | Resource ID, epoch, publisher Principal ID, sequence number | the snapshot itself (ciphertext) | `schema.rs:75-83` |
-| Hosting | which Principal asked the server to host each Resource | — | `schema.rs:89-93` |
-| Administrators | the operator's Principal ID and public keys, and when they were paired | — | `schema.rs:108-112` |
-| Settings | the hosting policy (allowed Principal IDs; hosting credentials only as SHA-256 hashes) | — | `schema.rs:116-119` |
+| Encrypted content you sync (Data Units, Key Packages, Snapshots) | providing the service | performance of the contract you enter by using it, GDPR Art. 6(1)(b) | until the Resource is removed (see "Erasure") |
+| Protocol metadata stored with it: public keys and Principal IDs, Resource IDs, abilities granted to members, sequence numbers, key-epoch numbers, coordinator URLs, sizes, which key hosted each Resource, quota settings | providing the service; enforcing quotas | Art. 6(1)(b) | as the content |
+| Your IP address, time of connection, request line and user agent (nginx log); connection number, IP address, Principal ID, Resource IDs hosted or changed (server log) | security, abuse prevention, troubleshooting | legitimate interest in keeping the service secure and available, Art. 6(1)(f) | 14 days |
+| Per-IP counters for rate limits and quotas | abuse prevention | Art. 6(1)(f) | in memory only, as long as a limit needs them (the longest window is 24 hours); cleared on every restart |
+| Encrypted backups of the server's database (not of the logs) | restoring the service after a failure | Art. 6(1)(f) | 30 days |
+| Emails you send us | answering you | Art. 6(1)(f), or Art. 6(1)(c) for a legal request | as long as the matter needs |
 
-What this reveals: which public keys collaborate on which Resource and
-with which abilities; how many changes each member made (sequence
-numbers); and the size of each change (ciphertext length tracks plaintext
-length, plus a 16-byte tag; there is no padding). WIRE-01 lists the same:
-a server can observe IP addresses, Resource IDs, message timing and sizes,
-and approximate collaborator activity (§94,
-`spec: wire/LFCP-WIRE-01.md:3089-3103`).
+The server code is open source. Where each item comes from: the stored
+tables are in `server@v0.2.0: crates/lfcp-server/src/store/schema.rs`
+(lines 20–165); the server never decrypts content and holds no decryption
+key (`crates/lfcp-server/src/ingest.rs:1-4`); the log lines are
+`crates/lfcp-server/src/ws.rs:547` (connection: IP address) and
+`crates/lfcp-server/src/session.rs:452-456` (session: Principal ID), at
+the default level `info` (`crates/lfcp-server/src/config.rs:129`); the
+per-IP table is `crates/lfcp-server/src/limits.rs:16-24`. What any LFCP
+server can observe is listed in the protocol itself (`spec:
+wire/LFCP-WIRE-01.md` §94).
 
-**No timestamps on your data.** No object table has a time column
-(`schema.rs:20-93`); the protocol orders changes by sequence, not by clock
-(WIRE-01 §96, `spec: wire/LFCP-WIRE-01.md:3115`). Optional creation times
-inside a task travel inside the ciphertext. The only stored times are the
-operator's pairing time and a setup code's expiry (`schema.rs:100-112`).
+**What this metadata reveals.** Which public keys collaborate on which
+Resource and with which abilities; how many changes each member made; the
+size of each change (ciphertext length follows plaintext length, without
+padding); when you connect. It does not reveal what you wrote. No stored
+object carries a time stamp; the protocol orders changes by sequence, not
+by clock (WIRE-01 §96).
 
-**No accounts.** You are a public key, not an email address or a password
-(WIRE-01 §91, `spec: wire/LFCP-WIRE-01.md:3026`). The server has no
-cookies and no analytics.
+**What the server cannot see.** Task text and every other shared content;
+the content keys (they reach members sealed to each member's own key);
+your private keys, which never leave your device; the secret part of an
+invitation link (WIRE-01 §18.2: it "MUST NOT be … transmitted to the
+synchronization server"); and everything in your notes that you did not
+share. The operator cannot read your tasks either.
 
-## What the server sees when you connect
+You are identified by a public key, not by your name or email. We do not
+try to link keys or IP addresses to people, and we make no automated
+decisions about you; quotas and rate limits are technical limits that
+apply to everyone alike.
 
-- **Your IP address**, at every connection. nginx passes it to the server
-  (`devbox-asstnt: stacks/openlfcp/nginx/06-sync.openlfcp.org.conf`), and
-  the server logs it with the connection number
-  (`server@v0.1.0: crates/lfcp-server/src/ws.rs:409`).
-- **Your Principal ID** (your public key's ID) when the session is
-  authenticated, logged with the same connection number
-  (`server@v0.1.0: crates/lfcp-server/src/session.rs:292-296`). The
-  connection number links your IP to your Principal ID in the log.
-- **Which Resources you open and when you sync**, and the timing and size
-  of your messages.
-- An optional hosting credential, kept in memory only
-  (`server@v0.1.0: crates/lfcp-server/src/session.rs:169-170`).
+## Who else receives data
 
-## Logs and how long they are kept
-
-- **Server log.** At the default level (`info`,
-  `server@v0.1.0: crates/lfcp-server/src/config.rs:77`) it records, with a
-  timestamp: connection opened (connection number, IP address) and closed;
-  session ready (Principal ID); Resource hosted (Resource ID); Control
-  Record committed (Resource ID, record ID); errors. It contains no task
-  content, invitation data or keys
-  (`.github: docs/release/security-review-mvp-0.1.md:161-162`). It is
-  rotated by size: at most 3 files of 10 MB
-  (`devbox-asstnt: stacks/openlfcp/compose.yaml`), so how long a line
-  survives depends on traffic.
-- **nginx access log.** Each connection's IP address, time, request line
-  and user agent (nginx's default `combined` format). Kept for
-  **[owner: N days]**. *Today that machine does not rotate nginx logs at
-  all; a retention period must be in place before this note is
-  published.*
-- **Backups.** The database is backed up nightly, encrypted with the
-  operator's public GPG key before it leaves the machine, to object
-  storage; retention **[owner: N days, per the bucket's lifecycle rule]**.
-  Logs are not backed up.
-
-## Cloudflare
-
-DNS for `openlfcp.org` is served by Cloudflare. `sync.openlfcp.org` is
-**DNS only**: your connection goes straight to our machine, and TLS ends
-there. If we ever enable Cloudflare's proxy (for example against a denial
-of service attack), Cloudflare will see your IP address and the TLS
-connection metadata (time, size, the host name). It still cannot read your
-tasks: they are end-to-end encrypted before TLS. We will update this note
-before enabling the proxy.
-
-## Deleting your data
-
-This server version has no way for you to delete data yourself, and
-deleting data from the server does not delete the copies held by your
-collaborators' devices (WIRE-01 §94, "delete its own copy of data",
-`spec: wire/LFCP-WIRE-01.md:3089-3103`). Write to abuse@openlfcp.org with
-the Resource ID; the operator can remove a Resource's data by hand. The
-operator may also delete data at any time (see the
-[terms](sync-server-terms.md)).
-
-## Who can read what
-
-- The operator can read the database and the logs: everything in "What the
-  server stores" and "Logs", none of it task content.
+- **Amazon Web Services** hosts the server (EC2) and stores the encrypted
+  backups (S3), in the **us-east-1** region (United States). This is a
+  transfer outside the EEA. It is covered by AWS's Data Processing
+  Addendum, which includes the EU Standard Contractual Clauses; Amazon Web
+  Services, Inc. also participates in the EU-U.S. Data Privacy Framework.
+  Backups are encrypted with the operator's key before they leave the
+  server; AWS cannot read them.
+- **Cloudflare** runs DNS for `openlfcp.org` and forwards email sent to our
+  addresses (Cloudflare Email Routing). `sync.openlfcp.org` is DNS only: your
+  connection goes straight to the server, and Cloudflare does not see it.
+  If we ever enable Cloudflare's proxy (for example against an attack),
+  Cloudflare will see your IP address and the TLS connection metadata
+  (time, size, host name), but still not your tasks, which are encrypted
+  before TLS. We will update this note before enabling it. Cloudflare
+  provides a Data Processing Addendum with the Standard Contractual
+  Clauses and participates in the EU-U.S. Data Privacy Framework.
 - Anyone you share a Resource with can read its content and copy it
-  (WIRE-01 §95, `spec: wire/LFCP-WIRE-01.md:3107`).
-- This is MVP reference software. Do not use it for data you need to
-  protect.
+  (WIRE-01 §95). That is the point of sharing, and it is outside the
+  operator's control.
+- We disclose data to authorities only where the law requires it. We hold
+  no readable content.
+
+## Your rights
+
+You have the right to access your data, to have it rectified or erased,
+to restrict or object to its processing, and to data portability. To
+exercise them, write to **privacy@openlfcp.org**. Because there are no
+accounts, include what identifies your data: the Resource ID and your
+Principal ID (both shown by the client), and, for logs, your IP address
+and the time. We answer within one month.
+
+How the rights work here, honestly:
+
+- **Access and portability.** We can give you the metadata and the
+  encrypted objects we hold for a Resource or Principal ID. The readable
+  copy of your data is already on your own devices.
+- **Erasure.** We delete the server's copy of a Resource (the encrypted
+  content and its metadata). A shared Resource is one unit: removing one
+  member's contributions without deleting it for every member is not
+  possible, so for a shared Resource we will agree the next step with
+  you. Deletion does not reach your collaborators' devices. Log entries
+  age out within 14 days; encrypted backups within 30 days, and a restore
+  in that period could bring a deleted Resource back, in which case we
+  delete it again.
+- **Objection** to log processing: logs are kept for security and only for
+  14 days; we weigh any objection against that purpose.
+
+You may also complain to the Polish supervisory authority, the President
+of the Personal Data Protection Office (Prezes Urzędu Ochrony Danych
+Osobowych, **uodo.gov.pl**), or to the authority of the EU country where
+you live or work.
+
+## Beta service
+
+This is MVP software run as a proof of concept, free and without
+guarantees. Data on the server can be lost, including changes made
+shortly before a restore from backup (see the
+[terms](sync-server-terms.md)). Keep your own copies: your devices hold the
+full data of every Resource you sync. Do not use the service for data you
+need to protect. The service is not directed at children under 16.
+
+## Changes to this note
+
+We publish changes here, with a new effective date. For material changes
+(for example new recipients or longer retention) we announce them before
+they take effect, in the project's repositories.
