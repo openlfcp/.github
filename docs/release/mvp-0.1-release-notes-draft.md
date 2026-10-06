@@ -159,7 +159,11 @@ shared task · Resolve shared task conflict
   verify signatures, capabilities, epochs and AEAD themselves.
 - The pre-release security review is
   [security-review-mvp-0.1.md](security-review-mvp-0.1.md): findings by
-  severity, what was fixed, what is routed, and the dependency audit.
+  severity, what was fixed, what is routed, and the dependency audit:
+  `pnpm audit` and `cargo audit` (RustSec, 1,290 advisories, 2026-10-06)
+  find no vulnerability in sdk-ts, sdk-rs, the server or examples, and
+  one moderate advisory in a development-only typings dependency of the
+  plugin that is never bundled.
   H1–H4 are fixed, and H5 and H6 are accepted as known limitations
   (below).
 

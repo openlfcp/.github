@@ -322,7 +322,8 @@ derived and never stored.
 | sdk-ts | `pnpm audit` | 0 advisories (94 dependencies) |
 | examples | `pnpm audit` | 0 advisories (75 dependencies) |
 | obsidian | `pnpm audit` | 1 moderate: `moment` 2.29.4 (GHSA-4p3w-j4w9-5jqw, path traversal via a crafted locale name), reached only through the `obsidian` typings dev dependency; not bundled (the plugin never imports it; `obsidian` is external) |
-| server, sdk-rs | `cargo audit` | not run: `cargo-audit` is not installed and was not fetched. The security-relevant crates for a later check are listed below |
+| sdk-rs | `cargo audit` | 0 vulnerabilities, 0 warnings (73 crates; RustSec advisory DB, 1,290 advisories, 2026-10-06) |
+| server | `cargo audit` | 0 vulnerabilities, 0 warnings (112 crates; same database) |
 
 **Rust crates in both lockfiles:**
 - `ed25519-dalek` 3.0.0, `x25519-dalek` 3.0.0, `curve25519-dalek` 5.0.0;
@@ -333,4 +334,5 @@ derived and never stored.
 **Server only:** `tokio` 1.53.2, `tokio-tungstenite`/`tungstenite` 0.30.0,
 `hyper` 1.11.1, `rusqlite` 0.40.2.
 
-**sdk-rs only:** `automerge` 0.12.0.
+**sdk-rs only:** `automerge` 0.12.0, and `flate2` 1.1.10 with `zlib-rs`
+0.6.8 for the capped Snapshot inflate (the build automerge already uses).

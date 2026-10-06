@@ -20,5 +20,6 @@ catalogs every artifact across the repositories, with its status.
 | [release/npm-publish-checklist.md](release/npm-publish-checklist.md) | release | Publishing the `@openlfcp/*` packages to npm (`next`) by hand, step by step |
 | [release/rc2-manifest.json](release/rc2-manifest.json) | release | The pins of release candidate rc2 |
 | [release/rc3-manifest.json](release/rc3-manifest.json) | release | The pins of release candidate rc3 |
+| [release/rc4-manifest.json](release/rc4-manifest.json) | release | The pins of release candidate rc4, the commit set to push and publish |
 | [release/security-review-mvp-0.1.md](release/security-review-mvp-0.1.md) | release | The MVP 0.1 pre-release security review: findings, fixes, known limitations |
 | [release/open-decision-actor-seq-collision.md](release/open-decision-actor-seq-collision.md) | owner | Open decision: two Automerge changes with the same actor and sequence number; options, recommendation, and what shipping as is means |
