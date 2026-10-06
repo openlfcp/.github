@@ -13,6 +13,7 @@ catalogs every artifact across the repositories, with its status.
 | [ARTIFACTS-INDEX.md](ARTIFACTS-INDEX.md) | everyone | Every artifact, where it lives and its status |
 | [conformance/compatibility-matrix.md](conformance/compatibility-matrix.md) | release | The generated sdk-rs ⇄ sdk-ts conformance snapshot at a baseline |
 | [release/mvp-0.1-release-notes.md](release/mvp-0.1-release-notes.md) | release | MVP 0.1.0 release notes (final, 2026-10-06) |
+| [release/server-0.2.0-release-notes.md](release/server-0.2.0-release-notes.md) | release, operators | Server 0.2.0 release notes: abuse limits, quotas, memory bounds, upgrade notes |
 | [release/deferred-wire-01-features.md](release/deferred-wire-01-features.md) | everyone | What MVP 0.1 does not implement, and how it behaves instead |
 | [release/readme-scope-statements.md](release/readme-scope-statements.md) | release | The "Scope" section each repository README carries |
 | [release/rc-verification.md](release/rc-verification.md) | release | Verifying a release candidate locally (`scripts/rc-verify.py`) |

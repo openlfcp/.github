@@ -2,6 +2,10 @@
 
 **Status:** Final. OpenLFCP MVP 0.1.0, released 2026-10-06 (LFCP-072).
 
+For the server, these notes are superseded by
+[server 0.2.0](server-0.2.0-release-notes.md): abuse limits, quotas and
+memory bounds, with the same wire protocol.
+
 ## What this is
 
 OpenLFCP MVP 0.1 is a secure vertical slice of the Local-First
