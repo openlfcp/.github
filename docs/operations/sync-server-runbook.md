@@ -37,23 +37,22 @@ watched, and how abuse is handled. Users see the
 | Container down or unhealthy, disk, inodes | `devbox-watch.timer`, every 15 minutes | Telegram (machine alerts) |
 | The whole path on the box: nginx → vhost → server → WebSocket upgrade with `lfcp-1` | `stacks/openlfcp/scripts/health.sh`, run by `./stack --check` | the operator, on demand |
 | The machine's monitoring itself | `devbox-heartbeat`, weekly summary on Mondays | Telegram; **no summary = monitoring is broken** |
-| Reachable from the internet | an external uptime check (below) | email / push from the service |
+| Reachable from the internet | Better Stack uptime monitor on `/health` (below) | the owner, by Better Stack alert |
 | Backups fresh | `devbox-backup-check` / `check-backups.sh` | Telegram |
 
-**External uptime check (recommended: UptimeRobot, free plan).** The box
-cannot tell you it is unreachable from outside (DNS, security group,
-certificate, the machine being off). Create one monitor:
+**External uptime check: Better Stack** (betterstack.com), set up by the
+owner. The box cannot tell you it is unreachable from outside (DNS,
+security group, certificate, the machine being off), so this check runs
+outside it:
 
-- type: HTTP(s) keyword; URL `https://sync.openlfcp.org/health`;
+- monitor type: keyword; URL `https://sync.openlfcp.org/health`;
 - keyword: `"status":"ok"` (the body is exactly `{"status":"ok"}`);
-- interval: 5 minutes (the free plan's shortest);
-- alert contact: the owner's email or the UptimeRobot app.
+- alerts: to the owner, through Better Stack's notification channels.
 
 It also catches an expired or wrong certificate, since the check fails on
-TLS errors. Any equivalent free service (Better Stack, Healthchecks with
-an HTTP probe) works the same way; the point is that it runs outside the
-box. Do not point it at `/v1/ws`: every probe would count against the
-per-IP connection limits.
+TLS errors. Better Stack sees only the public `/health` answer, which
+holds no user data. Do not point it at `/v1/ws`: every probe would count
+against the per-IP connection limits.
 
 ## Abuse handling
 
