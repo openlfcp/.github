@@ -1,7 +1,6 @@
-# OpenLFCP MVP 0.1: release notes (draft)
+# OpenLFCP MVP 0.1: release notes
 
-**Status:** DRAFT for LFCP-072. Not published; the owner decides wording,
-date and version numbers. Items marked _TBD_ depend on work still open.
+**Status:** Final. OpenLFCP MVP 0.1.0, released 2026-10-06 (LFCP-072).
 
 ## What this is
 
@@ -25,23 +24,24 @@ specifications remain Working Drafts.
 | Repository | Version | What it provides |
 | --- | --- | --- |
 | `spec` | `mvp-0.1-baseline.8` (da3977f); 509c1c1 adds the owner's ADR approvals | LFCP-WIRE-01, SHARED-OBJECTS-PROFILE-01 and MARKDOWN-REFS-01 (Working Drafts); test vectors, the Automerge reference corpus, schemas; ADRs 0001–0007 |
-| `sdk-ts` | npm `0.1.0-rc.1` (98efaab) | The TypeScript SDK: core, crypto, wire, storage (memory, IndexedDB, Node), Shared Objects on Automerge, the sync client with invitations, Key Packages, Snapshots and epoch rotation |
-| `sdk-rs` | 41dc532 | An independent Rust implementation of the protocol core and the Shared Objects profile (feature `shared-objects`) |
-| `server` | e84fa74 | The reference LFCP server in Rust: WebSocket sessions, Control Coordinator, durable SQLite store, first-run pairing; never decodes Shared Objects |
-| `obsidian` | 3cc9915 | The Obsidian plugin: Markdown ↔ Shared Object projection and the collaboration commands |
-| `examples` | fe3de90 | `lfcp-todo` (a headless client) and the cross-language conformance harness |
+| `sdk-ts` | npm `0.1.0` (4e1b02f) | The TypeScript SDK: core, crypto, wire, storage (memory, IndexedDB, Node), Shared Objects on Automerge, the sync client with invitations, Key Packages, Snapshots and epoch rotation |
+| `sdk-rs` | `0.1.0` (c9132b1) | An independent Rust implementation of the protocol core and the Shared Objects profile (feature `shared-objects`) |
+| `server` | `0.1.0` (896bbab) | The reference LFCP server in Rust: WebSocket sessions, Control Coordinator, durable SQLite store, first-run pairing; never decodes Shared Objects |
+| `obsidian` | `0.1.0` (e8e212f) | The Obsidian plugin: Markdown ↔ Shared Object projection and the collaboration commands |
+| `examples` | `0.1.0` (943a6ad) | `lfcp-todo` (a headless client) and the cross-language conformance harness |
 
-These are the commits of release candidate rc6
-([rc6-manifest.json](rc6-manifest.json)): all eight local release gates
-pass ([rc-verification.md](rc-verification.md)), and GitHub CI is green
-on every one of them, the server's Windows job and the plugin's platform
-smoke on macOS, Windows and Linux included.
+Each repository tags its release commit `v0.1.0`. These commits are rc6
+([rc6-manifest.json](rc6-manifest.json)) with only the version set to
+`0.1.0` and the pins moved along; rc6 passed all eight local release gates
+([rc-verification.md](rc-verification.md)) and GitHub CI, the server's
+Windows and Docker jobs and the plugin's platform smoke on macOS, Windows
+and Linux included.
 
 The sdk-ts packages (`@openlfcp/core`, `crypto`, `storage`, `wire`,
-`storage-node`, `storage-idb`, `shared-objects`, `client`) are on npm as
-`0.1.0-rc.1`, published by hand by the owner on 2026-10-06 from sdk-ts
-98efaab, under the dist-tag `next`. As their first publish, npm also set
-`latest` to it; `0.1.0` will take `latest` when MVP 0.1 is final. See
+`storage-node`, `storage-idb`, `shared-objects`, `client`) are released on
+npm as `0.1.0` under the dist-tag `latest`, published by hand by the owner
+from sdk-ts 4e1b02f; `next` names `0.1.0` too. The release candidate
+`0.1.0-rc.1` (sdk-ts 98efaab) stays on npm. See
 [npm-publish-checklist.md](npm-publish-checklist.md).
 
 ## Highlights
@@ -182,12 +182,18 @@ shared task · Resolve shared task conflict
 - The protocol decisions in ADRs 0004 to 0007 were made by the
   orchestrator while the owner was away; the project owner approved them
   on 2026-10-06.
-- Desktop platform smoke (macOS, Windows, Linux), LFCP-068: the CI smoke
-  passes on all three. The manual macOS smoke passed on 2026-10-06 with
-  Obsidian 1.14.4, after fix obsidian faaf020. The manual Windows and
-  Linux runs, and the cross-OS pair, are still open.
-- The Docker deployment of the server is not yet verified end to end
-  (_TBD_, LFCP-055).
+- **Desktop platform smoke (LFCP-068): manual run on macOS only.** The
+  automated platform smoke passes on macOS, Windows and Linux. The manual
+  checklist in real Obsidian passed on macOS on 2026-10-06 (Obsidian
+  1.14.4, after fix obsidian faaf020; record in
+  `obsidian: docs/devel/testing/platform-smoke-runs.md`). The manual
+  Windows and Linux runs and the cross-OS pair (two operating systems
+  over `wss://`) were not run for 0.1.0.
+- The Docker deployment of the server (LFCP-055) is verified by the server
+  CI's `docker` job: it builds the image and runs `deploy/check.sh`
+  (non-root, health, `wss://` through the Caddy proxy, restart on the same
+  volume, a destroyed volume). It has not been run by hand on a production
+  host.
 - Mobile (iOS, Android) is not tested.
 - sdk-rs copies a document once per apply call as rollback insurance; a
   batch of changes counts once, but a Data Unit applied on its own costs a
@@ -197,7 +203,8 @@ shared task · Resolve shared task conflict
   equivocated or misbehaved. The refusal is safe: nothing is merged and
   nothing crashes. But in that rare case one replica stops showing that
   collaborator's later edits, with no notice. The project owner decided to
-  ship this in MVP 0.1 and to adopt "hold and retry" in the next baseline:
+  ship this in MVP 0.1 and to adopt "hold and retry" in the next baseline,
+  tracked as POST-001 in [BACKLOG-MVP-0.1.md](../BACKLOG-MVP-0.1.md#post-001---hold-and-retry-automerge-actor-seq-collisions):
   see [open-decision-actor-seq-collision.md](open-decision-actor-seq-collision.md).
 - Invitations are copied as links; there is no QR code. A copied link
   stays on the system clipboard.
