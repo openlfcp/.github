@@ -1752,6 +1752,10 @@ any client still holds is lost.
 
 ## POST-014 - lfcp-admin CLI
 
+**State:** done. Merged on server main (4644302, 36805ed, 740e589), ships
+in the next server release. Docs: `devbox-asstnt` c2ca4b3 (stack admin
+section), `.github` 5f43154 (runbook abuse section).
+
 Source: `.github: docs/operations/sync-server-runbook.md` ("Gaps for the
 owner"); `server: README.md` ("Administration").
 
