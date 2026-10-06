@@ -215,6 +215,9 @@ shared task · Resolve shared task conflict
 - The reference server is for known users. Run it with the allow-list
   hosting policy, behind the Caddy proxy (see the security review):
   - Hosting is open by default, and there are no storage quotas (H5).
+    Fixed after 0.1.0 (POST-003): quota hosting mode by default, new
+    Resources per client IP per day, a global storage floor (server
+    bf09efe, 0c998a6, b9307ca).
   - Replies to `DATA_GET`, `KEY_PACKAGE_GET` and `CONTROL_GET` are built
     fully in memory, not streamed. The outbound queue counts messages, not
     bytes: up to 256 × `max_message_bytes` per connection (H6).
@@ -222,10 +225,14 @@ shared task · Resolve shared task conflict
     `max_message_bytes` (M5).
   - There are no rate limits on WebSocket sessions or the admin HTTP API.
     The connection cap is global, not per IP; use the proxy's limits.
+    Fixed after 0.1.0 (POST-003): the client IP from a trusted proxy,
+    per-IP connection caps and rates, a message rate per WebSocket, an
+    admin rate per IP (server 9b5c85f, 9de1db1, 126c65a, c8c0809).
   - Admin request bodies (at most 16 KiB) have no read timeout of their
     own.
   - An unauthenticated flood can fill the admin challenge cap and delay an
-    administrator's login by up to 5 minutes.
+    administrator's login by up to 5 minutes. Fixed after 0.1.0
+    (POST-003): stateless challenges (server 03585cb).
   - **Windows: no owner-only state files.** On Windows the server does not
     tighten the permissions of its state files (server ID, setup code, the
     database): they inherit the state directory's ACL, so put the state
