@@ -479,6 +479,7 @@ This index.
 | MVP 0.1 release notes (draft) | `.github: docs/release/mvp-0.1-release-notes-draft.md` | Draft release notes for MVP 0.1 (LFCP-072); not published |
 | Deferred WIRE-01 features | `.github: docs/release/deferred-wire-01-features.md` | What MVP 0.1 does not implement, or implements partly, and how it behaves instead (LFCP-072 draft) |
 | RC verification | `.github: scripts/rc-verify.py`, `docs/release/rc-verification.md`, `docs/release/rc1-manifest.json`, `rc2-manifest.json` and `rc3-manifest.json` (the pins of each candidate) | Local release-candidate check: pins every repository, checks their locks agree, runs every release-blocking gate, writes a report (LFCP-072) |
+| npm publish checklist | `.github: docs/release/npm-publish-checklist.md` | The owner's step-by-step for publishing the `@openlfcp/*` packages (`0.1.0-rc.1`, dist-tag `next`) by hand: prerequisites, pre-flight (`pnpm release:check`), the publish order, verification, recovery, promotion |
 | README scope statements | `.github: docs/release/readme-scope-statements.md` | The "Scope" section each repository README carries (LFCP-072 draft) |
 | Security review (MVP 0.1) | `.github: docs/release/security-review-mvp-0.1.md` | Pre-release security review: findings by severity, fixed vs routed, server hostile-client limits, dependency audit |
 
@@ -534,6 +535,7 @@ openlfcp/.github/docs/
     ├── mvp-0.1-release-notes-draft.md
     ├── deferred-wire-01-features.md
     ├── readme-scope-statements.md
+    ├── npm-publish-checklist.md
     ├── rc-verification.md
     ├── rc1-manifest.json
     ├── rc2-manifest.json

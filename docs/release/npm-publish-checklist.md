@@ -1,0 +1,129 @@
+# npm publish checklist: @openlfcp/* 0.1.0-rc.1
+
+**For:** the project owner, who publishes by hand. Nothing in any
+repository publishes automatically, and agents never run `npm publish` or
+`npm login`.
+
+**What:** the eight sdk-ts packages, `0.1.0-rc.1`, under the npm dist-tag
+`next`. They are never published as `latest` (see [Promotion](#promotion)).
+
+## 1. Prerequisites
+
+- [ ] An npm account with two-factor authentication on (auth and writes).
+- [ ] Membership of the `openlfcp` npm organization with publish rights
+      for the `@openlfcp` scope. Check with `npm org ls openlfcp <your-user>`.
+- [ ] Logged in on this machine: `npm login`, then `npm whoami`.
+- [ ] Node 24 or later and pnpm 10, as in sdk-ts `packageManager`.
+- [ ] An authenticator ready: every publish asks for a one-time code (`--otp`).
+
+## 2. Pre-flight
+
+- [ ] The release-candidate commit of sdk-ts is on `main` and pushed. Its
+      version is `0.1.0-rc.1` in all eight `packages/*/package.json`.
+- [ ] CI is green on that commit, and the release-candidate verification
+      (`.github: scripts/rc-verify.py`, see [rc-verification.md](rc-verification.md))
+      passed for the RC that contains it.
+- [ ] A clean checkout at exactly that commit: `git status` shows nothing,
+      and `git rev-parse HEAD` is the commit you checked.
+- [ ] `pnpm install --frozen-lockfile && pnpm build` succeeds.
+- [ ] `pnpm release:check` prints `release check PASSED`. It checks, without
+      publishing:
+  - the files of each tarball (`dist/` JavaScript and declarations,
+    README, LICENSE, package.json only);
+  - the rewritten `@openlfcp/*` dependency ranges (`^0.1.0-rc.1`);
+  - publishConfig (`access: public`, `tag: next`);
+  - a fresh-project install with a smoke import of every package.
+- [ ] None of the versions exists yet: `npm view @openlfcp/core@0.1.0-rc.1`
+      should answer 404. A published version can never be published again.
+
+## 3. Publish, in dependency order
+
+From the sdk-ts root, one package at a time, each with a fresh one-time
+code. Every package also has `publishConfig.tag: "next"`; the explicit
+`--tag next` is a second guard. `pnpm publish` rewrites `workspace:^`
+dependencies to `^0.1.0-rc.1` and refuses a dirty tree or a branch other
+than `main`. Do not bypass that with `--no-git-checks`.
+
+| # | Package | Command |
+| --- | --- | --- |
+| 1 | `@openlfcp/core` | `pnpm --filter @openlfcp/core publish --tag next --otp=<code>` |
+| 2 | `@openlfcp/crypto` | `pnpm --filter @openlfcp/crypto publish --tag next --otp=<code>` |
+| 3 | `@openlfcp/storage` | `pnpm --filter @openlfcp/storage publish --tag next --otp=<code>` |
+| 4 | `@openlfcp/wire` | `pnpm --filter @openlfcp/wire publish --tag next --otp=<code>` |
+| 5 | `@openlfcp/storage-node` | `pnpm --filter @openlfcp/storage-node publish --tag next --otp=<code>` |
+| 6 | `@openlfcp/storage-idb` | `pnpm --filter @openlfcp/storage-idb publish --tag next --otp=<code>` |
+| 7 | `@openlfcp/shared-objects` | `pnpm --filter @openlfcp/shared-objects publish --tag next --otp=<code>` |
+| 8 | `@openlfcp/client` | `pnpm --filter @openlfcp/client publish --tag next --otp=<code>` |
+
+Each package comes after every `@openlfcp/*` package it depends on:
+- crypto, storage → core;
+- wire → core, crypto;
+- storage-node, storage-idb → core, storage;
+- shared-objects → core, crypto;
+- client → core, crypto, storage, wire.
+
+`pnpm release:check` fails if a package depends on one published after it.
+
+To see exactly what a command will upload before running it, add
+`--dry-run` (no code needed).
+
+## 4. Verify
+
+- [ ] Each package is on `next`, not `latest`:
+
+  ```sh
+  for p in core crypto storage wire storage-node storage-idb shared-objects client; do
+    npm view @openlfcp/$p dist-tags --json
+  done
+  ```
+
+  Expect `"next": "0.1.0-rc.1"` for each. There is no `latest` tag, or it
+  is unchanged if one existed.
+- [ ] The metadata looks right:
+  `npm view @openlfcp/client@next version dependencies license repository`.
+- [ ] A fresh project installs and imports everything from the registry:
+
+  ```sh
+  mkdir /tmp/openlfcp-npm-check && cd /tmp/openlfcp-npm-check && npm init -y >/dev/null
+  npm pkg set type=module
+  npm install @openlfcp/core@next @openlfcp/crypto@next @openlfcp/storage@next \
+    @openlfcp/wire@next @openlfcp/storage-node@next @openlfcp/storage-idb@next \
+    @openlfcp/shared-objects@next @openlfcp/client@next
+  node --input-type=module -e 'for (const p of ["core","crypto","storage","wire","storage-node","storage-idb","shared-objects","client"]) await import(`@openlfcp/${p}`); console.log("all eight import")'
+  ```
+
+- [ ] Record the published versions and the sdk-ts commit in the release
+      notes ([mvp-0.1-release-notes-draft.md](mvp-0.1-release-notes-draft.md)).
+
+## 5. If a publish fails midway
+
+Packages already published stay published, and their version can never be
+reused.
+
+- **Rejected before upload** (wrong or expired code, network, not logged
+  in): fix the cause and run the same command again for that package, then
+  continue with the next one in order. Nothing was published for it.
+- **Some packages are out, a later one cannot be published at all** (e.g.
+  a broken tarball): the ones already out are only on `next`, so `latest`
+  users are not affected.
+  - Do not unpublish.
+  - Fix the cause in sdk-ts and move all eight packages to the next
+    prerelease (`0.1.0-rc.2`), so versions stay aligned.
+  - Run `pnpm release:check` again and publish all eight in order.
+  - Mark the incomplete set: `npm deprecate @openlfcp/<pkg>@0.1.0-rc.1 "incomplete release; use 0.1.0-rc.2"`.
+- **A package published with a defect:** the same, a new prerelease for
+  all eight, and deprecate the bad version. Unpublishing is limited by npm
+  (72 hours, no dependents) and breaks anyone who installed it.
+
+## Promotion
+
+`0.1.0-rc.1` stays on `next`. When MVP 0.1 is final:
+1. Publish `0.1.0` the same way, in the same order.
+2. Then move `latest` to it, one package at a time:
+
+   ```sh
+   npm dist-tag add @openlfcp/<pkg>@0.1.0 latest --otp=<code>
+   ```
+
+3. Check with `npm view @openlfcp/<pkg> dist-tags`. A release candidate is
+   never tagged `latest`.

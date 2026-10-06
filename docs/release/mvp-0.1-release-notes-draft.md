@@ -31,6 +31,11 @@ specifications remain Working Drafts.
 | `obsidian` | _TBD_ | The Obsidian plugin: Markdown ↔ Shared Object projection and the collaboration commands |
 | `examples` | _TBD_ | `lfcp-todo` (a headless client) and the cross-language conformance harness |
 
+The sdk-ts packages (`@openlfcp/core`, `crypto`, `storage`, `wire`,
+`storage-node`, `storage-idb`, `shared-objects`, `client`) go to npm as
+`0.1.0-rc.1` under the dist-tag `next`, published by hand by the owner:
+[npm-publish-checklist.md](npm-publish-checklist.md).
+
 ## Highlights
 
 - **No plaintext mode.** Every change travels as a Data Unit:

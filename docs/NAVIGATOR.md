@@ -17,6 +17,7 @@ catalogs every artifact across the repositories, with its status.
 | [release/readme-scope-statements.md](release/readme-scope-statements.md) | release | The "Scope" section each repository README carries |
 | [release/rc-verification.md](release/rc-verification.md) | release | Verifying a release candidate locally (`scripts/rc-verify.py`) |
 | [release/rc1-manifest.json](release/rc1-manifest.json) | release | The pins of release candidate rc1 |
+| [release/npm-publish-checklist.md](release/npm-publish-checklist.md) | release | Publishing the `@openlfcp/*` packages to npm (`next`) by hand, step by step |
 | [release/rc2-manifest.json](release/rc2-manifest.json) | release | The pins of release candidate rc2 |
 | [release/rc3-manifest.json](release/rc3-manifest.json) | release | The pins of release candidate rc3 |
 | [release/security-review-mvp-0.1.md](release/security-review-mvp-0.1.md) | release | The MVP 0.1 pre-release security review: findings, fixes, known limitations |
