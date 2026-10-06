@@ -16,8 +16,10 @@ If you are unsure which repository is affected, use `openlfcp/spec` for
 protocol and specification issues, or the implementation repository for
 code issues.
 
-The project has no separate security email address. Please do not send
-reports to personal addresses.
+If you can't use GitHub, email **security@openlfcp.org** with the same
+details. Please don't send reports to personal addresses, and don't use
+`abuse@openlfcp.org`. That address is only for abuse of the public sync
+server.
 
 ## Scope
 
