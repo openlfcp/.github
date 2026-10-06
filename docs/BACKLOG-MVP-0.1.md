@@ -3,7 +3,7 @@
 **Project:** OpenLFCP  
 **Status:** Authoritative Working Backlog  
 **Scope:** Secure MVP 0.1  
-**Revision date:** 2026-10-06
+**Revision date:** 2026-10-07
 
 > This backlog replaces the earlier `LFCP-001...050` draft and the temporary `BACKLOG-MVP-0.1-PATCH.md`. Issue numbers may be rewritten while the project is still in early implementation. Dependencies, not numeric adjacency, determine execution order.
 
@@ -1559,6 +1559,10 @@ Acceptance:
 
 ## POST-003 - Server hosting abuse limits
 
+**State:** done. Shipped in server 0.2.0: e825c30..1e59dcf, plus 2a4d5c7
+and 24f013d (revocation and key rotation through at quota, the control
+reserve).
+
 Source: `.github: docs/release/security-review-mvp-0.1.md`, H5 and the
 known limitations under "Follow-up: server hardening".
 
@@ -1581,6 +1585,8 @@ Acceptance:
 - each limit has a test that crosses it and gets the documented refusal.
 
 ## POST-004 - Server memory bounds
+
+**State:** done. Shipped in server 0.2.0: bb9677c..0aa4dab.
 
 Source: `.github: docs/release/security-review-mvp-0.1.md`, H6 and M5 after
 READY.
@@ -1685,16 +1691,19 @@ Acceptance: 20 consecutive full `pnpm test` runs under parallel load pass.
 
 ## POST-011 - Obsidian plugin distribution
 
-**State:** prepared, not released. On obsidian main:
+**State:** released 0.2.0. The obsidian tag `0.2.0` has its GitHub
+release with 4 assets
+(https://github.com/openlfcp/obsidian/releases/tag/0.2.0); CI and the
+platform smoke on 3 OS are green at a620051; the BRAT beta install passed
+(owner, 2026-10-07). It contains:
 - the rename to Shared Tasks / `shared-tasks` (ae3747a), with the
   device-local state keys unchanged, so a 0.1.0 identity survives;
 - version 0.2.0 (3cc9279);
 - the release workflow for bare version tags (2953e19), with the 0.2.0 notes;
 - the install, release and directory-submission docs (289bf7a).
 
-Next, by the owner: push, tag `0.2.0`, run the BRAT beta, then submit to
-the directory (`obsidian: docs/devel/release.md`,
-`docs/devel/community-submission.md`).
+Next, by the owner: the community directory submission
+(`obsidian: docs/devel/community-submission.md`).
 
 Source: `obsidian: manifest.json`, `versions.json`; the Obsidian community
 plugin submission rules.
@@ -1737,6 +1746,10 @@ owner") and the restore drill in `devbox-asstnt: stacks/openlfcp/README.md`
 (2026-10-06).
 
 **Blocks the public server leaving POC/beta status (owner to confirm).**
+
+**State:** designed, not decided. The draft ADR 0008 (`spec:
+adr/0008-recovery-after-server-data-loss.md`, spec 0d0d68b) is Proposed;
+the project owner's decision is pending.
 
 After a server is restored from a backup, the Data Units it had
 acknowledged after the backup are gone. The client that wrote them never
@@ -1861,15 +1874,22 @@ limitations.
 
 A public server at `wss://sync.openlfcp.org/v1/ws`.
 
-Facts: the domain is `openlfcp.org` (owned by the project owner); the server
-host is `sync.openlfcp.org`, which the owner is setting up; the abuse and
-privacy contact is `abuse@openlfcp.org`. The deployment is prepared as the
-stack `openlfcp` of the owner's machine (`devbox-asstnt: stacks/openlfcp/`,
-nginx with getssl in front, the image from `ghcr.io/openlfcp/lfcp-server`),
-with drafts of the privacy note, terms and runbook in `docs/operations/`.
+**State:** live since 2026-10-06, as a beta. Server 0.2.0 (POST-003 and
+POST-004 included) runs as the stack `openlfcp` of the owner's machine
+(`devbox-asstnt: stacks/openlfcp/`, nginx with getssl in front, the image
+`ghcr.io/openlfcp/lfcp-server:0.2.0`).
+- A two-home `lfcp-todo` sync through it passed; the administrator is
+  paired; the client IP reaches the server through nginx.
+- TLS from Let's Encrypt; nginx logs rotated after 14 days; external
+  monitoring by Better Stack on `/health`.
+- The privacy note, terms and runbook in `docs/operations/` are final.
+  Contacts: `abuse@`, `privacy@` and `security@openlfcp.org`.
 
-Gated: open public hosting waits for POST-003 (quotas, per-IP limits) and
-POST-004 (memory bounds) in a released server image.
+Open, and done when both are recorded:
+- (a) the S3 lifecycle rule that keeps backups 30 days is not applied yet
+  (owner); the privacy note promises 30 days;
+- (b) the restore test on the machine (`devbox-asstnt:
+  stacks/openlfcp/README.md`, "Восстановить") has not been run yet.
 
 Deliver:
 
