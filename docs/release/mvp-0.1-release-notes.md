@@ -222,15 +222,20 @@ shared task · Resolve shared task conflict
   - Replies to `DATA_GET`, `KEY_PACKAGE_GET` and `CONTROL_GET` are built
     fully in memory, not streamed. The outbound queue counts messages, not
     bytes: up to 256 × `max_message_bytes` per connection (H6).
+    Fixed after 0.1.0 (POST-004): paged GET replies, outbound byte
+    budgets per connection and server-wide, and 64 KiB WebSocket
+    fragments (server 850f398, 805d800, 72d05bc, 6777968).
   - After `READY`, a message is decoded in full, up to
-    `max_message_bytes` (M5).
+    `max_message_bytes` (M5). The server README ("Memory") gives the
+    resulting bound since POST-004.
   - There are no rate limits on WebSocket sessions or the admin HTTP API.
     The connection cap is global, not per IP; use the proxy's limits.
     Fixed after 0.1.0 (POST-003): the client IP from a trusted proxy,
     per-IP connection caps and rates, a message rate per WebSocket, an
     admin rate per IP (server 9b5c85f, 9de1db1, 126c65a, c8c0809).
   - Admin request bodies (at most 16 KiB) have no read timeout of their
-    own.
+    own. Fixed after 0.1.0 (POST-004): `admin_body_timeout_ms` (server
+    bb9677c).
   - An unauthenticated flood can fill the admin challenge cap and delay an
     administrator's login by up to 5 minutes. Fixed after 0.1.0
     (POST-003): stateless challenges (server 03585cb).

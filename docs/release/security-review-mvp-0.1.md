@@ -29,13 +29,13 @@ limitations in the release notes.
 | H3 | high | obsidian | Task-suffix regex (recurrence) is super-linear: a collaborator's long title freezes the editor | **fixed: obsidian c73c46d** |
 | H4 | high | server | `DATA_GET` / `KEY_PACKAGE_GET` load every requested range/epoch before deduplicating, with no count cap | **fixed: server eb1323f** |
 | H5 | high | server | Open hosting by default and no quotas: any keypair can host Resources and fill the disk | **fixed after 0.1.0: server bf09efe, 0c998a6, b9307ca** (POST-003: quota hosting mode by default, new Resources per client IP per day, a global storage floor; revocation and key rotation pass at quota: 2a4d5c7); a known limitation of 0.1.0 |
-| H6 | high | server | GET replies are built fully in memory; the outbound queue can hold about 2 GiB per connection | routed (known limitation) |
+| H6 | high | server | GET replies are built fully in memory; the outbound queue can hold about 2 GiB per connection | **fixed after 0.1.0: server 850f398, 805d800, 72d05bc, 6777968** (POST-004: outbound byte budgets per connection and server-wide, GET replies paged from the store, large messages sent as 64 KiB WebSocket fragments); a known limitation of 0.1.0 |
 | H7 | high | sdk-ts (Automerge JS) | A change nesting objects about 6,500 levels below the root traps Automerge JS 3.5.0, and its wasm module is then terminated for the whole process; a 32 KB change within the §11.1 limits, or several small changes, reach it (automerge-rs 0.12 is unaffected); found while implementing H1 | **fixed in the spec: SPEC-PATCH-08, `mvp-0.1-baseline.8`** (§11.2); SDK alignment pending (ALIGN-TS-8, sdk-rs) |
 | M1 | medium | sdk-ts, sdk-rs | A client adopts the server's `READY.maxMessageBytes` with no local upper bound | **fixed in the spec: WIRE §31, baseline.7**; SDK alignment pending |
 | M2 | medium | server | No connection cap, no HTTP header timeout, no handshake deadline; PING before AUTH keeps a connection alive | **fixed: server 65f148d, 625dbd9**; per-IP and rate limits **fixed after 0.1.0: server 9b5c85f, 9de1db1, 126c65a, c8c0809** (POST-003) |
 | M3 | medium | server | `POST /admin/challenge` is unauthenticated and its map is unbounded | **fixed: server a7f3461** (bounded; still unauthenticated by design); stateless challenges that a flood cannot exhaust **after 0.1.0: server 03585cb** (POST-003) |
 | M4 | medium | server | The coordinator's per-Resource slot map grows for any requested Resource ID | **fixed: server 11e1fb2** |
-| M5 | medium | server | Full CBOR decode of every frame before AUTH: about 30× memory amplification | **partly fixed: server 65f148d** (before READY); after READY a known limitation |
+| M5 | medium | server | Full CBOR decode of every frame before AUTH: about 30× memory amplification | **partly fixed: server 65f148d** (before READY); after READY a known limitation, bounded by configuration (server README, "Memory") |
 | M6 | medium | server | The pairing code is printed to stdout, the same stream as the tracing log (so `docker logs` keeps it) | **fixed: server 7e61710** |
 | M7 | medium | sdk-rs | `values::read` recursion has no depth limit (stack overflow on deeply nested `extensions`) | **fixed: sdk-rs bb43a78**; the nesting bound is normative (§30, baseline.7) |
 | M8 | medium | sdk-rs | `SharedObjects::merge` has no §14.1 sequence check and no panic guard | **fixed: sdk-rs b99f85c** |
@@ -226,8 +226,25 @@ tracing subscriber share stdout. Under Docker the code stays in
   - The outbound queue counts messages (256), not bytes, so one
     connection can hold up to 256 × `max_message_bytes`.
   - Lower `max_message_bytes` to lower this bound.
+  - *Fixed after 0.1.0 (POST-004):* GET replies are read from the store a
+    page at a time and wait for room in byte budgets: `max_outbound_bytes`
+    per connection (default 4 × `max_message_bytes`) and
+    `max_total_outbound_bytes` for the whole server (default 64 MiB)
+    (server 850f398, 805d800). Waiting replies are queued in order, with
+    control replies ahead of GET pages (72d05bc). A peer that stops
+    reading is closed after `write_timeout_ms`, and its bytes are freed.
+  - *Also found and fixed in POST-004:* in 0.1.0, tungstenite's write
+    buffer kept the size of the largest frame for the life of each
+    connection, about 8 MiB per connection outside any bound. Messages
+    over 64 KiB are now sent as 64 KiB WebSocket fragments (§31; server
+    6777968).
+  - Measured peak RSS, 0.1.0 → now: 750 → 41 MiB for 50 concurrent
+    readers, 619 → 41 MiB for one 256 MiB `DATA_GET`.
 - **M5 after READY:** an authenticated peer's message is fully decoded,
-  up to `max_message_bytes`.
+  up to `max_message_bytes`. Since POST-004 the server README ("Memory")
+  gives the bound: up to `max_connections` × about 3 ×
+  `max_message_bytes` for messages being read and decoded, and settings
+  for a 128 MB container.
 - **No rate limits** on WebSocket messages or admin HTTP beyond the caps
   above. *Fixed after 0.1.0 (POST-003):* messages per WebSocket
   connection (server 126c65a) and admin requests per client IP (c8c0809).
@@ -238,7 +255,9 @@ tracing subscriber share stdout. Under Docker the code stays in
   9b5c85f, 9de1db1).
 - **No body-read timeout:** admin request bodies (capped at 16 KiB) have no
   read timeout of their own. A slow body holds one connection place until
-  the client gives up.
+  the client gives up. *Fixed after 0.1.0 (POST-004):* a body must arrive
+  within `admin_body_timeout_ms` (default 10 s), else HTTP 408 and close
+  (server bb9677c).
 - **The challenge cap can be exhausted:** an unauthenticated flood can fill
   the 1024 challenges and delay an administrator's login by up to 5
   minutes. *Fixed after 0.1.0 (POST-003):* challenges are stateless, so
