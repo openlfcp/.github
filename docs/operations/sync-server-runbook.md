@@ -166,6 +166,6 @@ the privacy note; route them to the owner.
   period).
 - **Restore loses recent writes and can stall clients:** clients do not
   re-send changes the server had acknowledged before the backup (see the
-  stack runbook, "Restore")).
+  stack runbook, "Restore").
   The proposed fix and the interim guidance for operators are in
   `spec: adr/0008-recovery-after-server-data-loss.md` (POST-013).
