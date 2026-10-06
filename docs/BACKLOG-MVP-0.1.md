@@ -1829,6 +1829,17 @@ revision lists it as informative.
 
 ## POST-017 - Client UX: a Resource the server no longer hosts
 
+**State:** done. Local, not pushed:
+- sdk-ts cae7434: a terminal, typed refusal — `resourceRefusal`, the
+  `resource-refused` event, `TERMINAL_RESOURCE_CODES` — and transient
+  refusals retried with backoff;
+- examples b5f9ce0: `lfcp-todo sync` and `watch` exit 1 with the server, the
+  Resource and the code;
+- obsidian 51ea77d: one notice and the reason in "Resource status".
+
+Each has a live test against server d6cd820. It ships with the next
+sdk-ts and Shared Tasks releases.
+
 Source: `.github: docs/operations/sync-server-runbook.md` ("Purge a
 Resource", the rehearsal on server 0.2.0; `.github` c87c16b).
 
