@@ -182,8 +182,10 @@ shared task · Resolve shared task conflict
 - The protocol decisions in ADRs 0004 to 0007 were made by the
   orchestrator while the owner was away; the project owner approved them
   on 2026-10-06.
-- Desktop platform smoke (macOS, Windows, Linux): _TBD_, LFCP-068. The CI
-  matrix and the manual checklist exist; results are pending.
+- Desktop platform smoke (macOS, Windows, Linux), LFCP-068: the CI smoke
+  passes on all three. The manual macOS smoke passed on 2026-10-06 with
+  Obsidian 1.14.4, after fix obsidian faaf020. The manual Windows and
+  Linux runs, and the cross-OS pair, are still open.
 - The Docker deployment of the server is not yet verified end to end
   (_TBD_, LFCP-055).
 - Mobile (iOS, Android) is not tested.
