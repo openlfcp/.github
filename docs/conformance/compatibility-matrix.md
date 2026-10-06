@@ -1,11 +1,11 @@
 # OpenLFCP compatibility matrix
 
-Generated 2026-10-06T05:46:03.611Z by examples/conformance (LFCP-070).
+Generated 2026-10-06T05:59:39.597Z by examples/conformance (LFCP-070).
 
 - Spec baseline: mvp-0.1-baseline.8 (spec da3977f927feaf3e7c5b8f653797d3696ce0613b).
 - sdk-rs: 41dc53297c27bebf649d41823df0abc554334007.
-- sdk-ts: d60e4919a8049fa08cc1864131a2ed8c80fd8aa6.
-- pins.json: sdk-rs 41dc532, sdk-ts d60e491, spec da3977f (strict run: the SDKs are these commits).
+- sdk-ts: 98efaab94d88111317e966d159fa78ed3d717039.
+- pins.json: sdk-rs 41dc532, sdk-ts 98efaab, spec da3977f (strict run: the SDKs are these commits).
 
 ## A. Official vectors (byte-exact where the vectors fix every input)
 
