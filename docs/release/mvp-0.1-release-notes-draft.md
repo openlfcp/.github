@@ -205,6 +205,12 @@ shared task · Resolve shared task conflict
     own.
   - An unauthenticated flood can fill the admin challenge cap and delay an
     administrator's login by up to 5 minutes.
+  - **Windows: no owner-only state files.** On Windows the server does not
+    tighten the permissions of its state files (server ID, setup code, the
+    database): they inherit the state directory's ACL, so put the state
+    directory where only the server's user can read it, such as under that
+    user's profile. On Unix the directory is created 0700 and the files
+    0600 (server 83f9a33; Windows start fixed in server 4cfa5f4).
 - Decrypted shared tasks are stored unencrypted on each device (IndexedDB
   or SQLite), and Obsidian's `secretStorage` is shared by every plugin on
   the device.
