@@ -65,6 +65,26 @@ commits.
 The exit status is 0 only when the pins are consistent and every gate
 passed.
 
+## Documentation check
+
+`scripts/doccheck.py` checks the committed Markdown of the seven checkouts
+next to this repository (or of the repositories named, under `--root DIR`):
+
+- every relative link and `#anchor` resolves, links into a sibling
+  checkout included;
+- every file under `docs/` is linked from that repository's
+  `docs/NAVIGATOR.md`;
+- `docs/` file names are kebab-case or the established upper-case
+  artifact names.
+
+```sh
+scripts/doccheck.py                               # all seven checkouts
+scripts/doccheck.py --root ../openlfcp-rc obsidian
+```
+
+It prints one line per problem and exits 1 when there is any. Links in
+code spans and fenced blocks, and uncommitted files, are not checked.
+
 ## Requirements
 
 Python 3, git, Node 24 with pnpm, a Rust toolchain, and Ruby with bundler
