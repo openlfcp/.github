@@ -107,7 +107,7 @@ color and meaning. The dimensions are:
 | **Working Draft** specification (e.g. `LFCP-WIRE-01`, `SHARED-OBJECTS-PROFILE-01` today) | Mutable in place. Corrections go into the canonical document; Git history is the changelog. No `.1` or errata files. |
 | **Stable** specification | Never silently rewritten. Compatible clarifications use errata; incompatible changes get a new identifier (e.g. `LFCP-WIRE-02`) through an RFC. |
 | **Implementation and package versions** (`sdk-ts`, `sdk-rs`, `server`, `obsidian`) | Semantic Versioning. `0.x` while pre-1.0, so breaking changes may land in minor versions. |
-| **MVP 0.1 baseline** | The current `spec` tag `mvp-0.1-baseline.7` (with a matching `.github` tag), listed in `spec: MVP-0.1-BASELINE.md`; `mvp-0.1-baseline`, `mvp-0.1-baseline.2`, `mvp-0.1-baseline.3`, `mvp-0.1-baseline.4`, `mvp-0.1-baseline.5` and `mvp-0.1-baseline.6` are superseded. Implementations pin it. An approved Working Draft correction produces a new tag such as `mvp-0.1-baseline.8`; a tag is never moved. |
+| **MVP 0.1 baseline** | The current `spec` tag `mvp-0.1-baseline.8` (with a matching `.github` tag), listed in `spec: MVP-0.1-BASELINE.md`; `mvp-0.1-baseline` and `mvp-0.1-baseline.2` to `mvp-0.1-baseline.7` are superseded. Implementations pin it. An approved Working Draft correction produces a new tag such as `mvp-0.1-baseline.9`; a tag is never moved. |
 
 **MVP 0.1 does not make LFCP-WIRE-01 Stable.** The baseline is a snapshot of
 Working Drafts that the first implementations agree to build against.

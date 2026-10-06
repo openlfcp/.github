@@ -245,7 +245,7 @@ Acceptance:
 - Markdown refs have two conforming placements;
 - implementation agents have one unambiguous source-of-truth set.
 
-Current baseline: `spec` tag `mvp-0.1-baseline.7` (SPEC-PATCH-07, `spec: adr/0006-mvp-0.1-protocol-decisions-6.md`), which supersedes `mvp-0.1-baseline.6`. Implementations move to it deliberately; no vector value changed. Receivers check every Automerge chunk against the expansion limits before their engine (exact for changes, local with a floor for Snapshots), changes are uncompressed chunks, values nest at most 64 levels, and a client bounds its receive limit; the corpus `expansion` cases and `SO-DEPTH` validations need runners. All items await owner review.
+Current baseline: `spec` tag `mvp-0.1-baseline.8` (SPEC-PATCH-08, `spec: adr/0007-mvp-0.1-protocol-decisions-7.md`), which supersedes `mvp-0.1-baseline.7`. Implementations move to it deliberately; no vector value changed. Receivers reject, before their engine, a change or Snapshot that would put an object deeper than 256 levels below the root; the corpus `depth` cases need a runner. It awaits owner review.
 
 Depends on: `LFCP-008`, `LFCP-009`.
 

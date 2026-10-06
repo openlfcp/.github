@@ -365,7 +365,7 @@ Fully conforming LFCP-WIRE-01 implementation.
 
 Full WIRE-01 conformance is a later milestone.
 
-The exact documents, vectors and schemas that make up the MVP 0.1 baseline are listed in `spec: MVP-0.1-BASELINE.md` at the current `spec` baseline tag, `mvp-0.1-baseline.7` (the manifest names the current tag).
+The exact documents, vectors and schemas that make up the MVP 0.1 baseline are listed in `spec: MVP-0.1-BASELINE.md` at the current `spec` baseline tag, `mvp-0.1-baseline.8` (the manifest names the current tag).
 
 ---
 

@@ -408,7 +408,7 @@ This index.
 
 ### `MVP-0.1-BASELINE.md`
 
-**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.7`)
+**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.8`)
 **Status:** GUIDE
 
 **Purpose:** The exact set of documents, vectors, generators, CDDL files and schemas that MVP 0.1 implementations build against. It is not a Stable publication.
@@ -454,6 +454,13 @@ This index.
 **Status:** ARCHITECTURE
 
 **Purpose:** The sixth batch of MVP 0.1 protocol decisions (SPEC-PATCH-07), all orchestrator decisions pending owner review: exact change expansion limits and structural checks before the Automerge engine, uncompressed changes only, local Snapshot limits with a floor, the value nesting bound, request bounds (KEY_PACKAGE_GET epochs, DATA_GET ranges) and the client receive limit, each with its status, sections and vectors.
+
+### `adr/0007-mvp-0.1-protocol-decisions-7.md`
+
+**Location:** `spec: adr/0007-mvp-0.1-protocol-decisions-7.md`
+**Status:** ARCHITECTURE
+
+**Purpose:** The seventh batch of MVP 0.1 protocol decisions (SPEC-PATCH-08), an orchestrator decision pending owner review: the document depth bound (no object deeper than 256 levels below the root, checked before the Automerge engine for changes and Snapshots), with its measurements, sections and vectors.
 
 ---
 
