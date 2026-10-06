@@ -31,3 +31,4 @@ catalogs every artifact across the repositories, with its status.
 | [operations/sync-server-privacy.md](operations/sync-server-privacy.md) | everyone | Privacy note of the public sync server sync.openlfcp.org: what it sees, stores and logs, with citations (draft, pending owner review) |
 | [operations/sync-server-terms.md](operations/sync-server-terms.md) | everyone | Terms of service of sync.openlfcp.org (draft, pending owner review) |
 | [operations/sync-server-runbook.md](operations/sync-server-runbook.md) | owner | Operating sync.openlfcp.org: where it runs, monitoring, external uptime check, abuse handling (draft) |
+| [assets/brand/README.md](assets/brand/README.md) | everyone | The OpenLFCP mark: files for light and dark backgrounds, favicon, colours and usage rules (LAUNCH-006) |
