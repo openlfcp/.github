@@ -116,7 +116,11 @@ lever.
 **Purge a Resource.** Server 0.1.0 has no delete API. By hand, with the
 server stopped. Rehearsed on 2026-10-06 against a copy of the restore-drill
 database, with foreign keys on: every row of the Resource gone, the other
-tables intact, `integrity_check` ok, `foreign_key_check` clean. A server
+tables intact, `integrity_check` ok, `foreign_key_check` clean. From
+server 0.2.0 the store also keeps `resource_usage` (stored bytes per
+Resource, for the quotas): its row must go too, or the delete of the
+Resource fails with foreign keys on, and with them off an orphan row keeps
+counting the purged bytes against `max_total_bytes`. A server
 start on a purged database is not yet rehearsed: do that on a copy before
 the first real purge.
 
@@ -133,6 +137,7 @@ DELETE FROM data_units    WHERE resource_id = X'$hex';
 DELETE FROM key_packages  WHERE resource_id = X'$hex';
 DELETE FROM snapshots     WHERE resource_id = X'$hex';
 DELETE FROM control_records WHERE resource_id = X'$hex';
+DELETE FROM resource_usage  WHERE resource_id = X'$hex';   -- server 0.2.0+ (POST-003 storage accounting)
 DELETE FROM resources     WHERE resource_id = X'$hex';
 COMMIT;
 VACUUM;
