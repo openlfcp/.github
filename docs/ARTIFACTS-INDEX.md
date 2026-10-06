@@ -439,28 +439,28 @@ This index.
 **Location:** `spec: adr/0004-mvp-0.1-protocol-decisions-4.md`
 **Status:** ARCHITECTURE
 
-**Purpose:** The fourth batch of MVP 0.1 protocol decisions (SPEC-PATCH-05): G-DP1-GAP (actor chains across abandoned sequences), approved by the project owner, and orchestrator decisions pending owner review (Snapshot cutoff rebuild, invitation query parameters, claimant Key Packages, server and message clarifications, per-value profile diagnostics, `INVALID_AUTOMERGE_BYTES`), each with its status, sections and vectors.
+**Purpose:** The fourth batch of MVP 0.1 protocol decisions (SPEC-PATCH-05): G-DP1-GAP (actor chains across abandoned sequences), approved by the project owner, and orchestrator decisions approved by the project owner on 2026-10-06 (Snapshot cutoff rebuild, invitation query parameters, claimant Key Packages, server and message clarifications, per-value profile diagnostics, `INVALID_AUTOMERGE_BYTES`), each with its status, sections and vectors.
 
 ### `adr/0005-mvp-0.1-protocol-decisions-5.md`
 
 **Location:** `spec: adr/0005-mvp-0.1-protocol-decisions-5.md`
 **Status:** ARCHITECTURE
 
-**Purpose:** The fifth batch of MVP 0.1 protocol decisions (SPEC-PATCH-06), all orchestrator decisions pending owner review: the writer's previous unit is its latest own unit still accepted, clients retransmit after a request timeout, the invitation read rule uses the §25.2 active grant, a writer keeps writing after a rebuild removes its own changes, scalar conflicts stay profile-valid (S15, S16), SO-STRINGS pointer cases in the Automerge corpus, and Obsidian plugin state kept out of the vault-synced folder, each with its status, sections and vectors.
+**Purpose:** The fifth batch of MVP 0.1 protocol decisions (SPEC-PATCH-06), all orchestrator decisions approved by the project owner on 2026-10-06: the writer's previous unit is its latest own unit still accepted, clients retransmit after a request timeout, the invitation read rule uses the §25.2 active grant, a writer keeps writing after a rebuild removes its own changes, scalar conflicts stay profile-valid (S15, S16), SO-STRINGS pointer cases in the Automerge corpus, and Obsidian plugin state kept out of the vault-synced folder, each with its status, sections and vectors.
 
 ### `adr/0006-mvp-0.1-protocol-decisions-6.md`
 
 **Location:** `spec: adr/0006-mvp-0.1-protocol-decisions-6.md`
 **Status:** ARCHITECTURE
 
-**Purpose:** The sixth batch of MVP 0.1 protocol decisions (SPEC-PATCH-07), all orchestrator decisions pending owner review: exact change expansion limits and structural checks before the Automerge engine, uncompressed changes only, local Snapshot limits with a floor, the value nesting bound, request bounds (KEY_PACKAGE_GET epochs, DATA_GET ranges) and the client receive limit, each with its status, sections and vectors.
+**Purpose:** The sixth batch of MVP 0.1 protocol decisions (SPEC-PATCH-07), all orchestrator decisions approved by the project owner on 2026-10-06: exact change expansion limits and structural checks before the Automerge engine, uncompressed changes only, local Snapshot limits with a floor, the value nesting bound, request bounds (KEY_PACKAGE_GET epochs, DATA_GET ranges) and the client receive limit, each with its status, sections and vectors.
 
 ### `adr/0007-mvp-0.1-protocol-decisions-7.md`
 
 **Location:** `spec: adr/0007-mvp-0.1-protocol-decisions-7.md`
 **Status:** ARCHITECTURE
 
-**Purpose:** The seventh batch of MVP 0.1 protocol decisions (SPEC-PATCH-08), an orchestrator decision pending owner review: the document depth bound (no object deeper than 256 levels below the root, checked before the Automerge engine for changes and Snapshots), with its measurements, sections and vectors.
+**Purpose:** The seventh batch of MVP 0.1 protocol decisions (SPEC-PATCH-08), an orchestrator decision approved by the project owner on 2026-10-06: the document depth bound (no object deeper than 256 levels below the root, checked before the Automerge engine for changes and Snapshots), with its measurements, sections and vectors.
 
 ---
 

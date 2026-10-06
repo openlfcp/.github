@@ -245,7 +245,7 @@ Acceptance:
 - Markdown refs have two conforming placements;
 - implementation agents have one unambiguous source-of-truth set.
 
-Current baseline: `spec` tag `mvp-0.1-baseline.8` (SPEC-PATCH-08, `spec: adr/0007-mvp-0.1-protocol-decisions-7.md`), which supersedes `mvp-0.1-baseline.7`. Implementations move to it deliberately; no vector value changed. Receivers reject, before their engine, a change or Snapshot that would put an object deeper than 256 levels below the root; the corpus `depth` cases need a runner. It awaits owner review.
+Current baseline: `spec` tag `mvp-0.1-baseline.8` (SPEC-PATCH-08, `spec: adr/0007-mvp-0.1-protocol-decisions-7.md`), which supersedes `mvp-0.1-baseline.7`. Implementations move to it deliberately; no vector value changed. Receivers reject, before their engine, a change or Snapshot that would put an object deeper than 256 levels below the root; the corpus `depth` cases need a runner. The project owner approved it, with ADRs 0004 to 0006, on 2026-10-06.
 
 Depends on: `LFCP-008`, `LFCP-009`.
 
@@ -1501,3 +1501,38 @@ private Markdown leakage test
 ```
 
 A CRDT demo without these properties is a useful development fixture but is not the OpenLFCP MVP 0.1 release gate.
+
+# 6. Post-MVP 0.1 work
+
+Work decided for after MVP 0.1, each with its decision record.
+
+## POST-001 - Hold and retry Automerge (actor, seq) collisions
+
+Decision: the project owner, 2026-10-06
+(`.github: docs/release/open-decision-actor-seq-collision.md`, option B).
+
+Today both SDKs refuse a change whose Automerge actor and sequence number
+match a different change the replica holds (`ACTOR_EQUIVOCATION`). In sdk-ts
+the unit is marked `profile-rejected` for good. In the equivocation corner
+the replica therefore stops showing that collaborator's later edits, with no
+notice. MVP 0.1 ships with this, which is safe by default.
+
+Deliver, as a spec patch and new baseline, then an alignment in each SDK:
+
+- SHARED-OBJECTS-PROFILE-01 §14.1: a replica never merges two changes with
+  the same actor and sequence number. It holds the later one (not refused)
+  and retries it after any rebuild that removes changes;
+- vectors: a held change that applies after the rebuild that removes the
+  change it collided with;
+- sdk-ts: the profile's `ACTOR_EQUIVOCATION` becomes a held unit instead
+  of `profile-rejected`, retried after `exclude`/rebuild;
+- sdk-rs: the same;
+- the Obsidian plugin: surface a refused or held change to the user.
+
+Acceptance:
+
+- the equivocation corner converges once the replica learns of the
+  equivocation, on both SDKs (a live interop case);
+- no new abuse: a malicious writer still affects only its own history and
+  the work built on it.
+

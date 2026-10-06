@@ -1,7 +1,16 @@
 # Open decision: two changes with the same actor and sequence number
 
-**Status:** owner decision needed. It is the one open spec question left
-after SPEC-PATCH-08 (`mvp-0.1-baseline.8`). Prepared 2026-10-06.
+**Status:** decided by the project owner on 2026-10-06 (see Decision). It
+was the one open spec question left after SPEC-PATCH-08
+(`mvp-0.1-baseline.8`). Prepared 2026-10-06.
+
+## Decision
+
+The project owner accepted the recommendation on 2026-10-06:
+- MVP 0.1 ships with today's behaviour: refuse, which is safe by default.
+- Option B (hold and retry) is adopted for the next baseline, with the spec
+  text, vectors and both SDKs. It is tracked as POST-001 in
+  `BACKLOG-MVP-0.1.md` §6.
 
 **Question.** A replica holds an Automerge change from actor X with
 sequence number *n*. It then receives a *different* change from X, also
