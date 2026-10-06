@@ -24,8 +24,11 @@ watched, and how abuse is handled. Users see the
   (128 MB). Only `/v1/ws` and `/health` are public; `/setup` and `/admin/*`
   answer 404 outside the SSH tunnel.
 - **DNS:** Cloudflare, `sync.openlfcp.org` DNS only (grey cloud).
-- **Contact:** abuse@openlfcp.org, forwarded by Cloudflare Email Routing to
-  the owner.
+- **Contacts:** abuse@openlfcp.org (abuse), privacy@openlfcp.org (GDPR
+  requests), security@openlfcp.org (vulnerabilities), all forwarded by
+  Cloudflare Email Routing to the owner.
+- **Retention promised in the privacy note:** nginx and server logs 14
+  days, encrypted backups 30 days.
 
 ## Monitoring
 
@@ -189,13 +192,19 @@ again what the server had acknowledged (Data Units, Control Records,
 Key Packages): this is the restore wedge, POST-013. A purge is therefore
 final for the server's copy. Delete the `before-purge` copy once the
 purge is confirmed: it holds the purged data. Encrypted nightly backups
-keep it until their retention expires.
+keep it until their retention expires (30 days).
 
 ### 4. Answer
 
 Tell the reporter what was done, without other users' identifiers. Law
 enforcement requests: the server holds no content, only the metadata in
 the privacy note; route them to the owner.
+
+**Privacy requests** (privacy@openlfcp.org) follow the privacy note,
+"Your rights": answer within one month; access means the metadata and
+encrypted objects of the Resource or Principal ID the requester names;
+erasure of a Resource is the purge above (a shared Resource only after
+agreeing with the requester); logs and backups age out on their own.
 
 ## Gaps for the owner
 
@@ -205,9 +214,10 @@ the privacy note; route them to the owner.
   lfcp-admin`).
 - **No ban or purge API** in server 0.1.0; the purge above is manual.
   Proposed as backlog work.
-- **nginx access logs are not rotated on the box**, so IP retention is
-  unbounded until a rotation is set up (the privacy note promises a
-  period).
+- **Log rotation must be in place before the privacy note is published:**
+  it promises 14 days for nginx and server logs and 30 days for backups.
+  Until the rotation is deployed on the box, nginx access logs grow
+  without bound.
 - **Restore loses recent writes and can stall clients:** clients do not
   re-send changes the server had acknowledged before the backup (see the
   stack runbook, "Restore").
