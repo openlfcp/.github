@@ -28,7 +28,7 @@ limitations in the release notes.
 | H2 | high | sdk-ts client | A server-supplied Have range is expanded one sequence at a time: one `DATA_HAVE` hangs the client | **fixed: sdk-ts 9d5edf7, sdk-rs 6aab900** |
 | H3 | high | obsidian | Task-suffix regex (recurrence) is super-linear: a collaborator's long title freezes the editor | **fixed: obsidian c73c46d** |
 | H4 | high | server | `DATA_GET` / `KEY_PACKAGE_GET` load every requested range/epoch before deduplicating, with no count cap | **fixed: server eb1323f** |
-| H5 | high | server | Open hosting by default and no quotas: any keypair can host Resources and fill the disk | **fixed after 0.1.0: server bf09efe, 0c998a6, b9307ca** (POST-003: quota hosting mode by default, new Resources per client IP per day, a global storage floor); a known limitation of 0.1.0 |
+| H5 | high | server | Open hosting by default and no quotas: any keypair can host Resources and fill the disk | **fixed after 0.1.0: server bf09efe, 0c998a6, b9307ca** (POST-003: quota hosting mode by default, new Resources per client IP per day, a global storage floor; revocation and key rotation pass at quota: 2a4d5c7); a known limitation of 0.1.0 |
 | H6 | high | server | GET replies are built fully in memory; the outbound queue can hold about 2 GiB per connection | routed (known limitation) |
 | H7 | high | sdk-ts (Automerge JS) | A change nesting objects about 6,500 levels below the root traps Automerge JS 3.5.0, and its wasm module is then terminated for the whole process; a 32 KB change within the §11.1 limits, or several small changes, reach it (automerge-rs 0.12 is unaffected); found while implementing H1 | **fixed in the spec: SPEC-PATCH-08, `mvp-0.1-baseline.8`** (§11.2); SDK alignment pending (ALIGN-TS-8, sdk-rs) |
 | M1 | medium | sdk-ts, sdk-rs | A client adopts the server's `READY.maxMessageBytes` with no local upper bound | **fixed in the spec: WIRE §31, baseline.7**; SDK alignment pending |
@@ -218,7 +218,9 @@ tracing subscriber share stdout. Under Docker the code stays in
   Set the allow-list hosting policy. *Fixed after 0.1.0 (POST-003):* the
   quota hosting mode is the default (server bf09efe), new Resources per
   client IP per day are limited (0c998a6), and a global storage floor
-  refuses writes (b9307ca).
+  refuses writes (b9307ca). Control Records and Key Packages, which a
+  revocation and its key rotation need, pass at quota within a bounded
+  reserve and down to a hard disk floor (2a4d5c7).
 - **H6:** `DATA_GET`, `KEY_PACKAGE_GET` and `CONTROL_GET` replies are built
   fully in memory, not streamed or paged.
   - The outbound queue counts messages (256), not bytes, so one

@@ -217,7 +217,8 @@ shared task · Resolve shared task conflict
   - Hosting is open by default, and there are no storage quotas (H5).
     Fixed after 0.1.0 (POST-003): quota hosting mode by default, new
     Resources per client IP per day, a global storage floor (server
-    bf09efe, 0c998a6, b9307ca).
+    bf09efe, 0c998a6, b9307ca); revocation and key rotation still pass
+    at quota (2a4d5c7).
   - Replies to `DATA_GET`, `KEY_PACKAGE_GET` and `CONTROL_GET` are built
     fully in memory, not streamed. The outbound queue counts messages, not
     bytes: up to 256 × `max_message_bytes` per connection (H6).
