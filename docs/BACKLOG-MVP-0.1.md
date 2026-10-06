@@ -1695,12 +1695,15 @@ Deliver:
 - a GitHub release per version with `main.js`, `manifest.json` and
   `styles.css` as assets, built by CI from the tagged commit;
 - `manifest.json` and `versions.json` kept in step with each release;
-- a BRAT beta first, then a submission to the community plugin directory.
+- a BRAT beta first, then a submission to the community plugin directory;
+- the rename to the decided name and ID in `manifest.json` (today the ID is
+  `openlfcp`), with its consequences for existing installs.
 
-- before submitting, decide the plugin's display name and ID: Obsidian's
-  rules forbid "Obsidian" and "Plugin" in the name and constrain the ID, and
-  both must be unique in the directory. Candidates are TBD; the current ID
-  is `openlfcp`.
+Name and ID: **decided** (project owner, 2026-10-06). The display name is
+"Shared Tasks" and the plugin ID `shared-tasks`. Both were free in the
+directory's `community-plugins.json` on 2026-10-06 ("Relay" and "Tandem"
+are taken), and they respect Obsidian's rules: no "Obsidian" or "Plugin"
+in the name, a lowercase ID.
 
 Acceptance: a clean vault installs the plugin from the release (BRAT, then
 the directory) without building it.
