@@ -24,12 +24,18 @@ specifications remain Working Drafts.
 
 | Repository | Version | What it provides |
 | --- | --- | --- |
-| `spec` | `mvp-0.1-baseline.8` (da3977f) | LFCP-WIRE-01, SHARED-OBJECTS-PROFILE-01 and MARKDOWN-REFS-01 (Working Drafts); test vectors, the Automerge reference corpus, schemas; ADRs 0001–0007 |
+| `spec` | `mvp-0.1-baseline.8` (da3977f); 509c1c1 adds the owner's ADR approvals | LFCP-WIRE-01, SHARED-OBJECTS-PROFILE-01 and MARKDOWN-REFS-01 (Working Drafts); test vectors, the Automerge reference corpus, schemas; ADRs 0001–0007 |
 | `sdk-ts` | npm `0.1.0-rc.1` (98efaab) | The TypeScript SDK: core, crypto, wire, storage (memory, IndexedDB, Node), Shared Objects on Automerge, the sync client with invitations, Key Packages, Snapshots and epoch rotation |
-| `sdk-rs` | _TBD_ (7ae47c4 or later) | An independent Rust implementation of the protocol core and the Shared Objects profile (feature `shared-objects`) |
-| `server` | _TBD_ (6e2dce6 or later) | The reference LFCP server in Rust: WebSocket sessions, Control Coordinator, durable SQLite store, first-run pairing; never decodes Shared Objects |
-| `obsidian` | _TBD_ | The Obsidian plugin: Markdown ↔ Shared Object projection and the collaboration commands |
-| `examples` | _TBD_ | `lfcp-todo` (a headless client) and the cross-language conformance harness |
+| `sdk-rs` | 41dc532 | An independent Rust implementation of the protocol core and the Shared Objects profile (feature `shared-objects`) |
+| `server` | e84fa74 | The reference LFCP server in Rust: WebSocket sessions, Control Coordinator, durable SQLite store, first-run pairing; never decodes Shared Objects |
+| `obsidian` | 3cc9915 | The Obsidian plugin: Markdown ↔ Shared Object projection and the collaboration commands |
+| `examples` | fe3de90 | `lfcp-todo` (a headless client) and the cross-language conformance harness |
+
+These are the commits of release candidate rc6
+([rc6-manifest.json](rc6-manifest.json)): all eight local release gates
+pass ([rc-verification.md](rc-verification.md)), and GitHub CI is green
+on every one of them, the server's Windows job and the plugin's platform
+smoke on macOS, Windows and Linux included.
 
 The sdk-ts packages (`@openlfcp/core`, `crypto`, `storage`, `wire`,
 `storage-node`, `storage-idb`, `shared-objects`, `client`) are on npm as
