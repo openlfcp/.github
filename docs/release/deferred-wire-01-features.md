@@ -59,7 +59,7 @@ These are future extensions, not MVP gaps:
 | Snapshots in the Obsidian plugin | The plugin loads Snapshots but never publishes one. | obsidian |
 | Mobile | The plugin keeps mobile portability boundaries, but iOS and Android are not tested (LFCP-068). | obsidian |
 | Invitation sharing | No QR code or share sheet; copy only. | obsidian |
-| Deployment | The Docker deployment (`server: deploy/`) is written but not yet verified end to end. | server |
+| Deployment | The Docker deployment (`server: deploy/`) is verified by the server CI's `docker` job and by a hand run of `deploy/check.sh` on macOS on 2026-10-06, but not on a production host. | server |
 
 ## 5. What software may say
 

@@ -3,7 +3,7 @@
 **Project:** OpenLFCP  
 **Status:** Authoritative Working Backlog  
 **Scope:** Secure MVP 0.1  
-**Revision date:** 2026-10-05
+**Revision date:** 2026-10-06
 
 > This backlog replaces the earlier `LFCP-001...050` draft and the temporary `BACKLOG-MVP-0.1-PATCH.md`. Issue numbers may be rewritten while the project is still in early implementation. Dependencies, not numeric adjacency, determine execution order.
 
