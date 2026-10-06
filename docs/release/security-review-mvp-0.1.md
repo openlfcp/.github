@@ -30,6 +30,7 @@ limitations in the release notes.
 | H4 | high | server | `DATA_GET` / `KEY_PACKAGE_GET` load every requested range/epoch before deduplicating, with no count cap | **fixed: server eb1323f** |
 | H5 | high | server | Open hosting by default and no quotas: any keypair can host Resources and fill the disk | routed (known limitation) |
 | H6 | high | server | GET replies are built fully in memory; the outbound queue can hold about 2 GiB per connection | routed (known limitation) |
+| H7 | high | sdk-ts (Automerge JS) | A change nesting objects about 6,500 levels below the root traps Automerge JS 3.5.0, and its wasm module is then terminated for the whole process; a 32 KB change within the §11.1 limits, or several small changes, reach it (automerge-rs 0.12 is unaffected); found while implementing H1 | **fixed in the spec: SPEC-PATCH-08, `mvp-0.1-baseline.8`** (§11.2); SDK alignment pending (ALIGN-TS-8, sdk-rs) |
 | M1 | medium | sdk-ts, sdk-rs | A client adopts the server's `READY.maxMessageBytes` with no local upper bound | **fixed in the spec: WIRE §31, baseline.7**; SDK alignment pending |
 | M2 | medium | server | No connection cap, no HTTP header timeout, no handshake deadline; PING before AUTH keeps a connection alive | **fixed: server 65f148d, 625dbd9** (rate limits remain a known limitation) |
 | M3 | medium | server | `POST /admin/challenge` is unauthenticated and its map is unbounded | **fixed: server a7f3461** (bounded; still unauthenticated by design) |
