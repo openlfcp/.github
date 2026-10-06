@@ -5,7 +5,8 @@
 
 **Website:** [openlfcp.org](https://openlfcp.org)
 
-OpenLFCP is an open protocol and reference stack for **local-first
+OpenLFCP (Open Local-First Collaboration Protocol) is an open protocol
+and reference stack for **local-first
 collaboration**. It starts with Obsidian. You keep your vault on your own
 device and choose single objects to share, such as one task. The same task
 can then live in different notes, in different people's vaults. Only that
