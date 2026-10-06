@@ -1,4 +1,4 @@
-# npm publish checklist: @openlfcp/* 0.1.0-rc.1
+# npm publish checklist: @openlfcp/*
 
 **For:** the project owner, who publishes by hand. Nothing in any
 repository publishes automatically, and agents never run `npm publish` or
@@ -11,6 +11,10 @@ moved, never removed (see [Promotion](#promotion)).
 
 **Published:** `0.1.0-rc.1` of all eight, from sdk-ts 98efaab, on
 2026-10-06. Being their first publish, `next` and `latest` both name it.
+
+**Final:** `0.1.0` of all eight, from sdk-ts 4e1b02f, under `latest`. See
+[Final release 0.1.0](#final-release-010). Sections 1 to 5 describe the
+release-candidate publish; the final release reuses them.
 
 ## 1. Prerequisites
 
@@ -124,17 +128,69 @@ reused.
 ## Promotion
 
 `0.1.0-rc.1` is on `next`, and, being the first publish, on `latest` too,
-which is harmless while it is the only version. When MVP 0.1 is final:
-1. Publish `0.1.0` the same way, in the same order.
-2. Then move `latest` to it, one package at a time:
-
-   ```sh
-   npm dist-tag add @openlfcp/<pkg>@0.1.0 latest --otp=<code>
-   ```
-
-3. Check with `npm view @openlfcp/<pkg> dist-tags`: `latest` is `0.1.0`.
+which is harmless while it is the only version. The final `0.1.0` goes
+straight to `latest` (below), and `next` then moves to it too.
 
 A later release candidate of a package that is already published
 (`0.1.0-rc.2` …) goes out with `--tag next` as above, and then `latest`
 stays where it was: only the first publish of a package sets `latest`
 regardless of `--tag`.
+
+## Final release 0.1.0
+
+The final release publishes `0.1.0` of all eight packages from sdk-ts
+4e1b02f, under `latest`. Every package there has `version: "0.1.0"` and
+`publishConfig.tag: "latest"`; `pnpm release:check` expects `latest` for a
+final version and `next` for a prerelease.
+
+1. **Prerequisites and pre-flight:** sections 1 and 2, with these values:
+   - sdk-ts at 4e1b02f (tag `v0.1.0`), pushed, CI green;
+   - `pnpm release:check` prints `version 0.1.0, dist-tag latest` and
+     `release check PASSED`;
+   - `npm view @openlfcp/core@0.1.0` answers 404.
+2. **Publish, in the same order,** each with a fresh one-time code:
+
+   | # | Package | Command |
+   | --- | --- | --- |
+   | 1 | `@openlfcp/core` | `pnpm --filter @openlfcp/core publish --tag latest --otp=<code>` |
+   | 2 | `@openlfcp/crypto` | `pnpm --filter @openlfcp/crypto publish --tag latest --otp=<code>` |
+   | 3 | `@openlfcp/storage` | `pnpm --filter @openlfcp/storage publish --tag latest --otp=<code>` |
+   | 4 | `@openlfcp/wire` | `pnpm --filter @openlfcp/wire publish --tag latest --otp=<code>` |
+   | 5 | `@openlfcp/storage-node` | `pnpm --filter @openlfcp/storage-node publish --tag latest --otp=<code>` |
+   | 6 | `@openlfcp/storage-idb` | `pnpm --filter @openlfcp/storage-idb publish --tag latest --otp=<code>` |
+   | 7 | `@openlfcp/shared-objects` | `pnpm --filter @openlfcp/shared-objects publish --tag latest --otp=<code>` |
+   | 8 | `@openlfcp/client` | `pnpm --filter @openlfcp/client publish --tag latest --otp=<code>` |
+
+3. **Move `next` to 0.1.0 too**, so `next` never lags behind `latest`, in
+   the same order:
+
+   ```sh
+   npm dist-tag add @openlfcp/core@0.1.0 next --otp=<code>
+   npm dist-tag add @openlfcp/crypto@0.1.0 next --otp=<code>
+   npm dist-tag add @openlfcp/storage@0.1.0 next --otp=<code>
+   npm dist-tag add @openlfcp/wire@0.1.0 next --otp=<code>
+   npm dist-tag add @openlfcp/storage-node@0.1.0 next --otp=<code>
+   npm dist-tag add @openlfcp/storage-idb@0.1.0 next --otp=<code>
+   npm dist-tag add @openlfcp/shared-objects@0.1.0 next --otp=<code>
+   npm dist-tag add @openlfcp/client@0.1.0 next --otp=<code>
+   ```
+
+4. **Verify:**
+
+   ```sh
+   for p in core crypto storage wire storage-node storage-idb shared-objects client; do
+     printf '%s ' "@openlfcp/$p"
+     npm view "@openlfcp/$p" dist-tags --json | tr -d ' \n'
+     echo
+   done
+   ```
+
+   Expect `"latest":"0.1.0","next":"0.1.0"` for each. Then run the
+   fresh-project install of section 4 with `@latest` in place of `@next`,
+   and check the metadata with
+   `npm view @openlfcp/client@latest version dependencies license repository`:
+   every `@openlfcp/*` dependency is `^0.1.0`.
+5. **If a publish fails midway:** section 5 applies, with `0.1.1` as the
+   next version (a final version cannot be republished either), and
+   `npm deprecate @openlfcp/<pkg>@0.1.0 "incomplete release; use 0.1.1"`
+   for the incomplete set.
