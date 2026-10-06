@@ -76,11 +76,13 @@ def manifest_from_heads() -> dict:
         path = ROOT / repo
         entry = {"commit": git(path, "rev-parse", "HEAD")}
         if repo == "spec":
-            tags = git(path, "tag", "--points-at", "HEAD").split()
-            baseline = sorted(t for t in tags if t.startswith("mvp-0.1-baseline"))
-            if not baseline:
-                sys.exit("rc-verify: spec HEAD carries no mvp-0.1-baseline tag")
-            entry["tag"] = baseline[-1]
+            # The implementations pin a baseline tag; spec HEAD may carry
+            # later commits (ADRs, docs). The spec gate tests HEAD (`commit`);
+            # the pins are checked against the tag's commit (`tag_commit`).
+            if run(["git", "describe", "--tags", "--abbrev=0", "--match", "mvp-0.1-baseline.*", "HEAD"], path) != 0:
+                sys.exit("rc-verify: spec HEAD has no mvp-0.1-baseline tag in its history")
+            entry["tag"] = git(path, "describe", "--tags", "--abbrev=0", "--match", "mvp-0.1-baseline.*", "HEAD")
+            entry["tag_commit"] = git(path, "rev-parse", f"refs/tags/{entry['tag']}^{{commit}}")
         dirty = git(path, "status", "--porcelain", "--untracked-files=no")
         if dirty:
             entry["note"] = "uncommitted changes in the checkout are not part of this RC"
@@ -106,12 +108,39 @@ def prepare(rc: Path, manifest: dict) -> None:
         if git(target, "rev-parse", "HEAD") != commit:
             sys.exit(f"rc-verify: {target} is not at {commit}")
     spec = manifest["spec"]
+    tag_commit = spec_tag_commit(manifest)
     resolved = git(rc / "spec", "rev-parse", f"refs/tags/{spec['tag']}^{{commit}}")
-    if resolved != spec["commit"]:
-        sys.exit(f"rc-verify: tag {spec['tag']} is {resolved}, the manifest says {spec['commit']}")
+    if resolved != tag_commit:
+        sys.exit(f"rc-verify: tag {spec['tag']} is {resolved}, the manifest says {tag_commit}")
+    if run(["git", "merge-base", "--is-ancestor", tag_commit, spec["commit"]], rc / "spec") != 0:
+        sys.exit(f"rc-verify: tag {spec['tag']} is not in the history of spec {spec['commit']}")
 
 
 # ------------------------------------------------------------------ consistency
+
+# Spec paths whose change after a baseline tag needs a new baseline: the
+# normative documents, their schemas and CDDL, and the test vectors.
+NORMATIVE = ("wire/", "profiles/", "integration/", "schemas/", "test-vectors/")
+
+
+def spec_tag_commit(manifest: dict) -> str:
+    """The commit the spec pins name: the baseline tag's (older manifests: the spec commit)."""
+    spec = manifest["spec"]
+    return spec.get("tag_commit", spec["commit"])
+
+
+def spec_after_tag(rc: Path, manifest: dict) -> tuple[bool, list[dict]]:
+    """The spec commits after the pinned baseline tag: docs and ADRs are
+    fine; one touching a normative path means a new baseline is due."""
+    spec = manifest["spec"]
+    tag_commit = spec_tag_commit(manifest)
+    out = []
+    for line in git(rc / "spec", "log", "--format=%H %s", f"{tag_commit}..{spec['commit']}").splitlines():
+        commit, subject = line.split(" ", 1)
+        files = git(rc / "spec", "show", "--name-only", "--format=", commit).splitlines()
+        normative = [f for f in files if f.startswith(NORMATIVE) or f.endswith(".cddl")]
+        out.append({"commit": commit, "subject": subject, "normative": normative})
+    return all(not c["normative"] for c in out), out
 
 
 def read_json(path: Path) -> dict:
@@ -121,6 +150,7 @@ def read_json(path: Path) -> dict:
 def consistency(rc: Path, manifest: dict) -> tuple[bool, list[dict]]:
     """Every pin agrees with the manifest; and, against the local HEADs, what lags."""
     m = {r: manifest[r]["commit"] for r in REPOS}
+    m["spec"] = spec_tag_commit(manifest)
     spec_tag = manifest["spec"]["tag"]
     pins = []
 
@@ -296,7 +326,15 @@ def versions() -> dict:
 # ------------------------------------------------------------------ report
 
 
-def write_report(rc: Path, manifest: dict, consistent: bool, pins: list[dict], results: list[dict], tools: dict) -> Path:
+def write_report(
+    rc: Path,
+    manifest: dict,
+    consistent: bool,
+    pins: list[dict],
+    after_tag: list[dict],
+    results: list[dict],
+    tools: dict,
+) -> Path:
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     all_ok = consistent and all(r["ok"] for r in results)
     lines = [
@@ -338,12 +376,30 @@ def write_report(rc: Path, manifest: dict, consistent: bool, pins: list[dict], r
             f"| {p['owner']} `{p['file']}` {p['field']} → {p['target']} | {p['value'][:12]} | "
             f"{'yes' if p['matches_manifest'] else '**no**'} | {'yes' if p['ancestor_of_head'] else '**no**'} | {gap} |"
         )
+    if after_tag:
+        lines += [
+            "",
+            f"## Spec after {manifest['spec']['tag']}",
+            "",
+            "Spec commits after the pinned baseline tag. Docs and ADRs are fine; a normative change needs a new baseline.",
+            "",
+            "| Commit | Subject | Normative files |",
+            "| --- | --- | --- |",
+        ]
+        for c in after_tag:
+            normative = ", ".join(c["normative"]) if c["normative"] else "none"
+            if c["normative"]:
+                normative = f"**{normative}**"
+            lines.append(f"| {c['commit'][:12]} | {c['subject']} | {normative} |")
     lines += ["", "## Tools", ""] + [f"- {k}: {v}" for k, v in tools.items()]
     lines += ["", f"Free disk at the end: {free_bytes(rc) / 1024**3:.1f} GB", ""]
     report = rc / f"report-{stamp}.md"
     report.write_text("\n".join(lines))
     (rc / f"report-{stamp}.json").write_text(
-        json.dumps({"ok": all_ok, "manifest": manifest, "pins": pins, "gates": results, "tools": tools}, indent=2)
+        json.dumps(
+            {"ok": all_ok, "manifest": manifest, "pins": pins, "spec_after_tag": after_tag, "gates": results, "tools": tools},
+            indent=2,
+        )
     )
     return report
 
@@ -366,6 +422,9 @@ def main() -> int:
         args.write_manifest.write_text(json.dumps(manifest, indent=2) + "\n")
     prepare(rc, manifest)
     consistent, pins = consistency(rc, manifest)
+    # A normative spec change after the pinned tag makes the pins inconsistent.
+    spec_ok, after_tag = spec_after_tag(rc, manifest)
+    consistent = consistent and spec_ok
     target_dir = Path(os.environ.get("LFCP_SERVER_TARGET_DIR", Path(tempfile.gettempdir()) / "openlfcp-sdk-ts-server-target"))
     results = []
     if not args.consistency_only:
@@ -378,7 +437,7 @@ def main() -> int:
             r = run_gate(gate, rc / "logs", ROOT)
             print(f"rc-verify: {gate['name']} {'PASS' if r['ok'] else 'FAIL'} ({r['seconds']} s)", flush=True)
             results.append(r)
-    report = write_report(rc, manifest, consistent, pins, results, versions())
+    report = write_report(rc, manifest, consistent, pins, after_tag, results, versions())
     print(f"rc-verify: report {report}")
     ok = consistent and all(r["ok"] for r in results)
     return 0 if ok else 1

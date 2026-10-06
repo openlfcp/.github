@@ -16,8 +16,10 @@ scripts/rc-verify.py --from-heads --consistency-only            # pins only
 scripts/rc-verify.py --from-heads --only sdk-rs,server          # some gates
 ```
 
-`--from-heads` pins every repository's committed HEAD (and the spec's
-`mvp-0.1-baseline.*` tag on it). Uncommitted work in a checkout is never
+`--from-heads` pins every repository's committed HEAD. For the spec it
+also records the newest `mvp-0.1-baseline.*` tag in HEAD's history and
+that tag's commit: the spec gate tests HEAD, and the implementations' spec
+pins must name the tag's commit. Uncommitted work in a checkout is never
 part of the RC, because the gates run in separate worktrees at the pinned
 commits.
 
@@ -36,6 +38,11 @@ commits.
    - `sdk-rs.lock` in server;
    - `sdk-ts.lock` and `server.lock` in obsidian;
    - `conformance/pins.json` in examples.
+
+   Spec commits after the pinned tag are listed in the report. ADRs and
+   other docs there are fine; a commit touching `wire/`, `profiles/`,
+   `integration/`, `schemas/`, `test-vectors/` or a `.cddl` file makes the
+   pins inconsistent: a normative change needs a new baseline.
 
    Every pin that lags its repository's HEAD is listed with the commits in
    the gap.
