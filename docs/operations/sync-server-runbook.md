@@ -104,14 +104,25 @@ Commit, push; on the box `git pull && ./stack sync` (`nginx -t`, then
 reload). With the Cloudflare proxy on, block in Cloudflare's WAF instead,
 before the traffic reaches the box.
 
-**Stop a Principal from hosting.** With POST-003, an administrator sets
-that Principal's quota to zero (`PUT /admin/quotas/<principal hex>`, over
-the SSH tunnel, with an admin token). This stops new Resources; it does
-not cut its existing sessions or its access to Resources it is a member
-of: membership is decided by each Resource's own signed Control Chain, not
-by the server. Until an admin client exists (see the stack runbook,
-"Administration"), there is no admin token, and the IP block is the only
-lever.
+**Stop a Principal from hosting.** With `lfcp-admin` (POST-014, server
+after 0.2.0; stack runbook "Administration"), over the SSH tunnel, set
+that Principal's quota to zero:
+
+```sh
+lfcp-admin quota get <principal hex>                       # what it hosts: Resources, bytes
+lfcp-admin quota set <principal hex> --resources 0 --bytes 0
+lfcp-admin quota clear <principal hex>                     # undo: back to the defaults
+```
+
+A zero quota refuses its new Resources and every new Data Unit and
+Snapshot in the Resources it hosts (`QUOTA_EXCEEDED`). Stored data stays
+and stays readable. Control Records and Key Packages still pass within
+the control reserve (16 MiB), so revocations and key rotations in those
+Resources keep working. It does not cut its existing sessions or its
+access to Resources it is a member of: membership is decided by each
+Resource's own signed Control Chain, not by the server. Pair it with an
+IP block when the same client keeps creating new Principals (keypairs are
+free; the server already limits new Resources per IP per day).
 
 **Purge a Resource.** Server 0.1.0 has no delete API. By hand, with the
 server stopped. Rehearsed on 2026-10-06 against a copy of the restore-drill
@@ -161,9 +172,10 @@ the privacy note; route them to the owner.
 
 ## Gaps for the owner
 
-- **No admin client.** Pairing and every admin call need a COSE proof
-  signed by the administrator's Principal; only the server's tests can make
-  one today. Proposed as backlog work.
+- **Admin client: `lfcp-admin` (POST-014)** ships with the server
+  release after 0.2.0. Until then the server stays unpaired, or the
+  owner builds it from server main (`cargo build --release -p
+  lfcp-admin`).
 - **No ban or purge API** in server 0.1.0; the purge above is manual.
   Proposed as backlog work.
 - **nginx access logs are not rotated on the box**, so IP retention is
