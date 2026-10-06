@@ -97,3 +97,4 @@ for the spec's CDDL check. The spec gate reuses the main checkout's
 | RC | Manifest | Result |
 | --- | --- | --- |
 | rc1 | [rc1-manifest.json](rc1-manifest.json) | All seven gates PASS on Darwin 25.5.0 arm64. The spec gate passed on a rerun after the bundler fix in rc-verify. Pins are consistent with no lag. Excludes in-flight LFCP-067 and LFCP-071 work. |
+| rc2 | [rc2-manifest.json](rc2-manifest.json) | All eight gates PASS (the docs gate is new) on Darwin 25.5.0 arm64, at spec `mvp-0.1-baseline.8`. Pins are consistent with no lag. The first run failed one examples test on a random Resource ID starting with "-" (fixed in examples 2a686a3); a rerun then failed four gates on a damaged build-script output in the shared Cargo target directory (repaired, not a code change); the third run passed. Excludes obsidian cfcb7a5 (rc3). |
