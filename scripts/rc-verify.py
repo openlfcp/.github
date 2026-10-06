@@ -197,6 +197,11 @@ def gates(rc: Path, target_dir: Path) -> list[dict]:
             ["./scripts/validate.sh"],
         ]},
         {"name": ".github", "cwd": rc / ".github", "env": base, "steps": [["./scripts/validate.sh"]]},
+        # Links, anchors and NAVIGATOR coverage across all seven worktrees,
+        # each at its pinned commit (the checker reads committed files).
+        {"name": "docs", "cwd": rc / ".github", "env": base, "steps": [
+            ["python3", "scripts/doccheck.py", "--root", str(rc), *REPOS],
+        ]},
         {"name": "sdk-rs", "cwd": rc / "sdk-rs", "env": cargo, "steps": [
             ["cargo", "fmt", "--all", "--check"],
             ["cargo", "clippy", "--workspace", "--all-targets", "--all-features", "--", "-D", "warnings"],

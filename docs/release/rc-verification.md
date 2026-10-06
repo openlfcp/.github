@@ -45,6 +45,7 @@ commits.
    | --- | --- |
    | spec | `pnpm install --frozen-lockfile`, `bundle check`, `scripts/validate.sh` |
    | .github | `scripts/validate.sh` |
+   | docs | `scripts/doccheck.py` across the seven worktrees, each at its pinned commit (see [Documentation check](#documentation-check)) |
    | sdk-rs | `cargo fmt --check`; `clippy -D warnings` and `test`, each with `--all-features` and `--no-default-features` |
    | server | `cargo fmt --check`, `clippy -D warnings`, `test` |
    | sdk-ts | install, build, typecheck, lint, `pnpm test` (live tests against the server included) |
