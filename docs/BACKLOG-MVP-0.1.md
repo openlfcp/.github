@@ -1799,6 +1799,30 @@ clarification (no normative change, no new baseline needed on its own).
 Acceptance: §45, §49 and §52 read alike; the change log of the next spec
 revision lists it as informative.
 
+## POST-017 - Client UX: a Resource the server no longer hosts
+
+Source: `.github: docs/operations/sync-server-runbook.md` ("Purge a
+Resource", the rehearsal on server 0.2.0; `.github` c87c16b).
+
+After a purge, the server answers `RESOURCE_OPEN` of that Resource with
+`NACK(RESOURCE_NOT_HOSTED)`, but `lfcp-todo sync` waits without an error
+until it is killed. The client treats the refusal as something to retry
+instead of a final state. The same happens to any client whose server lost
+or removed a Resource.
+
+Deliver:
+
+- sdk-ts: `RESOURCE_NOT_HOSTED` for an open Resource becomes a terminal,
+  typed sync state with an event, instead of a retry;
+- `lfcp-todo`: `sync` and `watch` exit non-zero with a message that names
+  the Resource and the server;
+- the Obsidian plugin: a notice, and the state in "Resource status".
+
+Acceptance: a test for each of the three against a server that does not
+host the Resource: the SDK reaches the terminal state without hanging,
+`lfcp-todo` exits non-zero with the message, and the plugin shows the
+notice and the status.
+
 ## Launch track (owner-led, orchestrator assists)
 
 ### LAUNCH-001 - GitHub organization profile
