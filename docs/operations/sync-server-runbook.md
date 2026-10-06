@@ -124,16 +124,36 @@ Resource's own signed Control Chain, not by the server. Pair it with an
 IP block when the same client keeps creating new Principals (keypairs are
 free; the server already limits new Resources per IP per day).
 
-**Purge a Resource.** Server 0.1.0 has no delete API. By hand, with the
-server stopped. Rehearsed on 2026-10-06 against a copy of the restore-drill
-database, with foreign keys on: every row of the Resource gone, the other
-tables intact, `integrity_check` ok, `foreign_key_check` clean. From
-server 0.2.0 the store also keeps `resource_usage` (stored bytes per
-Resource, for the quotas): its row must go too, or the delete of the
-Resource fails with foreign keys on, and with them off an orphan row keeps
-counting the purged bytes against `max_total_bytes`. A server
-start on a purged database is not yet rehearsed: do that on a copy before
-the first real purge.
+**Purge a Resource.** The server has no delete API (0.1.0 and 0.2.0;
+POST-015). Purge by hand, with the server stopped.
+
+From server 0.2.0 the store also keeps `resource_usage` (stored bytes
+per Resource, for the quotas). Its row must go too:
+- with foreign keys on, the delete of the Resource fails without it;
+- with them off, an orphan row keeps counting the purged bytes against
+  `max_total_bytes`.
+
+The `sqlite3` shell starts with foreign keys **off** and, after an error,
+runs the remaining statements, `COMMIT` included. That would leave a
+half-purged Resource: its row present, its head and hosting gone. So the
+script turns foreign keys on and stops at the first error (`.bail on`).
+An error then rolls the whole purge back.
+
+Rehearsed on 2026-10-06:
+- On server 0.1.0, against a copy of the restore-drill database.
+- On server 0.2.0 (d6cd820), with two Resources hosted, one with an
+  invitation and a Key Package. The script below purged one of them.
+- After the purge: every row of that Resource gone, the other tables
+  intact, `integrity_check` ok, `foreign_key_check` clean, no orphan row
+  in any table, `resource_usage` included.
+- The server then started normally:
+  - `RESOURCE_OPEN` of the purged Resource gets
+    `NACK(RESOURCE_NOT_HOSTED)`;
+  - the other Resource kept syncing;
+  - `lfcp-admin quota get` showed the purged host at 0 Resources and
+    0 bytes, and `status` showed one Resource fewer.
+- A member's `lfcp-todo sync` on the purged Resource waits without an
+  error message until it is stopped.
 
 ```sh
 ./stack disable openlfcp
@@ -141,6 +161,8 @@ S=/mnt/data/openlfcp/server.sqlite3
 TS=$(date -u +%Y%m%dT%H%M%SZ)
 sudo sqlite3 "$S" ".backup /mnt/data/openlfcp-before-purge-$TS.db"   # keep until the purge is confirmed
 sudo sqlite3 "$S" <<SQL
+.bail on
+PRAGMA foreign_keys = ON;
 BEGIN;
 DELETE FROM control_head  WHERE resource_id = X'$hex';
 DELETE FROM hosting       WHERE resource_id = X'$hex';
@@ -160,7 +182,12 @@ sudo chown 65532:65532 "$S" && sudo chmod 600 "$S"
 
 The purge removes the server's copy only. Members keep theirs, and any of
 them can host the same Resource again with its Genesis; pair the purge
-with an IP block or a zero quota. Delete the `before-purge` copy once the
+with an IP block or a zero quota.
+
+A Resource hosted again holds only its Genesis. Its clients do not send
+again what the server had acknowledged (Data Units, Control Records,
+Key Packages): this is the restore wedge, POST-013. A purge is therefore
+final for the server's copy. Delete the `before-purge` copy once the
 purge is confirmed: it holds the purged data. Encrypted nightly backups
 keep it until their retention expires.
 
