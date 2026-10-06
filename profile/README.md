@@ -1,4 +1,5 @@
-# OpenLFCP
+<p align="center"><picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/openlfcp/.github/main/docs/assets/brand/openlfcp-mark-dark.svg"><img src="https://raw.githubusercontent.com/openlfcp/.github/main/docs/assets/brand/openlfcp-mark.svg" width="96" height="96" alt="OpenLFCP"></picture></p>
+<h1 align="center">OpenLFCP</h1>
 
 **Shared tasks inside your private notes.**
 
