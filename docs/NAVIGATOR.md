@@ -18,3 +18,4 @@ catalogs every artifact across the repositories, with its status.
 | [release/rc-verification.md](release/rc-verification.md) | release | Verifying a release candidate locally (`scripts/rc-verify.py`) |
 | [release/rc1-manifest.json](release/rc1-manifest.json) | release | The pins of release candidate rc1 |
 | [release/security-review-mvp-0.1.md](release/security-review-mvp-0.1.md) | release | The MVP 0.1 pre-release security review: findings, fixes, known limitations |
+| [release/open-decision-actor-seq-collision.md](release/open-decision-actor-seq-collision.md) | owner | Open decision: two Automerge changes with the same actor and sequence number; options, recommendation, and what shipping as is means |
