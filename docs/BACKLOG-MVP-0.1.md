@@ -1862,6 +1862,55 @@ host the Resource: the SDK reaches the terminal state without hanging,
 `lfcp-todo` exits non-zero with the message, and the plugin shows the
 notice and the status.
 
+## POST-018 - Share and insert many tasks at once
+
+**State:** open. Owner request 2026-10-07. Plugin only; no protocol change.
+
+A collaboration (Resource) already holds any number of Tasks, and one
+invitation covers all of them, including Tasks added later
+(SHARED-OBJECTS-PROFILE-01 §15; OBSIDIAN-ARCHITECTURE-01 §8). The plugin
+only lets a user share one Task line at a time, and the collaborator
+inserts each Task into a note one by one. Sharing a list or a section of a
+note therefore takes one command per line on both sides.
+
+Deliver, in the Obsidian plugin:
+
+- **"Share selected tasks"**: shares every Task line in the editor
+  selection. With no selection, it shares the Task lines under the heading
+  at the cursor, down to the next heading of the same or a higher level.
+  One collaboration pick for the whole batch, as "Share task under cursor"
+  does, with "create a new collaboration" offered. Each Task becomes its own
+  `task.create` intent and its own change. Its ref uses the configured
+  placement. All refs of one note go in one `vault.process`, so lines that
+  move in between are still found.
+- Lines that already carry a valid ref are skipped. Lines with a blocked
+  (malformed or duplicated) ref are refused. Nested Task lines are shared
+  as Tasks of their own; nesting stays local presentation (§24). One
+  summary notice says how many were shared, skipped and refused.
+- **"Insert all tasks from collaboration"**: picks a collaboration and
+  inserts, at the cursor, a projection of every live Task that this note
+  does not already show, ordered by `created_at` and then Object ID. The
+  notice says how many were inserted.
+- A batch is capped at 200 Tasks per command. Above that, the command
+  refuses before writing anything. The dialog states that everyone invited
+  to the collaboration sees every Task in it.
+- `docs/architecture/collaboration.md` and the user README list the new
+  commands. Command names follow the Obsidian guidelines (sentence case, no
+  plugin prefix).
+
+Acceptance:
+
+- Unit tests for the range: selection, heading at the cursor, nested
+  lists, child-line and inline refs, CRLF, already shared and blocked lines.
+- A live test against a local server: share three Tasks under a heading in
+  vault A, then "Insert all" in vault B gives three refs. Edits then sync
+  both ways.
+- The existing suite stays green, and `eslint-plugin-obsidianmd` reports 0
+  errors.
+
+Live sections, where the order, the heading and new Tasks follow
+automatically, are NEXT-001 and need the protocol.
+
 ## Launch track (owner-led, orchestrator assists)
 
 ### LAUNCH-001 - GitHub organization profile
@@ -1955,4 +2004,32 @@ same mark, colour and spelling.
 
 ## Next MVP planning (owner)
 
-No entries yet.
+### NEXT-001 - Shared sections (an ordered list of Tasks)
+
+**State:** idea, needs a design and an owner decision. Owner request
+2026-10-07.
+
+Users want to share a whole section of a note: a heading with its Tasks, in
+order, where a Task one person adds appears in the other person's section by
+itself. Shared Objects v1 cannot say this. `objects` is an unordered map,
+nothing groups Tasks, and a heading is local presentation
+(OBSIDIAN-ARCHITECTURE-01 §24). POST-018 covers the batch commands without
+a protocol change. This entry is what remains.
+
+Design questions:
+
+- **Object model.** One option is a new object type: a standard `list`, or a
+  namespaced `org.openlfcp.list` first, with a `title` and ordered
+  membership. Ordered membership is either an Automerge list of Object IDs
+  or a fractional position per member.
+- **Conflicts.** Concurrent moves; a member that is deleted; one Task in two
+  lists; a list deleted while a peer adds to it.
+- **Markdown.** A ref on the heading (MARKDOWN-REFS-01 would need a `list`
+  object type) and a managed block below it. Also: what happens to
+  unshared lines inside the block, and how the plugin appends Tasks that
+  arrive from a peer without fighting the user's edits.
+- **Compatibility.** Clients that only know Tasks keep the Tasks and ignore
+  the list.
+
+Deliver first: a design note and a proposed ADR in `spec`, for an owner
+decision. Then the profile change, vectors, SDK and plugin.
