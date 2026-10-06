@@ -30,12 +30,14 @@ specifications remain Working Drafts.
 | `obsidian` | `0.1.0` (e8e212f) | The Obsidian plugin: Markdown ↔ Shared Object projection and the collaboration commands |
 | `examples` | `0.1.0` (943a6ad) | `lfcp-todo` (a headless client) and the cross-language conformance harness |
 
-Each repository tags its release commit `v0.1.0`. These commits are rc6
-([rc6-manifest.json](rc6-manifest.json)) with only the version set to
-`0.1.0` and the pins moved along; rc6 passed all eight local release gates
-([rc-verification.md](rc-verification.md)) and GitHub CI, the server's
-Windows and Docker jobs and the plugin's platform smoke on macOS, Windows
-and Linux included.
+These are the commits of rc7 ([rc7-manifest.json](rc7-manifest.json)),
+and each repository tags its commit `v0.1.0`; in this repository, `v0.1.0`
+is the commit that records rc7 and completes these notes. rc7 passed all
+eight local release gates on its first run
+([rc-verification.md](rc-verification.md)). It is rc6 with the versions set
+to `0.1.0` and the pins moved to them, and rc6 is green in GitHub CI, the
+server's Windows and Docker jobs and the plugin's platform smoke on macOS,
+Windows and Linux included.
 
 The sdk-ts packages (`@openlfcp/core`, `crypto`, `storage`, `wire`,
 `storage-node`, `storage-idb`, `shared-objects`, `client`) are released on
@@ -190,10 +192,12 @@ shared task · Resolve shared task conflict
   Windows and Linux runs and the cross-OS pair (two operating systems
   over `wss://`) were not run for 0.1.0.
 - The Docker deployment of the server (LFCP-055) is verified by the server
-  CI's `docker` job: it builds the image and runs `deploy/check.sh`
+  CI's `docker` job, which builds the image and runs `deploy/check.sh`
   (non-root, health, `wss://` through the Caddy proxy, restart on the same
-  volume, a destroyed volume). It has not been run by hand on a production
-  host.
+  volume, a destroyed volume), and by hand on macOS with Docker Desktop on
+  2026-10-06 (`deploy/check.sh` end to end, first-run pairing over `https://`
+  through Caddy included; server f1fcf29). It has not been verified on a
+  production host.
 - Mobile (iOS, Android) is not tested.
 - sdk-rs copies a document once per apply call as rollback insurance; a
   batch of changes counts once, but a Data Unit applied on its own costs a
