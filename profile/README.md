@@ -3,6 +3,8 @@
 
 **Shared tasks inside your private notes.**
 
+**Website:** [openlfcp.org](https://openlfcp.org)
+
 OpenLFCP is an open protocol and reference stack for **local-first
 collaboration**. It starts with Obsidian. You keep your vault on your own
 device and choose single objects to share, such as one task. The same task
