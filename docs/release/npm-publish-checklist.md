@@ -194,3 +194,84 @@ final version and `next` for a prerelease.
    next version (a final version cannot be republished either), and
    `npm deprecate @openlfcp/<pkg>@0.1.0 "incomplete release; use 0.1.1"`
    for the incomplete set.
+
+## Patch release 0.1.1
+
+The patch release publishes `0.1.1` of all eight packages from sdk-ts
+ab0a49a, under `latest`. It adds POST-017, the terminal refusal of a
+Resource, in `@openlfcp/client`; the Shared Tasks plugin needs it in order
+to depend on published packages. What changed is in
+`sdk-ts: CHANGELOG.md`. Nothing is removed or renamed. Two changes may
+matter to an existing client:
+- a Resource refused with a terminal code is no longer opened again after
+  a reconnect;
+- `SyncEvent` has a new member, `resource-refused`.
+
+1. **Pre-flight**, from a clean sdk-ts checkout at ab0a49a, pushed and CI
+   green:
+
+   ```sh
+   git status --short                          # empty
+   git log -1 --format=%h                      # ab0a49a
+   pnpm install --frozen-lockfile
+   pnpm release:check                          # "version 0.1.1, dist-tag latest", "release check PASSED"
+   npm whoami                                  # the account that owns @openlfcp
+   npm view @openlfcp/core@0.1.1 version       # E404: not published yet
+   ```
+
+   `release:check` was PASSED on a fresh clone of ab0a49a on 2026-10-07.
+   Every `@openlfcp/*` dependency packs as `^0.1.1`, and the total is
+   277.9 KiB.
+2. **Publish, in dependency order,** each with a fresh one-time code:
+
+   | # | Package | Command |
+   | --- | --- | --- |
+   | 1 | `@openlfcp/core` | `pnpm --filter @openlfcp/core publish --tag latest --otp=<code>` |
+   | 2 | `@openlfcp/crypto` | `pnpm --filter @openlfcp/crypto publish --tag latest --otp=<code>` |
+   | 3 | `@openlfcp/storage` | `pnpm --filter @openlfcp/storage publish --tag latest --otp=<code>` |
+   | 4 | `@openlfcp/wire` | `pnpm --filter @openlfcp/wire publish --tag latest --otp=<code>` |
+   | 5 | `@openlfcp/storage-node` | `pnpm --filter @openlfcp/storage-node publish --tag latest --otp=<code>` |
+   | 6 | `@openlfcp/storage-idb` | `pnpm --filter @openlfcp/storage-idb publish --tag latest --otp=<code>` |
+   | 7 | `@openlfcp/shared-objects` | `pnpm --filter @openlfcp/shared-objects publish --tag latest --otp=<code>` |
+   | 8 | `@openlfcp/client` | `pnpm --filter @openlfcp/client publish --tag latest --otp=<code>` |
+
+   `publishConfig.access` is `public` in every package, so `pnpm publish`
+   needs no `--access public`.
+3. **Move `next` to 0.1.1 too**, so that `next` never lags `latest`:
+
+   ```sh
+   for p in core crypto storage wire storage-node storage-idb shared-objects client; do
+     npm dist-tag add "@openlfcp/$p@0.1.1" next --otp=<code>
+   done
+   ```
+
+4. **Verify:**
+
+   ```sh
+   for p in core crypto storage wire storage-node storage-idb shared-objects client; do
+     printf '%s ' "@openlfcp/$p"
+     npm view "@openlfcp/$p" dist-tags --json | tr -d ' \n'
+     echo
+   done                                        # each: "latest":"0.1.1","next":"0.1.1"
+   npm view @openlfcp/client@0.1.1 version dependencies   # every @openlfcp/* dependency ^0.1.1
+
+   mkdir /tmp/openlfcp-npm-011 && cd /tmp/openlfcp-npm-011 && npm init -y >/dev/null
+   npm pkg set type=module
+   npm install @openlfcp/core@0.1.1 @openlfcp/crypto@0.1.1 @openlfcp/storage@0.1.1 \
+     @openlfcp/wire@0.1.1 @openlfcp/storage-node@0.1.1 @openlfcp/storage-idb@0.1.1 \
+     @openlfcp/shared-objects@0.1.1 @openlfcp/client@0.1.1
+   node --input-type=module -e 'for (const p of ["core","crypto","storage","wire","storage-node","storage-idb","shared-objects","client"]) await import(`@openlfcp/${p}`); const { TERMINAL_RESOURCE_CODES } = await import("@openlfcp/client"); console.log("all eight import; RESOURCE_NOT_HOSTED terminal:", TERMINAL_RESOURCE_CODES.has("RESOURCE_NOT_HOSTED"))'
+   ```
+
+   The last line prints `all eight import; RESOURCE_NOT_HOSTED terminal: true`.
+5. **Tag the release commit**, as for 0.1.0:
+
+   ```sh
+   git tag -a v0.1.1 ab0a49a -m "OpenLFCP sdk-ts 0.1.1"
+   git push origin v0.1.1
+   ```
+
+6. **If a publish fails midway:** section 5 applies, with `0.1.2` as the
+   next version, and
+   `npm deprecate @openlfcp/<pkg>@0.1.1 "incomplete release; use 0.1.2"`
+   for the incomplete set.
