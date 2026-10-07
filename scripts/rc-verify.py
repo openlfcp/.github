@@ -162,7 +162,12 @@ def consistency(rc: Path, manifest: dict) -> tuple[bool, list[dict]]:
         pin(owner, "spec.lock", "commit", "spec", lock["commit"])
         pins[-1]["tag"] = lock.get("tag")
     pin("server", "sdk-rs.lock", "commit", "sdk-rs", read_json(rc / "server" / "sdk-rs.lock")["commit"])
-    pin("obsidian", "sdk-ts.lock", "commit", "sdk-ts", read_json(rc / "obsidian" / "sdk-ts.lock")["commit"])
+    # Before 0.3.1 obsidian linked ../sdk-ts at sdk-ts.lock; since, it
+    # depends on the published @openlfcp/* packages, pinned by version.
+    if (rc / "obsidian" / "sdk-ts.lock").exists():
+        pin("obsidian", "sdk-ts.lock", "commit", "sdk-ts", read_json(rc / "obsidian" / "sdk-ts.lock")["commit"])
+    else:
+        pins.extend(npm_pins(rc))
     pin("obsidian", "server.lock", "commit", "server", read_json(rc / "obsidian" / "server.lock")["commit"])
     # sdk-ts pins the server its live tests run against (absent before rc5).
     if (rc / "sdk-ts" / "server.lock").exists():
@@ -174,6 +179,9 @@ def consistency(rc: Path, manifest: dict) -> tuple[bool, list[dict]]:
 
     ok = True
     for p in pins:
+        if p.get("kind") == "npm":
+            ok = ok and p["matches_manifest"] and p["published"] is not False
+            continue
         target = ROOT / p["target"]
         value = p["value"]
         p["matches_manifest"] = value == m[p["target"]] and (
@@ -195,6 +203,41 @@ def consistency(rc: Path, manifest: dict) -> tuple[bool, list[dict]]:
         ok = ok and p["ancestor_of_head"]
         p["gap"] = git(target, "log", "--oneline", f"{value}..{head}").splitlines()
     return ok, pins
+
+
+def npm_published(name: str, version: str) -> bool | None:
+    """Whether npm has name@version; None when the registry cannot be reached."""
+    try:
+        r = subprocess.run(
+            ["npm", "view", f"{name}@{version}", "version"], capture_output=True, text=True, timeout=60
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return None
+    if r.returncode == 0:
+        return r.stdout.strip() == version
+    return False if "E404" in r.stderr else None
+
+
+def npm_pins(rc: Path) -> list[dict]:
+    """obsidian's @openlfcp/* dependencies: each must be the exact version of
+    that sdk-ts package at the manifest commit, and published on npm."""
+    sdk = {}
+    for manifest in sorted((rc / "sdk-ts" / "packages").glob("*/package.json")):
+        pkg = read_json(manifest)
+        sdk[pkg["name"]] = pkg["version"]
+    pkg = read_json(rc / "obsidian" / "package.json")
+    deps = {**pkg.get("devDependencies", {}), **pkg.get("dependencies", {})}
+    pins = []
+    for name, value in sorted(deps.items()):
+        if not name.startswith("@openlfcp/"):
+            continue
+        published = npm_published(name, value)
+        pins.append({
+            "kind": "npm", "owner": "obsidian", "file": "package.json", "field": name,
+            "target": "sdk-ts", "value": value, "expected": sdk.get(name),
+            "matches_manifest": value == sdk.get(name), "published": published,
+        })
+    return pins
 
 
 # ------------------------------------------------------------------ gates
@@ -378,11 +421,28 @@ def write_report(
         "| --- | --- | --- | --- | --- |",
     ]
     for p in pins:
+        if p.get("kind") == "npm":
+            continue
         gap = "; ".join(p["gap"]) if p["gap"] else "none"
         lines.append(
             f"| {p['owner']} `{p['file']}` {p['field']} → {p['target']} | {p['value'][:12]} | "
             f"{'yes' if p['matches_manifest'] else '**no**'} | {'yes' if p['ancestor_of_head'] else '**no**'} | {gap} |"
         )
+    npm = [p for p in pins if p.get("kind") == "npm"]
+    if npm:
+        lines += [
+            "",
+            "Package pins: each obsidian `@openlfcp/*` dependency is the exact version of that sdk-ts package at the manifest commit, published on npm.",
+            "",
+            "| Pin | Value | sdk-ts at the manifest | Published on npm |",
+            "| --- | --- | --- | --- |",
+        ]
+        published = {True: "yes", False: "**no**", None: "unchecked (registry unreachable)"}
+        for p in npm:
+            lines.append(
+                f"| obsidian `package.json` {p['field']} | {p['value']} | "
+                f"{p['expected'] or '**not in sdk-ts**'}{'' if p['matches_manifest'] else ' **≠**'} | {published[p['published']]} |"
+            )
     if after_tag:
         lines += [
             "",

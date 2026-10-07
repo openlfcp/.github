@@ -36,9 +36,17 @@ commits.
    the local HEAD:
    - `spec.lock` in sdk-ts, sdk-rs, server and obsidian;
    - `sdk-rs.lock` in server;
-   - `sdk-ts.lock` and `server.lock` in obsidian;
+   - `server.lock` in obsidian;
    - `server.lock` in sdk-ts (the server its live tests run against);
    - `conformance/pins.json` in examples.
+
+   obsidian's SDK pin is a version, not a commit. Since 0.3.1 it depends on
+   the published `@openlfcp/*` npm packages: each must be the exact version
+   that sdk-ts package has at the RC commit, and, when the npm registry can
+   be reached, `npm view` must find it published (the report marks it
+   "unchecked" offline). Before 0.3.1, obsidian linked `../sdk-ts` at
+   `sdk-ts.lock`, a commit pin like the others; manifests of that time are
+   checked that way.
 
    Spec commits after the pinned tag are listed in the report. ADRs and
    other docs there are fine; a commit touching `wire/`, `profiles/`,
