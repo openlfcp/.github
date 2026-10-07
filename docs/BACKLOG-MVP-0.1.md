@@ -1691,7 +1691,20 @@ Acceptance: 20 consecutive full `pnpm test` runs under parallel load pass.
 
 ## POST-011 - Obsidian plugin distribution
 
-**State:** released 0.2.0. The obsidian tag `0.2.0` has its GitHub
+**State:** in the community directory review, which **passed** for 0.3.1
+on 2026-10-07:
+- verified attestations for `main.js` and `styles.css`;
+- "Build reproduced the release main.js byte-for-byte";
+- no vulnerable dependencies.
+
+Only the review's notes on enumerating the vault's files and on the
+disclosures remain, and the README answers them ("What the plugin
+accesses", "Network use"). Releases since 0.2.0: 0.3.0 and 0.3.1. The
+reproducible build comes from sdk-ts 0.1.1 on npm: the plugin now takes
+the `@openlfcp/*` packages from npm at exact versions instead of a sibling
+checkout.
+
+Earlier: released 0.2.0. The obsidian tag `0.2.0` has its GitHub
 release with 4 assets
 (https://github.com/openlfcp/obsidian/releases/tag/0.2.0); CI and the
 platform smoke on 3 OS are green at a620051; the BRAT beta install passed
@@ -1702,7 +1715,7 @@ platform smoke on 3 OS are green at a620051; the BRAT beta install passed
 - the release workflow for bare version tags (2953e19), with the 0.2.0 notes;
 - the install, release and directory-submission docs (289bf7a).
 
-Next, by the owner: the community directory submission
+Next, by the owner: the listing once the directory accepts it
 (`obsidian: docs/devel/community-submission.md`).
 
 Source: `obsidian: manifest.json`, `versions.json`; the Obsidian community
