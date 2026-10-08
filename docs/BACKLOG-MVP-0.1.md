@@ -245,7 +245,7 @@ Acceptance:
 - Markdown refs have two conforming placements;
 - implementation agents have one unambiguous source-of-truth set.
 
-Current baseline: `spec` tag `mvp-0.1-baseline.8` (SPEC-PATCH-08, `spec: adr/0007-mvp-0.1-protocol-decisions-7.md`), which supersedes `mvp-0.1-baseline.7`. Implementations move to it deliberately; no vector value changed. Receivers reject, before their engine, a change or Snapshot that would put an object deeper than 256 levels below the root; the corpus `depth` cases need a runner. The project owner approved it, with ADRs 0004 to 0006, on 2026-10-06.
+Current baseline: `spec` tag `mvp-0.1-baseline.9` (SPEC-PATCH-09, `spec: adr/0008-recovery-after-server-data-loss.md`), which supersedes `mvp-0.1-baseline.8`. Implementations move to it deliberately; no vector value changed. A server refuses a Data Unit whose `previous` it does not hold (`UNKNOWN_PREVIOUS`, code 23); clients reconcile in both directions, relay accepted objects and re-host a Resource a route lost; a change whose Automerge actor and sequence number are taken is held and retried (POST-001). The new `data_put_previous`, `have_difference` and corpus `collision` cases need runners. The project owner accepted ADR 0008 on 2026-10-08.
 
 Depends on: `LFCP-008`, `LFCP-009`.
 

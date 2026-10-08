@@ -408,7 +408,7 @@ This index.
 
 ### `MVP-0.1-BASELINE.md`
 
-**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.8`)
+**Location:** `spec: MVP-0.1-BASELINE.md` (current tag `mvp-0.1-baseline.9`)
 **Status:** GUIDE
 
 **Purpose:** The exact set of documents, vectors, generators, CDDL files and schemas that MVP 0.1 implementations build against. It is not a Stable publication.
@@ -461,6 +461,13 @@ This index.
 **Status:** ARCHITECTURE
 
 **Purpose:** The seventh batch of MVP 0.1 protocol decisions (SPEC-PATCH-08), an orchestrator decision approved by the project owner on 2026-10-06: the document depth bound (no object deeper than 256 levels below the root, checked before the Automerge engine for changes and Snapshots), with its measurements, sections and vectors.
+
+### `adr/0008-recovery-after-server-data-loss.md`
+
+**Location:** `spec: adr/0008-recovery-after-server-data-loss.md`
+**Status:** ARCHITECTURE
+
+**Purpose:** Recovery after server data loss (POST-013, SPEC-PATCH-09), accepted by the project owner on 2026-10-08: option (c), the server refuses a Data Unit whose `previous` it does not hold (`UNKNOWN_PREVIOUS`) and clients reconcile in both directions with relay and re-host a lost Resource; (d), a store generation, deferred. It also records POST-001, hold and retry of a taken Automerge actor sequence, applied in the same baseline.
 
 ---
 
