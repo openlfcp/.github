@@ -494,7 +494,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** contract / P0 / NOT_STARTED  
+**Type / priority / status:** contract / P0 / DONE — spec 0a17f17, d72ff2b, 3a13ba2, 2d1a829, 0927440 (SSP WD 0.3, MARKDOWN-SECTIONS-01, ADR 0009).  
 **Depends on:** LFCP-02-006, LFCP-02-083, LFCP-02-084  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; MARKDOWN-SECTIONS-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md  
 **Gate / test trace:** G02 / T02, T04
@@ -518,7 +518,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** contract / P0 / NOT_STARTED  
+**Type / priority / status:** contract / P0 / DONE — spec 0927440: test-vectors/shared-sections-01 with its generator, checked in spec CI.  
 **Depends on:** LFCP-02-007  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; MARKDOWN-SECTIONS-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md  
 **Gate / test trace:** G02 / T02, T04
@@ -562,7 +562,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** contract / P0 / NOT_STARTED  
+**Type / priority / status:** contract / P0 / IN_PROGRESS — spec d605f39: 41 model cases (admission A1-A5, ready and import, isolation, budgets), 1e87206: 41 Markdown fixtures; SOP negatives and the rest remain.  
 **Depends on:** LFCP-02-007, LFCP-02-008  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; MARKDOWN-SECTIONS-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md  
 **Gate / test trace:** G02 / T02, T04
@@ -841,7 +841,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts (companion: sdk-rs, by another worker)  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — TS done: sdk-ts 5b409f0, @openlfcp/shared-objects/admission (framing, limits, actor binding, sequence admission); the Rust part follows 010 (worker B).  
 **Depends on:** LFCP-02-007  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-PROFILE-01.md; LFCP-WIRE-01.md  
 **Gate / test trace:** G02, G07, G08 / T02, T03
