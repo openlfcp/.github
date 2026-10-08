@@ -1,0 +1,26 @@
+{
+  "created": "2026-10-08T15:01:57+00:00",
+  ".github": {
+    "commit": "27d7fc67256db3211f24094dc0c82449f9bba658"
+  },
+  "spec": {
+    "commit": "f42533c47f58fc980afd4e06f1366891592f7691",
+    "tag": "mvp-0.1-baseline.9",
+    "tag_commit": "f42533c47f58fc980afd4e06f1366891592f7691"
+  },
+  "sdk-rs": {
+    "commit": "259a688db2e57f2e5f2b7bab1144b26ed3ef02e0"
+  },
+  "server": {
+    "commit": "09c913289ae5b67d1a6869547fd221f952a81e3a"
+  },
+  "sdk-ts": {
+    "commit": "7e9462f12726cf892a3c5fe30b40aaa56b59bdd3"
+  },
+  "examples": {
+    "commit": "892be03989e0fb6fbfd09f699eda5f6baace88cd"
+  },
+  "obsidian": {
+    "commit": "1cfce1e31a2fa77eb765a64555f72b2ce2810fa5"
+  }
+}
