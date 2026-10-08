@@ -45,4 +45,5 @@ catalogs every artifact across the repositories, with its status.
 | [operations/sync-server-terms.md](operations/sync-server-terms.md) | everyone | Terms of service of sync.openlfcp.org: beta and as is, acceptable use, quotas, data loss, Polish law |
 | [operations/sync-server-runbook.md](operations/sync-server-runbook.md) | owner | Operating sync.openlfcp.org: where it runs, monitoring, external uptime check, abuse handling (draft) |
 | [operations/sync-server-restore-test.md](operations/sync-server-restore-test.md) | owner | Testing a restore of sync.openlfcp.org with server 0.3.0: three cases, expected results, what to record (LAUNCH-003 (b), draft) |
+| [devel/design/member-recovery-after-restore.md](devel/design/member-recovery-after-restore.md) | contributors | Design for LFCP-02-106: a member refused on open after a server restore re-supplies its own Control Chain and reopens; security rationale and tests |
 | [assets/brand/README.md](assets/brand/README.md) | everyone | The OpenLFCP mark: files for light and dark backgrounds, favicon, colours and usage rules (LAUNCH-006) |
