@@ -67,8 +67,10 @@ Steps:
    - `ACK`: the server had `n−1` and now has `n`: go to step 4;
    - `NACK(CONTROL_HEAD_MISMATCH, H)` and `H` is a record of the local chain
      at sequence `h`:
-     - `h = n`: the server already holds the whole chain; the refusal is
-       not caused by a loss. Stop; the refusal is final;
+     - `h = n`: the server already holds the whole chain, for example
+       because another holder re-supplied it meanwhile: go to step 4 (if
+       the refusal is not caused by a loss, the second refusal there is
+       final);
      - `h < n`: the server lost `h+1 … n`. Go to step 3;
    - `NACK(CONTROL_HEAD_MISMATCH, H)` and `H` is not in the local chain:
      the server's chain has records the client does not know (a newer
@@ -84,6 +86,9 @@ Steps:
    client, W §68.1). A `CONTROL_HEAD_MISMATCH` here means another holder is
    re-supplying at the same time: re-read the reported head and continue
    from it as in step 2.
+   The server answers a record it already holds with an `ACK` as well (a
+   repeat is idempotent), so a member whose head the server holds below a
+   record it does not know still reaches step 4 and is refused there.
 4. Send `RESOURCE_OPEN` again, once. On `RESOURCE_OPENED`, the normal
    anti-entropy of W §68.1 re-supplies the Data Units and Key Packages the
    server lacks. A second `AUTHORIZATION_FAILED` is final.
@@ -123,7 +128,16 @@ success: the normal open. On a final refusal: the existing "No access"
 message, unchanged. The status never claims that access was restored
 before `RESOURCE_OPENED`.
 
-## 7. Tests
+## 7. Implementation
+
+sdk-ts `7d6b67f` (`packages/client`: `access-recovery.ts`, `SyncClient`)
+and `5e6c71e` (live tests). The event `access-recovery` reports
+`started`, `recovered` (after `RESOURCE_OPENED`) or `ended` with a reason:
+`not-granted`, `unknown-head`, `refused` or `still-refused` (the server
+holds the member's chain and refuses again). The plugin shows its status
+text from it.
+
+## 8. Tests
 
 Against the Rust server (live interop, sdk-ts):
 
@@ -133,14 +147,14 @@ Against the Rust server (live interop, sdk-ts):
 | The owner re-supplies first | the member's first push answers `CONTROL_HEAD_MISMATCH` with a head at `n`: it reopens and reaches LIVE (no duplicate records) |
 | The member and the owner push at the same time | each continues from the reported head; one chain, no fork |
 | The member's own chain revokes it | no `CONTROL_PUT` is sent; the refusal is final |
-| The server's chain revokes it, the member has not seen it | one `CONTROL_PUT`, a mismatch with an unknown head, then final |
-| Rate limited | at most 3 attempts with backoff, then final |
-| A genuine refusal (no loss) | one `CONTROL_PUT` answered with the member's own head; final |
+| The server's chain revokes it, the member has not seen it | its head is on the server: the push is acknowledged as a repeat, one more open, then final (`still-refused`) |
+| Rate limited | at most 3 retries with backoff, then final (a unit test with a scripted server) |
+| A session without a chain that grants it | no `CONTROL_PUT`; refused as before |
 
 Unit tests: the preconditions, the head classification of step 2, the
 bound on attempts.
 
-## 8. Spec and effort
+## 9. Spec and effort
 
 - No Wire or profile change: the steps use `CONTROL_PUT` as W §47, §68.1
   and §84 define it. An informative paragraph in W §68.1 ("a member
