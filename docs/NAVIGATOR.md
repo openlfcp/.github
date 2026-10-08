@@ -37,6 +37,7 @@ catalogs every artifact across the repositories, with its status.
 | [release/mvp-0.2-baseline-inventory.md](release/mvp-0.2-baseline-inventory.md) | release, contributors | MVP 0.2 baseline (LFCP-02-001): components, versions, locks, artifacts, build and release paths, sources, superseded documents |
 | [release/mvp-0.2-baseline-manifest.json](release/mvp-0.2-baseline-manifest.json) | release | The commits of the MVP 0.2 baseline inventory |
 | [release/mvp-0.2-client-baseline.md](release/mvp-0.2-client-baseline.md) | release, contributors | MVP 0.2 client baseline (LFCP-02-002): the inherited sdk-ts security and durability checks, by area |
+| [release/mvp-0.2-baseline-gaps.md](release/mvp-0.2-baseline-gaps.md) | release, owner | MVP 0.2 baseline gaps (LFCP-02-006): gap register with owning tasks, blocking predicates for beta, integration and release |
 | [release/security-review-mvp-0.1.md](release/security-review-mvp-0.1.md) | release | The MVP 0.1 pre-release security review: findings, fixes, known limitations |
 | [release/open-decision-actor-seq-collision.md](release/open-decision-actor-seq-collision.md) | owner | Open decision: two Automerge changes with the same actor and sequence number; options, recommendation, and what shipping as is means |
 | [operations/sync-server-privacy.md](operations/sync-server-privacy.md) | everyone | Privacy note (GDPR) of the public sync server sync.openlfcp.org: controller, what it processes and why, recipients, retention, your rights |
