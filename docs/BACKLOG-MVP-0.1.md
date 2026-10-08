@@ -2022,10 +2022,14 @@ same mark, colour and spelling.
 
 ### NEXT-001 - Shared sections (an ordered list of Tasks)
 
-**State:** → superseded by MVP 0.2 (ADR 0009 pending). The plan is
-`BACKLOG-MVP-0.2.md`; the owner chose a new profile,
-`org.openlfcp.shared-sections.v1`, over a list type inside Shared Objects
-(decision P1; ADR 0009 is LFCP-02-083). Owner request 2026-10-07.
+**State:** closed, superseded by MVP 0.2. The owner chose a new profile,
+`org.openlfcp.shared-sections.v1`, over a list type inside Shared Objects:
+`spec: adr/0009-shared-sections-profile.md` (accepted 2026-10-08,
+LFCP-02-083). The list type was not taken because sections change what
+SHARED-OBJECTS-PROFILE-01 §115 calls breaking (subtree tombstones,
+placement conflicts, insert-only children lists), so clients that know only
+Tasks could not preserve them; legacy clients do not see sections at all.
+The plan is `BACKLOG-MVP-0.2.md`. Owner request 2026-10-07.
 
 Users want to share a whole section of a note: a heading with its Tasks, in
 order, where a Task one person adds appears in the other person's section by
