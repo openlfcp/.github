@@ -296,7 +296,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec + sdk-ts + sdk-rs + server (split per repository at dispatch)  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_REVIEW — Code ready; ships with the npm release of @openlfcp/* 0.1.3.  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); spec: adr/0008-recovery-after-server-data-loss.md; LFCP-WIRE-01.md; .github: docs/BACKLOG-MVP-0.1.md  
 **Gate / test trace:** G07 / T01, T07
@@ -317,7 +317,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec + sdk-ts + sdk-rs (split per repository at dispatch)  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_REVIEW — Code ready; ships with the npm release of @openlfcp/* 0.1.3.  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/open-decision-actor-seq-collision.md; SHARED-OBJECTS-PROFILE-01.md; .github: docs/BACKLOG-MVP-0.1.md  
 **Gate / test trace:** G06, G07 / T02, T07
@@ -473,7 +473,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** contract / P0 / NOT_STARTED  
+**Type / priority / status:** contract / P0 / DONE — .github b92fe19, 63b8454: the scope, roadmap, test plan, backlog and execution map published.  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); AGENT-OPERATING-GUIDE.md  
 **Gate / test trace:** G01 / T12
@@ -542,7 +542,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** contract / P0 / NOT_STARTED  
+**Type / priority / status:** contract / P0 / DONE — spec b184dda: integration/SDK-SECTIONS-INTEGRATION-01.md (sections-integration/1: commit and Receipt, receiptOf, batch statuses, events, canWrite, the local codes).  
 **Depends on:** LFCP-02-003, LFCP-02-007, LFCP-02-088  
 **Read first:** OBSIDIAN-SECTIONS-ARCHITECTURE-02.md; OBSIDIAN-SYNC-INDICATORS-01.md; MARKDOWN-SECTIONS-01.md; MVP-0.2-COMPATIBILITY-AND-MIGRATION.md  
 **Gate / test trace:** G02, G07, G10 / T07, T09
@@ -587,7 +587,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** contract / P0 / NOT_STARTED  
+**Type / priority / status:** contract / P0 / DONE — spec eb054d6: ADR 0009 accepted.  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; .github: docs/BACKLOG-MVP-0.1.md  
 **Gate / test trace:** G02 / T02
@@ -608,7 +608,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** contract / P0 / NOT_STARTED  
+**Type / priority / status:** contract / P0 / DONE — spec f595dd4: import in several changes under the 0.1 limits, the authoring budgets.  
 **Depends on:** LFCP-02-083  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; LFCP-WIRE-01.md  
 **Gate / test trace:** G02, G04, G07 / T02
@@ -888,7 +888,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-rs  
 **Milestone / group:** M02-1 / RP03  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-rs f8b0204: the section schema and actor dispatch.  
 **Depends on:** LFCP-02-007, LFCP-02-008, LFCP-02-085, LFCP-02-090  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G02, G05, G06 / T03
@@ -910,7 +910,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-rs  
 **Milestone / group:** M02-1 / RP03  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-rs 1c76ebb, 208f66e: the effective tree, structural facts, nodes, moves and placement resolution.  
 **Depends on:** LFCP-02-019  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G02, G05, G06 / T03
@@ -931,7 +931,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-rs  
 **Milestone / group:** M02-1 / RP03  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-rs ff3ed0f, 1ea55d9: lifecycle and collaborative Text.  
 **Depends on:** LFCP-02-010, LFCP-02-020  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G02, G05, G06 / T03
@@ -953,7 +953,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-rs  
 **Milestone / group:** M02-1 / RP03  
-**Type / priority / status:** integration / P0 / NOT_STARTED  
+**Type / priority / status:** integration / P0 / DONE — sdk-rs 01f536f, 7e24a3a, 1b55b6e, b345fbc, f5407a4: admission, collisions and the full corpus at spec 33c4544.  
 **Depends on:** LFCP-02-008, LFCP-02-021  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G02, G05, G06 / T03
@@ -1641,7 +1641,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP07  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian 771f298 (the native harness), a098ff6 (CI on three systems, dispatch only).  
 **Depends on:** LFCP-02-005  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); MVP-0.2-TEST-AND-RELEASE-PLAN.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G10, G12 / T05, T11
@@ -2287,7 +2287,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts e9cdb43: the engine-trap test runs alone with named timeouts.  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/BACKLOG-MVP-0.1.md  
 **Gate / test trace:** G12 / T01
@@ -2308,7 +2308,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / DONE — .github 26e09db, 7d09c23: rc-verify for MVP 0.2 (baseline series, optional gates, release evidence, the spec-sections.lock dev pins).  
 **Depends on:** LFCP-02-090  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/rc-verification.md  
 **Gate / test trace:** G12 / T12
