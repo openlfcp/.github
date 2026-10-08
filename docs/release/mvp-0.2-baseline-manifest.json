@@ -1,0 +1,30 @@
+{
+  "created": "2026-10-08T09:14:33+00:00",
+  ".github": {
+    "commit": "26e09db7dbb4d331a23d3fe1027016c0063c6fb6"
+  },
+  "spec": {
+    "commit": "1e872060f06c747a0a7faf0856b924d5a7b1559a",
+    "tag": "mvp-0.1-baseline.9",
+    "tag_commit": "f42533c47f58fc980afd4e06f1366891592f7691"
+  },
+  "sdk-rs": {
+    "commit": "259a688db2e57f2e5f2b7bab1144b26ed3ef02e0"
+  },
+  "server": {
+    "commit": "09c913289ae5b67d1a6869547fd221f952a81e3a"
+  },
+  "sdk-ts": {
+    "commit": "e9cdb4380103951e92374738de97916f25f55b94"
+  },
+  "examples": {
+    "commit": "892be03989e0fb6fbfd09f699eda5f6baace88cd"
+  },
+  "obsidian": {
+    "commit": "3142eb2e8b6fa3bb8eb09777693a852b8e31a43b",
+    "note": "uncommitted changes in the checkout are not part of this RC"
+  },
+  "website": {
+    "commit": "f6be91948ad8828c5445957f1c81c6a8ef124a35"
+  }
+}
