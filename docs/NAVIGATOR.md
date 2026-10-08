@@ -25,6 +25,7 @@ catalogs every artifact across the repositories, with its status.
 | [release/rc-verification.md](release/rc-verification.md) | release | Verifying a release candidate locally (`scripts/rc-verify.py`) |
 | [release/rc1-manifest.json](release/rc1-manifest.json) | release | The pins of release candidate rc1 |
 | [release/npm-publish-checklist.md](release/npm-publish-checklist.md) | release | Publishing the `@openlfcp/*` packages to npm (`next`) by hand, step by step |
+| [release/npm-trusted-publishing-setup.md](release/npm-trusted-publishing-setup.md) | owner | One-time setup of npm Trusted Publishing for the eight @openlfcp/* packages and the GitHub environment npm-publish |
 | [release/rc2-manifest.json](release/rc2-manifest.json) | release | The pins of release candidate rc2 |
 | [release/rc3-manifest.json](release/rc3-manifest.json) | release | The pins of release candidate rc3 |
 | [release/rc4-manifest.json](release/rc4-manifest.json) | release | The pins of release candidate rc4, the commit set to push and publish |

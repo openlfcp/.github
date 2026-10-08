@@ -376,8 +376,12 @@ Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
 
 ## Patch release 0.1.3
 
+**Published by CI**: the tag `v0.1.3` on sdk-ts 7e9462f runs the release
+workflow (see [Trusted publishing](#trusted-publishing)). The manual steps
+below are the fallback, if the workflow cannot publish.
+
 The patch release publishes `0.1.3` of all eight packages from sdk-ts
-dbc53b8, under `latest`. It is the code of 0.1.2 (see above), which went
+7e9462f, under `latest`. It is the code of 0.1.2 (see above), which went
 out without build output, plus a `release:check` that checks what this
 checkout would publish. Shared Tasks 0.3.2 depends on 0.1.3, never on
 0.1.2.
@@ -390,7 +394,7 @@ Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
 
    ```sh
    git clone https://github.com/openlfcp/sdk-ts.git /tmp/sdk-ts-013 && cd /tmp/sdk-ts-013
-   git checkout dbc53b8                        # pushed, CI green
+   git checkout 7e9462f                        # pushed, CI green
    git status --short                          # empty
    pnpm install --frozen-lockfile
    pnpm build                                  # the dist/ that pnpm publish uploads
@@ -422,7 +426,8 @@ Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
    `npm view @openlfcp/core@0.1.3 dist.fileCount` is more than 3 (a
    package with only `package.json`, `README.md` and `LICENSE` is the
    0.1.2 failure).
-3. **Move `next` to 0.1.3 too:**
+3. **Move `next` to 0.1.3 too** (manual path only; CI leaves `next` to
+   prereleases):
 
    ```sh
    for p in core crypto storage wire storage-node storage-idb shared-objects client; do
@@ -454,7 +459,7 @@ Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
 5. **Tag the release commit**, only after step 4 passed:
 
    ```sh
-   git -C ~/dev/openlfcp/sdk-ts tag -a v0.1.3 dbc53b8 -m "OpenLFCP sdk-ts 0.1.3"
+   git -C ~/dev/openlfcp/sdk-ts tag -a v0.1.3 7e9462f -m "OpenLFCP sdk-ts 0.1.3"
    git -C ~/dev/openlfcp/sdk-ts push origin v0.1.3
    ```
 
@@ -464,3 +469,65 @@ Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
    next version, and
    `npm deprecate @openlfcp/<pkg>@0.1.3 "incomplete release; use 0.1.4"`
    for the incomplete set.
+
+## Trusted publishing
+
+From sdk-ts 0.1.3 on, a release is published by CI: the workflow
+`sdk-ts: .github/workflows/release.yml` publishes the eight packages with
+npm Trusted Publishing (OIDC): no token, no one-time code, provenance
+attached. The one-time setup (a trusted publisher for each package on
+npm, the GitHub environment `npm-publish` with you as required reviewer)
+is in [npm-trusted-publishing-setup.md](npm-trusted-publishing-setup.md).
+The manual sections above stay as the fallback.
+
+What the workflow does on a pushed tag `vX.Y.Z`:
+
+1. **build** (no approval): a fresh checkout of the tag; every
+   `packages/*/package.json` has version `X.Y.Z`, the tag's; `pnpm install
+   --frozen-lockfile`, `pnpm build`, `pnpm release:check` (which also
+   checks that the checkout packs its `dist/`); `pnpm pack` of each package;
+   `npm publish --dry-run` of each tarball; the tarballs kept as a run
+   artifact.
+2. **publish** (waits for your approval in the environment `npm-publish`):
+   the very same tarballs, `npm publish <tarball> --tag latest` (`next`
+   for a prerelease `X.Y.Z-rc.N`), in dependency order (core, crypto,
+   storage, wire, storage-node, storage-idb, shared-objects, client). A
+   version the registry already has is skipped, so after a failure midway
+   **Re-run failed jobs** publishes the rest.
+3. **registry check**, in the publish job: `scripts/registry-check.mjs`
+   checks each package's `dist.fileCount` (more than 3) and dist-tag, then
+   installs all eight from the registry into a fresh project and imports
+   them, retrying for up to 10 minutes while npm still validates the new
+   version. The job is red if anything is wrong.
+
+The dist-tag `next` is no longer moved for a final release (CI can only
+publish): it names the latest prerelease.
+
+### A release
+
+1. sdk-ts is pushed and CI is green on the release commit; its versions
+   are `X.Y.Z` and `CHANGELOG.md` has the section.
+2. A dry run first, on `main` (nothing is published, no approval):
+
+   ```sh
+   gh workflow run release.yml -R openlfcp/sdk-ts --ref main -f dry_run=true
+   gh run watch -R openlfcp/sdk-ts "$(gh run list -R openlfcp/sdk-ts --workflow release.yml -L 1 --json databaseId -q '.[0].databaseId')"
+   ```
+
+3. The tag:
+
+   ```sh
+   git -C ~/dev/openlfcp/sdk-ts tag -a vX.Y.Z <commit> -m "OpenLFCP sdk-ts X.Y.Z"
+   git -C ~/dev/openlfcp/sdk-ts push origin vX.Y.Z
+   ```
+
+4. Approve: on the run page of **Release**, **Review deployments →
+   npm-publish → Approve and deploy**.
+5. Check: the run is green (its last step printed `registry check PASSED:
+   X.Y.Z on latest`), and by hand
+   `npm view @openlfcp/client dist-tags` and
+   `npm view @openlfcp/client@X.Y.Z dist.fileCount`.
+6. If the publish job fails: read the log. A refused `npm publish` on the
+   first package usually means the trusted-publisher settings of that
+   package (setup document, section 2). Fix them and **Re-run failed
+   jobs**: published versions are skipped.
