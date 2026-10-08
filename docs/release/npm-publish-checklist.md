@@ -514,6 +514,10 @@ publish): it names the latest prerelease.
    gh run watch -R openlfcp/sdk-ts "$(gh run list -R openlfcp/sdk-ts --workflow release.yml -L 1 --json databaseId -q '.[0].databaseId')"
    ```
 
+   A version npm already has is not dry-run (npm refuses even that): its
+   packages are skipped with a notice, so a dry run on `main` after a
+   release stays green and checks only the build, the checks and the packing.
+
 3. The tag:
 
    ```sh
