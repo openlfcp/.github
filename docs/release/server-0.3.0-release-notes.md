@@ -1,7 +1,7 @@
 # OpenLFCP server 0.3.0: release notes
 
 **Status:** Draft until the project owner tags `v0.3.0`. The reference
-server `0.3.0` (server 30f592d, on sdk-rs bbbb086), 2026-10-08. It is part
+server `0.3.0` (server 09c9132, on sdk-rs 259a688), 2026-10-08. It is part
 of the MVP 0.1.x sustaining release of wave W0
 ([BACKLOG-MVP-0.2.md](../BACKLOG-MVP-0.2.md), tasks 088 and 089), together
 with spec `mvp-0.1-baseline.9`, sdk-ts `0.1.2` and the Obsidian plugin
@@ -83,7 +83,7 @@ Resource (sdk-ts `conformance/interop/rust-server-recovery.test.ts`).
 
 ## Compatibility
 
-- LFCP-WIRE-01 at `mvp-0.1-baseline.9` (spec f42533c), on sdk-rs bbbb086.
+- LFCP-WIRE-01 at `mvp-0.1-baseline.9` (spec f42533c), on sdk-rs 259a688.
   The only wire change is the new refusal and its code.
 - **sdk-ts `0.1.2` and the Obsidian plugin `0.3.2`** reconcile in both
   directions: they upload what the server lacks, relay other actors'
