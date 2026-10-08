@@ -338,7 +338,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** audit / P0 / NOT_STARTED  
+**Type / priority / status:** audit / P0 / IN_REVIEW — .github 204af26: release/mvp-0.2-baseline-inventory.md and mvp-0.2-baseline-manifest.json (rc-verify --from-heads, 2026-10-08).  
 **Depends on:** LFCP-02-101  
 **Read first:** AGENT-OPERATING-GUIDE.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.1-PROTOCOL-SCOPE.md; BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/rc-verification.md  
 **Gate / test trace:** G01 / T01
@@ -360,7 +360,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** audit / P0 / NOT_STARTED  
+**Type / priority / status:** audit / P0 / IN_REVIEW — .github bea437a: release/mvp-0.2-client-baseline.md; rc9 sdk-ts gate PASS at 777f36e, full suite PASS at e9cdb43; no defect opened.  
 **Depends on:** LFCP-02-001  
 **Read first:** MVP-0.1-PROTOCOL-SCOPE.md; LFCP-WIRE-01.md; LFCP-TEST-VECTORS-01.md; AGENT-OPERATING-GUIDE.md; .github: docs/release/mvp-0.1-release-notes.md; .github: docs/release/security-review-mvp-0.1.md  
 **Gate / test trace:** G01 / T01
