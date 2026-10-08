@@ -3,12 +3,12 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 108 tasks in 13 epics, across seven milestones  
+**Size:** 109 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
 
-Use IDs **LFCP-02-001…LFCP-02-108**. Tasks 083-105 come from the review; each names its source in the review summary. Task 106 came from the W0 recovery drill, 107 from the spec baseline work, 108 from the corpus work of task 010. They belong to MVP 0.2 and do not rename, replace or imply completion of legacy LFCP-NNN tasks. No GitHub issues, assignments, PRs or deployments have been created by preparing this backlog.
+Use IDs **LFCP-02-001…LFCP-02-109**. Tasks 083-105 come from the review; each names its source in the review summary. Task 106 came from the W0 recovery drill, 107 from the spec baseline work, 108 and 109 from the corpus work of task 010. They belong to MVP 0.2 and do not rename, replace or imply completion of legacy LFCP-NNN tasks. No GitHub issues, assignments, PRs or deployments have been created by preparing this backlog.
 
 The MVP 0.1 facts are recorded in MVP-0.2-ROADMAP §2 (Starting evidence). A task is NOT_STARTED unless its card carries a status note with evidence. First inspect and reuse existing code. Where behavior already meets a task, close it with exact implementation/test evidence rather than rewriting it. Server audit tasks may legitimately end with verified no-change results.
 
@@ -24,7 +24,7 @@ A task is DONE when its acceptance criteria are met, required checks ran on the 
 
 Use NOT_STARTED, IN_PROGRESS, BLOCKED, IN_REVIEW and DONE. The release record separately uses PASS/FAIL/NOT_RUN/BLOCKED for evidence. A completed audit or pilot observation may have findings: it closes the investigation, not the failed product gate. Tasks 056, 069, 073, 077 and 082 cannot claim qualifying success while relevant inherited/new required blockers remain open.
 
-When a baseline gap or pilot defect needs code, append focused tasks starting at LFCP-02-109, with one owning repository and a regression test. Update affected dependency and gate links. Do not bury unknown work under an already-DONE audit, reuse old IDs or assume a blanket remediation task was implemented. Task 076 coordinates this process; actual repairs remain separately reviewable.
+When a baseline gap or pilot defect needs code, append focused tasks starting at LFCP-02-110, with one owning repository and a regression test. Update affected dependency and gate links. Do not bury unknown work under an already-DONE audit, reuse old IDs or assume a blanket remediation task was implemented. Task 076 coordinates this process; actual repairs remain separately reviewable.
 
 Every implementation change preserves the secure 0.1 subset, legacy Task support, private-source boundaries, actor/nonce safety, retained deleted content and explicit new-profile import. No protocol crypto in the plugin, plaintext Task logic in the server, per-node ACL, read receipts, silent legacy dual-write, arbitrary Markdown support or unapproved physical CRDT garbage collection.
 
@@ -122,7 +122,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | E01 | 001, 002, 003, 004, 005, 006, 101 | Baseline and inherited obligations | M02-0 |
 | E02 | 007, 008, 009, 010, 083, 084, 090, 107, 108 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085 | TypeScript section model | M02-1 |
-| E04 | 019, 020, 021, 022, 023, 024 | Rust and independent interoperability | M02-1 |
+| E04 | 019, 020, 021, 022, 023, 024, 109 | Rust and independent interoperability | M02-1 |
 | E05 | 025, 026, 027, 028, 029, 030, 097, 098, 106 | Durability and SDK evidence | M02-2 |
 | E06 | 031, 032, 033 | Opaque server compatibility | M02-3 |
 | E07 | 034, 035, 036, 037, 038, 039, 040, 041, 042 | Markdown ownership and reconciliation | M02-2 |
@@ -244,6 +244,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-106 | A member refused before its grant is re-supplied recovers by itself | sdk-ts (companion: obsidian) | P1 | 088 |
 | LFCP-02-107 | Move the shared-sections vectors to lfcp-vector-format/1 | spec | P1 | 010 |
 | LFCP-02-108 | A6: refuse a non-concurrent ID reuse across categories at admission | spec (companions: sdk-ts, sdk-rs) | P2 | 024, 075 |
+| LFCP-02-109 | Linear-time retained concurrent edits in the Rust section model | sdk-rs | P2 | 010 |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -563,7 +564,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** contract / P0 / IN_PROGRESS — spec d605f39: 41 model cases (admission A1-A5, ready and import, isolation, budgets), 1e87206: 41 Markdown fixtures; SOP negatives and the rest remain.  
+**Type / priority / status:** contract / P0 / DONE — spec 33c4544: SHARED-SECTIONS-TEST-VECTORS-01 with 56 cases (admission A1-A5 and SOP negatives, ready and import, isolation, collisions, split/join, budgets, Text history at the Snapshot floor) and 47 Markdown fixtures; both SDKs pin it in spec-sections.lock (sdk-ts b81066b, sdk-rs f5407a4).  
 **Depends on:** LFCP-02-007, LFCP-02-008  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; MARKDOWN-SECTIONS-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md  
 **Gate / test trace:** G02 / T02, T04
@@ -1011,6 +1012,27 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** Seeded runs on both SDKs and replay of minimized failures; no byte-equality demand for different histories.
 
 **Deliverables:** Schedule generator, reproducible reports and regression fixtures.
+
+### LFCP-02-109 — Linear-time retained concurrent edits in the Rust section model
+
+**Primary repository:** sdk-rs  
+**Milestone / group:** M02-1 / RP03  
+**Type / priority / status:** implementation / P2 / NOT_STARTED  
+**Depends on:** LFCP-02-010  
+**Read first:** SHARED-SECTIONS-TEST-VECTORS-01.md; SHARED-SECTIONS-PROFILE-01.md  
+**Gate / test trace:** G05 / T03
+
+**Goal:** Keep long Text histories fast in the Rust model, as the Snapshot-floor cases need.
+
+**Acceptance:**
+
+1. SectionsDoc::retained_concurrent_edits no longer replays the history one change at a time reading a state snapshot at each step (quadratic on SS55/SS56); it walks the history once, or reuses the running document as the linear-history path of b345fbc does.
+2. Its results are unchanged on every case of SHARED-SECTIONS-TEST-VECTORS-01.
+3. The Rust corpus run in debug takes well under the current six minutes; the time before and after is recorded.
+
+**Required checks:** The Rust corpus conformance run before and after, with timings; the full sdk-rs gate.
+
+**Deliverables:** The sdk-rs change and its timings.
 
 ## E05. Durability and SDK evidence
 

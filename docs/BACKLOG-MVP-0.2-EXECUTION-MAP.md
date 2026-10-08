@@ -6,7 +6,7 @@
 
 ## 1. Start and integration rules
 
-Start with LFCP-02-001. Once actual repositories/artifacts are resolved, 002–005 can be assigned independently to the owning layers. Task 006 consolidates findings; 007–010 pin contracts/fixtures. Review tasks 083-105 are integrated; their waves are in BACKLOG-MVP-0.2.md section 4. Baseline remediation discovered by audit is appended from 109 onward and explicitly blocks affected qualification gates.
+Start with LFCP-02-001. Once actual repositories/artifacts are resolved, 002–005 can be assigned independently to the owning layers. Task 006 consolidates findings; 007–010 pin contracts/fixtures. Review tasks 083-105 are integrated; their waves are in BACKLOG-MVP-0.2.md section 4. Baseline remediation discovered by audit is appended from 110 onward and explicitly blocks affected qualification gates.
 
 TypeScript and Rust are independent implementations; neither must copy the other's model code. Shared fixtures/contracts are common inputs. Parser and status preparation can overlap model work where inputs are pinned. The hard dependency graph below describes what must be complete to close a task, not a prohibition on safe scaffolding or draft preparation.
 
@@ -29,7 +29,7 @@ No agent prompt pack is defined here. Future packs should respect the graph and 
 | server | 003, 031, 032, 033, 074, 081 | 6 |
 | obsidian | 004, 005, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 047, 048, 049, 050, 051, 052, 053, 054, 055, 057, 058, 059, 060, 061, 062, 063, 064, 065, 066, 067, 068, 069, 075, 076, 080, 087, 094, 095, 096, 097, 100, 104, 105 | 48 |
 | spec | 007, 008, 009, 010, 083, 084, 090, 107 | 8 |
-| sdk-rs | 019, 020, 021, 022 | 4 |
+| sdk-rs | 019, 020, 021, 022, 109 | 5 |
 | examples | 023, 024, 056, 070, 071, 072 | 6 |
 | website | 078 | 1 |
 | sdk-ts (companion: sdk-rs, by another worker) | 085 | 1 |
@@ -48,7 +48,7 @@ All abbreviated IDs in this map use the LFCP-02 namespace. A primary repository 
 | RP00 | 001, 002, 003, 004, 005, 006, 086, 087, 088, 089, 101 |
 | RP01 | 007, 008, 009, 010, 083, 084, 090, 107, 108 |
 | RP02 | 011, 012, 013, 014, 015, 016, 017, 018, 085 |
-| RP03 | 019, 020, 021, 022, 023, 024 |
+| RP03 | 019, 020, 021, 022, 023, 024, 109 |
 | RP04 | 025, 026, 027, 028, 029, 030, 097, 098, 106 |
 | RP05 | 031, 032, 033 |
 | RP06 | 034, 035, 036, 037, 038, 039, 040, 041, 042 |
@@ -69,7 +69,7 @@ A contribution is not a gate pass. The review tasks below aggregate evidence; th
 | G02 | 007, 008, 009, 010, 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 083, 084, 085, 090, 107 | 010, 018, 022, 023, 024 |
 | G03 | 049, 050, 051, 052, 053, 054, 055, 056, 105 | 056 |
 | G04 | 011, 012, 013, 014, 015, 016, 017, 018, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 047, 048, 056, 084 | 047, 056, 066 |
-| G05 | 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 047, 056 | 023, 045, 046, 056 |
+| G05 | 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 047, 056, 109 | 023, 045, 046, 056 |
 | G06 | 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 056, 070, 089 | 024, 056, 061, 070 |
 | G07 | 009, 025, 026, 028, 029, 030, 031, 032, 033, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 047, 049, 050, 051, 052, 053, 054, 055, 056, 070, 084, 085, 088, 089, 097, 106 | 030, 032, 044, 054, 070, 088 |
 | G08 | 031, 032, 033, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 047, 048, 056, 065, 070, 085, 098 | 047, 056, 063, 065, 070 |
@@ -84,7 +84,7 @@ A contribution is not a gate pass. The review tasks below aggregate evidence; th
 | --- | --- |
 | T01 | 001, 002, 003, 006, 031, 032, 033, 056, 070, 073, 088, 099 |
 | T02 | 007, 008, 010, 011, 012, 013, 014, 015, 016, 017, 018, 073, 083, 084, 085, 089, 090, 107, 108 |
-| T03 | 019, 020, 021, 022, 023, 024, 073, 085 |
+| T03 | 019, 020, 021, 022, 023, 024, 073, 085, 109 |
 | T04 | 007, 008, 010, 034, 035, 036, 037, 038, 039, 040, 041, 042, 047, 073 |
 | T05 | 005, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 048, 066, 069, 073, 096 |
 | T06 | 031, 032, 033, 049, 050, 051, 052, 053, 054, 055, 056, 070, 073, 097 |
@@ -122,7 +122,7 @@ Each level below is computed as one plus the maximum dependency level of a task.
 | 4 | 007 |
 | 5 | 008, 009, 085 |
 | 6 | 010 |
-| 7 | 090, 107 |
+| 7 | 090, 107, 109 |
 | 8 | 011, 019, 034, 102 |
 | 9 | 012, 020, 027, 035 |
 | 10 | 013, 021, 025, 031, 036 |
@@ -161,6 +161,6 @@ Each level below is computed as one plus the maximum dependency level of a task.
 
 ## 9. Extension and change control
 
-Append LFCP-02-109 onward for discovered repairs or justified splits. Record parent task, repository, dependencies, specification authority, acceptance regression and affected G/T IDs. Update this map and the JSON atomically with the Markdown source. Do not use DONE on a parent coordination task to conceal unimplemented repairs.
+Append LFCP-02-110 onward for discovered repairs or justified splits. Record parent task, repository, dependencies, specification authority, acceptance regression and affected G/T IDs. Update this map and the JSON atomically with the Markdown source. Do not use DONE on a parent coordination task to conceal unimplemented repairs.
 
 If scope changes, update the owning scope/spec and acceptance corpus first. Performance thresholds remain the reviewed values from task 005; implementation convenience does not authorize loosening them. Release actions are concrete reviewed operations, not automatic side effects of an agent completing code.
