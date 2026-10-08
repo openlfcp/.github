@@ -1,8 +1,11 @@
 # Open decision: two changes with the same actor and sequence number
 
-**Status:** decided by the project owner on 2026-10-06 (see Decision). It
-was the one open spec question left after SPEC-PATCH-08
-(`mvp-0.1-baseline.8`). Prepared 2026-10-06.
+**Status:** applied in `mvp-0.1-baseline.9` (SPEC-PATCH-09,
+`spec: profiles/SHARED-OBJECTS-PROFILE-01.md` §14.1, recorded in
+`spec: adr/0008-recovery-after-server-data-loss.md`). Decided by the
+project owner on 2026-10-06 (see Decision). It was the one open spec
+question left after SPEC-PATCH-08 (`mvp-0.1-baseline.8`). Prepared
+2026-10-06.
 
 ## Decision
 
