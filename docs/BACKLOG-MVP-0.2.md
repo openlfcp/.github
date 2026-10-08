@@ -650,7 +650,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** contract / P1 / NOT_STARTED  
+**Type / priority / status:** contract / P1 / DONE — spec f5e5bb0: the sections corpus in lfcp-vector-format/1.  
 **Depends on:** LFCP-02-010  
 **Read first:** SHARED-SECTIONS-TEST-VECTORS-01.md; SHARED-SECTIONS-PROFILE-01.md  
 **Gate / test trace:** G02 / T02
@@ -695,7 +695,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / IN_PROGRESS — sdk-ts c6b4f34: @openlfcp/shared-objects/sections, dispatch by Genesis profile, section actor, schema validation (§3, §4, §14.2); all corpus cases at the dev pin spec-sections.lock (d605f39).  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts c6b4f34, d6fc6d3, 4dcb56b: @openlfcp/shared-objects/sections, dispatch by Genesis profile, the section actor, schema validation (§3, §4, §14.2). Evidence: .github b59bb1b.  
 **Depends on:** LFCP-02-007, LFCP-02-008, LFCP-02-085, LFCP-02-090  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G04, G05, G06 / T02
@@ -716,7 +716,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts 9aee4cb, a1b0556: SectionReplica and the section and creation intents; SS01 authored reaches the reference state. Evidence: .github b59bb1b.  
 **Depends on:** LFCP-02-011, LFCP-02-084  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G04, G05, G06 / T02
@@ -738,7 +738,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts 6cc0e22: node.move through fresh placements; SS02 and SS09 authored reach the reference state. Evidence: .github b59bb1b.  
 **Depends on:** LFCP-02-012  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G04, G05, G06 / T02
@@ -759,7 +759,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts fd4a7fe, 5862560: the effective tree, structural facts and resolution intents; SS15 and SS26 authored. Evidence: .github b59bb1b.  
 **Depends on:** LFCP-02-013  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G04, G05, G06 / T02
@@ -780,7 +780,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts fd41e16: node.delete and node.restore, hidden nodes and retained concurrent edits; SS07, SS08, SS24, SS25, SS27 authored. Evidence: .github b59bb1b.  
 **Depends on:** LFCP-02-012, LFCP-02-014  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G04, G05, G06 / T02
@@ -801,7 +801,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts 725a06c: text.edit with base rebasing, split and join; SS06, SS14, SS16, SS17, SS40, SS47-SS51 authored. Evidence: .github b59bb1b.  
 **Depends on:** LFCP-02-012, LFCP-02-013, LFCP-02-015, LFCP-02-010  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G04, G05, G06 / T02
@@ -822,7 +822,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts b97e166, 7e9f83f, e202a66, b1033e9: receiveChanges with the inherited and the section admission (§14.1); refused, held and heads match every corpus case. Evidence: .github b59bb1b.  
 **Depends on:** LFCP-02-010, LFCP-02-014, LFCP-02-015, LFCP-02-016  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G04, G05, G06 / T02
@@ -844,7 +844,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** integration / P0 / NOT_STARTED  
+**Type / priority / status:** integration / P0 / DONE — sdk-ts 4b217eb, f9df270: the corpus adapter; the reference verifier with the sdk-ts adapter passes 56/56 at mvp-0.2-baseline.1; three deliveries in sdk-ts. Evidence: .github b59bb1b.  
 **Depends on:** LFCP-02-008, LFCP-02-017  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G04, G05, G06 / T02
@@ -975,7 +975,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** examples  
 **Milestone / group:** M02-1 / RP03  
-**Type / priority / status:** integration / P0 / NOT_STARTED  
+**Type / priority / status:** integration / P0 / IN_PROGRESS — Rust side: sdk-rs a64c59b, examples 7fb6a37 (lfcp-interop-sections/1); the TypeScript side follows.  
 **Depends on:** LFCP-02-018, LFCP-02-022  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G02, G05, G06 / T03
@@ -996,7 +996,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** examples  
 **Milestone / group:** M02-1 / RP03  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / IN_PROGRESS — Cross-language comparison under way (worker B).  
 **Depends on:** LFCP-02-010, LFCP-02-023  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G02, G05, G06 / T03
@@ -1017,7 +1017,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-rs  
 **Milestone / group:** M02-1 / RP03  
-**Type / priority / status:** implementation / P2 / NOT_STARTED  
+**Type / priority / status:** implementation / P2 / DONE — sdk-rs b6e873b, b9de91c: retained edits from the changed nodes only; Automerge optimized in debug builds.  
 **Depends on:** LFCP-02-010  
 **Read first:** SHARED-SECTIONS-TEST-VECTORS-01.md; SHARED-SECTIONS-PROFILE-01.md  
 **Gate / test trace:** G05 / T03
@@ -1210,7 +1210,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts (companion: obsidian)  
 **Milestone / group:** M02-2 / RP04  
-**Type / priority / status:** implementation / P1 / NOT_STARTED  
+**Type / priority / status:** implementation / P1 / DONE — sdk-ts 7d6b67f, 5e6c71e: access recovery after a server restore, with the live test against the Rust server.  
 **Depends on:** LFCP-02-088  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); spec: adr/0008-recovery-after-server-data-loss.md; LFCP-WIRE-01.md; .github: docs/BACKLOG-MVP-0.1.md  
 **Gate / test trace:** G07, G09 / T07, T08
@@ -1234,7 +1234,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** server  
 **Milestone / group:** M02-3 / RP05  
-**Type / priority / status:** integration / P0 / NOT_STARTED  
+**Type / priority / status:** integration / P0 / DONE — server dc735a8, 8193b06: a section Resource end to end and the live transport evidence.  
 **Depends on:** LFCP-02-003, LFCP-02-007, LFCP-02-012  
 **Read first:** LFCP-WIRE-01.md; MVP-0.1-PROTOCOL-SCOPE.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G07, G08, G09 / T01, T06
@@ -1255,7 +1255,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** server  
 **Milestone / group:** M02-3 / RP05  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / DONE — server a18dc4d: a section import through a kill and a lost ACK.  
 **Depends on:** LFCP-02-003, LFCP-02-031, LFCP-02-088  
 **Read first:** LFCP-WIRE-01.md; MVP-0.1-PROTOCOL-SCOPE.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G07, G08, G09 / T01, T06
@@ -1276,7 +1276,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** server  
 **Milestone / group:** M02-3 / RP05  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / DONE — server e1925cf: the secure ingest checks on a section Resource.  
 **Depends on:** LFCP-02-002, LFCP-02-031, LFCP-02-032  
 **Read first:** LFCP-WIRE-01.md; MVP-0.1-PROTOCOL-SCOPE.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G07, G08, G09 / T01, T06
@@ -1404,7 +1404,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP06  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian: the pure layer is ready; wiring follows.  
 **Depends on:** LFCP-02-017, LFCP-02-026, LFCP-02-027, LFCP-02-037, LFCP-02-038  
 **Read first:** MARKDOWN-SECTIONS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G04, G05, G07, G08 / T04, T05
@@ -1425,7 +1425,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP06  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian: the pure layer is ready; wiring follows.  
 **Depends on:** LFCP-02-014, LFCP-02-028, LFCP-02-036, LFCP-02-038  
 **Read first:** MARKDOWN-SECTIONS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G04, G05, G07, G08 / T04, T05
@@ -1446,7 +1446,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP06  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian db6067f: the pure layer; wiring follows.  
 **Depends on:** LFCP-02-039, LFCP-02-040  
 **Read first:** MARKDOWN-SECTIONS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G04, G05, G07, G08 / T04, T05
@@ -1468,7 +1468,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP06  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian: the pure layer is ready; wiring follows.  
 **Depends on:** LFCP-02-039, LFCP-02-040, LFCP-02-041  
 **Read first:** MARKDOWN-SECTIONS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G04, G05, G07, G08 / T04, T05
@@ -1491,7 +1491,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP07  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian: the pure layer is ready; wiring follows.  
 **Depends on:** LFCP-02-041, LFCP-02-042, LFCP-02-096  
 **Read first:** OBSIDIAN-SECTIONS-ARCHITECTURE-02.md; MARKDOWN-SECTIONS-01.md; OBSIDIAN-SHARED-SECTIONS-UX-01.md  
 **Gate / test trace:** G04, G05, G07, G08 / T05
@@ -1597,7 +1597,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP07  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian 6a20168: wired in.  
 **Depends on:** LFCP-02-034, LFCP-02-043, LFCP-02-045  
 **Read first:** OBSIDIAN-SECTIONS-ARCHITECTURE-02.md; MARKDOWN-SECTIONS-01.md; OBSIDIAN-SHARED-SECTIONS-UX-01.md  
 **Gate / test trace:** G04, G08, G10 / T05, T09
@@ -1834,7 +1834,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-3 / RP08  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — obsidian 88edfb4: legacy commands inside sections.  
 **Depends on:** LFCP-02-046, LFCP-02-049  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); OBSIDIAN-SHARED-SECTIONS-UX-01.md; .github: docs/BACKLOG-MVP-0.1.md  
 **Gate / test trace:** G10, G11 / T08, T09
