@@ -338,7 +338,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** audit / P0 / IN_REVIEW — .github 204af26: release/mvp-0.2-baseline-inventory.md and mvp-0.2-baseline-manifest.json (rc-verify --from-heads, 2026-10-08).  
+**Type / priority / status:** audit / P0 / DONE — .github 204af26: release/mvp-0.2-baseline-inventory.md and mvp-0.2-baseline-manifest.json (rc-verify --from-heads, 2026-10-08).  
 **Depends on:** LFCP-02-101  
 **Read first:** AGENT-OPERATING-GUIDE.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.1-PROTOCOL-SCOPE.md; BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/rc-verification.md  
 **Gate / test trace:** G01 / T01
@@ -360,7 +360,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** audit / P0 / IN_REVIEW — .github bea437a: release/mvp-0.2-client-baseline.md; rc9 sdk-ts gate PASS at 777f36e, full suite PASS at e9cdb43; no defect opened.  
+**Type / priority / status:** audit / P0 / DONE — .github bea437a: release/mvp-0.2-client-baseline.md; rc9 sdk-ts gate PASS at 777f36e, full suite PASS at e9cdb43; no defect opened.  
 **Depends on:** LFCP-02-001  
 **Read first:** MVP-0.1-PROTOCOL-SCOPE.md; LFCP-WIRE-01.md; LFCP-TEST-VECTORS-01.md; AGENT-OPERATING-GUIDE.md; .github: docs/release/mvp-0.1-release-notes.md; .github: docs/release/security-review-mvp-0.1.md  
 **Gate / test trace:** G01 / T01
@@ -382,7 +382,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** server  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** audit / P0 / NOT_STARTED  
+**Type / priority / status:** audit / P0 / DONE — server ad84496.  
 **Depends on:** LFCP-02-001  
 **Read first:** LFCP-WIRE-01.md; MVP-0.1-PROTOCOL-SCOPE.md; OBSIDIAN-SYNC-INDICATORS-01.md; MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G01 / T01
@@ -404,7 +404,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** audit / P0 / NOT_STARTED  
+**Type / priority / status:** audit / P0 / DONE — obsidian a2f48de; the fix (087) ships in 0.3.2.  
 **Depends on:** LFCP-02-001  
 **Read first:** MVP-0.2-COMPATIBILITY-AND-MIGRATION.md; MARKDOWN-REFS-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G01, G11 / T08
@@ -426,7 +426,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / DONE — obsidian 03c4aff.  
 **Depends on:** LFCP-02-001  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md; OBSIDIAN-SYNC-INDICATORS-01.md  
 **Gate / test trace:** G01, G12 / T05, T11, T12
@@ -450,7 +450,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** contract / P0 / NOT_STARTED  
+**Type / priority / status:** contract / P0 / DONE — .github 0c40604: release/mvp-0.2-baseline-gaps.md, gaps B1-B19 and the blocking predicates.  
 **Depends on:** LFCP-02-002, LFCP-02-003, LFCP-02-004, LFCP-02-005  
 **Read first:** AGENT-OPERATING-GUIDE.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.1-PROTOCOL-SCOPE.md  
 **Gate / test trace:** G01 / T01
@@ -1296,7 +1296,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP06  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian 0a8245c: module ready; wired in after the 0.3.2 tag.  
 **Depends on:** LFCP-02-035, LFCP-02-009  
 **Read first:** MARKDOWN-SECTIONS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G04, G05, G07, G08 / T04, T05
@@ -1317,7 +1317,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP06  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian a4253fd: module ready; wired in after the 0.3.2 tag.  
 **Depends on:** LFCP-02-009, LFCP-02-036  
 **Read first:** MARKDOWN-SECTIONS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G04, G05, G07, G08 / T04, T05
@@ -1338,7 +1338,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP06  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — obsidian 803034b: module ready; wired in after the 0.3.2 tag.  
 **Depends on:** LFCP-02-009, LFCP-02-025, LFCP-02-029, LFCP-02-036, LFCP-02-098  
 **Read first:** MARKDOWN-SECTIONS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G04, G05, G07, G08 / T04, T05
@@ -1467,7 +1467,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP07  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_REVIEW — obsidian 8bb2559: the model alone; wired in after the 0.3.2 tag.  
 **Depends on:** LFCP-02-015, LFCP-02-043  
 **Read first:** OBSIDIAN-SECTIONS-ARCHITECTURE-02.md; MARKDOWN-SECTIONS-01.md; OBSIDIAN-SHARED-SECTIONS-UX-01.md  
 **Gate / test trace:** G04, G05, G07, G08 / T05
@@ -1565,6 +1565,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 2. Show exact boundaries and minimal loading/attention without guessing DOM identity from title text.
 3. Handle fragments, folds, viewport changes, split views and cleanup; missing exact mapping gives an honest fallback and a compatibility issue.
 4. Per-node metadata is hidden in Live Preview by default (M5).
+5. Provide a "Show sharing metadata" command and declarative setting: the caret never reaches a hidden binding line by arrow keys (spike obsidian 003e50a, docs/devel/reports/marker-hiding-spike.md). Use a state field with block replace decorations in Live Preview only; Reading view needs no hiding code (host fact H7). Show the section boundary independently of hidden markers.
 
 **Required checks:** Three native modes, folded conflict and lifecycle cleanup; source bytes unchanged by decoration.
 
@@ -1951,6 +1952,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 1. Native source copy preserves selected binding metadata; readable copy strips only specified LFCP metadata; shared copy preserves complete identity binding.
 2. Selection-aware serialization removes plugin-owned decorations/cards without damaging mixed private/shared text or normal formatting.
 3. Actual copy/cut produces no SVG/check/status/participant material and no extra shared delete intent; CSS exclusion alone is insufficient.
+4. Copying a selection that spans hidden binding lines: native copy keeps the bindings (§10), the readable copy strips them; check text/plain and text/html.
 
 **Required checks:** UX10, MS15, SI20 in all modes and target OSes, with partial/mixed/whole-section selections.
 
@@ -2230,6 +2232,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 1. release.yml accepts X.Y.Z-beta.N tags and creates a GitHub pre-release with the same three attested assets.
 2. manifest.json on main keeps the catalog version until GA; release-assets.mjs checks the beta tag against its own manifest asset.
 3. docs/devel/release.md documents the BRAT install of a beta.
+4. The first beta with a section build waits for: 087 released (0.3.2 on @openlfcp/* 0.1.3, B1-B5); the owner's decision on the public server quotas (B15); 098 fixed or explicitly accepted by the owner for the beta (B8).
 
 **Required checks:** A dry run of release-assets for a beta tag; workflow syntax check; doccheck.
 
