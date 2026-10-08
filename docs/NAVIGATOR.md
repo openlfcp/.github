@@ -19,6 +19,7 @@ catalogs every artifact across the repositories, with its status.
 | [conformance/compatibility-matrix.md](conformance/compatibility-matrix.md) | release | The generated sdk-rs ⇄ sdk-ts conformance snapshot at a baseline |
 | [release/mvp-0.1-release-notes.md](release/mvp-0.1-release-notes.md) | release | MVP 0.1.0 release notes (final, 2026-10-06) |
 | [release/server-0.2.0-release-notes.md](release/server-0.2.0-release-notes.md) | release, operators | Server 0.2.0 release notes: abuse limits, quotas, memory bounds, upgrade notes |
+| [release/server-0.3.0-release-notes.md](release/server-0.3.0-release-notes.md) | release, operators | Server 0.3.0 release notes: the `previous` link check (UNKNOWN_PREVIOUS), relay, recovery after a restore, lfcp-admin |
 | [release/deferred-wire-01-features.md](release/deferred-wire-01-features.md) | everyone | What MVP 0.1 does not implement, and how it behaves instead |
 | [release/readme-scope-statements.md](release/readme-scope-statements.md) | release | The "Scope" section each repository README carries |
 | [release/rc-verification.md](release/rc-verification.md) | release | Verifying a release candidate locally (`scripts/rc-verify.py`) |
@@ -36,5 +37,5 @@ catalogs every artifact across the repositories, with its status.
 | [operations/sync-server-privacy.md](operations/sync-server-privacy.md) | everyone | Privacy note (GDPR) of the public sync server sync.openlfcp.org: controller, what it processes and why, recipients, retention, your rights |
 | [operations/sync-server-terms.md](operations/sync-server-terms.md) | everyone | Terms of service of sync.openlfcp.org: beta and as is, acceptable use, quotas, data loss, Polish law |
 | [operations/sync-server-runbook.md](operations/sync-server-runbook.md) | owner | Operating sync.openlfcp.org: where it runs, monitoring, external uptime check, abuse handling (draft) |
+| [operations/sync-server-restore-test.md](operations/sync-server-restore-test.md) | owner | Testing a restore of sync.openlfcp.org with server 0.3.0: three cases, expected results, what to record (LAUNCH-003 (b), draft) |
 | [assets/brand/README.md](assets/brand/README.md) | everyone | The OpenLFCP mark: files for light and dark backgrounds, favicon, colours and usage rules (LAUNCH-006) |
-| [release/server-0.3.0-release-notes.md](release/server-0.3.0-release-notes.md) | release, operators | Server 0.3.0 release notes: the `previous` link check (UNKNOWN_PREVIOUS), relay, recovery after a restore, lfcp-admin |
