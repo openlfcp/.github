@@ -198,10 +198,12 @@ def consistency(rc: Path, manifest: dict) -> tuple[bool, list[dict]]:
     pin("examples", "conformance/pins.json", "sdk_ts", "sdk-ts", pins_json["sdk_ts"])
     pin("examples", "conformance/pins.json", "spec", "spec", pins_json["spec"])
 
-    ok = True
+    ok = dev_pins(rc, m["spec"], pins)
     for p in pins:
         if p.get("kind") == "npm":
             ok = ok and p["matches_manifest"] and p["published"] is not False
+            continue
+        if p.get("kind") == "dev":
             continue
         target = ROOT / p["target"]
         value = p["value"]
@@ -224,6 +226,31 @@ def consistency(rc: Path, manifest: dict) -> tuple[bool, list[dict]]:
         ok = ok and p["ancestor_of_head"]
         p["gap"] = git(target, "log", "--oneline", f"{value}..{head}").splitlines()
     return ok, pins
+
+
+def dev_pins(rc: Path, tag_commit: str, pins: list[dict]) -> bool:
+    """spec-sections.lock: the MVP 0.2 development pin of the section corpus,
+    before the first mvp-0.2 baseline tag. It names no tag and is not the
+    manifest's spec: it must exist in spec, descend from the pinned
+    baseline, and be the same in every SDK that has one."""
+    found = []
+    for owner in ["sdk-ts", "sdk-rs"]:
+        path = rc / owner / "spec-sections.lock"
+        if not path.exists():
+            continue
+        value = read_json(path)["commit"]
+        spec = ROOT / "spec"
+        exists = run(["git", "cat-file", "-e", f"{value}^{{commit}}"], spec) == 0
+        descends = exists and run(["git", "merge-base", "--is-ancestor", tag_commit, value], spec) == 0
+        found.append(
+            {"kind": "dev", "owner": owner, "file": "spec-sections.lock", "field": "commit", "target": "spec",
+             "value": value, "exists": exists, "descends_from_baseline": descends}
+        )
+    agree = len({p["value"] for p in found}) <= 1
+    for p in found:
+        p["agrees"] = agree
+    pins.extend(found)
+    return all(p["exists"] and p["descends_from_baseline"] and p["agrees"] for p in found)
 
 
 def npm_published(name: str, version: str) -> bool | None:
@@ -459,7 +486,7 @@ def write_report(
         "| --- | --- | --- | --- | --- |",
     ]
     for p in pins:
-        if p.get("kind") == "npm":
+        if p.get("kind") in ("npm", "dev"):
             continue
         gap = "; ".join(p["gap"]) if p["gap"] else "none"
         lines.append(
@@ -480,6 +507,23 @@ def write_report(
             lines.append(
                 f"| obsidian `package.json` {p['field']} | {p['value']} | "
                 f"{p['expected'] or '**not in sdk-ts**'}{'' if p['matches_manifest'] else ' **≠**'} | {published[p['published']]} |"
+            )
+    dev = [p for p in pins if p.get("kind") == "dev"]
+    if dev:
+        lines += [
+            "",
+            "Dev pins, pre-baseline: `spec-sections.lock` pins the section corpus to a spec commit before the first "
+            "MVP 0.2 baseline tag. It is not the manifest's spec; it must exist in spec, descend from the pinned "
+            "baseline, and be the same in every SDK.",
+            "",
+            "| Pin | Value | Exists in spec | Descends from the baseline | Same in every SDK |",
+            "| --- | --- | --- | --- | --- |",
+        ]
+        yes = {True: "yes", False: "**no**"}
+        for p in dev:
+            lines.append(
+                f"| {p['owner']} `{p['file']}` → spec | {p['value'][:12]} | {yes[p['exists']]} | "
+                f"{yes[p['descends_from_baseline']]} | {yes[p['agrees']]} |"
             )
     if after_tag:
         lines += [

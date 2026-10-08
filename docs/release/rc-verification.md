@@ -70,6 +70,13 @@ commits.
    `sdk-ts.lock`, a commit pin like the others; manifests of that time are
    checked that way.
 
+   `spec-sections.lock` in sdk-ts and sdk-rs, while MVP 0.2 is before its
+   first baseline tag, is a development pin of the shared sections corpus,
+   not of the RC's spec: it names a spec commit and no tag. It is listed
+   apart, as "dev pin, pre-baseline", and must exist in spec, descend from
+   the pinned baseline tag, and be the same in every SDK that has one. It
+   goes away when `mvp-0.2-baseline.1` is tagged and `spec.lock` moves to it.
+
    Spec commits after the pinned tag are listed in the report. ADRs and
    other docs there are fine; a commit touching `wire/`, `profiles/`,
    `integration/`, `schemas/`, `test-vectors/` or a `.cddl` file makes the
