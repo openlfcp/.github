@@ -8,6 +8,9 @@ catalogs every artifact across the repositories, with its status.
 | [PROJECT-NARRATIVE.md](PROJECT-NARRATIVE.md) | everyone | Why OpenLFCP exists and how its parts fit together |
 | [MVP-0.1-PROTOCOL-SCOPE.md](MVP-0.1-PROTOCOL-SCOPE.md) | everyone | What MVP 0.1 implements of LFCP-WIRE-01, and what it defers |
 | [BACKLOG-MVP-0.1.md](BACKLOG-MVP-0.1.md) | contributors | The MVP 0.1 tasks (LFCP-001 onwards) and their acceptance criteria |
+| [MVP-0.2-SCOPE.md](MVP-0.2-SCOPE.md) | everyone | What MVP 0.2 (shared sections) delivers, its exclusions and completion gates G01–G12 |
+| [MVP-0.2-ROADMAP.md](MVP-0.2-ROADMAP.md) | everyone | MVP 0.2 milestones M02-0 to M02-6, the starting evidence from 0.1, risks and release versions |
+| [MVP-0.2-TEST-AND-RELEASE-PLAN.md](MVP-0.2-TEST-AND-RELEASE-PLAN.md) | contributors, release | MVP 0.2 test families T01–T12, workloads, budgets, pilot, release stages and rollback |
 | [AGENT-OPERATING-GUIDE.md](AGENT-OPERATING-GUIDE.md) | contributors | How agents and contributors work across the repositories |
 | [engineering-conventions.md](engineering-conventions.md) | contributors | Branches, commits, validation commands, labels, versioning, the Working Draft change process |
 | [ARTIFACTS-INDEX.md](ARTIFACTS-INDEX.md) | everyone | Every artifact, where it lives and its status |
