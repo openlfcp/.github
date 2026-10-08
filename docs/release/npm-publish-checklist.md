@@ -275,3 +275,92 @@ matter to an existing client:
    next version, and
    `npm deprecate @openlfcp/<pkg>@0.1.1 "incomplete release; use 0.1.2"`
    for the incomplete set.
+
+## Patch release 0.1.2
+
+The patch release publishes `0.1.2` of all eight packages from sdk-ts
+5bf4036, under `latest`. It is the 0.1.x sustaining release of MVP 0.2
+wave W0: spec `mvp-0.1-baseline.9` (ADR 0008, recovery after server data
+loss; POST-001, held actor-sequence collisions) and the profile check of
+`acceptInvitation` (LFCP-02-086), which Shared Tasks 0.3.2 needs. What
+changed is in `sdk-ts: CHANGELOG.md`. Nothing is removed or renamed. What
+may matter to an existing client:
+- a server that lacks objects the client holds is sent them again, and a
+  Resource a route lost is hosted again from its Genesis (new `rehost`
+  event);
+- `ApplyOutcome` has the new member `profile-held`, the storage status
+  `profile-held`, `NackOutcome` the member `needs-offer`, and
+  `AcceptedInvitation` the member `profile-unsupported` (only with the new
+  `dataProfiles` option): a `switch` that checks exhaustiveness needs a
+  case for each;
+- a Shared Objects change whose actor and sequence number another change
+  has is held, no longer refused with `ACTOR_EQUIVOCATION`.
+
+Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
+30f592d (0.3.0, `server.lock`) pushed first.
+
+1. **Pre-flight**, from a clean sdk-ts checkout at 5bf4036, pushed and CI
+   green:
+
+   ```sh
+   git status --short                          # empty
+   git log -1 --format=%h                      # 5bf4036
+   pnpm install --frozen-lockfile
+   pnpm release:check                          # "version 0.1.2, dist-tag latest", "release check PASSED"
+   npm whoami                                  # the account that owns @openlfcp
+   npm view @openlfcp/core@0.1.2 version       # E404: not published yet
+   ```
+
+   `release:check` was PASSED at 5bf4036 on 2026-10-08. Every
+   `@openlfcp/*` dependency packs as `^0.1.2`, and the total is 283.6 KiB.
+2. **Publish, in dependency order,** each with a fresh one-time code:
+
+   | # | Package | Command |
+   | --- | --- | --- |
+   | 1 | `@openlfcp/core` | `pnpm --filter @openlfcp/core publish --tag latest --otp=<code>` |
+   | 2 | `@openlfcp/crypto` | `pnpm --filter @openlfcp/crypto publish --tag latest --otp=<code>` |
+   | 3 | `@openlfcp/storage` | `pnpm --filter @openlfcp/storage publish --tag latest --otp=<code>` |
+   | 4 | `@openlfcp/wire` | `pnpm --filter @openlfcp/wire publish --tag latest --otp=<code>` |
+   | 5 | `@openlfcp/storage-node` | `pnpm --filter @openlfcp/storage-node publish --tag latest --otp=<code>` |
+   | 6 | `@openlfcp/storage-idb` | `pnpm --filter @openlfcp/storage-idb publish --tag latest --otp=<code>` |
+   | 7 | `@openlfcp/shared-objects` | `pnpm --filter @openlfcp/shared-objects publish --tag latest --otp=<code>` |
+   | 8 | `@openlfcp/client` | `pnpm --filter @openlfcp/client publish --tag latest --otp=<code>` |
+
+3. **Move `next` to 0.1.2 too:**
+
+   ```sh
+   for p in core crypto storage wire storage-node storage-idb shared-objects client; do
+     npm dist-tag add "@openlfcp/$p@0.1.2" next --otp=<code>
+   done
+   ```
+
+4. **Verify:**
+
+   ```sh
+   for p in core crypto storage wire storage-node storage-idb shared-objects client; do
+     printf '%s ' "@openlfcp/$p"
+     npm view "@openlfcp/$p" dist-tags --json | tr -d ' \n'
+     echo
+   done                                        # each: "latest":"0.1.2","next":"0.1.2"
+   npm view @openlfcp/client@0.1.2 version dependencies   # every @openlfcp/* dependency ^0.1.2
+
+   mkdir /tmp/openlfcp-npm-012 && cd /tmp/openlfcp-npm-012 && npm init -y >/dev/null
+   npm pkg set type=module
+   npm install @openlfcp/core@0.1.2 @openlfcp/crypto@0.1.2 @openlfcp/storage@0.1.2 \
+     @openlfcp/wire@0.1.2 @openlfcp/storage-node@0.1.2 @openlfcp/storage-idb@0.1.2 \
+     @openlfcp/shared-objects@0.1.2 @openlfcp/client@0.1.2
+   node --input-type=module -e 'for (const p of ["core","crypto","storage","wire","storage-node","storage-idb","shared-objects","client"]) await import(`@openlfcp/${p}`); const { ERROR_CODE, haveDifference } = await import("@openlfcp/wire"); console.log("all eight import; UNKNOWN_PREVIOUS:", ERROR_CODE.UNKNOWN_PREVIOUS, typeof haveDifference)'
+   ```
+
+   The last line prints `all eight import; UNKNOWN_PREVIOUS: 23n function`.
+5. **Tag the release commit:**
+
+   ```sh
+   git tag -a v0.1.2 5bf4036 -m "OpenLFCP sdk-ts 0.1.2"
+   git push origin v0.1.2
+   ```
+
+6. **If a publish fails midway:** section 5 applies, with `0.1.3` as the
+   next version, and
+   `npm deprecate @openlfcp/<pkg>@0.1.2 "incomplete release; use 0.1.3"`
+   for the incomplete set.
