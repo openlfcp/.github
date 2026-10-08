@@ -34,6 +34,7 @@ catalogs every artifact across the repositories, with its status.
 | [release/rc7-manifest.json](release/rc7-manifest.json) | release | The pins of rc7, the MVP 0.1.0 release commits |
 | [release/rc8-manifest.json](release/rc8-manifest.json) | release | The pins of rc8, the server 0.2.0 release commits |
 | [release/rc9-manifest.json](release/rc9-manifest.json) | release | The pins of rc9, the MVP 0.2 wave W0 sustaining release commits (spec baseline.9, server 0.3.0, sdk-ts 0.1.2) |
+| [release/rc10-manifest.json](release/rc10-manifest.json) | release | The pins of rc10, the Shared Tasks 0.3.2 release (spec baseline.9, server 0.3.0, sdk-ts 0.1.3, obsidian 1cfce1e) |
 | [release/mvp-0.2-baseline-inventory.md](release/mvp-0.2-baseline-inventory.md) | release, contributors | MVP 0.2 baseline (LFCP-02-001): components, versions, locks, artifacts, build and release paths, sources, superseded documents |
 | [release/mvp-0.2-baseline-manifest.json](release/mvp-0.2-baseline-manifest.json) | release | The commits of the MVP 0.2 baseline inventory |
 | [release/mvp-0.2-client-baseline.md](release/mvp-0.2-client-baseline.md) | release, contributors | MVP 0.2 client baseline (LFCP-02-002): the inherited sdk-ts security and durability checks, by area |
