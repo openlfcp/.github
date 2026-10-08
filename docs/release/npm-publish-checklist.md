@@ -500,8 +500,15 @@ What the workflow does on a pushed tag `vX.Y.Z`:
    them, retrying for up to 10 minutes while npm still validates the new
    version. The job is red if anything is wrong.
 
-The dist-tag `next` is no longer moved for a final release (CI can only
-publish): it names the latest prerelease.
+The dist-tag `next` is no longer maintained (owner decision, 2026-10-08).
+It stays on 0.1.1 and moves again only when CI publishes a prerelease
+(`X.Y.Z-rc.N`, `--tag next`); a final release never moves it, and nobody
+moves it by hand: every manual npm operation needs a separate
+confirmation per package, and a dist-tag change has no grace window. For
+the same reason sdk-ts releases come in batches, with no patch release
+unless something actually needs one. Should CI ever have to move `next`
+itself, that is the trusted publisher's "Allow npm dist-tag" setting with
+npm 11.21 or later; it is not set up.
 
 ### A release
 
