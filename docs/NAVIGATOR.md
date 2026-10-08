@@ -11,6 +11,8 @@ catalogs every artifact across the repositories, with its status.
 | [MVP-0.2-SCOPE.md](MVP-0.2-SCOPE.md) | everyone | What MVP 0.2 (shared sections) delivers, its exclusions and completion gates G01–G12 |
 | [MVP-0.2-ROADMAP.md](MVP-0.2-ROADMAP.md) | everyone | MVP 0.2 milestones M02-0 to M02-6, the starting evidence from 0.1, risks and release versions |
 | [MVP-0.2-TEST-AND-RELEASE-PLAN.md](MVP-0.2-TEST-AND-RELEASE-PLAN.md) | contributors, release | MVP 0.2 test families T01–T12, workloads, budgets, pilot, release stages and rollback |
+| [BACKLOG-MVP-0.2.md](BACKLOG-MVP-0.2.md) | contributors | The MVP 0.2 tasks (LFCP-02-001 to 105), the owner decisions, waves and brief rules |
+| [BACKLOG-MVP-0.2-EXECUTION-MAP.md](BACKLOG-MVP-0.2-EXECUTION-MAP.md) | contributors | Routing, gate and test coverage, and dependency levels of the MVP 0.2 backlog |
 | [AGENT-OPERATING-GUIDE.md](AGENT-OPERATING-GUIDE.md) | contributors | How agents and contributors work across the repositories |
 | [engineering-conventions.md](engineering-conventions.md) | contributors | Branches, commits, validation commands, labels, versioning, the Working Draft change process |
 | [ARTIFACTS-INDEX.md](ARTIFACTS-INDEX.md) | everyone | Every artifact, where it lives and its status |

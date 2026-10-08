@@ -224,15 +224,18 @@ This governs the portable `lfcp-ref` grammar and placement. Task projections sup
 
 # 4.6 Current execution backlog
 
-The authoritative implementation sequence for MVP 0.1 is:
+The authoritative implementation sequence is MVP 0.2 (shared sections):
 
 ```text
-BACKLOG-MVP-0.1.md
+BACKLOG-MVP-0.2.md                  (tasks LFCP-02-001 to LFCP-02-105, reviewed 2026-10-08)
+BACKLOG-MVP-0.2-EXECUTION-MAP.md    (routing, coverage, dependency levels)
 ```
 
-Agents MUST use its current issue numbers and dependencies. The earlier `LFCP-001...050` draft and temporary `BACKLOG-MVP-0.1-PATCH.md` are superseded.
+Agents MUST use its task IDs and dependencies, the owner decisions of its §3 and the rules of its §5. Its scope, roadmap and test plan are `MVP-0.2-SCOPE.md`, `MVP-0.2-ROADMAP.md` and `MVP-0.2-TEST-AND-RELEASE-PLAN.md`.
 
-The backlog is planning authority, but it does not override normative protocol/profile specifications. If a backlog acceptance criterion conflicts with a normative spec, raise the inconsistency rather than coding to the backlog blindly.
+`BACKLOG-MVP-0.1.md` stays the record of MVP 0.1 (LFCP-001 to LFCP-072) and of the post-0.1 work (POST-, LAUNCH-, NEXT- entries). Its IDs are never renumbered; open POST- items that MVP 0.2 needs are linked from LFCP-02 tasks. The earlier `LFCP-001...050` draft and temporary `BACKLOG-MVP-0.1-PATCH.md` are superseded.
+
+A backlog is planning authority, but it does not override normative protocol/profile specifications. If a backlog acceptance criterion conflicts with a normative spec, raise the inconsistency rather than coding to the backlog blindly.
 
 # 4.7 MVP 0.1 baseline
 
@@ -243,6 +246,8 @@ spec: MVP-0.1-BASELINE.md        (at spec tag mvp-0.1-baseline.8; mvp-0.1-baseli
 ```
 
 It names every normative document, vector suite, generator, CDDL file and schema that implementations build against. The protocol decisions applied to the Working Drafts for this baseline are recorded in `spec: adr/0001-mvp-0.1-protocol-decisions.md`, `spec: adr/0002-mvp-0.1-protocol-decisions-2.md`, `spec: adr/0003-mvp-0.1-protocol-decisions-3.md`, `spec: adr/0004-mvp-0.1-protocol-decisions-4.md`, `spec: adr/0005-mvp-0.1-protocol-decisions-5.md`, `spec: adr/0006-mvp-0.1-protocol-decisions-6.md` and `spec: adr/0007-mvp-0.1-protocol-decisions-7.md`.
+
+MVP 0.2 builds on this baseline: first `mvp-0.1-baseline.9` (the 0.1.x sustaining changes of wave W0), then the series `mvp-0.2-baseline.N`, which adds the shared-sections documents (LFCP-02-090).
 
 The baseline is an implementation baseline only. It is not a Stable publication of `LFCP-WIRE-01`, and it is not a full-conformance claim. The documents remain Working Drafts. A later approved correction produces a new tag (for example `mvp-0.1-baseline.9`); an existing tag is never moved.
 
