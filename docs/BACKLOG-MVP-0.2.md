@@ -3,12 +3,12 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 106 tasks in 13 epics, across seven milestones  
+**Size:** 107 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
 
-Use IDs **LFCP-02-001…LFCP-02-106**. Tasks 083-105 come from the review; each names its source in the review summary. Task 106 came from the W0 recovery drill. They belong to MVP 0.2 and do not rename, replace or imply completion of legacy LFCP-NNN tasks. No GitHub issues, assignments, PRs or deployments have been created by preparing this backlog.
+Use IDs **LFCP-02-001…LFCP-02-107**. Tasks 083-105 come from the review; each names its source in the review summary. Task 106 came from the W0 recovery drill, 107 from the spec baseline work. They belong to MVP 0.2 and do not rename, replace or imply completion of legacy LFCP-NNN tasks. No GitHub issues, assignments, PRs or deployments have been created by preparing this backlog.
 
 The MVP 0.1 facts are recorded in MVP-0.2-ROADMAP §2 (Starting evidence). A task is NOT_STARTED unless its card carries a status note with evidence. First inspect and reuse existing code. Where behavior already meets a task, close it with exact implementation/test evidence rather than rewriting it. Server audit tasks may legitimately end with verified no-change results.
 
@@ -24,7 +24,7 @@ A task is DONE when its acceptance criteria are met, required checks ran on the 
 
 Use NOT_STARTED, IN_PROGRESS, BLOCKED, IN_REVIEW and DONE. The release record separately uses PASS/FAIL/NOT_RUN/BLOCKED for evidence. A completed audit or pilot observation may have findings: it closes the investigation, not the failed product gate. Tasks 056, 069, 073, 077 and 082 cannot claim qualifying success while relevant inherited/new required blockers remain open.
 
-When a baseline gap or pilot defect needs code, append focused tasks starting at LFCP-02-107, with one owning repository and a regression test. Update affected dependency and gate links. Do not bury unknown work under an already-DONE audit, reuse old IDs or assume a blanket remediation task was implemented. Task 076 coordinates this process; actual repairs remain separately reviewable.
+When a baseline gap or pilot defect needs code, append focused tasks starting at LFCP-02-108, with one owning repository and a regression test. Update affected dependency and gate links. Do not bury unknown work under an already-DONE audit, reuse old IDs or assume a blanket remediation task was implemented. Task 076 coordinates this process; actual repairs remain separately reviewable.
 
 Every implementation change preserves the secure 0.1 subset, legacy Task support, private-source boundaries, actor/nonce safety, retained deleted content and explicit new-profile import. No protocol crypto in the plugin, plaintext Task logic in the server, per-node ACL, read receipts, silent legacy dual-write, arbitrary Markdown support or unapproved physical CRDT garbage collection.
 
@@ -120,7 +120,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | --- | --- | --- | --- |
 | E00 | 086, 087, 088, 089 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
 | E01 | 001, 002, 003, 004, 005, 006, 101 | Baseline and inherited obligations | M02-0 |
-| E02 | 007, 008, 009, 010, 083, 084, 090 | Pinned contracts and corpus | M02-1 |
+| E02 | 007, 008, 009, 010, 083, 084, 090, 107 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085 | TypeScript section model | M02-1 |
 | E04 | 019, 020, 021, 022, 023, 024 | Rust and independent interoperability | M02-1 |
 | E05 | 025, 026, 027, 028, 029, 030, 097, 098, 106 | Durability and SDK evidence | M02-2 |
@@ -242,6 +242,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-104 | README, user guide and access disclosure for sections | obsidian | P1 | 066 |
 | LFCP-02-105 | Early BRAT dogfood of share, insert and edit | obsidian | P1 | 048, 049, 052, 087, 091, 094 |
 | LFCP-02-106 | A member refused before its grant is re-supplied recovers by itself | sdk-ts (companion: obsidian) | P1 | 088 |
+| LFCP-02-107 | Move the shared-sections vectors to lfcp-vector-format/1 | spec | P1 | 010 |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -642,6 +643,27 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** spec gate (validate.sh, CDDL) at the tag; rc-verify --consistency-only.
 
 **Deliverables:** Tag (owner), baseline document and lock commits.
+
+### LFCP-02-107 — Move the shared-sections vectors to lfcp-vector-format/1
+
+**Primary repository:** spec  
+**Milestone / group:** M02-1 / RP01  
+**Type / priority / status:** contract / P1 / NOT_STARTED  
+**Depends on:** LFCP-02-010  
+**Read first:** SHARED-SECTIONS-TEST-VECTORS-01.md; SHARED-SECTIONS-PROFILE-01.md  
+**Gate / test trace:** G02 / T02
+
+**Goal:** Check the section corpus with the project's one vector tooling.
+
+**Acceptance:**
+
+1. test-vectors/shared-sections-01 (SHARED-SECTIONS-TEST-VECTORS-01) is expressed in lfcp-vector-format/1 instead of its own schema (schemas/section-vectors.schema.json).
+2. scripts/validate-vectors.mjs checks the directory: it is removed from OWN_FORMAT, and scripts/check-shared-sections-corpus.mjs is retired or reduced to what the format cannot say.
+3. No expected value changes without an entry in migrations/; the case identities and hashes of task 010 are kept.
+
+**Required checks:** spec validate.sh on a fresh clone; both SDK conformance runners read the moved corpus.
+
+**Deliverables:** Moved corpus, schema and validator changes, migrations entry.
 
 ## E03. TypeScript section model
 

@@ -6,7 +6,7 @@
 
 ## 1. Start and integration rules
 
-Start with LFCP-02-001. Once actual repositories/artifacts are resolved, 002–005 can be assigned independently to the owning layers. Task 006 consolidates findings; 007–010 pin contracts/fixtures. Review tasks 083-105 are integrated; their waves are in BACKLOG-MVP-0.2.md section 4. Baseline remediation discovered by audit is appended from 107 onward and explicitly blocks affected qualification gates.
+Start with LFCP-02-001. Once actual repositories/artifacts are resolved, 002–005 can be assigned independently to the owning layers. Task 006 consolidates findings; 007–010 pin contracts/fixtures. Review tasks 083-105 are integrated; their waves are in BACKLOG-MVP-0.2.md section 4. Baseline remediation discovered by audit is appended from 108 onward and explicitly blocks affected qualification gates.
 
 TypeScript and Rust are independent implementations; neither must copy the other's model code. Shared fixtures/contracts are common inputs. Parser and status preparation can overlap model work where inputs are pinned. The hard dependency graph below describes what must be complete to close a task, not a prohibition on safe scaffolding or draft preparation.
 
@@ -28,7 +28,7 @@ No agent prompt pack is defined here. Future packs should respect the graph and 
 | sdk-ts | 002, 011, 012, 013, 014, 015, 016, 017, 018, 025, 026, 027, 028, 029, 030, 086, 091, 092, 098, 099 | 20 |
 | server | 003, 031, 032, 033, 074, 081 | 6 |
 | obsidian | 004, 005, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 047, 048, 049, 050, 051, 052, 053, 054, 055, 057, 058, 059, 060, 061, 062, 063, 064, 065, 066, 067, 068, 069, 075, 076, 080, 087, 094, 095, 096, 097, 100, 104, 105 | 48 |
-| spec | 007, 008, 009, 010, 083, 084, 090 | 7 |
+| spec | 007, 008, 009, 010, 083, 084, 090, 107 | 8 |
 | sdk-rs | 019, 020, 021, 022 | 4 |
 | examples | 023, 024, 056, 070, 071, 072 | 6 |
 | website | 078 | 1 |
@@ -45,7 +45,7 @@ All abbreviated IDs in this map use the LFCP-02 namespace. A primary repository 
 | Group | Tasks |
 | --- | --- |
 | RP00 | 001, 002, 003, 004, 005, 006, 086, 087, 088, 089, 101 |
-| RP01 | 007, 008, 009, 010, 083, 084, 090 |
+| RP01 | 007, 008, 009, 010, 083, 084, 090, 107 |
 | RP02 | 011, 012, 013, 014, 015, 016, 017, 018, 085 |
 | RP03 | 019, 020, 021, 022, 023, 024 |
 | RP04 | 025, 026, 027, 028, 029, 030, 097, 098, 106 |
@@ -65,7 +65,7 @@ A contribution is not a gate pass. The review tasks below aggregate evidence; th
 | Gate | Contributing tasks | Required closure/review tasks |
 | --- | --- | --- |
 | G01 | 001, 002, 003, 004, 005, 006, 101 | 006, 073 |
-| G02 | 007, 008, 009, 010, 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 083, 084, 085, 090 | 010, 018, 022, 023, 024 |
+| G02 | 007, 008, 009, 010, 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 083, 084, 085, 090, 107 | 010, 018, 022, 023, 024 |
 | G03 | 049, 050, 051, 052, 053, 054, 055, 056, 105 | 056 |
 | G04 | 011, 012, 013, 014, 015, 016, 017, 018, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 047, 048, 056, 084 | 047, 056, 066 |
 | G05 | 011, 012, 013, 014, 015, 016, 017, 018, 019, 020, 021, 022, 023, 024, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 047, 056 | 023, 045, 046, 056 |
@@ -82,7 +82,7 @@ A contribution is not a gate pass. The review tasks below aggregate evidence; th
 | Family | Tasks requiring this evidence |
 | --- | --- |
 | T01 | 001, 002, 003, 006, 031, 032, 033, 056, 070, 073, 088, 099 |
-| T02 | 007, 008, 010, 011, 012, 013, 014, 015, 016, 017, 018, 073, 083, 084, 085, 089, 090 |
+| T02 | 007, 008, 010, 011, 012, 013, 014, 015, 016, 017, 018, 073, 083, 084, 085, 089, 090, 107 |
 | T03 | 019, 020, 021, 022, 023, 024, 073, 085 |
 | T04 | 007, 008, 010, 034, 035, 036, 037, 038, 039, 040, 041, 042, 047, 073 |
 | T05 | 005, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 048, 066, 069, 073, 096 |
@@ -121,7 +121,7 @@ Each level below is computed as one plus the maximum dependency level of a task.
 | 4 | 007 |
 | 5 | 008, 009, 085 |
 | 6 | 010 |
-| 7 | 090 |
+| 7 | 090, 107 |
 | 8 | 011, 019, 034, 102 |
 | 9 | 012, 020, 027, 035 |
 | 10 | 013, 021, 025, 031, 036 |
