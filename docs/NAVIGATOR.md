@@ -37,3 +37,4 @@ catalogs every artifact across the repositories, with its status.
 | [operations/sync-server-terms.md](operations/sync-server-terms.md) | everyone | Terms of service of sync.openlfcp.org: beta and as is, acceptable use, quotas, data loss, Polish law |
 | [operations/sync-server-runbook.md](operations/sync-server-runbook.md) | owner | Operating sync.openlfcp.org: where it runs, monitoring, external uptime check, abuse handling (draft) |
 | [assets/brand/README.md](assets/brand/README.md) | everyone | The OpenLFCP mark: files for light and dark backgrounds, favicon, colours and usage rules (LAUNCH-006) |
+| [release/server-0.3.0-release-notes.md](release/server-0.3.0-release-notes.md) | release, operators | Server 0.3.0 release notes: the `previous` link check (UNKNOWN_PREVIOUS), relay, recovery after a restore, lfcp-admin |
