@@ -279,7 +279,7 @@ matter to an existing client:
 ## Patch release 0.1.2
 
 The patch release publishes `0.1.2` of all eight packages from sdk-ts
-e9d85bc, under `latest`. It is the 0.1.x sustaining release of MVP 0.2
+777f36e, under `latest`. It is the 0.1.x sustaining release of MVP 0.2
 wave W0: spec `mvp-0.1-baseline.9` (ADR 0008, recovery after server data
 loss; POST-001, held actor-sequence collisions) and the profile check of
 `acceptInvitation` (LFCP-02-086), which Shared Tasks 0.3.2 needs. What
@@ -299,20 +299,20 @@ may matter to an existing client:
 Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
 09c9132 (0.3.0, `server.lock`) pushed first.
 
-1. **Pre-flight**, from a clean sdk-ts checkout at e9d85bc, pushed and CI
+1. **Pre-flight**, from a clean sdk-ts checkout at 777f36e, pushed and CI
    green:
 
    ```sh
    git status --short                          # empty
-   git log -1 --format=%h                      # e9d85bc
+   git log -1 --format=%h                      # 777f36e
    pnpm install --frozen-lockfile
    pnpm release:check                          # "version 0.1.2, dist-tag latest", "release check PASSED"
    npm whoami                                  # the account that owns @openlfcp
    npm view @openlfcp/core@0.1.2 version       # E404: not published yet
    ```
 
-   `release:check` was PASSED at 5bf4036 (the version commit; e9d85bc only
-   moves `server.lock`) on 2026-10-08. Every
+   `release:check` was PASSED at 777f36e in the rc9 run of 2026-10-08
+   (the versions are set in 5bf4036). Every
    `@openlfcp/*` dependency packs as `^0.1.2`, and the total is 283.6 KiB.
 2. **Publish, in dependency order,** each with a fresh one-time code:
 
@@ -357,7 +357,7 @@ Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
 5. **Tag the release commit:**
 
    ```sh
-   git tag -a v0.1.2 e9d85bc -m "OpenLFCP sdk-ts 0.1.2"
+   git tag -a v0.1.2 777f36e -m "OpenLFCP sdk-ts 0.1.2"
    git push origin v0.1.2
    ```
 
