@@ -671,7 +671,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / IN_PROGRESS — sdk-ts c6b4f34: @openlfcp/shared-objects/sections, dispatch by Genesis profile, section actor, schema validation (§3, §4, §14.2); all corpus cases at the dev pin spec-sections.lock (d605f39).  
 **Depends on:** LFCP-02-007, LFCP-02-008, LFCP-02-085, LFCP-02-090  
 **Read first:** SHARED-SECTIONS-PROFILE-01.md; SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G04, G05, G06 / T02
@@ -841,7 +841,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts (companion: sdk-rs, by another worker)  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / IN_PROGRESS — TS done: sdk-ts 5b409f0, @openlfcp/shared-objects/admission (framing, limits, actor binding, sequence admission); the Rust part follows 010 (worker B).  
+**Type / priority / status:** implementation / P0 / DONE — TS: sdk-ts 5b409f0, @openlfcp/shared-objects/admission (framing, limits, actor binding, sequence admission). Rust: sdk-rs 01f536f, the section profile reuses the shared_objects admission engine as is (SharedObjects::apply_change) with the section actor domain and A1-A5 on top; no separate public module.  
 **Depends on:** LFCP-02-007  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-PROFILE-01.md; LFCP-WIRE-01.md  
 **Gate / test trace:** G02, G07, G08 / T02, T03
