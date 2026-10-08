@@ -1,0 +1,797 @@
+{
+  "record_type": "sdk-ts shared sections conformance evidence",
+  "task": "LFCP-02-018",
+  "date": "2026-10-09",
+  "sdk_ts": {
+    "repository": "openlfcp/sdk-ts",
+    "commit": "728734a1b9315b12f1a194713ca63efca07e8a11",
+    "adapter": "conformance/shared-sections/adapter.mjs",
+    "build": "pnpm build (tsc -b)",
+    "dist_sha256": {
+      "packages/core/dist/index.js": "04aa528b52fea48493336af398d63cfd436519f26418113b7e8623d55e243723",
+      "packages/shared-objects/dist/admission/actor.js": "34cc6b370aa006cd61adc750950753c802f5a3d984efc321d68291fbd296f4d7",
+      "packages/shared-objects/dist/admission/framing.js": "e6dd5f5a818b5a2683003c86b72fb7b547bdf2f61df8623843c694547158848c",
+      "packages/shared-objects/dist/admission/index.js": "8a045b1f74b2a210c665dc6d265cf91ff4b00f71b056dacbd0983cfa454b4b5f",
+      "packages/shared-objects/dist/admission/limits.js": "4a49bc5dac9bca12fd4a3f846a400fc79df194eeef0166d1519f5bf73fb6d1fc",
+      "packages/shared-objects/dist/admission/sequence.js": "63b2e8b3582fe9c362c72aa947ad3db824792fbeb30b2f61ace6335b1a3ffb37",
+      "packages/shared-objects/dist/replica.js": "0392e70f3692e9821bf2d1d646c2ac1f269ddcc936a7c6e5c482dc35fc5cad0a",
+      "packages/shared-objects/dist/sections/admission.js": "63a6fdceaba26f497ac27b92cfd2e58aa96bbf774eccff16a7ce3b43608b8a35",
+      "packages/shared-objects/dist/sections/dispatch.js": "3d92bf07eecba533a6bd34be381f09b5a006627f1cb00204b33fe40d85782472",
+      "packages/shared-objects/dist/sections/document.js": "ed5aa7bf896ad111be2b52325bb7d62d8d5ac304a23aea69b4a287a46400a59e",
+      "packages/shared-objects/dist/sections/index.js": "8abc1360ce0029d8c872ee211edc735ecf7d74f025334cce864e0ddc949db07a",
+      "packages/shared-objects/dist/sections/replica.js": "e361db1f4571255e605b4e7a37b75a20996dfecd5f694837c83ec642d0939525",
+      "packages/shared-objects/dist/sections/schema.js": "4a7495a9a1a002606999e50f8397f60f403c4c8d3678095e39b2ebac56320389",
+      "packages/shared-objects/dist/sections/tree.js": "b5dad6e624bd89d1e65dd9105ddccde164e084d58b523b316c204abef74ba42f",
+      "packages/shared-objects/dist/sections/values.js": "58e32cc70231a5a76233d8ebf5d11eee06a53d0b678f016fec2f0ba31decff95",
+      "packages/shared-objects/dist/validate.js": "fce55387fef61480f07b01545056f2a59d286b59217458610b2cad66b1b8bfdb"
+    }
+  },
+  "spec": {
+    "repository": "openlfcp/spec",
+    "tag": "mvp-0.2-baseline.1",
+    "commit": "96e21d62b97aa0241a4399e47e5c9cc168a3bd81",
+    "suite": "test-vectors/shared-sections-01/SHARED-SECTIONS-TEST-VECTORS-01.json",
+    "suite_sha256": "ee18794e608c6dfc4abe2c4e46d621c8cc6074bcaf0383db0946fff674834332"
+  },
+  "verifier": {
+    "command": "node test-vectors/shared-sections-01/generator/verify-vectors.mjs <suite dir> --adapter <sdk-ts>/conformance/shared-sections/adapter.mjs",
+    "ci_env": false,
+    "report": {
+      "suite": "SHARED-SECTIONS-TEST-VECTORS-01",
+      "engine": {
+        "package": "@automerge/automerge",
+        "version": "3.5.0",
+        "role": "corpus reference engine; the version spec pins in package.json"
+      },
+      "executed": "JavaScript reference model and binary replay only",
+      "cases": [
+        {
+          "id": "SS01",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS02",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS03",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS04",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS05",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS06",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS07",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS08",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS09",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS10",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS11",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS12",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS13",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS14",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS15",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS16",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS17",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS18",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS19",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS20",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS21",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS22",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS23",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS24",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS25",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS26",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS27",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS28",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS29",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS30",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS31",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS32",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS33",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS34",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS35",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS36",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS37",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS38",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS39",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS40",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS41",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS42",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS43",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS44",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS45",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS46",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS47",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS48",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS49",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS50",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS51",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS52",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS53",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS54",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS55",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        },
+        {
+          "id": "SS56",
+          "result": "pass",
+          "checks": [
+            "hashes",
+            "CBOR plaintext framing",
+            "normal replay",
+            "reverse duplicate replay",
+            "snapshot plus tail",
+            "reference save load",
+            "handwritten semantic assertions"
+          ]
+        }
+      ],
+      "passed": 56,
+      "failed": 0,
+      "independent_adapter_executed": true,
+      "not_executed": [
+        "LFCP signatures/encryption/network",
+        "Obsidian UI/clipboard/platform matrix"
+      ]
+    }
+  },
+  "toolchain": {
+    "node": "v24.4.0",
+    "pnpm": "10.33.4",
+    "automerge": "3.5.0",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O"
+  },
+  "sdk_ts_runs": {
+    "conformance/shared-sections/adapter.test.ts": "168 passed: 56 cases x normal, reverse with duplicates, base Snapshot plus tail",
+    "conformance/shared-sections/corpus.test.ts": "61 passed",
+    "conformance/shared-sections/authoring.test.ts": "23 passed"
+  }
+}
