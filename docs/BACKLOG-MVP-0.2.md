@@ -3,12 +3,12 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 105 tasks in 13 epics, across seven milestones  
+**Size:** 106 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
 
-Use IDs **LFCP-02-001…LFCP-02-105**. Tasks 083-105 come from the review; each names its source in the review summary. They belong to MVP 0.2 and do not rename, replace or imply completion of legacy LFCP-NNN tasks. No GitHub issues, assignments, PRs or deployments have been created by preparing this backlog.
+Use IDs **LFCP-02-001…LFCP-02-106**. Tasks 083-105 come from the review; each names its source in the review summary. Task 106 came from the W0 recovery drill. They belong to MVP 0.2 and do not rename, replace or imply completion of legacy LFCP-NNN tasks. No GitHub issues, assignments, PRs or deployments have been created by preparing this backlog.
 
 The MVP 0.1 facts are recorded in MVP-0.2-ROADMAP §2 (Starting evidence). A task is NOT_STARTED unless its card carries a status note with evidence. First inspect and reuse existing code. Where behavior already meets a task, close it with exact implementation/test evidence rather than rewriting it. Server audit tasks may legitimately end with verified no-change results.
 
@@ -24,7 +24,7 @@ A task is DONE when its acceptance criteria are met, required checks ran on the 
 
 Use NOT_STARTED, IN_PROGRESS, BLOCKED, IN_REVIEW and DONE. The release record separately uses PASS/FAIL/NOT_RUN/BLOCKED for evidence. A completed audit or pilot observation may have findings: it closes the investigation, not the failed product gate. Tasks 056, 069, 073, 077 and 082 cannot claim qualifying success while relevant inherited/new required blockers remain open.
 
-When a baseline gap or pilot defect needs code, append focused tasks starting at LFCP-02-106, with one owning repository and a regression test. Update affected dependency and gate links. Do not bury unknown work under an already-DONE audit, reuse old IDs or assume a blanket remediation task was implemented. Task 076 coordinates this process; actual repairs remain separately reviewable.
+When a baseline gap or pilot defect needs code, append focused tasks starting at LFCP-02-107, with one owning repository and a regression test. Update affected dependency and gate links. Do not bury unknown work under an already-DONE audit, reuse old IDs or assume a blanket remediation task was implemented. Task 076 coordinates this process; actual repairs remain separately reviewable.
 
 Every implementation change preserves the secure 0.1 subset, legacy Task support, private-source boundaries, actor/nonce safety, retained deleted content and explicit new-profile import. No protocol crypto in the plugin, plaintext Task logic in the server, per-node ACL, read receipts, silent legacy dual-write, arbitrary Markdown support or unapproved physical CRDT garbage collection.
 
@@ -36,7 +36,7 @@ Approved by the project owner on 2026-10-08 with the review of the planning batc
 
 | ID | Decision |
 | --- | --- |
-| R1 | ADR 0008: adopt (c), bidirectional reconciliation with relay plus the server refusing a dangling `previous`; (d) deferred. Shipped as 0.1.x sustaining before 0.2: `mvp-0.1-baseline.9`, server 0.3.0 (with `lfcp-admin`), sdk-ts 0.1.2, plugin 0.3.2 (088). |
+| R1 | ADR 0008: adopt (c), bidirectional reconciliation with relay plus the server refusing a dangling `previous`; (d) deferred. Shipped as 0.1.x sustaining before 0.2: `mvp-0.1-baseline.9`, server 0.3.0 (with `lfcp-admin`), sdk-ts 0.1.3, plugin 0.3.2 (088). |
 | R2 | POST-001 hold-and-retry goes into the same baseline.9 (089). |
 | R3 | Forward compatibility in 0.3.2: the profile is checked before the claim (`acceptInvitation` option, 086); another profile is never opened; the user is told a newer version is needed (087). |
 | P1 | New profile `org.openlfcp.shared-sections.v1` (ADR 0009, 083); NEXT-001 is closed. Legacy clients do not see sections; migration is by copy. |
@@ -45,7 +45,7 @@ Approved by the project owner on 2026-10-08 with the review of the planning batc
 | P4 | Baseline series `mvp-0.2-baseline.N` from baseline.8 (.9 after W0); SOP §§7-18 and §74.1 imported; a diagnostics registry; exact shared admission limits (090). |
 | P5 | Two moves into one parent stay a conflict; revisit after the pilot. |
 | P6 | Corpus engine: Automerge 3.5.0, the project's real pin. |
-| M1 | Inside sections the ref is inline (Enter does not carry it to the new Task); standalone Tasks keep child-line refs. |
+| M1 | Revised by the orchestrator on 2026-10-08, pending the owner's review: inside sections too, Task refs are child-line, as for standalone Tasks; Enter keeps the ref with its Task through CodeMirror transactions (obsidian ADR 0001, accepted for sections). The approved text was inline refs inside sections. |
 | M2 | Tabs in indentation are supported as in 0.1. |
 | M3 | Sections write through CodeMirror transactions in open notes and `vault.process` in closed ones; legacy Tasks stay on the file path; an obsidian ADR records it. |
 | M4 | The start marker sits right after the heading. |
@@ -61,6 +61,8 @@ Approved by the project owner on 2026-10-08 with the review of the planning batc
 | V4 | Native checks on macOS; the CI harness on three systems; manual smoke on Windows and Linux; p95 budgets on macOS only, Windows/Linux "functional, not performance-qualified". |
 | V5 | During development obsidian takes sdk-ts by a commit pin (`sdk-ts.lock`); betas use `0.2.0-rc.N` on npm `next`. |
 | V6 | SCOPE, ROADMAP, BACKLOG and TEST-PLAN are published in `.github/docs/`, specification drafts in spec (101); agent prompts, the narrative and the review reports stay private. |
+| V7 | sdk-ts is published by CI: a pushed tag `vX.Y.Z` runs `release.yml`, which publishes with npm Trusted Publishing (OIDC, provenance) after the owner's approval in the GitHub environment `npm-publish`; the manual checklist is the fallback. A final release goes to `latest`, a prerelease to `next`; `next` is not moved to final versions. |
+| V8 | W0 ships sdk-ts 0.1.3, not 0.1.2: 0.1.2 went to npm without build output and is deprecated (`latest` and `next` back on 0.1.1 until 0.1.3); 0.1.3 is the same code, published by CI. Shared Tasks 0.3.2 pins 0.1.3 and sets `minAppVersion` 1.13.4. |
 
 ## 4. Modules, workers and waves
 
@@ -74,7 +76,7 @@ TypeScript and Rust models are written by different workers. One writer per modu
 
 | Wave | Tasks | Owner releases |
 | --- | --- | --- |
-| W0 | 086-089 (ADR 0008 (c), POST-001, profile check before claim, 0.3.2); 100 as analysis only | baseline.9, server 0.3.0, sdk-ts 0.1.2, plugin 0.3.2; LAUNCH-003 (a)(b) |
+| W0 | 086-089 (ADR 0008 (c), POST-001, profile check before claim, 0.3.2); 100 as analysis only | baseline.9, server 0.3.0, sdk-ts 0.1.3 (CI), plugin 0.3.2; LAUNCH-003 (a)(b) |
 | W1 (M02-0) | 101, 001-006 (narrowed to recorded facts), spike of 096 | push |
 | W2 (M02-1) | 083 -> 084 -> 007-010 -> 090; 085; parser 034-035 on the fixed M1-M6 | tag `mvp-0.2-baseline.1` |
 | W3-W4 | TS models 011-018, Rust 019-022, interop 023-024, durability 025-033, 097, 098 | `0.2.0-rc.1` on `next` when needed |
@@ -121,7 +123,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | E02 | 007, 008, 009, 010, 083, 084, 090 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085 | TypeScript section model | M02-1 |
 | E04 | 019, 020, 021, 022, 023, 024 | Rust and independent interoperability | M02-1 |
-| E05 | 025, 026, 027, 028, 029, 030, 097, 098 | Durability and SDK evidence | M02-2 |
+| E05 | 025, 026, 027, 028, 029, 030, 097, 098, 106 | Durability and SDK evidence | M02-2 |
 | E06 | 031, 032, 033 | Opaque server compatibility | M02-3 |
 | E07 | 034, 035, 036, 037, 038, 039, 040, 041, 042 | Markdown ownership and reconciliation | M02-2 |
 | E08 | 043, 044, 045, 046, 047, 048, 095, 096 | Native editor lifecycle | M02-2 |
@@ -203,7 +205,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-067 | Generate scale workloads and instrument performance | obsidian | P0 | 005, 010, 043, 048, 056, 096 |
 | LFCP-02-068 | Meet performance budgets without changing semantics | obsidian | P0 | 058, 059, 067, 096 |
 | LFCP-02-069 | Qualify the supported desktop and plugin matrix | obsidian | P0 | 005, 055, 063, 064, 066, 068, 095, 096 |
-| LFCP-02-070 | Qualify integrated crash, access and compatibility recovery | examples | P0 | 024, 030, 033, 054, 055, 056, 066 |
+| LFCP-02-070 | Qualify integrated crash, access and compatibility recovery | examples | P0 | 024, 030, 033, 054, 055, 056, 066, 106 |
 | LFCP-02-071 | Publish secure headless section examples | examples | P1 | 023, 028, 033, 056 |
 | LFCP-02-072 | Document the two-vault demonstration and recovery workflow | examples | P1 | 056, 066, 071 |
 | LFCP-02-073 | Assemble immutable candidate builds and full evidence record | .github | P0 | 006, 018, 022, 024, 066, 069, 070, 071, 072, 098, 099, 102 |
@@ -239,6 +241,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-103 | Pilot operations: recruiting, consent and support | .github (owner) | P1 | — |
 | LFCP-02-104 | README, user guide and access disclosure for sections | obsidian | P1 | 066 |
 | LFCP-02-105 | Early BRAT dogfood of share, insert and edit | obsidian | P1 | 048, 049, 052, 087, 091, 094 |
+| LFCP-02-106 | A member refused before its grant is re-supplied recovers by itself | sdk-ts (companion: obsidian) | P1 | 088 |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -248,7 +251,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** implementation / P0 / IN_REVIEW — sdk-ts 0e9676e (2026-10-08): typecheck, lint, client tests and the live invite test pass; not pushed.  
+**Type / priority / status:** implementation / P0 / IN_REVIEW — sdk-ts 0e9676e (2026-10-08), pushed; ships in sdk-ts 0.1.3 (tag v0.1.3 on 7e9462f, publish by CI pending).  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); LFCP-WIRE-01.md  
 **Gate / test trace:** G11 / T08
@@ -263,7 +266,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Required checks:** Live test against the Rust server: another-profile joiner stores nothing, then a claim through the same one-time link succeeds; client unit tests.
 
-**Deliverables:** sdk-ts change, live test and CHANGELOG; ships in sdk-ts 0.1.2.
+**Deliverables:** sdk-ts change, live test and CHANGELOG; ships in sdk-ts 0.1.3 (0.1.2 went to npm without build output and is deprecated).
 
 ### LFCP-02-087 — Plugin 0.3.2: forward compatibility with unknown profiles
 
@@ -280,7 +283,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 1. Join passes dataProfiles: [PROFILE_ID]; profile-unsupported shows that a newer Shared Tasks version is needed and writes nothing.
 2. A stored Resource of another profile is never opened or merged as Shared Objects.
-3. Released as 0.3.2 through the catalog with sdk-ts 0.1.2 from npm, before the first section beta (094/105).
+3. Released as 0.3.2 through the catalog with the eight @openlfcp/* packages at exactly 0.1.3 from npm (never 0.1.2, deprecated without dist/) and minAppVersion 1.13.4, before the first section beta (094/105).
 
 **Required checks:** Unit and live tests for join of another profile; the existing suite; eslint-plugin-obsidianmd 0 errors.
 
@@ -301,7 +304,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 1. spec: ADR 0008 accepted with (c) and (d) deferred; SPEC-PATCH for bidirectional anti-entropy with relay and the server refusal of a dangling previous; open questions 2-4 answered and approved by the orchestrator; baseline mvp-0.1-baseline.9.
 2. sdk-ts and sdk-rs: a client re-uploads accepted units, Control Records and Key Packages the server lacks; server: refuses a dangling previous with the agreed code.
-3. A live interop test reproduces the 2026-10-06 drill (back up, write, restore, write) and a second client catches up; released as the 0.1.x sustaining set (server 0.3.0, sdk-ts 0.1.2, sdk-rs and examples tags).
+3. A live interop test reproduces the 2026-10-06 drill (back up, write, restore, write) and a second client catches up; released as the 0.1.x sustaining set (server 0.3.0, sdk-ts 0.1.3 published by CI through npm Trusted Publishing, sdk-rs and examples tags).
 
 **Required checks:** Spec vectors, both SDK suites, server tests and the live drill test; rc-verify on the sustaining set.
 
@@ -504,7 +507,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 3. Resolve normative contradictions in canonical Working Drafts with corresponding fixture changes; do not create competing errata.
 4. Pins start from mvp-0.1-baseline.8 (.9 after W0), not the batch spec-baseline snapshot (spec 8f1cc79).
 5. Import SHARED-OBJECTS-PROFILE-01 §§7-18 and §74.1 admission rules; a portable diagnostics registry; ImmutableString; the #section: and whitespace rule.
-6. Fix the Markdown decisions M1-M7: inline refs inside sections, child-line for standalone Tasks; tabs as in 0.1; start marker right after the heading; a marker on every node hidden in Live Preview by default; tables/callouts/fences/blockquotes as raw blocks and no nested headings in 0.2; Tasks-local tokens stay local.
+6. Fix the Markdown decisions M1-M7: child-line refs inside sections as for standalone Tasks, Enter handled through CodeMirror transactions (M1 as revised, obsidian ADR 0001); tabs as in 0.1; start marker right after the heading; a marker on every node hidden in Live Preview by default; tables/callouts/fences/blockquotes as raw blocks and no nested headings in 0.2; Tasks-local tokens stay local.
 
 **Required checks:** Cross-document review; all resolved differences link to updated regression cases.
 
@@ -1135,6 +1138,28 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** Storage tests in Node and IndexedDB adapters; migration test.
 
 **Deliverables:** Encrypted storage and migration.
+
+### LFCP-02-106 — A member refused before its grant is re-supplied recovers by itself
+
+**Primary repository:** sdk-ts (companion: obsidian)  
+**Milestone / group:** M02-2 / RP04  
+**Type / priority / status:** implementation / P1 / NOT_STARTED  
+**Depends on:** LFCP-02-088  
+**Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); spec: adr/0008-recovery-after-server-data-loss.md; LFCP-WIRE-01.md; .github: docs/BACKLOG-MVP-0.1.md  
+**Gate / test trace:** G07, G09 / T07, T08
+
+**Goal:** After a server restore, a member whose grant the server lost reaches LIVE once the grant is re-supplied, without restarting.
+
+**Acceptance:**
+
+1. Today: a member that opens the Resource before a holder re-supplied the Control Records (§68.1) gets AUTHORIZATION_FAILED for RESOURCE_OPEN, which is final (POST-017), and stays CLOSED until the application opens it again or restarts.
+2. Recover without a new attack surface: retry the open only when (a) the client's own validated chain grants it data/read at its head and (b) there is evidence that the server lost state (its Control Head is behind that chain, a re-host was seen, or a sibling route answered). The retry is bounded (a few attempts with backoff, then final) and per Resource; a Resource the local chain does not grant is never retried. Evaluate first whether the member can re-supply its own chain (CONTROL_PUT, §68.1, §84) instead of waiting for the owner.
+3. Write the security rationale in the change: no brute-force path (the client learns nothing it does not already hold; retries count against the server's rate limits), and a revoked member stays refused (a revocation is on the chain it validates).
+4. obsidian: the Resource shows "waiting for the server to recover access" while retrying, then the normal refusal if it stays refused.
+
+**Required checks:** Live test against the Rust server: restore before the grant, member opens first, recovers once the owner re-supplies (the race of sdk-ts 1d00993, without the test reopening it); a revoked member is not retried; unit tests of the retry bounds.
+
+**Deliverables:** SDK change with tests, the security rationale, plugin status text.
 
 ## E06. Opaque server compatibility
 
@@ -2044,7 +2069,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Primary repository:** examples  
 **Milestone / group:** M02-5 / RP10  
 **Type / priority / status:** qualification / P0 / NOT_STARTED  
-**Depends on:** LFCP-02-024, LFCP-02-030, LFCP-02-033, LFCP-02-054, LFCP-02-055, LFCP-02-056, LFCP-02-066  
+**Depends on:** LFCP-02-024, LFCP-02-030, LFCP-02-033, LFCP-02-054, LFCP-02-055, LFCP-02-056, LFCP-02-066, LFCP-02-106  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G06, G07, G08, G09, G11, G12 / T01, T06, T07, T08, T10
 
@@ -2160,7 +2185,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Acceptance:**
 
 1. Versions of the eight packages set together; CHANGELOG; pnpm release:check passes at the commit.
-2. The agent prepares the npm-publish-checklist commands; the owner publishes with dist-tag next, never latest.
+2. Published by the sdk-ts release workflow on a tag vX.Y.Z-rc.N (npm Trusted Publishing, the owner approves in the GitHub environment npm-publish) to dist-tag next, never latest (V7).
 3. Repeatable per rc; each rc is pinned by an exact version in obsidian (V5).
 
 **Required checks:** release:check, the sdk-ts gate of rc-verify at the commit.
@@ -2440,7 +2465,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Acceptance:**
 
-1. The approved rc content is released as 0.2.0 (latest) by the owner from the commit recorded in 077.
+1. The approved rc content is released as 0.2.0 (latest) by the release workflow on the tag v0.2.0 of the commit recorded in 077, after the owner's approval (V7).
 2. obsidian pins the eight packages at 0.2.0 exactly; the release build reproduces from npm.
 3. npm view shows 0.2.0 latest; the 0.0.0-stage placeholders are deprecated (POST-012) if still open.
 

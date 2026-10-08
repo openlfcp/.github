@@ -125,6 +125,6 @@ Possible later tracks include broader Markdown support, identity/device provisio
 
 ## 10. Next planning artifact
 
-The detailed backlog is `BACKLOG-MVP-0.2.md`, with its execution map. It keeps legacy issue identities, adds the review tasks 083–105 and sets the waves W0–W8; wave W0 ships the 0.1.x sustaining set (spec `mvp-0.1-baseline.9`, server 0.3.0, sdk-ts 0.1.2, plugin 0.3.2) before 0.2 work starts.
+The detailed backlog is `BACKLOG-MVP-0.2.md`, with its execution map. It keeps legacy issue identities, adds the review tasks 083–105 and the W0 follow-up 106, and sets the waves W0–W8; wave W0 ships the 0.1.x sustaining set (spec `mvp-0.1-baseline.9`, server 0.3.0, sdk-ts 0.1.3, plugin 0.3.2) before 0.2 work starts. sdk-ts 0.1.2 went to npm without build output and is deprecated; 0.1.3 is the same code, published by CI through npm Trusted Publishing.
 
 Release versions (decision V1): Shared Tasks 0.4.0 (betas `0.4.0-beta.N` through BRAT), `@openlfcp/*` 0.2.0 (`0.2.0-rc.N` on npm `next` before), sdk-rs and examples `v0.2.0`, spec `mvp-0.2-baseline.N`; the server gets a release only if it changes. Release notes call the set "MVP 0.2" and list each component's version.
