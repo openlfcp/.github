@@ -1877,8 +1877,9 @@ notice and the status.
 
 ## POST-018 - Share and insert many tasks at once
 
-**State:** done on obsidian main (b2779e9, 876d40a, c9a8b05, cc797dd,
-eeb6a99); ships in the next plugin release. Owner request 2026-10-07.
+**State:** done; released in Shared Tasks 0.3.0 (b2779e9, 876d40a,
+c9a8b05, cc797dd, eeb6a99). Owner request 2026-10-07. Inside MVP 0.2
+sections these commands are disabled or redirected (LFCP-02-100).
 Plugin only; no protocol change.
 
 A collaboration (Resource) already holds any number of Tasks, and one
@@ -2021,8 +2022,10 @@ same mark, colour and spelling.
 
 ### NEXT-001 - Shared sections (an ordered list of Tasks)
 
-**State:** idea, needs a design and an owner decision. Owner request
-2026-10-07.
+**State:** → superseded by MVP 0.2 (ADR 0009 pending). The plan is
+`BACKLOG-MVP-0.2.md`; the owner chose a new profile,
+`org.openlfcp.shared-sections.v1`, over a list type inside Shared Objects
+(decision P1; ADR 0009 is LFCP-02-083). Owner request 2026-10-07.
 
 Users want to share a whole section of a note: a heading with its Tasks, in
 order, where a Task one person adds appears in the other person's section by
