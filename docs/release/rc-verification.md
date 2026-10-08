@@ -14,7 +14,29 @@ scripts/rc-verify.py --from-heads --write-manifest /tmp/rc-manifest.json
 scripts/rc-verify.py --manifest docs/release/rc-manifest.json   # a pinned set
 scripts/rc-verify.py --from-heads --consistency-only            # pins only
 scripts/rc-verify.py --from-heads --only sdk-rs,server          # some gates
+scripts/rc-verify.py --from-heads --baseline mvp-0.2-baseline   # an MVP 0.2 candidate
+scripts/rc-verify.py --from-heads --with website                 # plus an optional gate
 ```
+
+The spec baseline tag is the nearest `mvp-*-baseline.*` tag in spec HEAD's
+history (`mvp-0.1-baseline.9` for the 0.1.x sustaining releases,
+`mvp-0.2-baseline.N` for MVP 0.2); `--baseline <series>` requires one
+series and stops when spec HEAD has none of its tags.
+
+Optional gates run only when asked for with `--with`:
+
+- `website`: the website checkout (next to the others) joins the
+  manifest, and `scripts/website-check.py` checks that every local link and
+  asset of its committed HTML and CSS exists;
+- `native`: the obsidian native harness (`pnpm run native`, real Obsidian,
+  LFCP-02-096). It needs a desktop session and takes long.
+
+Every run also writes `release-evidence-<time>.json` next to the report:
+the fields of the MVP 0.2 release-evidence record this run can fill (each
+component's repository, commit, version, lockfile hash, toolchain, gate
+commands and status, the host and the pins). Its status is always
+`NOT_QUALIFIED`: scope gates, test families, budgets, the pilot and release
+operations are reviewed by people.
 
 `--from-heads` pins every repository's committed HEAD. For the spec it
 also records the newest `mvp-0.1-baseline.*` tag in HEAD's history and

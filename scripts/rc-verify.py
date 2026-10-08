@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Local release-candidate verification for OpenLFCP MVP 0.1 (LFCP-072).
+"""Local release-candidate verification for OpenLFCP (LFCP-072; MVP 0.2: LFCP-02-102).
 
 Checks out the seven repositories at the commits a manifest pins, into ONE
 persistent RC directory (git worktrees of the sibling checkouts, reused on
@@ -9,7 +9,13 @@ and writes a report. See docs/release/rc-verification.md.
     scripts/rc-verify.py --from-heads [--write-manifest FILE]   # pin the committed HEADs
     scripts/rc-verify.py --manifest FILE                        # pin a given manifest
     options: --rc-dir DIR (default $LFCP_RC_DIR or ../openlfcp-rc next to the
-             checkouts), --only GATE[,GATE...], --consistency-only
+             checkouts), --only GATE[,GATE...], --consistency-only,
+             --baseline mvp-0.N-baseline (default: the nearest mvp-*-baseline.*
+             tag in spec HEAD's history), --with website,native (optional
+             gates: the website checkout, and the obsidian native harness)
+
+A release-evidence JSON (the fields of the MVP 0.2 RELEASE-EVIDENCE
+template that this run can fill) is written next to every report.
 
 Rules it keeps: worktrees are only ever moved between commits when clean
 (never reset, never forced); one shared Cargo target directory
@@ -33,6 +39,13 @@ import time
 from pathlib import Path
 
 REPOS = [".github", "spec", "sdk-rs", "server", "sdk-ts", "examples", "obsidian"]
+# Checkouts added to the manifest only when an optional gate needs them (--with).
+OPTIONAL_REPOS = {"website": ["website"], "native": []}
+# Optional gates, run only when asked for with --with.
+OPTIONAL_GATES = ("website", "native")
+# Spec baseline tags: mvp-0.1-baseline.N (MVP 0.1 and its sustaining
+# releases), mvp-0.2-baseline.N (MVP 0.2), and later series alike.
+BASELINE_GLOB = "mvp-*-baseline.*"
 MIN_FREE_BYTES = 3 * 1024**3
 ROOT = Path(__file__).resolve().parents[2]  # the directory holding the checkouts
 
@@ -70,18 +83,21 @@ def require_disk(path: Path) -> None:
 # ------------------------------------------------------------------ manifest
 
 
-def manifest_from_heads() -> dict:
+def manifest_from_heads(baseline: str | None = None, extra: tuple[str, ...] = ()) -> dict:
+    """The committed HEADs. The spec's baseline tag is the nearest one of the
+    series `baseline` (e.g. mvp-0.2-baseline), or of any series."""
     m: dict = {"created": dt.datetime.now(dt.timezone.utc).isoformat(timespec="seconds")}
-    for repo in REPOS:
+    match = f"{baseline}.*" if baseline else BASELINE_GLOB
+    for repo in (*REPOS, *extra):
         path = ROOT / repo
         entry = {"commit": git(path, "rev-parse", "HEAD")}
         if repo == "spec":
             # The implementations pin a baseline tag; spec HEAD may carry
             # later commits (ADRs, docs). The spec gate tests HEAD (`commit`);
             # the pins are checked against the tag's commit (`tag_commit`).
-            if run(["git", "describe", "--tags", "--abbrev=0", "--match", "mvp-0.1-baseline.*", "HEAD"], path) != 0:
-                sys.exit("rc-verify: spec HEAD has no mvp-0.1-baseline tag in its history")
-            entry["tag"] = git(path, "describe", "--tags", "--abbrev=0", "--match", "mvp-0.1-baseline.*", "HEAD")
+            if run(["git", "describe", "--tags", "--abbrev=0", "--match", match, "HEAD"], path) != 0:
+                sys.exit(f"rc-verify: spec HEAD has no {match} tag in its history")
+            entry["tag"] = git(path, "describe", "--tags", "--abbrev=0", "--match", match, "HEAD")
             entry["tag_commit"] = git(path, "rev-parse", f"refs/tags/{entry['tag']}^{{commit}}")
         dirty = git(path, "status", "--porcelain", "--untracked-files=no")
         if dirty:
@@ -93,9 +109,14 @@ def manifest_from_heads() -> dict:
 # ------------------------------------------------------------------ worktrees
 
 
+def manifest_repos(manifest: dict) -> list[str]:
+    """The checkouts a manifest pins: the seven, then any optional ones."""
+    return [r for r in (*REPOS, *(r for rs in OPTIONAL_REPOS.values() for r in rs)) if r in manifest]
+
+
 def prepare(rc: Path, manifest: dict) -> None:
     rc.mkdir(parents=True, exist_ok=True)
-    for repo in REPOS:
+    for repo in manifest_repos(manifest):
         source = ROOT / repo
         target = rc / repo
         commit = manifest[repo]["commit"]
@@ -243,7 +264,7 @@ def npm_pins(rc: Path) -> list[dict]:
 # ------------------------------------------------------------------ gates
 
 
-def gates(rc: Path, target_dir: Path) -> list[dict]:
+def gates(rc: Path, target_dir: Path, extra: tuple[str, ...] = ()) -> list[dict]:
     base = dict(os.environ)
     base.update(
         {
@@ -317,6 +338,23 @@ def gates(rc: Path, target_dir: Path) -> list[dict]:
             ["pnpm", "exec", "vitest", "run", "--reporter=default", "--reporter=json",
              f"--outputFile={vitest_json}"],
         ], "no_skips": vitest_json},
+    ] + [g for g in optional_gates(rc, base, cargo) if g["name"] in extra]
+
+
+def optional_gates(rc: Path, base: dict, cargo: dict) -> list[dict]:
+    """Gates run only with --with: they need a checkout or a desktop."""
+    return [
+        # The static website: every local link and asset it references exists.
+        {"name": "website", "cwd": rc / "website", "env": base, "steps": [
+            # The checker that ships with this rc-verify (a tool, not a pinned input).
+            ["python3", str(Path(__file__).resolve().parent / "website-check.py"), str(rc / "website")],
+        ]},
+        # The obsidian native harness (real Obsidian, LFCP-02-096): needs a
+        # desktop session; long, so never part of the default run.
+        {"name": "native", "cwd": rc / "obsidian", "env": cargo, "steps": [
+            ["pnpm", "install", "--frozen-lockfile"],
+            ["pnpm", "run", "native"],
+        ]},
     ]
 
 
@@ -397,7 +435,7 @@ def write_report(
         "| Repository | Commit | Note |",
         "| --- | --- | --- |",
     ]
-    for repo in REPOS:
+    for repo in manifest_repos(manifest):
         e = manifest[repo]
         note = e.get("tag", "") + (f" {e['note']}" if "note" in e else "")
         lines.append(f"| {repo} | {e['commit']} | {note.strip()} |")
@@ -468,7 +506,88 @@ def write_report(
             indent=2,
         )
     )
+    (rc / f"release-evidence-{stamp}.json").write_text(
+        json.dumps(release_evidence(rc, manifest, consistent, results, tools, stamp), indent=2) + "\n"
+    )
     return report
+
+
+# ------------------------------------------------------------------ release evidence
+
+
+def sha256_file(path: Path) -> str | None:
+    import hashlib
+
+    return hashlib.sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+
+
+def component_version(path: Path) -> str | None:
+    """A component's own version: a package.json, or a Cargo workspace."""
+    for f in (path / "packages" / "core" / "package.json", path / "package.json"):
+        if f.is_file():
+            v = read_json(f).get("version")
+            if v:
+                return v
+    cargo = path / "Cargo.toml"
+    if cargo.is_file():
+        import tomllib
+
+        data = tomllib.loads(cargo.read_text())
+        return (data.get("workspace", {}).get("package", {}) or data.get("package", {})).get("version")
+    return None
+
+
+def release_evidence(
+    rc: Path, manifest: dict, consistent: bool, results: list[dict], tools: dict, stamp: str
+) -> dict:
+    """The fields of the MVP 0.2 RELEASE-EVIDENCE template this run can fill.
+    Scope gates G01-G12, test families T01-T12, budgets, pilot and release
+    operations need people and other runs: they are not claimed here."""
+    by_gate = {r["name"]: r for r in results}
+    components = []
+    for repo in manifest_repos(manifest):
+        path = rc / repo
+        lock = next((f for f in ("pnpm-lock.yaml", "Cargo.lock", "Gemfile.lock") if (path / f).is_file()), None)
+        try:
+            url = git(ROOT / repo, "remote", "get-url", "origin")
+        except subprocess.CalledProcessError:
+            url = None
+        gate = by_gate.get(repo)
+        components.append({
+            "component": repo,
+            "repository_or_deployment": url,
+            "commit_or_image_digest": manifest[repo]["commit"],
+            # The spec's version is its baseline tag; a private root package's 0.0.0 is none.
+            "version": manifest[repo].get("tag") if repo == "spec" else (
+                None if component_version(path) in (None, "0.0.0") else component_version(path)
+            ),
+            "lockfile_hash": None if lock is None else {lock: sha256_file(path / lock)},
+            "toolchain": {k: v for k, v in tools.items() if k in ("node", "pnpm", "rustc", "cargo", "ruby", "python")},
+            "test_commands": [] if gate is None else [s["cmd"] for s in gate["steps"]],
+            "gate_status": "NOT_RUN" if gate is None else ("PASS" if gate["ok"] else "FAIL"),
+            "artifact_checksums": {},
+            "owner": None,
+        })
+    spec = manifest["spec"]
+    return {
+        "record_type": "release_evidence_from_rc_verify",
+        "template_version": "0.1",
+        "candidate_id": stamp,
+        "candidate_status": "NOT_QUALIFIED",
+        "instructions": "Filled by rc-verify from this run only. Null and NOT_RUN are not passing evidence; scope gates, families, budgets, pilot and release operations are reviewed by people.",
+        "scope": {"wire_subset_revision": spec.get("tag"), "spec_commit": spec["commit"], "spec_tag_commit": spec_tag_commit(manifest)},
+        "pins_consistent": consistent,
+        "components": components,
+        "environments": [{
+            "id": "rc-verify-host",
+            "os_build": tools.get("os"),
+            "runtime_versions": {k: v for k, v in tools.items() if k != "os"},
+        }],
+        "rc_gates": [
+            {"gate": r["name"], "status": "PASS" if r["ok"] else "FAIL", "seconds": r["seconds"], "log": r["log"]}
+            for r in results
+        ],
+    }
 
 
 def main() -> int:
@@ -480,11 +599,18 @@ def main() -> int:
     ap.add_argument("--rc-dir", type=Path, default=Path(os.environ.get("LFCP_RC_DIR", ROOT / "openlfcp-rc")))
     ap.add_argument("--only", default="")
     ap.add_argument("--consistency-only", action="store_true")
+    ap.add_argument("--baseline", default=None, help="baseline tag series, e.g. mvp-0.2-baseline")
+    ap.add_argument("--with", dest="extra", default="", help=f"optional gates: {','.join(OPTIONAL_GATES)}")
     args = ap.parse_args()
+    extra = tuple(g for g in args.extra.split(",") if g)
+    unknown = [g for g in extra if g not in OPTIONAL_GATES]
+    if unknown:
+        sys.exit(f"rc-verify: unknown optional gate(s) {', '.join(unknown)}; known: {', '.join(OPTIONAL_GATES)}")
+    extra_repos = tuple(r for g in extra for r in OPTIONAL_REPOS[g])
 
     rc: Path = args.rc_dir.resolve()
     require_disk(ROOT)
-    manifest = read_json(args.manifest) if args.manifest else manifest_from_heads()
+    manifest = read_json(args.manifest) if args.manifest else manifest_from_heads(args.baseline, extra_repos)
     if args.write_manifest:
         args.write_manifest.write_text(json.dumps(manifest, indent=2) + "\n")
     prepare(rc, manifest)
@@ -497,7 +623,7 @@ def main() -> int:
     if not args.consistency_only:
         (rc / "logs").mkdir(exist_ok=True)
         only = {g for g in args.only.split(",") if g}
-        for gate in gates(rc, target_dir):
+        for gate in gates(rc, target_dir, extra):
             if only and gate["name"] not in only:
                 continue
             print(f"rc-verify: {gate['name']} …", flush=True)
