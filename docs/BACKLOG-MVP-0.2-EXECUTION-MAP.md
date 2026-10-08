@@ -6,7 +6,7 @@
 
 ## 1. Start and integration rules
 
-Start with LFCP-02-001. Once actual repositories/artifacts are resolved, 002–005 can be assigned independently to the owning layers. Task 006 consolidates findings; 007–010 pin contracts/fixtures. Review tasks 083-105 are integrated; their waves are in BACKLOG-MVP-0.2.md section 4. Baseline remediation discovered by audit is appended from 108 onward and explicitly blocks affected qualification gates.
+Start with LFCP-02-001. Once actual repositories/artifacts are resolved, 002–005 can be assigned independently to the owning layers. Task 006 consolidates findings; 007–010 pin contracts/fixtures. Review tasks 083-105 are integrated; their waves are in BACKLOG-MVP-0.2.md section 4. Baseline remediation discovered by audit is appended from 109 onward and explicitly blocks affected qualification gates.
 
 TypeScript and Rust are independent implementations; neither must copy the other's model code. Shared fixtures/contracts are common inputs. Parser and status preparation can overlap model work where inputs are pinned. The hard dependency graph below describes what must be complete to close a task, not a prohibition on safe scaffolding or draft preparation.
 
@@ -37,6 +37,7 @@ No agent prompt pack is defined here. Future packs should respect the graph and 
 | spec + sdk-ts + sdk-rs (split per repository at dispatch) | 089 | 1 |
 | .github (owner) | 103 | 1 |
 | sdk-ts (companion: obsidian) | 106 | 1 |
+| spec (companions: sdk-ts, sdk-rs) | 108 | 1 |
 
 All abbreviated IDs in this map use the LFCP-02 namespace. A primary repository identifies the accountable deliverable; integration reports may consume several components. It does not authorize changing another layer without its own reviewed task.
 
@@ -45,7 +46,7 @@ All abbreviated IDs in this map use the LFCP-02 namespace. A primary repository 
 | Group | Tasks |
 | --- | --- |
 | RP00 | 001, 002, 003, 004, 005, 006, 086, 087, 088, 089, 101 |
-| RP01 | 007, 008, 009, 010, 083, 084, 090, 107 |
+| RP01 | 007, 008, 009, 010, 083, 084, 090, 107, 108 |
 | RP02 | 011, 012, 013, 014, 015, 016, 017, 018, 085 |
 | RP03 | 019, 020, 021, 022, 023, 024 |
 | RP04 | 025, 026, 027, 028, 029, 030, 097, 098, 106 |
@@ -75,14 +76,14 @@ A contribution is not a gate pass. The review tasks below aggregate evidence; th
 | G09 | 027, 030, 031, 032, 033, 049, 050, 051, 052, 053, 054, 055, 056, 057, 058, 059, 060, 061, 062, 063, 064, 066, 070, 106 | 027, 033, 056, 060, 070 |
 | G10 | 009, 026, 027, 030, 048, 057, 058, 059, 060, 061, 062, 063, 064, 065, 066, 096, 100 | 063, 064, 066 |
 | G11 | 004, 029, 049, 050, 051, 052, 053, 054, 055, 056, 066, 070, 086, 087, 095, 100 | 055, 066, 070, 087 |
-| G12 | 005, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 091, 092, 093, 094, 095, 096, 099, 102, 103, 104, 105 | 069, 073, 074, 076, 077, 082 |
+| G12 | 005, 067, 068, 069, 070, 071, 072, 073, 074, 075, 076, 077, 078, 079, 080, 081, 082, 091, 092, 093, 094, 095, 096, 099, 102, 103, 104, 105, 108 | 069, 073, 074, 076, 077, 082 |
 
 ## 6. Test-family responsibility
 
 | Family | Tasks requiring this evidence |
 | --- | --- |
 | T01 | 001, 002, 003, 006, 031, 032, 033, 056, 070, 073, 088, 099 |
-| T02 | 007, 008, 010, 011, 012, 013, 014, 015, 016, 017, 018, 073, 083, 084, 085, 089, 090, 107 |
+| T02 | 007, 008, 010, 011, 012, 013, 014, 015, 016, 017, 018, 073, 083, 084, 085, 089, 090, 107, 108 |
 | T03 | 019, 020, 021, 022, 023, 024, 073, 085 |
 | T04 | 007, 008, 010, 034, 035, 036, 037, 038, 039, 040, 041, 042, 047, 073 |
 | T05 | 005, 034, 035, 036, 037, 038, 039, 040, 041, 042, 043, 044, 045, 046, 048, 066, 069, 073, 096 |
@@ -150,7 +151,7 @@ Each level below is computed as one plus the maximum dependency level of a task.
 | 33 | 073 |
 | 34 | 074 |
 | 35 | 075 |
-| 36 | 076 |
+| 36 | 076, 108 |
 | 37 | 077 |
 | 38 | 081, 092 |
 | 39 | 080, 093 |
@@ -160,6 +161,6 @@ Each level below is computed as one plus the maximum dependency level of a task.
 
 ## 9. Extension and change control
 
-Append LFCP-02-107 onward for discovered repairs or justified splits. Record parent task, repository, dependencies, specification authority, acceptance regression and affected G/T IDs. Update this map and the JSON atomically with the Markdown source. Do not use DONE on a parent coordination task to conceal unimplemented repairs.
+Append LFCP-02-109 onward for discovered repairs or justified splits. Record parent task, repository, dependencies, specification authority, acceptance regression and affected G/T IDs. Update this map and the JSON atomically with the Markdown source. Do not use DONE on a parent coordination task to conceal unimplemented repairs.
 
 If scope changes, update the owning scope/spec and acceptance corpus first. Performance thresholds remain the reviewed values from task 005; implementation convenience does not authorize loosening them. Release actions are concrete reviewed operations, not automatic side effects of an agent completing code.

@@ -3,12 +3,12 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 107 tasks in 13 epics, across seven milestones  
+**Size:** 108 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
 
-Use IDs **LFCP-02-001…LFCP-02-107**. Tasks 083-105 come from the review; each names its source in the review summary. Task 106 came from the W0 recovery drill, 107 from the spec baseline work. They belong to MVP 0.2 and do not rename, replace or imply completion of legacy LFCP-NNN tasks. No GitHub issues, assignments, PRs or deployments have been created by preparing this backlog.
+Use IDs **LFCP-02-001…LFCP-02-108**. Tasks 083-105 come from the review; each names its source in the review summary. Task 106 came from the W0 recovery drill, 107 from the spec baseline work, 108 from the corpus work of task 010. They belong to MVP 0.2 and do not rename, replace or imply completion of legacy LFCP-NNN tasks. No GitHub issues, assignments, PRs or deployments have been created by preparing this backlog.
 
 The MVP 0.1 facts are recorded in MVP-0.2-ROADMAP §2 (Starting evidence). A task is NOT_STARTED unless its card carries a status note with evidence. First inspect and reuse existing code. Where behavior already meets a task, close it with exact implementation/test evidence rather than rewriting it. Server audit tasks may legitimately end with verified no-change results.
 
@@ -24,7 +24,7 @@ A task is DONE when its acceptance criteria are met, required checks ran on the 
 
 Use NOT_STARTED, IN_PROGRESS, BLOCKED, IN_REVIEW and DONE. The release record separately uses PASS/FAIL/NOT_RUN/BLOCKED for evidence. A completed audit or pilot observation may have findings: it closes the investigation, not the failed product gate. Tasks 056, 069, 073, 077 and 082 cannot claim qualifying success while relevant inherited/new required blockers remain open.
 
-When a baseline gap or pilot defect needs code, append focused tasks starting at LFCP-02-108, with one owning repository and a regression test. Update affected dependency and gate links. Do not bury unknown work under an already-DONE audit, reuse old IDs or assume a blanket remediation task was implemented. Task 076 coordinates this process; actual repairs remain separately reviewable.
+When a baseline gap or pilot defect needs code, append focused tasks starting at LFCP-02-109, with one owning repository and a regression test. Update affected dependency and gate links. Do not bury unknown work under an already-DONE audit, reuse old IDs or assume a blanket remediation task was implemented. Task 076 coordinates this process; actual repairs remain separately reviewable.
 
 Every implementation change preserves the secure 0.1 subset, legacy Task support, private-source boundaries, actor/nonce safety, retained deleted content and explicit new-profile import. No protocol crypto in the plugin, plaintext Task logic in the server, per-node ACL, read receipts, silent legacy dual-write, arbitrary Markdown support or unapproved physical CRDT garbage collection.
 
@@ -120,7 +120,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | --- | --- | --- | --- |
 | E00 | 086, 087, 088, 089 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
 | E01 | 001, 002, 003, 004, 005, 006, 101 | Baseline and inherited obligations | M02-0 |
-| E02 | 007, 008, 009, 010, 083, 084, 090, 107 | Pinned contracts and corpus | M02-1 |
+| E02 | 007, 008, 009, 010, 083, 084, 090, 107, 108 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085 | TypeScript section model | M02-1 |
 | E04 | 019, 020, 021, 022, 023, 024 | Rust and independent interoperability | M02-1 |
 | E05 | 025, 026, 027, 028, 029, 030, 097, 098, 106 | Durability and SDK evidence | M02-2 |
@@ -243,6 +243,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-105 | Early BRAT dogfood of share, insert and edit | obsidian | P1 | 048, 049, 052, 087, 091, 094 |
 | LFCP-02-106 | A member refused before its grant is re-supplied recovers by itself | sdk-ts (companion: obsidian) | P1 | 088 |
 | LFCP-02-107 | Move the shared-sections vectors to lfcp-vector-format/1 | spec | P1 | 010 |
+| LFCP-02-108 | A6: refuse a non-concurrent ID reuse across categories at admission | spec (companions: sdk-ts, sdk-rs) | P2 | 024, 075 |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -664,6 +665,28 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** spec validate.sh on a fresh clone; both SDK conformance runners read the moved corpus.
 
 **Deliverables:** Moved corpus, schema and validator changes, migrations entry.
+
+### LFCP-02-108 — A6: refuse a non-concurrent ID reuse across categories at admission
+
+**Primary repository:** spec (companions: sdk-ts, sdk-rs)  
+**Milestone / group:** M02-6 / RP01  
+**Type / priority / status:** contract / P2 / NOT_STARTED — Candidate, after G02; decision after the pilot. Readers do not check cross-category reuse in v1 (sdk-ts 4dcb56b, sdk-rs 1b55b6e).  
+**Depends on:** LFCP-02-024, LFCP-02-075  
+**Read first:** SHARED-SECTIONS-TEST-VECTORS-01.md; SHARED-SECTIONS-PROFILE-01.md  
+**Gate / test trace:** G12 / T02
+
+**Goal:** Close the writer-only rule of SHARED-SECTIONS-PROFILE-01 §3 without giving any writer a way to take out another's content.
+
+**Acceptance:**
+
+1. Candidate rule A6 in §14.1: a change that creates a node, placement or object under an ID its causal history already uses in another category (a node ID equal to a PlacementId or the SectionId, say; a Task node and its Task excepted) is refused at admission, decided from the change and its history like A1-A5.
+2. Readers keep not isolating cross-category reuse (§14.2, the v1 decision): concurrent reuse stays undetected by A6 and is left to the writer rule of §3.
+3. Vectors in test-vectors/shared-sections-01; sdk-ts and sdk-rs refuse the same changes with the same diagnostic.
+4. Decided after the pilot (075): adopt, defer or drop, recorded in ADR 0009 or a successor.
+
+**Required checks:** Corpus cases for reuse of each category pair, refused, and concurrent reuse accepted; both SDK conformance runs.
+
+**Deliverables:** Profile text, vectors and both SDK admissions, if adopted.
 
 ## E03. TypeScript section model
 
