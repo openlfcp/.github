@@ -278,6 +278,14 @@ matter to an existing client:
 
 ## Patch release 0.1.2
 
+**Broken, deprecated.** The eight `0.1.2` packages were published from a
+checkout that was never built: each holds only `package.json`, `README.md`
+and `LICENSE`. The steps below had no `pnpm build`, and `release:check`
+then built and checked a clean copy only. `latest` and `next` went back to
+`0.1.1`, `0.1.2` is deprecated, and `0.1.3` is the same code (see
+[Patch release 0.1.3](#patch-release-013)). Kept as the record of what ran.
+
+
 The patch release publishes `0.1.2` of all eight packages from sdk-ts
 777f36e, under `latest`. It is the 0.1.x sustaining release of MVP 0.2
 wave W0: spec `mvp-0.1-baseline.9` (ADR 0008, recovery after server data
@@ -364,4 +372,95 @@ Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
 6. **If a publish fails midway:** section 5 applies, with `0.1.3` as the
    next version, and
    `npm deprecate @openlfcp/<pkg>@0.1.2 "incomplete release; use 0.1.3"`
+   for the incomplete set.
+
+## Patch release 0.1.3
+
+The patch release publishes `0.1.3` of all eight packages from sdk-ts
+dbc53b8, under `latest`. It is the code of 0.1.2 (see above), which went
+out without build output, plus a `release:check` that checks what this
+checkout would publish. Shared Tasks 0.3.2 depends on 0.1.3, never on
+0.1.2.
+
+Its CI needs the spec tag `mvp-0.1-baseline.9` (f42533c) and server
+09c9132 (0.3.0, `server.lock`), both pushed already.
+
+1. **Pre-flight**, in a fresh clone, so no stale `dist/` or build state
+   can reach a tarball:
+
+   ```sh
+   git clone https://github.com/openlfcp/sdk-ts.git /tmp/sdk-ts-013 && cd /tmp/sdk-ts-013
+   git checkout dbc53b8                        # pushed, CI green
+   git status --short                          # empty
+   pnpm install --frozen-lockfile
+   pnpm build                                  # the dist/ that pnpm publish uploads
+   pnpm release:check                          # "version 0.1.3, dist-tag latest" and, last,
+                                               # "every package as built in the clean copy, dist/ included",
+                                               # "release check PASSED"
+   npm whoami                                  # the account that owns @openlfcp
+   npm view @openlfcp/core@0.1.3 version       # E404: not published yet
+   ```
+
+   `release:check` now packs this checkout as `pnpm publish` would and fails
+   when a package lacks `dist/` (it reports 24 problems on an unbuilt
+   checkout). Do not skip `pnpm build`: the publish uploads this checkout.
+2. **Publish, in dependency order,** each with a fresh one-time code, from
+   the same clone:
+
+   | # | Package | Command |
+   | --- | --- | --- |
+   | 1 | `@openlfcp/core` | `pnpm --filter @openlfcp/core publish --tag latest --otp=<code>` |
+   | 2 | `@openlfcp/crypto` | `pnpm --filter @openlfcp/crypto publish --tag latest --otp=<code>` |
+   | 3 | `@openlfcp/storage` | `pnpm --filter @openlfcp/storage publish --tag latest --otp=<code>` |
+   | 4 | `@openlfcp/wire` | `pnpm --filter @openlfcp/wire publish --tag latest --otp=<code>` |
+   | 5 | `@openlfcp/storage-node` | `pnpm --filter @openlfcp/storage-node publish --tag latest --otp=<code>` |
+   | 6 | `@openlfcp/storage-idb` | `pnpm --filter @openlfcp/storage-idb publish --tag latest --otp=<code>` |
+   | 7 | `@openlfcp/shared-objects` | `pnpm --filter @openlfcp/shared-objects publish --tag latest --otp=<code>` |
+   | 8 | `@openlfcp/client` | `pnpm --filter @openlfcp/client publish --tag latest --otp=<code>` |
+
+   After the first one, check it before going on:
+   `npm view @openlfcp/core@0.1.3 dist.fileCount` is more than 3 (a
+   package with only `package.json`, `README.md` and `LICENSE` is the
+   0.1.2 failure).
+3. **Move `next` to 0.1.3 too:**
+
+   ```sh
+   for p in core crypto storage wire storage-node storage-idb shared-objects client; do
+     npm dist-tag add "@openlfcp/$p@0.1.3" next --otp=<code>
+   done
+   ```
+
+4. **Verify, before tagging:**
+
+   ```sh
+   for p in core crypto storage wire storage-node storage-idb shared-objects client; do
+     printf '%s ' "@openlfcp/$p"
+     npm view "@openlfcp/$p@0.1.3" dist.fileCount
+     npm view "@openlfcp/$p" dist-tags --json | tr -d ' \n'
+     echo
+   done                                        # each: fileCount > 3, "latest":"0.1.3","next":"0.1.3"
+   npm view @openlfcp/client@0.1.3 version dependencies   # every @openlfcp/* dependency ^0.1.3
+
+   mkdir /tmp/openlfcp-npm-013 && cd /tmp/openlfcp-npm-013 && npm init -y >/dev/null
+   npm pkg set type=module
+   npm install @openlfcp/core@0.1.3 @openlfcp/crypto@0.1.3 @openlfcp/storage@0.1.3 \
+     @openlfcp/wire@0.1.3 @openlfcp/storage-node@0.1.3 @openlfcp/storage-idb@0.1.3 \
+     @openlfcp/shared-objects@0.1.3 @openlfcp/client@0.1.3
+   node --input-type=module -e 'for (const p of ["core","crypto","storage","wire","storage-node","storage-idb","shared-objects","client"]) await import(`@openlfcp/${p}`); const { ERROR_CODE, haveDifference } = await import("@openlfcp/wire"); console.log("all eight import; UNKNOWN_PREVIOUS:", ERROR_CODE.UNKNOWN_PREVIOUS, typeof haveDifference)'
+   ```
+
+   The last line prints `all eight import; UNKNOWN_PREVIOUS: 23n function`.
+   If anything here fails, do not tag: section 5 applies, with `0.1.4`.
+5. **Tag the release commit**, only after step 4 passed:
+
+   ```sh
+   git -C ~/dev/openlfcp/sdk-ts tag -a v0.1.3 dbc53b8 -m "OpenLFCP sdk-ts 0.1.3"
+   git -C ~/dev/openlfcp/sdk-ts push origin v0.1.3
+   ```
+
+   The tag `v0.1.2` (777f36e) stays as it is: tags are never moved, and its
+   code is that of 0.1.3.
+6. **If a publish fails midway:** section 5 applies, with `0.1.4` as the
+   next version, and
+   `npm deprecate @openlfcp/<pkg>@0.1.3 "incomplete release; use 0.1.4"`
    for the incomplete set.
