@@ -1,19 +1,19 @@
 # OpenLFCP compatibility matrix
 
-Generated 2026-10-06T05:59:39.597Z by examples/conformance (LFCP-070).
+Generated 2026-10-09T04:58:57.941Z by examples/conformance (LFCP-070).
 
-- Spec baseline: mvp-0.1-baseline.8 (spec da3977f927feaf3e7c5b8f653797d3696ce0613b).
-- sdk-rs: 41dc53297c27bebf649d41823df0abc554334007.
-- sdk-ts: 98efaab94d88111317e966d159fa78ed3d717039.
-- pins.json: sdk-rs 41dc532, sdk-ts 98efaab, spec da3977f (strict run: the SDKs are these commits).
+- Spec baseline: mvp-0.2-baseline.2 (spec 4198c43ea89d681efa5654a020b2f7b578f90df7).
+- sdk-rs: c05309ba25883d229aa7861859b18226a0fbff70.
+- sdk-ts: b92f70177a4d91ca82e9494dca0e3c30342f869f.
+- pins.json: sdk-rs c05309b, sdk-ts b92f701, spec 4198c43 (strict run: the SDKs are these commits).
 
 ## A. Official vectors (byte-exact where the vectors fix every input)
 
 | SDK | Suites | Result | Source |
 | --- | --- | --- | --- |
-| ts | LFCP-TEST-VECTORS-01/01 | PASS 116/116 | sdk-ts conformance runner at mvp-0.1-baseline.8 (584/584 checks) |
-| ts | SHARED-OBJECTS-TEST-VECTORS-01/01 | PASS 31/31 | sdk-ts conformance runner at mvp-0.1-baseline.8 (90/90 checks) |
-| rust | LFCP-TEST-VECTORS-01, SHARED-OBJECTS-TEST-VECTORS-01, corpus, schema fixtures | PASS 242/242 | sdk-rs cargo test --all-features (every test; vectors read at spec.lock) |
+| ts | LFCP-TEST-VECTORS-01/01 | PASS 128/128 | sdk-ts conformance runner at mvp-0.2-baseline.2 (603/603 checks) |
+| ts | SHARED-OBJECTS-TEST-VECTORS-01/01 | PASS 31/31 | sdk-ts conformance runner at mvp-0.2-baseline.2 (90/90 checks) |
+| rust | LFCP-TEST-VECTORS-01, SHARED-OBJECTS-TEST-VECTORS-01, corpus, schema fixtures | PASS 281/281 | sdk-rs cargo test --all-features (every test; vectors read at spec.lock) |
 
 ## B and C. Cross-consumption, negatives and Shared Objects
 
@@ -81,6 +81,19 @@ by logical state and conflict sets, never by bytes.
 | shared_objects.negative.snapshot_change_chunk | shared_objects | PASS | PASS | PASS | PASS |
 | shared_objects.negative.change_equivocation | shared_objects | PASS | PASS | PASS | PASS |
 | shared_objects.negative.state_problems | shared_objects | PASS | N/A | PASS | N/A |
+| sections.basic | shared_sections | PASS | PASS | PASS | PASS |
+| sections.concurrent_insert | shared_sections | PASS | PASS | PASS | PASS |
+| sections.placement_conflict | shared_sections | PASS | PASS | PASS | PASS |
+| sections.parent_cycle | shared_sections | PASS | PASS | PASS | PASS |
+| sections.delete_vs_edit | shared_sections | PASS | PASS | PASS | PASS |
+| sections.split_join | shared_sections | PASS | PASS | PASS | PASS |
+| sections.text_unicode | shared_sections | PASS | PASS | PASS | PASS |
+| sections.refused_children_mutated | shared_sections | PASS | PASS | PASS | PASS |
+| sections.refused_actor_mismatch | shared_sections | PASS | PASS | PASS | PASS |
+| sections.id_collision | shared_sections | PASS | PASS | PASS | PASS |
+| schedules.minimizer | schedules | PASS | PASS | PASS | PASS |
+| schedules.random | schedules | PASS | PASS | PASS | PASS |
+| schedules.regressions | schedules | PASS | PASS | PASS | PASS |
 
 ## Known gaps
 
