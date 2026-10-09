@@ -357,6 +357,10 @@ def gates(rc: Path, target_dir: Path, extra: tuple[str, ...] = ()) -> list[dict]
         ]},
         {"name": "examples", "cwd": rc / "examples", "env": cargo, "steps": [
             ["pnpm", "install", "--frozen-lockfile"],
+            # The released 0.1.3 client the compatibility run drives (LFCP-02-070;
+            # from the npm registry), and the plugin sources two-vault/ imports.
+            ["npm", "ci", "--prefix", "qualification/legacy-0.1.3", "--no-audit", "--no-fund"],
+            ["pnpm", "--dir", "../obsidian", "install", "--frozen-lockfile"],
             ["pnpm", "build"],
             ["pnpm", "typecheck"],
             ["pnpm", "lint"],

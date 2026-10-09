@@ -135,7 +135,7 @@ commits.
    | sdk-rs | `cargo fmt --check`; `clippy -D warnings` and `test`, each with `--all-features` and `--no-default-features` |
    | server | `cargo fmt --check`, `clippy -D warnings`, `test` |
    | sdk-ts | install, build, typecheck, lint, `pnpm test` (live tests against the server included), `pnpm release:check` (pack, check and install the npm packages; nothing is published) |
-   | examples | install, build, typecheck, lint, test, `conformance/dist/run.js --strict` |
+   | examples | install (with `npm ci` of the released 0.1.3 client in `qualification/legacy-0.1.3`, from the npm registry, and the obsidian worktree's dependencies, which `two-vault/` imports), build, typecheck, lint, test, `conformance/dist/run.js --strict` |
    | obsidian | install, build, lint, typecheck, `vitest run`, the E2E included; it fails if any test is skipped |
 
    Every gate runs with `LFCP_REQUIRE_LIVE=1`, so live tests may not skip,
