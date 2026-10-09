@@ -2699,7 +2699,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-6 / RP11  
-**Type / priority / status:** release / P1 / IN_PROGRESS — obsidian c420a7e, 557bb9d: docs/guides/shared-sections.md. README "What is shared" and the access disclosure for sections remain.  
+**Type / priority / status:** release / P1 / DONE — obsidian c420a7e, 557bb9d (docs/guides/shared-sections.md), 6030ed7 (README: shared sections, what is shared, per-node markers hidden in Live Preview, what the plugin accesses).  
 **Depends on:** LFCP-02-066  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); OBSIDIAN-SHARED-SECTIONS-UX-01.md  
 **Gate / test trace:** G12 / T12
