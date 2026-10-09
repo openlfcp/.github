@@ -18,6 +18,7 @@ catalogs every artifact across the repositories, with its status.
 | [ARTIFACTS-INDEX.md](ARTIFACTS-INDEX.md) | everyone | Every artifact, where it lives and its status |
 | [conformance/compatibility-matrix.md](conformance/compatibility-matrix.md) | release | The generated sdk-rs ⇄ sdk-ts conformance snapshot at a baseline |
 | [release/mvp-0.1-release-notes.md](release/mvp-0.1-release-notes.md) | release | MVP 0.1.0 release notes (final, 2026-10-06) |
+| [release/mvp-0.2-release-notes.md](release/mvp-0.2-release-notes.md) | release | MVP 0.2 release notes (draft): shared sections, the component versions (V1), limits, known limitations, upgrading |
 | [release/server-0.2.0-release-notes.md](release/server-0.2.0-release-notes.md) | release, operators | Server 0.2.0 release notes: abuse limits, quotas, memory bounds, upgrade notes |
 | [release/server-0.3.0-release-notes.md](release/server-0.3.0-release-notes.md) | release, operators | Server 0.3.0 release notes: the `previous` link check (UNKNOWN_PREVIOUS), relay, recovery after a restore, lfcp-admin |
 | [release/deferred-wire-01-features.md](release/deferred-wire-01-features.md) | everyone | What MVP 0.1 does not implement, and how it behaves instead |
