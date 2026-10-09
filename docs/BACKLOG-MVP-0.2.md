@@ -655,7 +655,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** release / P0 / IN_REVIEW — spec tag mvp-0.2-baseline.2 (4198c43); spec.lock moved: sdk-rs c05309b, server 7f7eb99, sdk-ts b92f701, obsidian 6b1aa45; examples pins b4cbc61; .github c5e491a (compatibility matrix). rc-verify --consistency-only at the tag not recorded yet.  
+**Type / priority / status:** release / P0 / DONE for N=2 — spec tag mvp-0.2-baseline.2 (4198c43); spec.lock moved: sdk-rs c05309b, server 7f7eb99, sdk-ts b92f701, obsidian 6b1aa45; examples pins b4cbc61; .github c5e491a (compatibility matrix). rc-verify --from-heads --consistency-only (2026-10-09, report 20261009T051056Z): pins consistent at mvp-0.2-baseline.2; spec 4aa9491 awaits baseline.3. The card repeats for N=3 (spec 8076d89 prepared).  
 **Depends on:** LFCP-02-007, LFCP-02-008, LFCP-02-010, LFCP-02-084  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/rc-verification.md; SHARED-SECTIONS-PROFILE-01.md  
 **Gate / test trace:** G02 / T02
