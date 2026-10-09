@@ -1409,7 +1409,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** server  
 **Milestone / group:** M02-3 / RP05  
-**Type / priority / status:** implementation / P1 / IN_REVIEW — server 246dd25 (fresh clone at sdk-rs c05309b and mvp-0.2-baseline.2: fmt, clippy, 170/170). Found by the 074 rehearsal; needed before the first schema change, not for 0.2.  
+**Type / priority / status:** implementation / P1 / DONE — server e49f595 (gated at mvp-0.2-baseline.3, sdk-rs 76609e5: fmt, clippy, 170/170). Found by the 074 rehearsal; in place before the first schema change.  
 **Depends on:** LFCP-02-074  
 **Read first:** MVP-0.2-COMPATIBILITY-AND-MIGRATION.md; LFCP-WIRE-01.md  
 **Gate / test trace:** G07 / T06, T12
