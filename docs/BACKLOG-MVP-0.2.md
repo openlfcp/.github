@@ -259,7 +259,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** implementation / P0 / IN_REVIEW — sdk-ts 0e9676e (2026-10-08), pushed; ships in sdk-ts 0.1.3 (tag v0.1.3 on 7e9462f, publish by CI pending).  
+**Type / priority / status:** implementation / P0 / DONE — Released: @openlfcp/*@0.1.3 on npm (CI trusted publishing, 2026-10-08; tag sdk-ts v0.1.3 on 7e9462f) and Shared Tasks 0.3.2 (obsidian tag 0.3.2 on 1cfce1e).  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); LFCP-WIRE-01.md  
 **Gate / test trace:** G11 / T08
@@ -301,7 +301,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec + sdk-ts + sdk-rs + server (split per repository at dispatch)  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** implementation / P0 / IN_REVIEW — Code ready; ships with the npm release of @openlfcp/* 0.1.3.  
+**Type / priority / status:** implementation / P0 / DONE — Released: @openlfcp/*@0.1.3 on npm (CI trusted publishing, 2026-10-08; tag sdk-ts v0.1.3 on 7e9462f) and Shared Tasks 0.3.2 (obsidian tag 0.3.2 on 1cfce1e).  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); spec: adr/0008-recovery-after-server-data-loss.md; LFCP-WIRE-01.md; .github: docs/BACKLOG-MVP-0.1.md  
 **Gate / test trace:** G07 / T01, T07
@@ -322,7 +322,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec + sdk-ts + sdk-rs (split per repository at dispatch)  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** implementation / P0 / IN_REVIEW — Code ready; ships with the npm release of @openlfcp/* 0.1.3.  
+**Type / priority / status:** implementation / P0 / DONE — Released: @openlfcp/*@0.1.3 on npm (CI trusted publishing, 2026-10-08; tag sdk-ts v0.1.3 on 7e9462f) and Shared Tasks 0.3.2 (obsidian tag 0.3.2 on 1cfce1e).  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/open-decision-actor-seq-collision.md; SHARED-OBJECTS-PROFILE-01.md; .github: docs/BACKLOG-MVP-0.1.md  
 **Gate / test trace:** G06, G07 / T02, T07
