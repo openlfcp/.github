@@ -280,7 +280,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** release / P0 / NOT_STARTED  
+**Type / priority / status:** release / P0 / DONE — Released as Shared Tasks 0.3.2 (obsidian tag 0.3.2 on 1cfce1e; audit a2f48de); docs/releases/0.3.2.md.  
 **Depends on:** LFCP-02-086, LFCP-02-088, LFCP-02-089  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); MVP-0.2-COMPATIBILITY-AND-MIGRATION.md; obsidian: docs/devel/release.md  
 **Gate / test trace:** G11 / T08
@@ -343,7 +343,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts (companions: obsidian, sdk-rs)  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** release / P1 / BLOCKED — Waits for the owner's decision.  
+**Type / priority / status:** release / P1 / IN_PROGRESS — The owner decided yes (2026-10-09); 0.1.4 is in preparation.  
 **Depends on:** LFCP-02-090  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/npm-publish-checklist.md  
 **Gate / test trace:** G11 / T08
@@ -655,7 +655,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** release / P0 / NOT_STARTED  
+**Type / priority / status:** release / P0 / IN_REVIEW — spec tag mvp-0.2-baseline.2 (4198c43); spec.lock moved: sdk-rs c05309b, server 7f7eb99, sdk-ts b92f701, obsidian 6b1aa45; examples pins b4cbc61; .github c5e491a (compatibility matrix). rc-verify --consistency-only at the tag not recorded yet.  
 **Depends on:** LFCP-02-007, LFCP-02-008, LFCP-02-010, LFCP-02-084  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/rc-verification.md; SHARED-SECTIONS-PROFILE-01.md  
 **Gate / test trace:** G02 / T02
@@ -912,7 +912,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-1 / RP02  
-**Type / priority / status:** implementation / P0 / IN_PROGRESS — TS side in progress (3d). sdk-rs has it (d2a2b77). At spec main sdk-ts decides canonical 6/15 and references 4/21; the harness keeps the rest pending (sdk-ts d371a22, ce04709).  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts 8ef791e (§11.3), 62e2efd (§11.4), f2b526d; sdk-rs d2a2b77, pinned at c05309b. CAN-*/REF-* 36/36 and SS57-SS59 12/12 at the baseline.2 pins (.github 3c045fd).  
 **Depends on:** LFCP-02-090  
 **Read first:** SHARED-OBJECTS-PROFILE-01.md; SHARED-SECTIONS-TEST-VECTORS-01.md  
 **Gate / test trace:** G02, G06 / T02
@@ -1388,7 +1388,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP06  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — obsidian 98ce92c (parser), fixes 67f2d5c, 5742557, 2abd935, 2a80c54, 517a545; test/core/sections/parser.test.ts (boundaries, fences and comments literal, overlaps, private text after the end marker).  
 **Depends on:** LFCP-02-007, LFCP-02-008, LFCP-02-090  
 **Read first:** MARKDOWN-SECTIONS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G04, G05, G07, G08 / T04, T05
@@ -1409,7 +1409,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP06  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — obsidian 98ce92c and the fixes of 034; test/core/sections/parser.test.ts (nodes: child-line refs and content-column nesting, tabs, raw nodes, unsupported headings, continuation lines, MS17, MS22, MS31, MS41).  
 **Depends on:** LFCP-02-034  
 **Read first:** MARKDOWN-SECTIONS-01.md; MARKDOWN-SECTIONS-FIXTURES-01.md; SHARED-OBJECTS-PROFILE-01.md; MARKDOWN-REFS-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G04, G05, G07, G08 / T04, T05
@@ -1901,7 +1901,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** examples  
 **Milestone / group:** M02-3 / RP08  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / DONE — .github 3c045fd: release/mvp-0.2-two-vault-qualification.md and .json at the mvp-0.2-baseline.2 pins (first run 8f0ae42); examples qualification/ (10d6162, 4b67dc5, 36a7005, b3c763f).  
 **Depends on:** LFCP-02-006, LFCP-02-023, LFCP-02-030, LFCP-02-033, LFCP-02-044, LFCP-02-046, LFCP-02-047, LFCP-02-052, LFCP-02-055, LFCP-02-097  
 **Read first:** OBSIDIAN-SHARED-SECTIONS-UX-01.md; MVP-0.2-COMPATIBILITY-AND-MIGRATION.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G03, G04, G05, G06, G07, G08, G09, G11 / T01, T06, T07, T08, T10
@@ -2117,7 +2117,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-4 / RP09  
-**Type / priority / status:** implementation / P1 / NOT_STARTED  
+**Type / priority / status:** implementation / P1 / DONE — obsidian 5865fc5 (local report without notes or secrets), 727caf3 (previewed export); test/core/diagnostics.test.ts, diagnostics-collect.test.ts (canaries, secrets, paths).  
 **Depends on:** LFCP-02-030, LFCP-02-038, LFCP-02-059, LFCP-02-060, LFCP-02-098  
 **Read first:** OBSIDIAN-SYNC-INDICATORS-01.md; OBSIDIAN-SHARED-SECTIONS-UX-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G08, G10 / T10
@@ -2247,7 +2247,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** examples  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** implementation / P1 / NOT_STARTED  
+**Type / priority / status:** implementation / P1 / DONE — examples 660d5e1: lfcp-todo section commands, todo-cli/test/sections.test.ts and sections-live.test.ts, todo-cli/README.md "Shared sections".  
 **Depends on:** LFCP-02-023, LFCP-02-028, LFCP-02-033, LFCP-02-056  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G12 / T11, T12
@@ -2268,7 +2268,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** examples  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** implementation / P1 / NOT_STARTED  
+**Type / priority / status:** implementation / P1 / DONE — examples d77e464, e4c96e6: docs/demos/two-vault-sections.md, two-vault/prepare.mjs and its test. The reviewer run of the script belongs to 066.  
 **Depends on:** LFCP-02-056, LFCP-02-066, LFCP-02-071  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G12 / T11, T12
@@ -2699,7 +2699,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-6 / RP11  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / IN_PROGRESS — obsidian c420a7e, 557bb9d: docs/guides/shared-sections.md. README "What is shared" and the access disclosure for sections remain.  
 **Depends on:** LFCP-02-066  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); OBSIDIAN-SHARED-SECTIONS-UX-01.md  
 **Gate / test trace:** G12 / T12
