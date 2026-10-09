@@ -3,7 +3,7 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 115 tasks in 13 epics, across seven milestones  
+**Size:** 116 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
@@ -124,7 +124,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085, 114 | TypeScript section model | M02-1 |
 | E04 | 019, 020, 021, 022, 023, 024, 109, 111 | Rust and independent interoperability | M02-1 |
 | E05 | 025, 026, 027, 028, 029, 030, 097, 098, 106, 110, 115 | Durability and SDK evidence | M02-2 |
-| E06 | 031, 032, 033 | Opaque server compatibility | M02-3 |
+| E06 | 031, 032, 033, 116 | Opaque server compatibility | M02-3 |
 | E07 | 034, 035, 036, 037, 038, 039, 040, 041, 042 | Markdown ownership and reconciliation | M02-2 |
 | E08 | 043, 044, 045, 046, 047, 048, 095, 096 | Native editor lifecycle | M02-2 |
 | E09 | 049, 050, 051, 052, 053, 054, 055, 056, 100 | Secure sharing, join and import | M02-3 |
@@ -251,6 +251,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-113 | Patch release 0.1.4 and plugin 0.3.3 with the SPEC-PATCH-10 admission | sdk-ts (companions: obsidian, sdk-rs) | P1 | 090 |
 | LFCP-02-114 | SPEC-PATCH-10 admission in sdk-ts (F2-F4) | sdk-ts | P0 | 090 |
 | LFCP-02-115 | A revoked member learns the refusal and reports it honestly | sdk-ts (companion: obsidian) | P0 | 027, 106 |
+| LFCP-02-116 | The server refuses a store written by a newer server | server | P1 | 074 |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -1403,6 +1404,27 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** Actual Wire negative fixtures and client/server secure integration, not mock crypto.
 
 **Deliverables:** Server secure regression report and scoped fixes.
+
+### LFCP-02-116 — The server refuses a store written by a newer server
+
+**Primary repository:** server  
+**Milestone / group:** M02-3 / RP05  
+**Type / priority / status:** implementation / P1 / IN_REVIEW — server 246dd25 (fresh clone at sdk-rs c05309b and mvp-0.2-baseline.2: fmt, clippy, 170/170). Found by the 074 rehearsal; needed before the first schema change, not for 0.2.  
+**Depends on:** LFCP-02-074  
+**Read first:** MVP-0.2-COMPATIBILITY-AND-MIGRATION.md; LFCP-WIRE-01.md  
+**Gate / test trace:** G07 / T06, T12
+
+**Goal:** A server rolled back across a schema change stops instead of running on a schema it does not know.
+
+**Acceptance:**
+
+1. Opening a store whose schema version is above every migration the server knows fails with a clear error naming both versions, before anything is written; the server exits.
+2. The refused store keeps its files byte for byte (no WAL or SHM file is created); a newer version held only in the WAL is refused too.
+3. Once the version is one the server knows, the store opens as before; README states that a rollback across a schema change needs a backup made by the older version.
+
+**Required checks:** A store at schema version latest+1: refused by Store::open and by the server binary, files unchanged; the same with the version only in the WAL; reopened once the version is restored.
+
+**Deliverables:** The store guard, its test, the README note.
 
 ## E07. Markdown ownership and reconciliation
 
