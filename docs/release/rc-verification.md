@@ -16,6 +16,7 @@ scripts/rc-verify.py --from-heads --consistency-only            # pins only
 scripts/rc-verify.py --from-heads --only sdk-rs,server          # some gates
 scripts/rc-verify.py --from-heads --baseline mvp-0.2-baseline   # an MVP 0.2 candidate
 scripts/rc-verify.py --from-heads --with website                 # plus an optional gate
+scripts/rc-verify.py --from-heads --assemble /tmp/candidate --repro  # build the artifacts, twice
 ```
 
 The spec baseline tag is the nearest `mvp-*-baseline.*` tag in spec HEAD's
@@ -31,12 +32,52 @@ Optional gates run only when asked for with `--with`:
 - `native`: the obsidian native harness (`pnpm run native`, real Obsidian,
   LFCP-02-096). It needs a desktop session and takes long.
 
-Every run also writes `release-evidence-<time>.json` next to the report:
-the fields of the MVP 0.2 release-evidence record this run can fill (each
-component's repository, commit, version, lockfile hash, toolchain, gate
-commands and status, the host and the pins). Its status is always
-`NOT_QUALIFIED`: scope gates, test families, budgets, the pilot and release
-operations are reviewed by people.
+Every run also writes `release-evidence-<time>.json` next to the report.
+It is the MVP 0.2 release-evidence template
+([mvp-0.2-release-evidence-template.json](mvp-0.2-release-evidence-template.json))
+with the fields this run can fill:
+
+- each component's repository, commit, version, lockfile hash and toolchain;
+- each component's gate commands and status;
+- the host, the pins and the rc-verify gates (logs by their path under the
+  RC directory);
+- with `--assemble`, the build commands, the artifact checksums and the
+  corpora.
+
+Its status is always `NOT_QUALIFIED`: scope gates, test families, budgets,
+the pilot and release operations are reviewed by people. The record holds
+no local paths.
+
+## Candidate artifacts (`--assemble`)
+
+`--assemble DIR` (LFCP-02-073, `scripts/rc_assemble.py`) builds the
+candidate's installable artifacts into the empty directory `DIR`. The build
+uses fresh clones at the manifest's commits, laid out side by side as CI lays
+them out, never the RC worktrees. It builds:
+
+- **npm:** `pnpm pack` of the eight `@openlfcp/*` packages of sdk-ts, in
+  publish order, after `pnpm install --frozen-lockfile` and `pnpm build`;
+- **server:** the `lfcp-server` and `lfcp-admin` release binaries
+  (`cargo build --release --locked`, against sdk-rs at the manifest commit).
+  Their source paths are remapped to those of the image build (`/src`,
+  `/usr/local/cargo`), so a binary carries no path of the machine that built
+  it;
+- **obsidian:** `main.js`, `manifest.json` and `styles.css`, built against the
+  sdk-ts clone;
+- **spec:** each `test-vectors/<corpus>`, as its git tree ID and the sha256
+  of its `git archive`. These sha256 fill `scope.corpus_sha256`.
+
+Every artifact's sha256 is in `DIR/artifacts/SHA256SUMS`, in the report and
+in the evidence record. The artifacts are the immutable candidate: a
+release publishes these files, never a rebuild.
+
+`--repro` builds everything a second time: fresh clones and an empty
+target at the same paths, the first build moved aside meanwhile, then each
+checksum is compared. pnpm may write the dependencies it rewrites in a
+packed `package.json` in another order, so a tarball whose bytes differ but
+whose files are equal (`package.json` compared as JSON) is reported as
+"same content, other bytes". Any other difference is reported as not
+reproduced.
 
 `--from-heads` pins every repository's committed HEAD. For the spec it
 also records the newest `mvp-0.1-baseline.*` tag in HEAD's history and

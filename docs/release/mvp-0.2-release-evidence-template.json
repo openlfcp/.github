@@ -1,0 +1,505 @@
+{
+  "record_type": "unfilled_release_evidence_template",
+  "template_version": "0.1",
+  "prepared_on": "2026-10-07",
+  "product_target": "MVP 0.2",
+  "candidate_id": null,
+  "candidate_status": "NOT_QUALIFIED",
+  "instructions": "Fill from actual observations. Null and NOT_RUN are not passing evidence. This template contains no executed product test results. Use the companion test/release plan for requirements.",
+  "decision": {
+    "status": "NOT_REVIEWED",
+    "technical_owner": null,
+    "product_owner": null,
+    "release_owner": null,
+    "reviewed_at": null,
+    "rationale": null
+  },
+  "scope": {
+    "wire_subset_revision": null,
+    "legacy_task_profile_revision": null,
+    "section_profile_id": "org.openlfcp.shared-sections.v1",
+    "section_profile_revision": null,
+    "markdown_binding_revision": null,
+    "scope_revision": null,
+    "corpus_sha256": {},
+    "approved_claims": []
+  },
+  "components": [
+    {
+      "component": "spec",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "sdk-ts",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "sdk-rs",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "server",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "obsidian",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "examples",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "website_source_to_resolve",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "organization_profile_source_to_confirm",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "demo_deployment_to_resolve",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    }
+  ],
+  "environments": [
+    {
+      "id": "E-MAC-ARM",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    },
+    {
+      "id": "E-WIN-X64",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    },
+    {
+      "id": "E-LINUX-X64",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    },
+    {
+      "id": "E-HEADLESS",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    },
+    {
+      "id": "E-SERVER",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    }
+  ],
+  "budgets": {
+    "status": "PROPOSED_NOT_FROZEN",
+    "source": "MVP-0.2-TEST-AND-RELEASE-PLAN.md section 10",
+    "frozen_values": null,
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "change_history": []
+  },
+  "semantics_audit": {
+    "server_acceptance_evidence": null,
+    "server_persistence_guarantee": null,
+    "catch_up_checkpoint": null,
+    "local_commit_receipt": null,
+    "limits": null,
+    "evidence": []
+  },
+  "gates": [
+    {
+      "id": "G01",
+      "name": "Baseline",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G02",
+      "name": "Contracts",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G03",
+      "name": "Onboarding",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G04",
+      "name": "Content",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G05",
+      "name": "Identity",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G06",
+      "name": "Concurrency",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G07",
+      "name": "Durability",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G08",
+      "name": "Privacy",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G09",
+      "name": "Access",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G10",
+      "name": "UX",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G11",
+      "name": "Compatibility",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G12",
+      "name": "Release",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    }
+  ],
+  "families": [
+    {
+      "id": "T01",
+      "name": "Baseline security/regression",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T02",
+      "name": "Section model",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T03",
+      "name": "Independent interoperability",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T04",
+      "name": "Markdown ownership",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T05",
+      "name": "Native projection",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T06",
+      "name": "Secure section E2E",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T07",
+      "name": "Durability/races",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T08",
+      "name": "Access/compatibility",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T09",
+      "name": "Status/UX/accessibility",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T10",
+      "name": "Privacy/clipboard/diagnostics",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T11",
+      "name": "Scale/performance/limits",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T12",
+      "name": "Packaging/operations/pilot",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    }
+  ],
+  "case_inventory": {
+    "SS01-SS28": {
+      "target": "production SDK and independent interoperability",
+      "status": "NOT_RUN"
+    },
+    "Markdown fixture manifest, 29 fixtures": {
+      "target": "production parser/reconciler and native integration",
+      "status": "NOT_RUN"
+    },
+    "CM01-CM14": {
+      "status": "NOT_RUN"
+    },
+    "UX01-UX18": {
+      "status": "NOT_RUN"
+    },
+    "SI01-SI20": {
+      "status": "NOT_RUN"
+    }
+  },
+  "performance_runs": [],
+  "pilot": {
+    "status": "NOT_RUN",
+    "pair_count": 0,
+    "days_observed": 0,
+    "onboarding_attempts": 0,
+    "unassisted_completions": 0,
+    "comprehension_checks": 0,
+    "successful_comprehension_checks": 0,
+    "outcomes_evidence": null,
+    "privacy_policy_for_feedback": null
+  },
+  "issues": [],
+  "release_operations": {
+    "distribution_path": null,
+    "distribution_requirements_checked_at": null,
+    "upgrade_evidence": null,
+    "last_good_section_capable_build": null,
+    "rollback_compatibility": null,
+    "restore_rehearsal": null,
+    "demo_change_required": null,
+    "deployment_smoke_evidence": null,
+    "public_claims_review": null
+  },
+  "excluded_capabilities": [
+    "full LFCP-WIRE conformance claim",
+    "federation/P2P",
+    "ownership transfer and server migration",
+    "presence/read receipts",
+    "per-node ACL",
+    "arbitrary full-document Markdown",
+    "attachment upload",
+    "mobile certification"
+  ]
+}

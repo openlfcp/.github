@@ -12,10 +12,16 @@ and writes a report. See docs/release/rc-verification.md.
              checkouts), --only GATE[,GATE...], --consistency-only,
              --baseline mvp-0.N-baseline (default: the nearest mvp-*-baseline.*
              tag in spec HEAD's history), --with website,native (optional
-             gates: the website checkout, and the obsidian native harness)
+             gates: the website checkout, and the obsidian native harness),
+             --assemble DIR [--repro] (build and checksum the candidate's artifacts)
 
-A release-evidence JSON (the fields of the MVP 0.2 RELEASE-EVIDENCE
-template that this run can fill) is written next to every report.
+A release-evidence JSON (the MVP 0.2 RELEASE-EVIDENCE template,
+docs/release/mvp-0.2-release-evidence-template.json, with the fields this
+run can fill) is written next to every report. With --assemble DIR, the
+candidate's installable artifacts are built from fresh clones at the
+pinned commits into DIR (scripts/rc_assemble.py: the @openlfcp/* npm
+tarballs, the server binaries, the plugin files; --repro builds them twice
+and compares), and their sha256 go into that record.
 
 Rules it keeps: worktrees are only ever moved between commits when clean
 (never reset, never forced); one shared Cargo target directory
@@ -449,6 +455,7 @@ def write_report(
     after_tag: list[dict],
     results: list[dict],
     tools: dict,
+    assembly: dict | None = None,
 ) -> Path:
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%SZ")
     all_ok = consistent and all(r["ok"] for r in results)
@@ -540,18 +547,28 @@ def write_report(
             if c["normative"]:
                 normative = f"**{normative}**"
             lines.append(f"| {c['commit'][:12]} | {c['subject']} | {normative} |")
+    if assembly is not None:
+        lines += ["", "## Artifacts (--assemble)", "", "| Artifact | sha256 | Rebuilt the same |", "| --- | --- | --- |"]
+        for component, files in assembly["artifacts"].items():
+            for name, digest in files.items():
+                same = "not rebuilt"
+                if assembly["reproducibility"] is not None:
+                    r = assembly["reproducibility"][component][name]
+                    same = "yes" if r["same"] else ("same content, other bytes" if r.get("same_content") else "**no**")
+                lines.append(f"| {name} | `{digest[:16]}…` | {same} |")
+        lines += ["", f"`SHA256SUMS` sha256: `{assembly['sha256sums']}`"]
     lines += ["", "## Tools", ""] + [f"- {k}: {v}" for k, v in tools.items()]
     lines += ["", f"Free disk at the end: {free_bytes(rc) / 1024**3:.1f} GB", ""]
     report = rc / f"report-{stamp}.md"
     report.write_text("\n".join(lines))
     (rc / f"report-{stamp}.json").write_text(
         json.dumps(
-            {"ok": all_ok, "manifest": manifest, "pins": pins, "spec_after_tag": after_tag, "gates": results, "tools": tools},
+            {"ok": all_ok, "manifest": manifest, "pins": pins, "spec_after_tag": after_tag, "gates": results, "tools": tools, "assembly": assembly},
             indent=2,
         )
     )
     (rc / f"release-evidence-{stamp}.json").write_text(
-        json.dumps(release_evidence(rc, manifest, consistent, results, tools, stamp), indent=2) + "\n"
+        json.dumps(release_evidence(rc, manifest, consistent, results, tools, stamp, assembly), indent=2) + "\n"
     )
     return report
 
@@ -581,14 +598,31 @@ def component_version(path: Path) -> str | None:
     return None
 
 
+TEMPLATE = Path(__file__).resolve().parents[1] / "docs" / "release" / "mvp-0.2-release-evidence-template.json"
+
+
 def release_evidence(
-    rc: Path, manifest: dict, consistent: bool, results: list[dict], tools: dict, stamp: str
+    rc: Path,
+    manifest: dict,
+    consistent: bool,
+    results: list[dict],
+    tools: dict,
+    stamp: str,
+    assembly: dict | None = None,
 ) -> dict:
-    """The fields of the MVP 0.2 RELEASE-EVIDENCE template this run can fill.
-    Scope gates G01-G12, test families T01-T12, budgets, pilot and release
-    operations need people and other runs: they are not claimed here."""
+    """The MVP 0.2 RELEASE-EVIDENCE template with the fields this run can fill:
+    components (commits, versions, lockfiles, toolchains, gate commands and,
+    with --assemble, build commands and artifact checksums), the corpora,
+    the host and the rc-verify gates. Scope gates G01-G12, test families
+    T01-T12, budgets, the pilot and release operations need people and
+    other runs: they stay as the template has them."""
+    import copy
+
+    record = copy.deepcopy(read_json(TEMPLATE))
     by_gate = {r["name"]: r for r in results}
-    components = []
+    built = {} if assembly is None else assembly["artifacts"]
+    commands = {} if assembly is None else assembly["build_commands"]
+    filled = []
     for repo in manifest_repos(manifest):
         path = rc / repo
         lock = next((f for f in ("pnpm-lock.yaml", "Cargo.lock", "Gemfile.lock") if (path / f).is_file()), None)
@@ -597,7 +631,7 @@ def release_evidence(
         except subprocess.CalledProcessError:
             url = None
         gate = by_gate.get(repo)
-        components.append({
+        filled.append({
             "component": repo,
             "repository_or_deployment": url,
             "commit_or_image_digest": manifest[repo]["commit"],
@@ -607,31 +641,45 @@ def release_evidence(
             ),
             "lockfile_hash": None if lock is None else {lock: sha256_file(path / lock)},
             "toolchain": {k: v for k, v in tools.items() if k in ("node", "pnpm", "rustc", "cargo", "ruby", "python")},
+            "build_command": commands.get(repo) or None,
             "test_commands": [] if gate is None else [s["cmd"] for s in gate["steps"]],
             "gate_status": "NOT_RUN" if gate is None else ("PASS" if gate["ok"] else "FAIL"),
-            "artifact_checksums": {},
+            "artifact_checksums": built.get(repo, {}),
             "owner": None,
         })
+    # The template's components first (filled when this run knows them), then the others.
+    known = {c["component"]: c for c in filled}
+    record["components"] = [known.pop(c["component"], c) for c in record["components"]] + list(known.values())
     spec = manifest["spec"]
-    return {
+    record.update({
         "record_type": "release_evidence_from_rc_verify",
-        "template_version": "0.1",
         "candidate_id": stamp,
         "candidate_status": "NOT_QUALIFIED",
         "instructions": "Filled by rc-verify from this run only. Null and NOT_RUN are not passing evidence; scope gates, families, budgets, pilot and release operations are reviewed by people.",
-        "scope": {"wire_subset_revision": spec.get("tag"), "spec_commit": spec["commit"], "spec_tag_commit": spec_tag_commit(manifest)},
         "pins_consistent": consistent,
-        "components": components,
-        "environments": [{
-            "id": "rc-verify-host",
-            "os_build": tools.get("os"),
-            "runtime_versions": {k: v for k, v in tools.items() if k != "os"},
-        }],
-        "rc_gates": [
-            {"gate": r["name"], "status": "PASS" if r["ok"] else "FAIL", "seconds": r["seconds"], "log": r["log"]}
-            for r in results
-        ],
-    }
+    })
+    record["scope"].update({"wire_subset_revision": spec.get("tag"), "spec_commit": spec["commit"], "spec_tag_commit": spec_tag_commit(manifest)})
+    if assembly is not None:
+        record["scope"]["corpus_sha256"] = {k: v["archive_sha256"] for k, v in assembly["corpora"].items()}
+        record["assembly"] = {
+            "sha256sums_sha256": assembly["sha256sums"],
+            "corpora": assembly["corpora"],
+            "reproducibility": assembly["reproducibility"],
+            "seconds": assembly["seconds"],
+        }
+    record["environments"].append({
+        "id": "rc-verify-host",
+        "status": "PINNED",
+        "os_build": tools.get("os"),
+        "architecture": platform.machine(),
+        "runtime_versions": {k: v for k, v in tools.items() if k != "os"},
+    })
+    # Logs by their path under the RC directory: the record carries no local paths.
+    record["rc_gates"] = [
+        {"gate": r["name"], "status": "PASS" if r["ok"] else "FAIL", "seconds": r["seconds"], "log": f"logs/{Path(r['log']).name}"}
+        for r in results
+    ]
+    return record
 
 
 def main() -> int:
@@ -645,6 +693,8 @@ def main() -> int:
     ap.add_argument("--consistency-only", action="store_true")
     ap.add_argument("--baseline", default=None, help="baseline tag series, e.g. mvp-0.2-baseline")
     ap.add_argument("--with", dest="extra", default="", help=f"optional gates: {','.join(OPTIONAL_GATES)}")
+    ap.add_argument("--assemble", type=Path, default=None, help="build the candidate's artifacts into this empty directory")
+    ap.add_argument("--repro", action="store_true", help="with --assemble: build twice and compare the checksums")
     args = ap.parse_args()
     extra = tuple(g for g in args.extra.split(",") if g)
     unknown = [g for g in extra if g not in OPTIONAL_GATES]
@@ -674,7 +724,31 @@ def main() -> int:
             r = run_gate(gate, rc / "logs", ROOT)
             print(f"rc-verify: {gate['name']} {'PASS' if r['ok'] else 'FAIL'} ({r['seconds']} s)", flush=True)
             results.append(r)
-    report = write_report(rc, manifest, consistent, pins, after_tag, results, versions())
+    assembly = None
+    if args.assemble is not None:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        from rc_assemble import assemble
+
+        require_disk(ROOT)
+        print(f"rc-verify: assemble into {args.assemble} …", flush=True)
+        try:
+            assembly = assemble(ROOT, manifest, args.assemble.resolve(), args.repro, rc / "logs")
+        except RuntimeError as e:
+            print(f"rc-verify: {e}", flush=True)
+            assembly = None
+            results.append({"name": "assemble", "ok": False, "seconds": 0, "log": str(rc / "logs" / "assemble.log"), "steps": [], "tail": [str(e)]})
+        else:
+            print(f"rc-verify: assembled in {assembly['seconds']} s", flush=True)
+            if assembly["reproducibility"] is not None:
+                differ = [
+                    n for files in assembly["reproducibility"].values() for n, r in files.items()
+                    if not r["same"] and not r.get("same_content")
+                ]
+                if differ:
+                    print(f"rc-verify: not reproduced: {', '.join(differ)}", flush=True)
+    elif args.repro:
+        sys.exit("rc-verify: --repro needs --assemble DIR")
+    report = write_report(rc, manifest, consistent, pins, after_tag, results, versions(), assembly)
     print(f"rc-verify: report {report}")
     ok = consistent and all(r["ok"] for r in results)
     return 0 if ok else 1
