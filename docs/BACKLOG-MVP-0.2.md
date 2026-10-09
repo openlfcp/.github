@@ -3,7 +3,7 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 114 tasks in 13 epics, across seven milestones  
+**Size:** 115 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
@@ -123,7 +123,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | E02 | 007, 008, 009, 010, 083, 084, 090, 107, 108 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085, 114 | TypeScript section model | M02-1 |
 | E04 | 019, 020, 021, 022, 023, 024, 109, 111 | Rust and independent interoperability | M02-1 |
-| E05 | 025, 026, 027, 028, 029, 030, 097, 098, 106, 110 | Durability and SDK evidence | M02-2 |
+| E05 | 025, 026, 027, 028, 029, 030, 097, 098, 106, 110, 115 | Durability and SDK evidence | M02-2 |
 | E06 | 031, 032, 033 | Opaque server compatibility | M02-3 |
 | E07 | 034, 035, 036, 037, 038, 039, 040, 041, 042 | Markdown ownership and reconciliation | M02-2 |
 | E08 | 043, 044, 045, 046, 047, 048, 095, 096 | Native editor lifecycle | M02-2 |
@@ -250,6 +250,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-112 | Section history growth policy | obsidian (companions: spec, sdk-ts) | P1 | 067 |
 | LFCP-02-113 | Patch release 0.1.4 and plugin 0.3.3 with the SPEC-PATCH-10 admission | sdk-ts (companions: obsidian, sdk-rs) | P1 | 090 |
 | LFCP-02-114 | SPEC-PATCH-10 admission in sdk-ts (F2-F4) | sdk-ts | P0 | 090 |
+| LFCP-02-115 | A revoked member learns the refusal and reports it honestly | sdk-ts (companion: obsidian) | P0 | 027, 106 |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -343,7 +344,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts (companions: obsidian, sdk-rs)  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** release / P1 / IN_PROGRESS — The owner decided yes (2026-10-09); 0.1.4 is in preparation.  
+**Type / priority / status:** release / P1 / IN_PROGRESS — Decided yes (owner: "you decide", orchestrator). sdk-ts 0.1.4 candidate 21c7fe3 on branch release-0.1.4 (from v0.1.3): the SPEC-PATCH-10 admission at mvp-0.1-baseline.10; verified by the orchestrator on a fresh clone; the owner tags v0.1.4 and publishes. Plugin 0.3.3 follows the npm 0.1.4 release (3d).  
 **Depends on:** LFCP-02-090  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/npm-publish-checklist.md  
 **Gate / test trace:** G11 / T08
@@ -655,7 +656,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** release / P0 / DONE for N=2 — spec tag mvp-0.2-baseline.2 (4198c43); spec.lock moved: sdk-rs c05309b, server 7f7eb99, sdk-ts b92f701, obsidian 6b1aa45; examples pins b4cbc61; .github c5e491a (compatibility matrix). rc-verify --from-heads --consistency-only (2026-10-09, report 20261009T051056Z): pins consistent at mvp-0.2-baseline.2; spec 4aa9491 awaits baseline.3. The card repeats for N=3 (spec 8076d89 prepared).  
+**Type / priority / status:** release / P0 / DONE — For N=2: spec tag mvp-0.2-baseline.2 (4198c43); spec.lock moved: sdk-rs c05309b, server 7f7eb99, sdk-ts b92f701, obsidian 6b1aa45; examples pins b4cbc61; .github c5e491a (compatibility matrix). rc-verify --from-heads --consistency-only (2026-10-09, report 20261009T051056Z): pins consistent at mvp-0.2-baseline.2; spec 4aa9491 awaits baseline.3. The card repeats for N=3 (spec 8076d89 prepared).  
 **Depends on:** LFCP-02-007, LFCP-02-008, LFCP-02-010, LFCP-02-084  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/rc-verification.md; SHARED-SECTIONS-PROFILE-01.md  
 **Gate / test trace:** G02 / T02
@@ -1316,6 +1317,27 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** Unit tests with a fake coordinator; a live test against the Rust server losing the answer and the request.
 
 **Deliverables:** The journal in @openlfcp/client and its tests; plugin resume UI (obsidian).
+
+### LFCP-02-115 — A revoked member learns the refusal and reports it honestly
+
+**Primary repository:** sdk-ts (companion: obsidian)  
+**Milestone / group:** M02-2 / RP04  
+**Type / priority / status:** implementation / P0 / DONE — sdk-ts d616ed2, 9bf40d2 (found by examples 056, step 9).  
+**Depends on:** LFCP-02-027, LFCP-02-106  
+**Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); OBSIDIAN-SYNC-INDICATORS-01.md  
+**Gate / test trace:** G09, G10 / T08, T09
+
+**Goal:** A member refused by the server is shown as refused, not as waiting to sync.
+
+**Acceptance:**
+
+1. When RESOURCE_OPEN is refused with AUTHORIZATION_FAILED and the access recovery (106) does not help, accessState, canWrite and commit report allowed false with the reason server-refused, current false and how the recovery ended; never "revoked", since the server does not say why.
+2. Unaccepted batches are blocked (not accepted: access refused by the server), with their work kept; catch-up is unknown; each change is a status event; an open again clears it.
+3. obsidian: the status text for a refused section.
+
+**Required checks:** Live test against the Rust server: a member revoked while offline reconnects and is refused (the scenario of examples 056); a FakeServer test of the refusal and its clearing.
+
+**Deliverables:** The SDK change and tests; the plugin status text.
 
 ## E06. Opaque server compatibility
 
