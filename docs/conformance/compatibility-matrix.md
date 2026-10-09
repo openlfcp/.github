@@ -1,19 +1,19 @@
 # OpenLFCP compatibility matrix
 
-Generated 2026-10-09T07:05:24.510Z by examples/conformance (LFCP-070).
+Generated 2026-10-09T09:11:49.489Z by examples/conformance (LFCP-070).
 
-- Spec baseline: mvp-0.2-baseline.3 (spec 8076d89852be334b24e4077c30df32c8ef65d9be).
-- sdk-rs: 5d4a806436a2f50f76fdbd22b3535a44ca72c21c.
-- sdk-ts: a3e205fca26c713b402a370584818fab4b0dba1e.
-- pins.json: sdk-rs 5d4a806, sdk-ts a3e205f, spec 8076d89 (strict run: the SDKs are these commits).
+- Spec baseline: mvp-0.2-baseline.4 (spec 1e548f7f9c95820ec16d3c58cb8a93fdd6a72b6d).
+- sdk-rs: 7edbd5f181df6934a8130cc038a6dd441e9f80f5.
+- sdk-ts: 32e801fd2882dfe30229cb0188ade7c0b634fcc4.
+- pins.json: sdk-rs 7edbd5f, sdk-ts 32e801f, spec 1e548f7 (strict run: the SDKs are these commits).
 
 ## A. Official vectors (byte-exact where the vectors fix every input)
 
 | SDK | Suites | Result | Source |
 | --- | --- | --- | --- |
-| ts | LFCP-TEST-VECTORS-01/01 | PASS 128/128 | sdk-ts conformance runner at mvp-0.2-baseline.3 (603/603 checks) |
-| ts | SHARED-OBJECTS-TEST-VECTORS-01/01 | PASS 31/31 | sdk-ts conformance runner at mvp-0.2-baseline.3 (90/90 checks) |
-| rust | LFCP-TEST-VECTORS-01, SHARED-OBJECTS-TEST-VECTORS-01, corpus, schema fixtures | PASS 281/281 | sdk-rs cargo test --all-features (every test; vectors read at spec.lock) |
+| ts | LFCP-TEST-VECTORS-01/01 | PASS 128/128 | sdk-ts conformance runner at mvp-0.2-baseline.4 (603/603 checks) |
+| ts | SHARED-OBJECTS-TEST-VECTORS-01/01 | PASS 31/31 | sdk-ts conformance runner at mvp-0.2-baseline.4 (90/90 checks) |
+| rust | LFCP-TEST-VECTORS-01, SHARED-OBJECTS-TEST-VECTORS-01, corpus, schema fixtures | PASS 282/282 | sdk-rs cargo test --all-features (every test; vectors read at spec.lock) |
 
 ## B and C. Cross-consumption, negatives and Shared Objects
 
