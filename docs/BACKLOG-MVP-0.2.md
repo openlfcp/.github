@@ -657,7 +657,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** release / P0 / DONE — For N=2: spec tag mvp-0.2-baseline.2 (4198c43); spec.lock moved: sdk-rs c05309b, server 7f7eb99, sdk-ts b92f701, obsidian 6b1aa45; examples pins b4cbc61; .github c5e491a (compatibility matrix). rc-verify --from-heads --consistency-only (2026-10-09, report 20261009T051056Z): pins consistent at mvp-0.2-baseline.2; spec 4aa9491 awaits baseline.3. The card repeats for N=3 (spec 8076d89 prepared).  
+**Type / priority / status:** release / P0 / DONE — For N=2: spec tag mvp-0.2-baseline.2 (4198c43); spec.lock moved: sdk-rs c05309b, server 7f7eb99, sdk-ts b92f701, obsidian 6b1aa45; examples pins b4cbc61; .github c5e491a (compatibility matrix). rc-verify --from-heads --consistency-only (2026-10-09, report 20261009T051056Z): pins consistent at mvp-0.2-baseline.2; spec 4aa9491 awaits baseline.3. For N=3: spec tag mvp-0.2-baseline.3 (8076d89); spec.lock moved: sdk-rs 76609e5, server 4040a6d (then e49f595), sdk-ts bc2fb76 (server.lock e49f595 in 65c6f00), obsidian 1249db5; examples pins cc71c9b (strict run green); .github 8f1a508 (compatibility matrix). Each lock commit gated on a fresh clone at its neighbours' locks.  
 **Depends on:** LFCP-02-007, LFCP-02-008, LFCP-02-010, LFCP-02-084  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/rc-verification.md; SHARED-SECTIONS-PROFILE-01.md  
 **Gate / test trace:** G02 / T02
