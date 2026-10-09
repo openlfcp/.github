@@ -160,3 +160,41 @@ node of the document, and give `create_node`'s insertion an index that is
 not the whole effective tree; `text_edit`'s stale-base check can compare
 the heads of the Text's last change instead of the whole Text. Each turns a
 quadratic catch-up or import linear; none changes what is admitted.
+
+## 7. After LFCP-02-111 (sdk-rs `abff1b1`)
+
+The structural rules now compare only the entities a change writes into,
+`create_node` decides visibility along one node's ancestors, `text_edit`
+skips the stale-base comparison at the current heads, and the engine's
+patch log is emptied after every apply (automerge 0.12 records events even
+in an inactive log, and every clone of the document copied them). Same
+machine and commands as §1 (`section_scale` at `6255f2c` adds the
+import's authoring time and an engine-only row).
+
+| Measurement | Before | After |
+| --- | ---: | ---: |
+| W200 import admitted in order | 40.3 s (101 ms p50, 194 ms last tenth) | 0.43 s (1.1 ms p50, 1.3 ms last tenth) |
+| W200 import reversed with duplicates | 40.3 s | 0.44 s |
+| W200 import authored (`create_node` × 401) | 34.0 s | 0.42 s |
+| `text_edit` at 200,000 characters | 6.3 ms | 23 µs |
+| Typing catch-up, 50,000 characters, k = 16 (3,127 units) | 25.0 s | 14.2 s |
+| Typing catch-up, k = 128 (393 units) | 3.5 s | 1.9 s |
+| The same 3,127 changes applied to a plain Automerge document | — | 13.4 s |
+
+The import is linear now. The typing catch-up is within 6% of the engine
+alone: what still grows with the document is automerge 0.12 applying one
+change at a time to a long Text, not admission. A receiver that catches up
+on many units could apply them in one engine call (SharedObjects batches
+them; the section replica checks the structural rules per change), which
+is the next lever if the plugin's catch-up measurement (LFCP-02-067 item 4)
+needs it.
+
+**Nothing admitted changed.** The corpus replays as before;
+`visible_parent` agrees with `effective()` on every node of every corpus
+case; and an old-versus-new differential (`b693197` against the change)
+gives identical refusals, waiting changes, heads, trees, hidden nodes and
+recovery facts on 114 corpus replays (in order and reversed with
+duplicates), 400 schedule deliveries (100 seeds) and 3,000 random
+structural mutants, which hit every structural refusal (2,590 refused, 410
+admitted).
+
