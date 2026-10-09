@@ -1,0 +1,694 @@
+{
+  "record_type": "integrated crash, access and compatibility recovery evidence",
+  "task": "LFCP-02-070",
+  "scope": "headless: SDK, sealed vaults, Rust reference server, released 0.1.3 client; native Obsidian items NOT_RUN",
+  "date": "2026-10-09",
+  "commits": {
+    "examples": "5f51aa0c3ccbcb82dd37d9ead7072858b64b942a",
+    "sdk_ts": "b92f70177a4d91ca82e9494dca0e3c30342f869f",
+    "server": "7f7eb997a72fb10e044968109a46fe28a138703b",
+    "sdk_rs": "c05309ba25883d229aa7861859b18226a0fbff70",
+    "obsidian": "c4ab7eec87bee05e7649e5df6b56b253e548608d",
+    "spec": {
+      "tag": "mvp-0.2-baseline.2",
+      "commit": "4198c43ea89d681efa5654a020b2f7b578f90df7"
+    },
+    "legacy_client": "@openlfcp/*@0.1.3 from npm (qualification/legacy-0.1.3/package-lock.json)"
+  },
+  "toolchain": {
+    "node": "v24.4.0",
+    "pnpm": "10.33.4",
+    "rustc": "1.99.0",
+    "os": "macOS arm64"
+  },
+  "server_binary": {
+    "path": "target/debug/lfcp-server",
+    "sha256": "64fe4359a909e7b7da69d731e622140a6b0c214148f7ee45be3f5d6e1c28f2ae"
+  },
+  "load": "qualification files one at a time; sdk-ts --maxWorkers=2; CARGO_BUILD_JOBS=4; LFCP_REQUIRE_LIVE=1",
+  "runs": {
+    "examples_qualification": {
+      "passed": 10,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "file": "examples/qualification/test/compat.test.ts",
+          "test": "0.1.3 and the candidate on one vault and one server (LFCP-02-070, CM01\u2013CM03, CM10) upgrades with pending legacy work, coexists with sections, and refuses both ways",
+          "status": "passed",
+          "ms": 22161
+        },
+        {
+          "file": "examples/qualification/test/opacity.test.ts",
+          "test": "two vaults: opacity, and a legacy SOP Resource beside the section (\u00a77 step 11) keeps every plaintext and key off the wire, the server and the sealed vaults",
+          "status": "passed",
+          "ms": 1431
+        },
+        {
+          "file": "examples/qualification/test/partition.test.ts",
+          "test": "two vaults: partition, restart with pending work, conflict and resolution (\u00a77 steps 5\u20137) converges, shows the conflict on both sides, and resolves it causally",
+          "status": "passed",
+          "ms": 1537
+        },
+        {
+          "file": "examples/qualification/test/recovery.test.ts",
+          "test": "integrated crash, access and recovery faults (LFCP-02-070) F1: an ACK lost, then a client restart: sent again, accepted once",
+          "status": "passed",
+          "ms": 29159
+        },
+        {
+          "file": "examples/qualification/test/recovery.test.ts",
+          "test": "integrated crash, access and recovery faults (LFCP-02-070) F2: the server restored from an older copy: B offers its batch again",
+          "status": "passed",
+          "ms": 3371
+        },
+        {
+          "file": "examples/qualification/test/recovery.test.ts",
+          "test": "integrated crash, access and recovery faults (LFCP-02-070) F3: revoked while offline, restarted twice: blocked, nothing reset",
+          "status": "passed",
+          "ms": 2912
+        },
+        {
+          "file": "examples/qualification/test/recovery.test.ts",
+          "test": "integrated crash, access and recovery faults (LFCP-02-070) F4: the server crashes after committing a Control Record, before the ACK",
+          "status": "passed",
+          "ms": 1614
+        },
+        {
+          "file": "examples/qualification/test/restart-revoke.test.ts",
+          "test": "two vaults: server restart with Snapshot and tail, revocation, detach (\u00a77 steps 8\u201310) joins after a restart from the Snapshot, revokes B with its stale work kept out, and detaches",
+          "status": "passed",
+          "ms": 8696
+        },
+        {
+          "file": "examples/qualification/test/two-vault.test.ts",
+          "test": "two vaults, W20 (\u00a77 steps 1\u20134) creates, invites, joins, inserts and edits with independent identities",
+          "status": "passed",
+          "ms": 1044
+        },
+        {
+          "file": "examples/qualification/test/two-vault.test.ts",
+          "test": "two vaults, W200 (\u00a77 steps 1\u20134) creates, invites, joins, inserts and edits with independent identities",
+          "status": "passed",
+          "ms": 6468
+        }
+      ]
+    },
+    "sdk_ts_lower_level": {
+      "passed": 40,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "file": "sdk-ts/conformance/faults/sdk-faults.test.ts",
+          "test": "SDK faults at the durable boundary (LFCP-02-030) a full disk at commit: no receipt, no status, nothing reset; the retry commits once (SI17)",
+          "status": "passed",
+          "ms": 147
+        },
+        {
+          "file": "sdk-ts/conformance/faults/sdk-faults.test.ts",
+          "test": "SDK faults at the durable boundary (LFCP-02-030) an unavailable key store: key-unavailable, nothing written, no key or state purged",
+          "status": "passed",
+          "ms": 56
+        },
+        {
+          "file": "sdk-ts/conformance/faults/sdk-faults.test.ts",
+          "test": "SDK faults at the durable boundary (LFCP-02-030) an offline durable batch is pending, and stays so under the same receipt after a restart (SI03)",
+          "status": "passed",
+          "ms": 67
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 1. a DATA_PUT committed but cut before its ACK is retried as the same unit, applied once",
+          "status": "passed",
+          "ms": 650
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 2. duplicated deliveries both ways are harmless: one profile application per unit",
+          "status": "passed",
+          "ms": 205
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 3. a reordered push is held as a gap, never applied out of order, and repaired",
+          "status": "passed",
+          "ms": 226
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 11. a lost live push is recovered by anti-entropy (DATA_HAVE \u2192 DATA_GET)",
+          "status": "passed",
+          "ms": 216
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 12. repeated reconnects with queued units: no sequence reuse, no loss, convergence",
+          "status": "passed",
+          "ms": 1036
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 13. a lost ACK on a live connection: the put is retransmitted after the request timeout",
+          "status": "passed",
+          "ms": 10200
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 14. a lost DATA_GET reply on a live connection: the data round is issued again",
+          "status": "passed",
+          "ms": 15369
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 15. a lost SNAPSHOT reply falls back to the data round after the request timeout",
+          "status": "passed",
+          "ms": 15363
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 4. Have holes from abandoned sequences: only the real ranges are requested, the hole stays",
+          "status": "passed",
+          "ms": 1044
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 6. a stale CONTROL_PUT is CONTROL_HEAD_MISMATCH with the current head, and commits nothing",
+          "status": "passed",
+          "ms": 191
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 7. a tampered signed unit is INVALID_SIGNATURE at the server and never profile-applied",
+          "status": "passed",
+          "ms": 171
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 8. garbage sealed by an authorized signer: the server accepts it (N3), the client fails it locally",
+          "status": "passed",
+          "ms": 253
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 9. a revoked writer's write beyond the cutoff is STALE_DATA_EPOCH and never merges",
+          "status": "passed",
+          "ms": 265
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: network chaos (live) 10. an exact replay is harmless; a different unit at the same sequence is ACTOR_EQUIVOCATION",
+          "status": "passed",
+          "ms": 199
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: security assertions (live) an unauthenticated connection gets no Resource operation",
+          "status": "passed",
+          "ms": 29
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: security assertions (live) a hosting credential is not a capability: a stranger with one cannot open a Resource",
+          "status": "passed",
+          "ms": 158
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: seeded faults (live) seed 1: drops, duplicates, delays and cuts on Data messages still converge",
+          "status": "passed",
+          "ms": 539
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: seeded faults (live) seed 2: drops, duplicates, delays and cuts on Data messages still converge",
+          "status": "passed",
+          "ms": 10514
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: seeded faults (live) seed 3: drops, duplicates, delays and cuts on Data messages still converge",
+          "status": "passed",
+          "ms": 21027
+        },
+        {
+          "file": "sdk-ts/conformance/interop/chaos.test.ts",
+          "test": "LFCP-057: server restart (live; last, it restarts the shared server) 5. units committed before a SIGKILL survive the restart; queued ones are sent after it",
+          "status": "passed",
+          "ms": 495
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-access-recovery.test.ts",
+          "test": "access recovery after a restore \u2194 Rust reference server (live, LFCP-02-106) a member whose grant the server lost re-supplies it and reaches LIVE without the owner",
+          "status": "passed",
+          "ms": 3211
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-access-recovery.test.ts",
+          "test": "access recovery after a restore \u2194 Rust reference server (live, LFCP-02-106) member and owner reconnecting together end with one chain",
+          "status": "passed",
+          "ms": 988
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-access-recovery.test.ts",
+          "test": "access recovery after a restore \u2194 Rust reference server (live, LFCP-02-106) no recovery runs when the owner re-supplied first",
+          "status": "passed",
+          "ms": 1103
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-access-recovery.test.ts",
+          "test": "access recovery after a restore \u2194 Rust reference server (live, LFCP-02-106) a member whose own chain revokes it sends nothing and stays refused",
+          "status": "passed",
+          "ms": 996
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-access-recovery.test.ts",
+          "test": "access recovery after a restore \u2194 Rust reference server (live, LFCP-02-106) a member revoked on the server only is refused after one more open",
+          "status": "passed",
+          "ms": 1057
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-access-recovery.test.ts",
+          "test": "access recovery after a restore \u2194 Rust reference server (live, LFCP-02-106) a session without a chain that grants it is refused as before",
+          "status": "passed",
+          "ms": 856
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-claim-journal.test.ts",
+          "test": "the claim journal \u2194 Rust reference server (live, LFCP-02-110) a claim committed whose answer is lost joins on the retry, spending the link once",
+          "status": "passed",
+          "ms": 5620
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-claim-journal.test.ts",
+          "test": "the claim journal \u2194 Rust reference server (live, LFCP-02-110) a claim lost on its way commits when the journal sends it again",
+          "status": "passed",
+          "ms": 5563
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-recovery.test.ts",
+          "test": "recovery after server data loss \u2194 Rust reference server (live, ADR 0008) re-supplies an acknowledged unit the restored server lost; a new reader catches up",
+          "status": "passed",
+          "ms": 1158
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-recovery.test.ts",
+          "test": "recovery after server data loss \u2194 Rust reference server (live, ADR 0008) re-hosts a Resource the restored server lost and re-supplies all of it",
+          "status": "passed",
+          "ms": 913
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-restart.test.ts",
+          "test": "restart mid-sync \u2194 Rust reference server (live, child processes) converges after kills with no sequence reuse and no duplicate apply",
+          "status": "passed",
+          "ms": 2175
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-revoke.test.ts",
+          "test": "revokeAccess \u2194 Rust reference server (live, LFCP-02-060) revokes a member, rotates the epoch, and keys only the remaining reader",
+          "status": "passed",
+          "ms": 2068
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-revoked-refusal.test.ts",
+          "test": "a revoked member's refusal (live, LFCP-02-115) reports server-refused access, a blocked batch and unknown catch-up",
+          "status": "passed",
+          "ms": 359
+        },
+        {
+          "file": "sdk-ts/conformance/interop/rust-server-section-snapshot.test.ts",
+          "test": "section Snapshot catch-up \u2194 Rust reference server (live, LFCP-02-028) a fresh client loads the published section Snapshot and fetches only the tail",
+          "status": "passed",
+          "ms": 380
+        },
+        {
+          "file": "sdk-ts/conformance/upgrade/upgrade-0.1.3.test.ts",
+          "test": "upgrade from 0.1.3 storage (LFCP-02-029) SQLite: keeps the legacy queue and state, adds a section beside it, and refuses a 0.1.x client",
+          "status": "passed",
+          "ms": 144
+        },
+        {
+          "file": "sdk-ts/conformance/upgrade/upgrade-0.1.3.test.ts",
+          "test": "upgrade from 0.1.3 storage (LFCP-02-029) SQLite, sealed at rest: the upgrade seals the legacy checkpoint and keeps everything",
+          "status": "passed",
+          "ms": 38
+        },
+        {
+          "file": "sdk-ts/conformance/upgrade/upgrade-0.1.3.test.ts",
+          "test": "upgrade from 0.1.3 storage (LFCP-02-029) IndexedDB: opens the version 1 database as it is, and a 0.1.x client refuses it after",
+          "status": "passed",
+          "ms": 53
+        }
+      ]
+    },
+    "obsidian_headless": {
+      "journal_import_compat": {
+        "passed": 25,
+        "failed": 0,
+        "skipped": 0,
+        "tests": [
+          {
+            "file": "obsidian/test/core/lfcp/compatibility.test.ts",
+            "test": "upgrade and downgrade (055) CM01: a 0.3.x install with a pending legacy edit upgrades: same identity, same queued bytes, sealed",
+            "status": "passed",
+            "ms": 240
+          },
+          {
+            "file": "obsidian/test/core/lfcp/compatibility.test.ts",
+            "test": "upgrade and downgrade (055) CM02: a section beside legacy Tasks: each Resource by its own profile, no cross-profile write",
+            "status": "passed",
+            "ms": 40
+          },
+          {
+            "file": "obsidian/test/core/lfcp/compatibility.test.ts",
+            "test": "upgrade and downgrade (055) sync data from a newer plugin: a plain, non-destructive refusal; nothing is written",
+            "status": "passed",
+            "ms": 4
+          },
+          {
+            "file": "obsidian/test/core/lfcp/compatibility.test.ts",
+            "test": "upgrade and downgrade (055) CM10: edits made while the plugin was off merge with the collaborators' changes since",
+            "status": "passed",
+            "ms": 112
+          },
+          {
+            "file": "obsidian/test/core/sections/journal.test.ts",
+            "test": "journal phases (ARCHITECTURE-02 \u00a75) move forward only; IDs and the receipt are never replaced",
+            "status": "passed",
+            "ms": 2
+          },
+          {
+            "file": "obsidian/test/core/sections/journal.test.ts",
+            "test": "journal phases (ARCHITECTURE-02 \u00a75) keep the batch recorded with the IDs: a retry submits exactly it",
+            "status": "passed",
+            "ms": 0
+          },
+          {
+            "file": "obsidian/test/core/sections/journal.test.ts",
+            "test": "journal phases (ARCHITECTURE-02 \u00a75) recovery follows the crash table: re-evaluate, query, project existing IDs, finish",
+            "status": "passed",
+            "ms": 0
+          },
+          {
+            "file": "obsidian/test/core/sections/journal.test.ts",
+            "test": "journal phases (ARCHITECTURE-02 \u00a75) the store resumes unfinished entries and refuses to go back",
+            "status": "passed",
+            "ms": 1
+          },
+          {
+            "file": "obsidian/test/core/sections/journal.test.ts",
+            "test": "pending candidates are kept until explicitly resolved; diagnostics show neither text nor path",
+            "status": "passed",
+            "ms": 0
+          },
+          {
+            "file": "obsidian/test/core/sections/journal.test.ts",
+            "test": "rebuild from the note alone recovers identities and ranges, and always reports the base as unknown",
+            "status": "passed",
+            "ms": 3
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import preflight (053) CM04: lists the text entering the boundary; legacy Tasks keep their source",
+            "status": "passed",
+            "ms": 6
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import preflight (053) CM08: a source conflict asks for a value for the copy",
+            "status": "passed",
+            "ms": 1
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import preflight (053) CM09: an extension it cannot carry blocks; an unknown source blocks",
+            "status": "passed",
+            "ms": 0
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import preflight (053) CM12 and UX17: assignees are values, not access; a repeated Task needs a choice",
+            "status": "passed",
+            "ms": 1
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import preflight (053) CM13: strips child and inline refs, nothing else",
+            "status": "passed",
+            "ms": 4
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import (053, 054) copies into a new section: new IDs, the source untouched, the refs replaced with the binding",
+            "status": "passed",
+            "ms": 279
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import (053, 054) CM06: the range changed during the import: the note is not replaced",
+            "status": "passed",
+            "ms": 70
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import (053, 054) CM05, CM14: a crash after the note was written resumes with the same target; cancel keeps the note",
+            "status": "passed",
+            "ms": 102
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import (053, 054) CM07: rollback restores the original view; after edits on the section it keeps both",
+            "status": "passed",
+            "ms": 115
+          },
+          {
+            "file": "obsidian/test/core/sections/legacy-import.test.ts",
+            "test": "the import (053, 054) refuses while the preflight blocks or a choice is missing",
+            "status": "passed",
+            "ms": 24
+          },
+          {
+            "file": "obsidian/test/core/sections/recovery.test.ts",
+            "test": "recovery items (061) shows every alternative of each conflict, labelled by place",
+            "status": "passed",
+            "ms": 159
+          },
+          {
+            "file": "obsidian/test/core/sections/recovery.test.ts",
+            "test": "recovery items (061) each choice is a fresh intent that clears its conflict",
+            "status": "passed",
+            "ms": 124
+          },
+          {
+            "file": "obsidian/test/core/sections/recovery.test.ts",
+            "test": "recovery items (061) an edit under a deleted ancestor is shown with the ancestor to restore",
+            "status": "passed",
+            "ms": 54
+          },
+          {
+            "file": "obsidian/test/core/sections/recovery.test.ts",
+            "test": "recovery items (061) a comparison that changed meanwhile is shown again, not applied",
+            "status": "passed",
+            "ms": 94
+          },
+          {
+            "file": "obsidian/test/core/sections/recovery.test.ts",
+            "test": "recovery items (061) applying re-reads access and the model: stale or read-only applies nothing",
+            "status": "passed",
+            "ms": 110
+          }
+        ]
+      },
+      "projections_cm11": {
+        "passed": 5,
+        "failed": 0,
+        "skipped": 0,
+        "tests": [
+          {
+            "file": "obsidian/test/core/sections/projections.test.ts",
+            "test": "LFCP-02-045: projections and rebuild MS07: a complete copy in another note is another projection of the same identities",
+            "status": "passed",
+            "ms": 11
+          },
+          {
+            "file": "obsidian/test/core/sections/projections.test.ts",
+            "test": "LFCP-02-045: projections and rebuild two projections of one section in one note keep their bases across a restart",
+            "status": "passed",
+            "ms": 5
+          },
+          {
+            "file": "obsidian/test/core/sections/projections.test.ts",
+            "test": "LFCP-02-045: projections and rebuild a rename keeps the projection and its base: only the locator changes",
+            "status": "passed",
+            "ms": 1
+          },
+          {
+            "file": "obsidian/test/core/sections/projections.test.ts",
+            "test": "LFCP-02-045: projections and rebuild MS11, CM11: after the index is lost, nothing is uploaded and the source is kept for comparison",
+            "status": "passed",
+            "ms": 3
+          },
+          {
+            "file": "obsidian/test/core/sections/projections.test.ts",
+            "test": "LFCP-02-045: projections and rebuild a standalone ref to a section's Task is not a section projection: nothing is deleted",
+            "status": "passed",
+            "ms": 1
+          }
+        ]
+      }
+    }
+  },
+  "facts": {
+    "compat": {
+      "CM01": {
+        "legacyWrote": [
+          "3",
+          "4"
+        ],
+        "queuedAtUpgrade": 2,
+        "unitsOnB": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "filesChangedByTheUpgrade": [
+          "lfcp.sqlite",
+          "lfcp.sqlite-shm",
+          "lfcp.sqlite-wal",
+          "secrets/6c6663702d7365637265743a6c6f63616c2d73746174652d6b65793a65656130383234326562373935363334396266303238653261383733323563302e31.secret"
+        ]
+      },
+      "CM02-CM03": {
+        "legacyJoin": {
+          "t": "joined",
+          "kind": "profile-unsupported",
+          "code": "PROFILE_UNSUPPORTED",
+          "dataProfile": "org.openlfcp.shared-sections.v1"
+        },
+        "candidateJoin": "claimed"
+      },
+      "CM10": {
+        "legacyOpen": {
+          "t": "refused",
+          "name": "LfcpError",
+          "message": "the database is at schema version 4, newer than this code (3)"
+        }
+      }
+    },
+    "recovery": {
+      "F1": {
+        "dataPutsByBByConnection": [
+          2,
+          3,
+          3
+        ],
+        "acksDropped": 4,
+        "bUnitsOnA": [
+          "1",
+          "2"
+        ],
+        "receipt": {
+          "operationId": "b-ack-lost",
+          "durable": true
+        },
+        "batchStatuses": [
+          "accepted"
+        ]
+      },
+      "F2": {
+        "reoffered": [
+          {
+            "units": 1,
+            "reason": "have-gap"
+          }
+        ],
+        "joinedAfterRestore": "claimed"
+      },
+      "F3": [
+        {
+          "restart": 1,
+          "access": {
+            "allowed": false,
+            "reason": "server-refused",
+            "controlHead": "1597b2b215ebdc8e8a740576a306773661e533ec200f5f6a9d0aeec4a26b78f2",
+            "verifiedAt": 1791524949693,
+            "controlSeq": "2",
+            "serverControlSeq": null,
+            "current": false,
+            "owner": false,
+            "abilities": [
+              "data/read",
+              "data/write"
+            ],
+            "paths": [
+              {
+                "grantId": "1597b2b215ebdc8e8a740576a306773661e533ec200f5f6a9d0aeec4a26b78f2",
+                "source": "claim",
+                "abilities": [
+                  "data/read",
+                  "data/write"
+                ],
+                "delegated": false
+              }
+            ],
+            "invitations": [],
+            "pendingControl": [],
+            "pendingClaim": false,
+            "serverRefusal": {
+              "code": "AUTHORIZATION_FAILED",
+              "recovery": "still-refused"
+            }
+          },
+          "batch": "blocked",
+          "catchUp": "unknown",
+          "queued": 1
+        },
+        {
+          "restart": 2,
+          "access": {
+            "allowed": false,
+            "reason": "server-refused",
+            "controlHead": "1597b2b215ebdc8e8a740576a306773661e533ec200f5f6a9d0aeec4a26b78f2",
+            "verifiedAt": 1791524949780,
+            "controlSeq": "2",
+            "serverControlSeq": null,
+            "current": false,
+            "owner": false,
+            "abilities": [
+              "data/read",
+              "data/write"
+            ],
+            "paths": [
+              {
+                "grantId": "1597b2b215ebdc8e8a740576a306773661e533ec200f5f6a9d0aeec4a26b78f2",
+                "source": "claim",
+                "abilities": [
+                  "data/read",
+                  "data/write"
+                ],
+                "delegated": false
+              }
+            ],
+            "invitations": [],
+            "pendingControl": [],
+            "pendingClaim": false,
+            "serverRefusal": {
+              "code": "AUTHORIZATION_FAILED",
+              "recovery": "still-refused"
+            }
+          },
+          "batch": "blocked",
+          "catchUp": "unknown",
+          "queued": 1
+        }
+      ],
+      "F4": {
+        "committedBeforeCrash": 3,
+        "controlPutsByA": 3,
+        "joined": "claimed",
+        "aControlSeq": "4"
+      }
+    }
+  }
+}
