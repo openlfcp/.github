@@ -56,7 +56,6 @@ These are future extensions, not MVP gaps:
 | --- | --- | --- |
 | Invitation URI codec in sdk-rs | sdk-rs checks the URI's components but has no `lfcp://join` parser or writer. The `invite_uri_*` validation vectors are deferred there, with this reason. | sdk-rs |
 | Capability UI | Only the Read and Read + Write invitation presets have UI. The other abilities exist in the SDKs but have no UI. Revocation and key rotation run in the SDKs and tests, without member-management UI (scope §3.8). | obsidian |
-| Snapshots in the Obsidian plugin | The plugin loads Snapshots but never publishes one. | obsidian |
 | Mobile | The plugin keeps mobile portability boundaries, but iOS and Android are not tested (LFCP-068). | obsidian |
 | Invitation sharing | No QR code or share sheet; copy only. | obsidian |
 | Deployment | The Docker deployment (`server: deploy/`) is verified by the server CI's `docker` job and by a hand run of `deploy/check.sh` on macOS on 2026-10-06, but not on a production host. | server |
