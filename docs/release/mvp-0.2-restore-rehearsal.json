@@ -1,0 +1,95 @@
+{
+  "record_type": "restore rehearsal evidence",
+  "task": "LFCP-02-074",
+  "date": "2026-10-09",
+  "staging": "server/deploy/compose.yaml + examples qualification/rehearsal/compose.rehearsal.yaml, project lfcp-rehearsal, volume lfcp-rehearsal_lfcp-state, 127.0.0.1:17830; never the public stack",
+  "commits": {
+    "examples": "7e7b8fce818a63a946159ea737cc22cde7b8570a",
+    "sdk_ts": "b92f70177a4d91ca82e9494dca0e3c30342f869f",
+    "server": "7f7eb997a72fb10e044968109a46fe28a138703b",
+    "sdk_rs": "c05309ba25883d229aa7861859b18226a0fbff70",
+    "spec": {
+      "tag": "mvp-0.2-baseline.2",
+      "commit": "4198c43ea89d681efa5654a020b2f7b578f90df7"
+    }
+  },
+  "toolchain": {
+    "node": "v24.4.0",
+    "pnpm": "10.33.4",
+    "docker": "29.1.3",
+    "os": "macOS arm64"
+  },
+  "image": {
+    "tag": "openlfcp/lfcp-server:dev",
+    "id": "sha256:0497f7f1078140e84ef53507a04759b65f2fae318c53449ee576a668ce11f0b3",
+    "unchanged_across_restore": true
+  },
+  "command": "examples/qualification/rehearsal/rehearse-restore.sh <evidence dir>",
+  "phases": [
+    "build and start on an empty volume (lfcp-rehearsal_lfcp-state)",
+    "phase populate",
+    "back up the volume (server stopped)",
+    "phase after-backup",
+    "restore the volume from the backup",
+    "phase reconcile",
+    "all phases passed; evidence in local scratch (not retained)"
+  ],
+  "phase_results": [
+    "1 passed (1)",
+    "1 passed (1)",
+    "1 passed (1)"
+  ],
+  "exit": 0,
+  "backup": {
+    "sha256": "84fed1ed8ccc5e83731bff1772a3e231f9b25d5402e98ea8f4b95e6877bcf1d7",
+    "files": [
+      "./",
+      "./setup-code",
+      "./server-id",
+      "./server.sqlite3"
+    ]
+  },
+  "facts": {
+    "populate": {
+      "sectionRevision": "4f1a63f3a8a615525d7f8bcd53a6bde04c52aef5c851c16ddab5c567c4dd380f",
+      "aSectionUnits": [
+        "1"
+      ],
+      "aLegacyUnits": [
+        "1",
+        "2"
+      ]
+    },
+    "after-backup": {
+      "bSectionUnits": [
+        "1"
+      ],
+      "aLegacyUnits": [
+        "1",
+        "2",
+        "3"
+      ],
+      "receipt": true
+    },
+    "reconcile": {
+      "reoffered": [
+        {
+          "units": 1,
+          "reason": "have-gap"
+        }
+      ],
+      "legacyReoffered": [],
+      "bSectionUnitsOnC": [
+        "1",
+        "2"
+      ],
+      "aLegacyUnitsOnC": [
+        "1",
+        "2",
+        "3",
+        "4"
+      ],
+      "cJoined": true
+    }
+  }
+}
