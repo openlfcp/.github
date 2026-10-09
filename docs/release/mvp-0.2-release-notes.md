@@ -105,9 +105,10 @@ evidence is the release evidence record exported by rc-verify (LFCP-02-073).
 - **Long history.** A section after many thousands of edits (W200-H) is
   slower: an edit takes about half a second. The history growth policy is
   the owner's decision `<TBD: LFCP-02-112>`.
-- **Mobile.** Sections are read-only, or marked unsupported, on mobile (V3).
-  The plugin stays available there for shared tasks.
-  `<TBD: as implemented by LFCP-02-095>`
+- **Mobile.** Sections are read-only on mobile (V3, LFCP-02-095): they are
+  received and shown, and local edits stay on the device. Sharing, inviting
+  and removing access are not offered there. The plugin stays available on
+  mobile for shared tasks.
 - **Platforms.** Performance budgets are measured on macOS only. Windows and
   Linux are functional but not performance-qualified (V4).
 - **No nested headings** in a section in 0.2: sharing offers to split it.

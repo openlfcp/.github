@@ -345,7 +345,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts (companions: obsidian, sdk-rs)  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** release / P1 / IN_PROGRESS — Decided yes (owner: "you decide", orchestrator). sdk-ts 0.1.4 candidate 21c7fe3 on branch release-0.1.4 (from v0.1.3): the SPEC-PATCH-10 admission at mvp-0.1-baseline.10; verified by the orchestrator on a fresh clone; the owner tags v0.1.4 and publishes. Plugin 0.3.3 follows the npm 0.1.4 release (3d).  
+**Type / priority / status:** release / P1 / IN_PROGRESS — npm @openlfcp/* 0.1.4 published (tag sdk-ts v0.1.4); plugin 0.3.3 on branch release-0.3.3 (obsidian f062de4) waits for the owner's tag.  
 **Depends on:** LFCP-02-090  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/npm-publish-checklist.md  
 **Gate / test trace:** G11 / T08
@@ -1753,7 +1753,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-2 / RP07  
-**Type / priority / status:** implementation / P0 / NOT_STARTED  
+**Type / priority / status:** implementation / P0 / DONE — obsidian 9513c72, 695ffc5: sections read-only on mobile, isDesktopOnly stays false; the manual check on one device is the owner's.  
 **Depends on:** LFCP-02-048  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); OBSIDIAN-SECTIONS-ARCHITECTURE-02.md; OBSIDIAN-SHARED-SECTIONS-UX-01.md  
 **Gate / test trace:** G11, G12 / T08
@@ -2140,7 +2140,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-4 / RP09  
-**Type / priority / status:** implementation / P1 / IN_PROGRESS — obsidian: keyboard, focus and accessible visuals under way.  
+**Type / priority / status:** implementation / P1 / DONE — obsidian bd73327 (native keyboard and accessible status), d49e8cc (3:1 contrast for the badge in light themes); prefers-contrast and forced-colors NOT_RUN.  
 **Depends on:** LFCP-02-058, LFCP-02-059, LFCP-02-060, LFCP-02-061, LFCP-02-062, LFCP-02-063  
 **Read first:** OBSIDIAN-SYNC-INDICATORS-01.md; OBSIDIAN-SHARED-SECTIONS-UX-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G09, G10 / T09, T10
@@ -2182,7 +2182,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-4 / RP09  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / IN_PROGRESS — Native acceptance under way.  
 **Depends on:** LFCP-02-056, LFCP-02-060, LFCP-02-061, LFCP-02-062, LFCP-02-063, LFCP-02-064, LFCP-02-065, LFCP-02-096, LFCP-02-100  
 **Read first:** OBSIDIAN-SYNC-INDICATORS-01.md; OBSIDIAN-SHARED-SECTIONS-UX-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G09, G10, G11 / T05, T08, T09, T10
@@ -2205,7 +2205,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / DONE — Headless: obsidian 5e29bf1 (workloads W20 to W2000 and W200-H), a9e3df3 (docs/devel/reports/section-performance-headless.md). Native metrics NOT_RUN (066).  
 **Depends on:** LFCP-02-005, LFCP-02-010, LFCP-02-043, LFCP-02-048, LFCP-02-056, LFCP-02-096  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G12 / T11
@@ -2227,7 +2227,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / DONE — Headless: obsidian 3af9e6f, 4607317; sdk-ts 63a2d30, a3e205f; obsidian f322de1 (sdk-ts.lock), 40e68db (report, section 5): W200 meets every budget. Native metrics NOT_RUN; W200-H stays open with 112.  
 **Depends on:** LFCP-02-058, LFCP-02-059, LFCP-02-067, LFCP-02-096  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G12 / T11, T12
@@ -2270,7 +2270,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** examples  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / IN_REVIEW — Headless: examples 5f51aa0; .github d665051 (release/mvp-0.2-integrated-recovery-qualification.md). The native items belong to 066.  
 **Depends on:** LFCP-02-024, LFCP-02-030, LFCP-02-033, LFCP-02-054, LFCP-02-055, LFCP-02-056, LFCP-02-066, LFCP-02-106  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G06, G07, G08, G09, G11, G12 / T01, T06, T07, T08, T10
@@ -2333,7 +2333,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / IN_PROGRESS — .github 1c0e4c8 (rc-verify assembles checksummed candidate artifacts), 7d11fea; the rehearsal passed.  
 **Depends on:** LFCP-02-006, LFCP-02-018, LFCP-02-022, LFCP-02-024, LFCP-02-066, LFCP-02-069, LFCP-02-070, LFCP-02-071, LFCP-02-072, LFCP-02-098, LFCP-02-099, LFCP-02-102  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G12 / T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12
@@ -2355,7 +2355,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** server  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / IN_REVIEW — Headless: examples 7e7b8fc, 357b005; .github 65be1c6 (operations/mvp-0.2-rollback-and-restore.md, release/mvp-0.2-restore-rehearsal.json). The native items belong to 066.  
 **Depends on:** LFCP-02-032, LFCP-02-055, LFCP-02-073, LFCP-02-088  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-COMPATIBILITY-AND-MIGRATION.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md; LFCP-WIRE-01.md  
 **Gate / test trace:** G12 / T11, T12
@@ -2398,7 +2398,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** release / P0 / NOT_STARTED  
+**Type / priority / status:** release / P0 / DONE — obsidian a61d6c3: X.Y.Z-beta.N tags are published as pre-releases for BRAT; the owner's steps in docs/devel/release.md "Betas (pre-releases)". No beta released yet; the first tag is the owner's.  
 **Depends on:** LFCP-02-087  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); obsidian: docs/devel/release.md  
 **Gate / test trace:** G12 / T12
