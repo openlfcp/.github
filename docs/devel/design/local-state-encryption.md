@@ -63,11 +63,12 @@ envelope = "lse1" (4 bytes) || generation (uint32 BE) || nonce (24 bytes) || cip
 - A value that does not start with the magic is plaintext from before the
   migration; any other read failure is a key failure (§7).
 
-The helpers go into `@openlfcp/storage` (`sealLocal(key, aad, bytes)`,
-`openLocal(key, aad, envelope)`, plus `LocalStateKey`, which keeps the key
-bytes inside the package like `ActorDataKey`). Both storage adapters and the
-plugin's journal store use them; adapters stay unaware of the format beyond
-"opaque bytes".
+The primitives live in `@openlfcp/crypto` (`sealLocal`, `openLocal`,
+`LocalStateKey`, which keeps the key bytes inside that package): the
+storage packages may not depend on it (LFCP-014). `@openlfcp/storage`
+defines the `LocalStateCipher` interface and the keyring; the application
+passes `localStateCipher` of `@openlfcp/crypto` when it opens an adapter
+(§10).
 
 ## 5. What is encrypted
 
@@ -141,3 +142,35 @@ store and the IndexedDB canary test in the Obsidian harness about 1 day.
 bytes, and it can ship in any release; if it does not ship before the beta,
 the beta notes state that local checkpoints are plaintext in the app's
 profile directory.
+
+## 10. Implementation
+
+sdk-ts, LFCP-02-098:
+
+| Commit | Part |
+| --- | --- |
+| `e713244` | `@openlfcp/crypto`: `LocalStateKey`, `sealLocal`, `openLocal`, `localStateCipher` (§4) |
+| `540b9cc` | `@openlfcp/storage`: `LocalStateCipher`, `LocalStateKeyring` (new install, resumed migration or rotation, lost key, rotation), `reseal`, `localStateAad`, SecretKind `local-state-key` (§3, §6–§8) |
+| `09cbe18` | `@openlfcp/storage-node`: `SqliteLfcpStorage.openSealed(path, { secrets, cipher })`, schema version 4 (`local_state`), `rotateLocalStateKey`, `localStateDiagnostics` |
+| `28d6f4a` | `@openlfcp/storage-idb`: `IdbLfcpStorage.open(name, { localState: { secrets, cipher } })`, the same operations |
+| `bf96725` | `conformance/storage/local-state.test.ts`: canaries with the real cipher (§9) |
+
+As built:
+
+- The install metadata is the adapter's own (`local_state` in SQLite, the
+  `meta` store's `local-state` key in IndexedDB), not the plugin's install
+  row: its install ID is random, distinct from the plugin's.
+- A database that seals its local state refuses an open without the
+  cipher and SecretStore (a plain open would hand envelopes to the client).
+- SQLite: the sealed connection runs with `secure_delete`, and a finished
+  migration truncates the WAL and vacuums the file, so plaintext from
+  before the scheme does not linger in freed pages (the migration canary
+  test fails without it).
+- IndexedDB gives no way to purge old record versions from the browser's
+  files (LevelDB keeps them until compaction): the plugin's harness checks
+  its real files (§9), and the beta notes say so if they still hold
+  plaintext after migration.
+- Left to the plugin (obsidian): opening the adapter with `localState`
+  (the key in `app.secretStorage`), sealing the section journal, bases and
+  candidates with the keyring, the recovery texts of §7, the rotation
+  command and the diagnostics line of §8, and the IndexedDB canary on disk.
