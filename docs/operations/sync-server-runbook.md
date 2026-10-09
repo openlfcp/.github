@@ -217,8 +217,11 @@ agreeing with the requester); logs and backups age out on their own.
   it promises 14 days for nginx and server logs and 30 days for backups.
   Until the rotation is deployed on the box, nginx access logs grow
   without bound.
-- **Restore loses recent writes and can stall clients:** clients do not
-  re-send changes the server had acknowledged before the backup (see the
-  stack runbook, "Restore").
-  The proposed fix and the interim guidance for operators are in
-  `spec: adr/0008-recovery-after-server-data-loss.md` (POST-013).
+- **A restore loses what clients do not hold any more:** since SDK 0.1.3
+  and Shared Tasks 0.3.2 (LFCP-02-088), clients re-supply the changes a
+  restore took from the server, as
+  `spec: adr/0008-recovery-after-server-data-loss.md` (POST-013)
+  requires. Only changes that their writer no longer holds are gone. An
+  older client does not re-supply, and its collaboration can stall (see the
+  stack runbook, "Restore"). The rehearsed procedure is in
+  [mvp-0.2-rollback-and-restore.md](mvp-0.2-rollback-and-restore.md).
