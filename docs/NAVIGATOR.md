@@ -40,6 +40,8 @@ catalogs every artifact across the repositories, with its status.
 | [release/mvp-0.2-client-baseline.md](release/mvp-0.2-client-baseline.md) | release, contributors | MVP 0.2 client baseline (LFCP-02-002): the inherited sdk-ts security and durability checks, by area |
 | [release/mvp-0.2-sdk-ts-sections-conformance.md](release/mvp-0.2-sdk-ts-sections-conformance.md) | release | LFCP-02-018: sdk-ts's section model against the full shared sections corpus at mvp-0.2-baseline.1, through the reference verifier's adapter |
 | [release/mvp-0.2-sdk-ts-sections-evidence.json](release/mvp-0.2-sdk-ts-sections-evidence.json) | release | LFCP-02-018 machine-readable evidence: commits, build hashes, toolchain, the verifier report |
+| [release/mvp-0.2-two-vault-qualification.md](release/mvp-0.2-two-vault-qualification.md) | release | LFCP-02-056: the secure two-vault run of the test plan §7 on the SDK and the Rust server, negatives, open items |
+| [release/mvp-0.2-two-vault-qualification.json](release/mvp-0.2-two-vault-qualification.json) | release | LFCP-02-056 machine-readable evidence: commits, server binary hash, per-test results, recorded facts |
 | [release/mvp-0.2-baseline-gaps.md](release/mvp-0.2-baseline-gaps.md) | release, owner | MVP 0.2 baseline gaps (LFCP-02-006): gap register with owning tasks, blocking predicates for beta, integration and release |
 | [release/security-review-mvp-0.1.md](release/security-review-mvp-0.1.md) | release | The MVP 0.1 pre-release security review: findings, fixes, known limitations |
 | [release/open-decision-actor-seq-collision.md](release/open-decision-actor-seq-collision.md) | owner | Open decision: two Automerge changes with the same actor and sequence number; options, recommendation, and what shipping as is means |

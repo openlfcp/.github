@@ -1,0 +1,460 @@
+{
+  "record_type": "secure two-vault qualification evidence",
+  "task": "LFCP-02-056",
+  "plan": "MVP-0.2-TEST-AND-RELEASE-PLAN \u00a77",
+  "date": "2026-10-09",
+  "commits": {
+    "examples": "b3c763ff352ad7069fc3afcf0892ab9ab200b465",
+    "sdk_ts": "f2b526ddb34e968e101fd8e6be4a21a32dc5010a",
+    "server": "e1ba366323afa205fa4f53e85c23bb9d4333583c",
+    "sdk_rs": "5b2a3b9257cf4a0a43c3f1b09307d7f35378ea6e",
+    "spec": {
+      "tag": "mvp-0.2-baseline.1",
+      "commit": "96e21d62b97aa0241a4399e47e5c9cc168a3bd81"
+    }
+  },
+  "toolchain": {
+    "node": "v24.4.0",
+    "pnpm": "10.33.4",
+    "rustc": "1.99.0",
+    "os": "macOS arm64"
+  },
+  "server_binary": {
+    "build": "cargo build (debug), linked during the run",
+    "sha256": "30d48dc86934eb416dc93bc032f69feb19f7a262b860b8a5f6943b7ec929ba11"
+  },
+  "load": {
+    "vitest_workers": 1,
+    "cargo_build_jobs": 4,
+    "require_live": true
+  },
+  "qualification": {
+    "started": "2026-10-09T04:31:01Z",
+    "finished": "2026-10-09T04:31:39Z",
+    "tests": [
+      {
+        "file": "qualification/test/opacity.test.ts",
+        "name": "two vaults: opacity, and a legacy SOP Resource beside the section (\u00a77 step 11) keeps every plaintext and key off the wire, the server and the sealed vaults",
+        "status": "passed",
+        "ms": 1314
+      },
+      {
+        "file": "qualification/test/partition.test.ts",
+        "name": "two vaults: partition, restart with pending work, conflict and resolution (\u00a77 steps 5\u20137) converges, shows the conflict on both sides, and resolves it causally",
+        "status": "passed",
+        "ms": 1334
+      },
+      {
+        "file": "qualification/test/restart-revoke.test.ts",
+        "name": "two vaults: server restart with Snapshot and tail, revocation, detach (\u00a77 steps 8\u201310) joins after a restart from the Snapshot, revokes B with its stale work kept out, and detaches",
+        "status": "passed",
+        "ms": 8678
+      },
+      {
+        "file": "qualification/test/two-vault.test.ts",
+        "name": "two vaults, W20 (\u00a77 steps 1\u20134) creates, invites, joins, inserts and edits with independent identities",
+        "status": "passed",
+        "ms": 1005
+      },
+      {
+        "file": "qualification/test/two-vault.test.ts",
+        "name": "two vaults, W200 (\u00a77 steps 1\u20134) creates, invites, joins, inserts and edits with independent identities",
+        "status": "passed",
+        "ms": 6462
+      }
+    ],
+    "facts": {
+      "11-opacity": {
+        "scanned": {
+          "wireFrames": 101,
+          "serverFiles": [
+            "server-id",
+            "server.sqlite3",
+            "server.sqlite3-shm",
+            "server.sqlite3-wal",
+            "setup-code"
+          ],
+          "serverLogBytes": 13525,
+          "vaultFiles": [
+            "A/lfcp.sqlite",
+            "A/lfcp.sqlite-shm",
+            "A/lfcp.sqlite-wal",
+            "B/lfcp.sqlite",
+            "B/lfcp.sqlite-shm",
+            "B/lfcp.sqlite-wal"
+          ],
+          "needles": [
+            "A-private-canary-0563 note kept beside the section",
+            "B-private-canary-0564 note kept beside the section",
+            "B-0565 follow-up written into the section",
+            "A-0566 agreed edit: ",
+            "Task 0 of the plan",
+            "Notes for task 0",
+            "legacy-0567 task title one",
+            "legacy-0568 task title two",
+            "the section DEK",
+            "the legacy DEK",
+            "A's signing key",
+            "A's agreement key",
+            "B's signing key",
+            "B's agreement key"
+          ]
+        },
+        "leaks": [],
+        "positiveControl": {
+          "wire": true,
+          "serverFiles": true,
+          "vaultFiles": true
+        }
+      },
+      "11-legacy-smoke": {
+        "resources": 2,
+        "legacyTitle": "legacy-0568 task title two",
+        "sectionRevisionsAgree": true
+      },
+      "9-stale-offline-work": {
+        "statuses": [
+          "pending"
+        ],
+        "nacks": [],
+        "units": [
+          "applied",
+          "applied",
+          "applied"
+        ],
+        "outbound": [
+          {
+            "kind": "data-unit",
+            "blocked": null
+          }
+        ],
+        "keptInB": true,
+        "access": [
+          {
+            "allowed": true,
+            "reason": null,
+            "controlHead": "2a7e04d4b76bd17d9223ac17f04a887d6596cc67e2460b44e22d0ef97a8d9c2f",
+            "verifiedAt": 1791520289215,
+            "controlSeq": "2",
+            "serverControlSeq": "2",
+            "current": true,
+            "owner": false,
+            "abilities": [
+              "data/read",
+              "data/write"
+            ],
+            "paths": [
+              {
+                "grantId": "2a7e04d4b76bd17d9223ac17f04a887d6596cc67e2460b44e22d0ef97a8d9c2f",
+                "source": "claim",
+                "abilities": [
+                  "data/read",
+                  "data/write"
+                ],
+                "delegated": false
+              }
+            ],
+            "invitations": [],
+            "pendingControl": [],
+            "pendingClaim": false
+          },
+          {
+            "allowed": true,
+            "reason": null,
+            "controlHead": "ba0b927972bd33a977cd07061baa698e0decc5ce24967229cda3a54767c47215",
+            "verifiedAt": 1791520289905,
+            "controlSeq": "3",
+            "serverControlSeq": "2",
+            "current": true,
+            "owner": false,
+            "abilities": [
+              "data/read",
+              "data/write"
+            ],
+            "paths": [
+              {
+                "grantId": "2a7e04d4b76bd17d9223ac17f04a887d6596cc67e2460b44e22d0ef97a8d9c2f",
+                "source": "claim",
+                "abilities": [
+                  "data/read",
+                  "data/write"
+                ],
+                "delegated": false
+              }
+            ],
+            "invitations": [],
+            "pendingControl": [],
+            "pendingClaim": false
+          },
+          {
+            "allowed": true,
+            "reason": null,
+            "controlHead": "cfdabb32f17c4930676aec5d8bcc2df72a5c9756deebd85bde9801b615baa964",
+            "verifiedAt": 1791520289959,
+            "controlSeq": "4",
+            "serverControlSeq": "2",
+            "current": true,
+            "owner": false,
+            "abilities": [
+              "data/read",
+              "data/write"
+            ],
+            "paths": [
+              {
+                "grantId": "2a7e04d4b76bd17d9223ac17f04a887d6596cc67e2460b44e22d0ef97a8d9c2f",
+                "source": "claim",
+                "abilities": [
+                  "data/read",
+                  "data/write"
+                ],
+                "delegated": false
+              }
+            ],
+            "invitations": [],
+            "pendingControl": [],
+            "pendingClaim": false
+          }
+        ],
+        "errors": [
+          "AUTHORIZATION_FAILED"
+        ],
+        "state": "CLOSED"
+      }
+    }
+  },
+  "negatives": {
+    "live": {
+      "passed": 24,
+      "total": 24,
+      "failed": 0,
+      "files": {
+        "conformance/interop/chaos.test.ts": {
+          "passed": 20,
+          "total": 20
+        },
+        "conformance/interop/e2e-two-clients.test.ts": {
+          "passed": 1,
+          "total": 1
+        },
+        "conformance/interop/rust-server-claim-journal.test.ts": {
+          "passed": 2,
+          "total": 2
+        },
+        "conformance/interop/rust-server-invite.test.ts": {
+          "passed": 1,
+          "total": 1
+        }
+      }
+    },
+    "wire_and_client": {
+      "passed": 447,
+      "total": 447,
+      "failed": 0,
+      "files": {
+        "conformance/wire/authority.test.ts": {
+          "passed": 10,
+          "total": 10
+        },
+        "conformance/wire/cddl-fixtures.test.ts": {
+          "passed": 194,
+          "total": 194
+        },
+        "conformance/wire/epoch.test.ts": {
+          "passed": 6,
+          "total": 6
+        },
+        "conformance/wire/vectors.test.ts": {
+          "passed": 130,
+          "total": 130
+        },
+        "packages/client/test/claim-journal.test.ts": {
+          "passed": 5,
+          "total": 5
+        },
+        "packages/client/test/sync-client.test.ts": {
+          "passed": 26,
+          "total": 26
+        },
+        "packages/wire/test/capability.test.ts": {
+          "passed": 25,
+          "total": 25
+        },
+        "packages/wire/test/data-unit.test.ts": {
+          "passed": 33,
+          "total": 33
+        },
+        "packages/wire/test/key-package.test.ts": {
+          "passed": 18,
+          "total": 18
+        }
+      }
+    },
+    "admission_and_sections_at_pin": {
+      "passed": 502,
+      "total": 502,
+      "failed": 0,
+      "files": {
+        "conformance/shared-sections/adapter.test.ts": {
+          "passed": 168,
+          "total": 168
+        },
+        "conformance/shared-sections/authoring.test.ts": {
+          "passed": 23,
+          "total": 23
+        },
+        "conformance/shared-sections/commit.test.ts": {
+          "passed": 7,
+          "total": 7
+        },
+        "conformance/shared-sections/corpus.test.ts": {
+          "passed": 61,
+          "total": 61
+        },
+        "conformance/shared-sections/hostile.test.ts": {
+          "passed": 1,
+          "total": 1
+        },
+        "conformance/shared-sections/sync-commit.test.ts": {
+          "passed": 19,
+          "total": 19
+        },
+        "conformance/shared-objects/admission-corpus.test.ts": {
+          "passed": 3,
+          "total": 3
+        },
+        "conformance/shared-objects/automerge-corpus.test.ts": {
+          "passed": 108,
+          "total": 108
+        },
+        "conformance/shared-objects/contract-fixtures.test.ts": {
+          "passed": 31,
+          "total": 31
+        },
+        "conformance/shared-objects/corpus-orders.test.ts": {
+          "passed": 22,
+          "total": 22
+        },
+        "conformance/shared-objects/data-unit-apply.test.ts": {
+          "passed": 15,
+          "total": 15
+        },
+        "conformance/shared-objects/own-unit-rebuild.test.ts": {
+          "passed": 1,
+          "total": 1
+        },
+        "conformance/shared-objects/snap-ep.test.ts": {
+          "passed": 1,
+          "total": 1
+        },
+        "conformance/shared-objects/vectors.test.ts": {
+          "passed": 33,
+          "total": 33
+        },
+        "packages/shared-objects/test/canonical-encoding.test.ts": {
+          "passed": 4,
+          "total": 4
+        },
+        "packages/shared-objects/test/operation-references.test.ts": {
+          "passed": 5,
+          "total": 5
+        }
+      }
+    },
+    "admission_and_sections_at_baseline_2": {
+      "passed": 548,
+      "total": 548,
+      "failed": 0,
+      "files": {
+        "conformance/shared-objects/admission-corpus.test.ts": {
+          "passed": 37,
+          "total": 37
+        },
+        "conformance/shared-objects/automerge-corpus.test.ts": {
+          "passed": 108,
+          "total": 108
+        },
+        "conformance/shared-objects/contract-fixtures.test.ts": {
+          "passed": 31,
+          "total": 31
+        },
+        "conformance/shared-objects/corpus-orders.test.ts": {
+          "passed": 22,
+          "total": 22
+        },
+        "conformance/shared-objects/data-unit-apply.test.ts": {
+          "passed": 15,
+          "total": 15
+        },
+        "conformance/shared-objects/own-unit-rebuild.test.ts": {
+          "passed": 1,
+          "total": 1
+        },
+        "conformance/shared-objects/snap-ep.test.ts": {
+          "passed": 1,
+          "total": 1
+        },
+        "conformance/shared-objects/vectors.test.ts": {
+          "passed": 33,
+          "total": 33
+        },
+        "conformance/shared-sections/adapter.test.ts": {
+          "passed": 177,
+          "total": 177
+        },
+        "conformance/shared-sections/authoring.test.ts": {
+          "passed": 23,
+          "total": 23
+        },
+        "conformance/shared-sections/commit.test.ts": {
+          "passed": 7,
+          "total": 7
+        },
+        "conformance/shared-sections/corpus.test.ts": {
+          "passed": 64,
+          "total": 64
+        },
+        "conformance/shared-sections/hostile.test.ts": {
+          "passed": 1,
+          "total": 1
+        },
+        "conformance/shared-sections/sync-commit.test.ts": {
+          "passed": 19,
+          "total": 19
+        },
+        "packages/shared-objects/test/canonical-encoding.test.ts": {
+          "passed": 4,
+          "total": 4
+        },
+        "packages/shared-objects/test/operation-references.test.ts": {
+          "passed": 5,
+          "total": 5
+        }
+      },
+      "spec": {
+        "tag": "mvp-0.2-baseline.2",
+        "commit": "4198c43ea89d681efa5654a020b2f7b578f90df7"
+      },
+      "note": "spec.lock of the sdk-ts clone pointed at baseline.2 for this run only; CAN-*/REF-* 36 and SS57-SS59 12 tests pass"
+    }
+  },
+  "open_items": [
+    {
+      "id": 1,
+      "task": "LFCP-02-115",
+      "summary": "a revoked member still reports access allowed/current; its stale batch stays pending with no NACK"
+    },
+    {
+      "id": 2,
+      "summary": "F2-F4 corpus cases are absent at the baseline.1 pins; they pass at baseline.2; closes with the pin move"
+    },
+    {
+      "id": 3,
+      "summary": "vault metadata (labels, IDs, sequences) is not sealed by design; applications must not put user text in labels"
+    }
+  ],
+  "not_covered": [
+    "native UX (LFCP-02-066)",
+    "timings and budgets",
+    "LFCP-02-115 live test (after the pin)"
+  ]
+}
