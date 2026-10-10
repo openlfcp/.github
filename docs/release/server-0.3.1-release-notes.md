@@ -1,8 +1,9 @@
 # OpenLFCP server 0.3.1: release notes
 
-**Status:** Draft until the project owner tags `v0.3.1`. The reference
-server `0.3.1` (server aa398d9, on sdk-rs 7edbd5f, spec
-`mvp-0.2-baseline.4`), 2026-10-10. A patch release of
+**Status:** Released 2026-10-10 (tag `v0.3.1`, image
+`ghcr.io/openlfcp/lfcp-server:0.3.1`). The reference server `0.3.1`
+(server aa398d9, on sdk-rs 7edbd5f, spec `mvp-0.2-baseline.4`). A patch
+release of
 [server 0.3.0](server-0.3.0-release-notes.md) with two store fixes:
 LFCP-02-116 ([BACKLOG-MVP-0.2.md](../BACKLOG-MVP-0.2.md)) and finding S1
 of the server fuzzing.
