@@ -22,6 +22,7 @@ catalogs every artifact across the repositories, with its status.
 | [release/mvp-0.2-org-profile-draft.md](release/mvp-0.2-org-profile-draft.md) | owner | Proposed organization profile for MVP 0.2 (draft, LFCP-02-079): the text to put into profile/README.md at the release |
 | [release/server-0.2.0-release-notes.md](release/server-0.2.0-release-notes.md) | release, operators | Server 0.2.0 release notes: abuse limits, quotas, memory bounds, upgrade notes |
 | [release/server-0.3.0-release-notes.md](release/server-0.3.0-release-notes.md) | release, operators | Server 0.3.0 release notes: the `previous` link check (UNKNOWN_PREVIOUS), relay, recovery after a restore, lfcp-admin |
+| [release/server-0.3.1-release-notes.md](release/server-0.3.1-release-notes.md) | release, operators | Server 0.3.1 release notes: a store written by a newer server is refused, a damaged store is reported as corrupt (S1); same store format, rollback to 0.3.0 |
 | [release/deferred-wire-01-features.md](release/deferred-wire-01-features.md) | everyone | What MVP 0.1 does not implement, and how it behaves instead |
 | [release/readme-scope-statements.md](release/readme-scope-statements.md) | release | The "Scope" section each repository README carries |
 | [release/rc-verification.md](release/rc-verification.md) | release | Verifying a release candidate locally (`scripts/rc-verify.py`) |
