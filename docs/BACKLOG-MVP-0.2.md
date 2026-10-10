@@ -56,7 +56,7 @@ Approved by the project owner on 2026-10-08 with the review of the planning batc
 | M8 | A double check means "shared"; synchronization state has separate icons. |
 | M9 | One Resource and one invitation per section. |
 | M10 | POST-018 commands and Detach are disabled or redirected inside sections, unchanged outside (100). |
-| V1 | Versions: plugin 0.4.0, `@openlfcp/*` 0.2.0, sdk-rs and examples v0.2.0, spec `mvp-0.2-baseline.N`, server only if changed. Release notes say "MVP 0.2" with a version table. |
+| V1 | Versions: plugin 0.4.0, `@openlfcp/*` 0.2.0, sdk-rs and examples v0.2.0, spec `mvp-0.2-baseline.N`, server only if changed. Release notes say "MVP 0.2" with a version table. 2026-10-10: server 0.3.1 (116 and fuzzing finding S1) is part of MVP 0.2. |
 | V2 | Betas `0.4.0-beta.N` through BRAT; manifest.json on main moves only at GA. Early dogfood 2-3 pairs (105); pilot 3-5 pairs with at least two non-developers, 7 days. |
 | V3 | Mobile: sections read-only or marked unsupported; `isDesktopOnly` stays false (095). |
 | V4 | Native checks on macOS; the CI harness on three systems; manual smoke on Windows and Linux; p95 budgets on macOS only, Windows/Linux "functional, not performance-qualified". |
@@ -64,6 +64,7 @@ Approved by the project owner on 2026-10-08 with the review of the planning batc
 | V6 | SCOPE, ROADMAP, BACKLOG and TEST-PLAN are published in `.github/docs/`, specification drafts in spec (101); agent prompts, the narrative and the review reports stay private. |
 | V7 | sdk-ts is published by CI: a pushed tag `vX.Y.Z` runs `release.yml`, which publishes with npm Trusted Publishing (OIDC, provenance) after the owner's approval in the GitHub environment `npm-publish`; the manual checklist is the fallback. A final release goes to `latest`, a prerelease to `next`; `next` is not moved to final versions. |
 | V8 | W0 ships sdk-ts 0.1.3, not 0.1.2: 0.1.2 went to npm without build output and is deprecated (`latest` and `next` back on 0.1.1 until 0.1.3); 0.1.3 is the same code, published by CI. Shared Tasks 0.3.2 pins 0.1.3 and sets `minAppVersion` 1.13.4. |
+| V9 | 2026-10-10: sections are on by default in plugin 0.4.0. |
 
 ## 4. Modules, workers and waves
 
