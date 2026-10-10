@@ -3,7 +3,7 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 116 tasks in 13 epics, across seven milestones  
+**Size:** 119 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
@@ -45,6 +45,7 @@ Approved by the project owner on 2026-10-08 with the review of the planning batc
 | P4 | Baseline series `mvp-0.2-baseline.N` from baseline.8 (.9 after W0); SOP §§7-18 and §74.1 imported; a diagnostics registry; exact shared admission limits (090). |
 | P5 | Two moves into one parent stay a conflict; revisit after the pilot. |
 | P6 | Corpus engine: Automerge 3.5.0, the project's real pin. |
+| P7 | 2026-10-10, section history growth (112): (a) the plugin shows a section's history size and suggests a new section past about 200,000 inserted characters (117); (c) automatic compaction after 0.2 (118). The Snapshot floor is not raised. |
 | M1 | Revised by the orchestrator on 2026-10-08, pending the owner's review: inside sections too, Task refs are child-line, as for standalone Tasks; Enter keeps the ref with its Task through CodeMirror transactions (obsidian ADR 0001, accepted for sections). The approved text was inline refs inside sections. |
 | M2 | Tabs in indentation are supported as in 0.1. |
 | M3 | Sections write through CodeMirror transactions in open notes and `vault.process` in closed ones; legacy Tasks stay on the file path; an obsidian ADR records it. |
@@ -59,7 +60,7 @@ Approved by the project owner on 2026-10-08 with the review of the planning batc
 | V2 | Betas `0.4.0-beta.N` through BRAT; manifest.json on main moves only at GA. Early dogfood 2-3 pairs (105); pilot 3-5 pairs with at least two non-developers, 7 days. |
 | V3 | Mobile: sections read-only or marked unsupported; `isDesktopOnly` stays false (095). |
 | V4 | Native checks on macOS; the CI harness on three systems; manual smoke on Windows and Linux; p95 budgets on macOS only, Windows/Linux "functional, not performance-qualified". |
-| V5 | During development obsidian takes sdk-ts by a commit pin (`sdk-ts.lock`); betas use `0.2.0-rc.N` on npm `next`. |
+| V5 | During development obsidian takes sdk-ts by a commit pin (`sdk-ts.lock`). Revised 2026-10-10: no `0.2.0-rc.N` goes to npm `next` (091 not done); `@openlfcp/*` 0.2.0 goes straight to `latest` (092). |
 | V6 | SCOPE, ROADMAP, BACKLOG and TEST-PLAN are published in `.github/docs/`, specification drafts in spec (101); agent prompts, the narrative and the review reports stay private. |
 | V7 | sdk-ts is published by CI: a pushed tag `vX.Y.Z` runs `release.yml`, which publishes with npm Trusted Publishing (OIDC, provenance) after the owner's approval in the GitHub environment `npm-publish`; the manual checklist is the fallback. A final release goes to `latest`, a prerelease to `next`; `next` is not moved to final versions. |
 | V8 | W0 ships sdk-ts 0.1.3, not 0.1.2: 0.1.2 went to npm without build output and is deprecated (`latest` and `next` back on 0.1.1 until 0.1.3); 0.1.3 is the same code, published by CI. Shared Tasks 0.3.2 pins 0.1.3 and sets `minAppVersion` 1.13.4. |
@@ -118,9 +119,9 @@ No calendar durations, story-point estimates, assignee names or task completion 
 
 | Epic | Tasks | Focus | Review milestone |
 | --- | --- | --- | --- |
-| E00 | 086, 087, 088, 089, 113 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
+| E00 | 086, 087, 088, 089, 113, 119 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
 | E01 | 001, 002, 003, 004, 005, 006, 101 | Baseline and inherited obligations | M02-0 |
-| E02 | 007, 008, 009, 010, 083, 084, 090, 107, 108 | Pinned contracts and corpus | M02-1 |
+| E02 | 007, 008, 009, 010, 083, 084, 090, 107, 108, 118 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085, 114 | TypeScript section model | M02-1 |
 | E04 | 019, 020, 021, 022, 023, 024, 109, 111 | Rust and independent interoperability | M02-1 |
 | E05 | 025, 026, 027, 028, 029, 030, 097, 098, 106, 110, 115 | Durability and SDK evidence | M02-2 |
@@ -129,7 +130,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | E08 | 043, 044, 045, 046, 047, 048, 095, 096 | Native editor lifecycle | M02-2 |
 | E09 | 049, 050, 051, 052, 053, 054, 055, 056, 100 | Secure sharing, join and import | M02-3 |
 | E10 | 057, 058, 059, 060, 061, 062, 063, 064, 065, 066 | Status, access and recovery UX | M02-4 |
-| E11 | 067, 068, 069, 070, 071, 072, 073, 074, 091, 094, 099, 102, 105, 112 | Qualification and candidate | M02-5 |
+| E11 | 067, 068, 069, 070, 071, 072, 073, 074, 091, 094, 099, 102, 105, 112, 117 | Qualification and candidate | M02-5 |
 | E12 | 075, 076, 077, 078, 079, 080, 081, 082, 092, 093, 103, 104 | Pilot and public release | M02-6 |
 
 ## 8. Task index
@@ -252,6 +253,9 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-114 | SPEC-PATCH-10 admission in sdk-ts (F2-F4) | sdk-ts | P0 | 090 |
 | LFCP-02-115 | A revoked member learns the refusal and reports it honestly | sdk-ts (companion: obsidian) | P0 | 027, 106 |
 | LFCP-02-116 | The server refuses a store written by a newer server | server | P1 | 074 |
+| LFCP-02-117 | Show a section's history size and suggest a new section | obsidian | P1 | 112 |
+| LFCP-02-118 | Automatic compaction of a section's history after 0.2 | spec (companions: sdk-ts, sdk-rs) | P2 | 112 |
+| LFCP-02-119 | Patch release 0.1.5 and plugin 0.3.4 with the D1 fix | sdk-ts (companion: obsidian) | P0 | 113 |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -345,7 +349,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts (companions: obsidian, sdk-rs)  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** release / P1 / IN_PROGRESS — npm @openlfcp/* 0.1.4 published (tag sdk-ts v0.1.4); plugin 0.3.3 on branch release-0.3.3 (obsidian f062de4) waits for the owner's tag.  
+**Type / priority / status:** release / P1 / DONE — Released: npm @openlfcp/* 0.1.4 (tag sdk-ts v0.1.4) and Shared Tasks 0.3.3 (obsidian tag 0.3.3 on f062de4). The D1 patch 0.1.5 / 0.3.4 is 119.  
 **Depends on:** LFCP-02-090  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/npm-publish-checklist.md  
 **Gate / test trace:** G11 / T08
@@ -361,6 +365,27 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** The release gates of the 0.1 line, if released.
 
 **Deliverables:** An owner decision; then the patch release runbook.
+
+### LFCP-02-119 — Patch release 0.1.5 and plugin 0.3.4 with the D1 fix
+
+**Primary repository:** sdk-ts (companion: obsidian)  
+**Milestone / group:** M02-0 / RP00  
+**Type / priority / status:** release / P0 / IN_PROGRESS — Owner approved 2026-10-10. D1 confirmed on the released 0.1.4 (bd); the 0.2 line refuses tables by SHARED-OBJECTS-PROFILE-01 §11.4 R10 (spec 74bdae1, sdk-rs c0bc828).  
+**Depends on:** LFCP-02-113  
+**Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/npm-publish-checklist.md  
+**Gate / test trace:** G11 / T08
+
+**Goal:** Keep a 0.1.x replica working when it receives a change that makes a table and writes into it (finding D1 of the differential fuzzing).
+
+**Acceptance:**
+
+1. sdk-ts 0.1.5, from v0.1.4: a change the engine fails to apply leaves the replica as it was (rollback), and a change that makes a table is refused before the engine; spec.lock stays at mvp-0.1-baseline.10.
+2. Shared Tasks 0.3.4 pins sdk-ts 0.1.5.
+3. Released through the CI publication of V7 and the plugin release runbook; the 0.2 line is not delayed by it.
+
+**Required checks:** The D1 reproducer against the released 0.1.4 (fails) and 0.1.5 (passes); the release gates of the 0.1 line.
+
+**Deliverables:** The patch, the version commits and the owner command list.
 
 ## E01. Baseline and inherited obligations
 
@@ -716,6 +741,27 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** Corpus cases for reuse of each category pair, refused, and concurrent reuse accepted; both SDK conformance runs.
 
 **Deliverables:** Profile text, vectors and both SDK admissions, if adopted.
+
+### LFCP-02-118 — Automatic compaction of a section's history after 0.2
+
+**Primary repository:** spec (companions: sdk-ts, sdk-rs)  
+**Milestone / group:** M02-6 / RP01  
+**Type / priority / status:** contract / P2 / NOT_STARTED — Owner decision (c) on 112, 2026-10-10: after 0.2.  
+**Depends on:** LFCP-02-112  
+**Read first:** SHARED-SECTIONS-TEST-VECTORS-01.md; SHARED-SECTIONS-PROFILE-01.md  
+**Gate / test trace:** G02 / T02, T03
+
+**Goal:** Let a long-lived section keep working past the Snapshot floor without the user starting a new one (owner decision (c) on 112).
+
+**Acceptance:**
+
+1. A protocol rule for compacting a section's history, in the spec with vectors; history is pruned only under that rule (SSP §16.4).
+2. sdk-ts and sdk-rs implement it independently and pass the same vectors.
+3. Planned after 0.2; the Snapshot floor is not raised for it.
+
+**Required checks:** Corpus cases for compaction; both SDK conformance runs.
+
+**Deliverables:** An ADR or profile change, vectors and both SDK implementations.
 
 ## E03. TypeScript section model
 
@@ -2377,7 +2423,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / DONE — Won't do (owner, 2026-10-10): @openlfcp/* 0.2.0 goes straight to npm latest; no 0.2.0-rc.N on next (V5).  
 **Depends on:** LFCP-02-018, LFCP-02-030  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/npm-publish-checklist.md; .github: docs/release/rc-verification.md  
 **Gate / test trace:** G12 / T12
@@ -2483,7 +2529,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian (companions: spec, sdk-ts)  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** decision / P1 / BLOCKED — Waits for the owner's decision between (a), (b) and (c); measurements in .github docs/devel/reports/section-scale-measurements.md.  
+**Type / priority / status:** decision / P1 / DONE — Owner decision 2026-10-10: (a) show the section's history size and suggest a new section past about 200,000 characters (117); (c) automatic compaction after 0.2 (118); (b) not taken.  
 **Depends on:** LFCP-02-067  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); SHARED-SECTIONS-PROFILE-01.md  
 **Gate / test trace:** G12 / T11
@@ -2499,6 +2545,27 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** The decision record.
 
 **Deliverables:** An owner decision and the follow-up tasks.
+
+### LFCP-02-117 — Show a section's history size and suggest a new section
+
+**Primary repository:** obsidian  
+**Milestone / group:** M02-5 / RP10  
+**Type / priority / status:** implementation / P1 / NOT_STARTED — Owner decision (a) on 112, 2026-10-10.  
+**Depends on:** LFCP-02-112  
+**Read first:** OBSIDIAN-SHARED-SECTIONS-UX-01.md; OBSIDIAN-SYNC-INDICATORS-01.md  
+**Gate / test trace:** G10 / T10
+
+**Goal:** Warn before a section's history reaches the Snapshot floor, so the user can start a new section in time (owner decision (a) on 112).
+
+**Acceptance:**
+
+1. The section shows its history size (inserted characters) where its sync status is shown.
+2. Past about 200,000 inserted characters the plugin suggests starting a new section; it takes no automatic action, and history is never pruned (SSP §16.4).
+3. The threshold and the wording are recorded in the plugin's docs; the measurements are those of LFCP-02-067.
+
+**Required checks:** A headless test of a section below and above the threshold; the native check of the suggestion.
+
+**Deliverables:** The plugin change, its tests and docs.
 
 ## E12. Pilot and public release
 
