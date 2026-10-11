@@ -297,7 +297,28 @@ def npm_pins(rc: Path) -> list[dict]:
 # ------------------------------------------------------------------ gates
 
 
-def gates(rc: Path, target_dir: Path, extra: tuple[str, ...] = ()) -> list[dict]:
+def build_server(rc: Path, target_dir: Path, logs: Path) -> str:
+    """Build the lfcp-server at the manifest's server commit once, into the
+    shared Cargo target, and return its path. Both live harnesses use this one
+    binary: obsidian's requires LFCP_SERVER_BIN and refuses a default location,
+    and pre-building it keeps a sdk-ts live test from racing a concurrent build
+    of the server in the shared target (the ENOENT on a server restart)."""
+    logs.mkdir(parents=True, exist_ok=True)
+    env = dict(os.environ, CARGO_TARGET_DIR=str(target_dir))
+    env.pop("LFCP_SERVER_BIN", None)
+    with (logs / "server-build.log").open("w") as log:
+        code = run(["cargo", "build", "--manifest-path", str(rc / "server" / "Cargo.toml")],
+                   rc / "server", env=env, log=log)
+    if code != 0:
+        sys.exit(f"rc-verify: building the server failed; see {logs / 'server-build.log'}")
+    exe = "lfcp-server.exe" if os.name == "nt" else "lfcp-server"
+    binary = target_dir / "debug" / exe
+    if not binary.exists():
+        sys.exit(f"rc-verify: the server build left no {binary}")
+    return str(binary)
+
+
+def gates(rc: Path, target_dir: Path, extra: tuple[str, ...] = (), server_bin: str | None = None) -> list[dict]:
     base = dict(os.environ)
     base.update(
         {
@@ -310,6 +331,10 @@ def gates(rc: Path, target_dir: Path, extra: tuple[str, ...] = ()) -> list[dict]
     )
     base.pop("LFCP_SERVER_BIN", None)
     cargo = dict(base, CARGO_TARGET_DIR=str(target_dir))
+    # The live gates run against one server, pre-built at the manifest's server
+    # commit (build_server). obsidian's harness requires LFCP_SERVER_BIN and
+    # will not use a default location; sdk-ts reuses the same build.
+    live = dict(cargo, LFCP_SERVER_BIN=server_bin) if server_bin else cargo
     spec_env = dict(base)
     # The spec's .bundle/config installs gems into vendor/bundle (and wins
     # over BUNDLE_PATH): link the main checkout's gems there instead of
@@ -344,7 +369,7 @@ def gates(rc: Path, target_dir: Path, extra: tuple[str, ...] = ()) -> list[dict]
             ["cargo", "clippy", "--workspace", "--all-targets", "--", "-D", "warnings"],
             ["cargo", "test", "--workspace"],
         ]},
-        {"name": "sdk-ts", "cwd": rc / "sdk-ts", "env": cargo, "steps": [
+        {"name": "sdk-ts", "cwd": rc / "sdk-ts", "env": live, "steps": [
             ["pnpm", "install", "--frozen-lockfile"],
             ["pnpm", "build"],
             ["pnpm", "typecheck"],
@@ -367,7 +392,7 @@ def gates(rc: Path, target_dir: Path, extra: tuple[str, ...] = ()) -> list[dict]
             ["pnpm", "test"],
             ["node", "conformance/dist/run.js", "--strict"],
         ]},
-        {"name": "obsidian", "cwd": rc / "obsidian", "env": cargo, "steps": [
+        {"name": "obsidian", "cwd": rc / "obsidian", "env": live, "steps": [
             ["pnpm", "install", "--frozen-lockfile"],
             ["pnpm", "run", "build"],
             ["pnpm", "run", "lint"],
@@ -721,7 +746,11 @@ def main() -> int:
     if not args.consistency_only:
         (rc / "logs").mkdir(exist_ok=True)
         only = {g for g in args.only.split(",") if g}
-        for gate in gates(rc, target_dir, extra):
+        # The live gates (sdk-ts, obsidian) run against one server, built once
+        # at the manifest's server commit; obsidian's harness requires its path.
+        want_live = (not only) or ({"sdk-ts", "obsidian"} & only)
+        server_bin = build_server(rc, target_dir, rc / "logs") if want_live else None
+        for gate in gates(rc, target_dir, extra, server_bin):
             if only and gate["name"] not in only:
                 continue
             print(f"rc-verify: {gate['name']} …", flush=True)
