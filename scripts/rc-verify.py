@@ -134,6 +134,15 @@ def prepare(rc: Path, manifest: dict) -> None:
             git(target, "switch", "--detach", "--quiet", commit)
         if git(target, "rev-parse", "HEAD") != commit:
             sys.exit(f"rc-verify: {target} is not at {commit}")
+    # A reused sdk-ts worktree can carry a dist/ or tsbuildinfo built at another
+    # commit; release:check rejects a dist/ with files a clean build would not
+    # produce. These are git-ignored build outputs, so clear them and let the
+    # gate rebuild.
+    sdk_ts = rc / "sdk-ts"
+    if sdk_ts.exists():
+        for stale in (*sdk_ts.glob("packages/*/dist"), *sdk_ts.glob("packages/*/*.tsbuildinfo"),
+                      *sdk_ts.glob("*.tsbuildinfo")):
+            shutil.rmtree(stale, ignore_errors=True) if stale.is_dir() else stale.unlink(missing_ok=True)
     spec = manifest["spec"]
     tag_commit = spec_tag_commit(manifest)
     resolved = git(rc / "spec", "rev-parse", f"refs/tags/{spec['tag']}^{{commit}}")
