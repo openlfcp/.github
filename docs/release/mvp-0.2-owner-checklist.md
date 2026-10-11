@@ -5,23 +5,26 @@ public release of `@openlfcp/*` 0.2.0 and Shared Tasks 0.4.0, in order.
 Each item links the page with the full steps. Tick an item here when it is
 done, with the date and where its result is recorded.
 
-Done so far: spec `mvp-0.2-baseline.6` and `.7`; npm `@openlfcp/*`
-0.2.0-beta.1 and 0.2.0-beta.2 (dist-tag `beta`); plugin 0.4.0-beta.1
-(pre-release for BRAT); server 0.3.1 released (image
-`ghcr.io/openlfcp/lfcp-server:0.3.1`).
+Done so far: spec `mvp-0.2-baseline.6` to `.9`; npm `@openlfcp/*`
+0.2.0-beta.1 to 0.2.0-beta.4 (dist-tag `beta`); plugin 0.4.0-beta.1 to
+0.4.0-beta.4 (pre-releases for BRAT); server 0.3.1 released (image
+`ghcr.io/openlfcp/lfcp-server:0.3.1`). The two-vault check of 0.4.0-beta.1
+passed steps 0 to 5 and failed step 6 (a Task cut and pasted was lost);
+fixed in 0.4.0-beta.2, with a choice to restore or keep deleted since
+0.4.0-beta.4.
 
 ## 1. Betas (when the orchestrator sends the commands)
 
-- [ ] Tag and approve npm `@openlfcp/*` 0.2.0-beta.3 (finding C1 fixed
-      in sdk-ts, spec `mvp-0.2-baseline.7`). Release workflow in
-      `openlfcp/sdk-ts`, environment `npm-publish`.
-- [ ] Tag plugin 0.4.0-beta.2 on that SDK: dry run, then tag
+- [x] npm `@openlfcp/*` 0.2.0-beta.4 and plugin 0.4.0-beta.4, 2026-10-12.
+- [ ] Any later beta: tag and approve npm in `openlfcp/sdk-ts`
+      (environment `npm-publish`), then dry run and tag the plugin
       ([obsidian docs/devel/release.md](https://github.com/openlfcp/obsidian/blob/main/docs/devel/release.md),
       "The owner's steps for a beta").
 
 ## 2. Manual checks (any beta; the latest one is best)
 
-- [ ] **Two Obsidian vaults**, 8 steps, about 30 minutes:
+- [ ] **Two Obsidian vaults**, 8 steps, about 30 minutes; rerun steps 6
+      to 8 on 0.4.0-beta.4 in two new vaults:
       [obsidian docs/devel/testing/two-obsidian-beta-check.md](https://github.com/openlfcp/obsidian/blob/main/docs/devel/testing/two-obsidian-beta-check.md).
 - [ ] **IME input** (gap B13; required before a 0.4 beta is announced):
       Japanese and Pinyin on macOS, 6 steps,
