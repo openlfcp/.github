@@ -1,0 +1,691 @@
+{
+  "record_type": "release_evidence_from_rc_verify",
+  "template_version": "0.1",
+  "prepared_on": "2026-10-07",
+  "product_target": "MVP 0.2",
+  "candidate_id": "rc12",
+  "candidate_status": "NOT_QUALIFIED",
+  "instructions": "Filled by rc-verify from this run only. Null and NOT_RUN are not passing evidence; scope gates, families, budgets, pilot and release operations are reviewed by people.",
+  "decision": {
+    "status": "NOT_REVIEWED",
+    "technical_owner": null,
+    "product_owner": null,
+    "release_owner": null,
+    "reviewed_at": null,
+    "rationale": null
+  },
+  "scope": {
+    "wire_subset_revision": "mvp-0.2-baseline.10",
+    "legacy_task_profile_revision": null,
+    "section_profile_id": "org.openlfcp.shared-sections.v1",
+    "section_profile_revision": null,
+    "markdown_binding_revision": null,
+    "scope_revision": null,
+    "corpus_sha256": {},
+    "approved_claims": [],
+    "spec_commit": "a3161f7a29f42462eac7e13c37e2d57db65866c1",
+    "spec_tag_commit": "a3161f7a29f42462eac7e13c37e2d57db65866c1"
+  },
+  "components": [
+    {
+      "component": "spec",
+      "repository_or_deployment": "git@github.com:openlfcp/spec.git",
+      "commit_or_image_digest": "a3161f7a29f42462eac7e13c37e2d57db65866c1",
+      "version": "mvp-0.2-baseline.10",
+      "lockfile_hash": {
+        "pnpm-lock.yaml": "867d1a1684adf2a4793d7e57246636ce32387eaeb9a9a959124c955118b7ca64"
+      },
+      "toolchain": {
+        "python": "3.14.6",
+        "node": "v24.4.0",
+        "pnpm": "10.34.1",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+        "ruby": "ruby 4.0.5 (2026-05-20 revision 64336ffd0e) +PRISM [arm64-darwin25]"
+      },
+      "build_command": null,
+      "test_commands": [
+        "pnpm install --frozen-lockfile",
+        "bundle check",
+        "./scripts/validate.sh"
+      ],
+      "gate_status": "PASS",
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "sdk-ts",
+      "repository_or_deployment": "git@github.com:openlfcp/sdk-ts.git",
+      "commit_or_image_digest": "a40347cc81bb27577d870d5ffbff2031d2c02b5a",
+      "version": "0.2.0-beta.5",
+      "lockfile_hash": {
+        "pnpm-lock.yaml": "5c691aa8029e2858068e4e976246d1c783a6ad1932d985605f59a32dec8cbb84"
+      },
+      "toolchain": {
+        "python": "3.14.6",
+        "node": "v24.4.0",
+        "pnpm": "10.34.1",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+        "ruby": "ruby 4.0.5 (2026-05-20 revision 64336ffd0e) +PRISM [arm64-darwin25]"
+      },
+      "build_command": null,
+      "test_commands": [
+        "pnpm install --frozen-lockfile",
+        "pnpm build",
+        "pnpm typecheck",
+        "pnpm lint",
+        "pnpm test",
+        "pnpm release:check"
+      ],
+      "gate_status": "PASS",
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "sdk-rs",
+      "repository_or_deployment": "git@github.com:openlfcp/sdk-rs.git",
+      "commit_or_image_digest": "74c3a717ad68f8377f798ef4107f3bf23ef72a61",
+      "version": "0.1.0",
+      "lockfile_hash": {
+        "Cargo.lock": "1acfa2aac6d37579bcb370dd1554c6d64bf407d06f47a4a88a9c2fa2cab729de"
+      },
+      "toolchain": {
+        "python": "3.14.6",
+        "node": "v24.4.0",
+        "pnpm": "10.34.1",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+        "ruby": "ruby 4.0.5 (2026-05-20 revision 64336ffd0e) +PRISM [arm64-darwin25]"
+      },
+      "build_command": null,
+      "test_commands": [
+        "cargo fmt --all --check",
+        "cargo clippy --workspace --all-targets --all-features -- -D warnings",
+        "cargo clippy --workspace --all-targets --no-default-features -- -D warnings",
+        "cargo test --workspace --all-features",
+        "cargo test --workspace --no-default-features"
+      ],
+      "gate_status": "PASS",
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "server",
+      "repository_or_deployment": "git@github.com:openlfcp/server.git",
+      "commit_or_image_digest": "814e913db156a1f2378ade79f907cd349fc654e9",
+      "version": "0.3.1",
+      "lockfile_hash": {
+        "Cargo.lock": "06811c591c0bf644577d275edbf13f2ef8a85e93902c230bf63b874a20ff6cb6"
+      },
+      "toolchain": {
+        "python": "3.14.6",
+        "node": "v24.4.0",
+        "pnpm": "10.34.1",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+        "ruby": "ruby 4.0.5 (2026-05-20 revision 64336ffd0e) +PRISM [arm64-darwin25]"
+      },
+      "build_command": null,
+      "test_commands": [
+        "cargo fmt --all --check",
+        "cargo clippy --workspace --all-targets -- -D warnings",
+        "cargo test --workspace"
+      ],
+      "gate_status": "PASS",
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "obsidian",
+      "repository_or_deployment": "git@github.com:openlfcp/obsidian.git",
+      "commit_or_image_digest": "3780ca3a1496c00420ab098fd27d1c2f9d882098",
+      "version": "0.3.4",
+      "lockfile_hash": {
+        "pnpm-lock.yaml": "627c9c3bcc2f0865c8d8b07ca31a5cabd2374b3f97c5a54b39519f0e668f5a33"
+      },
+      "toolchain": {
+        "python": "3.14.6",
+        "node": "v24.4.0",
+        "pnpm": "10.34.1",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+        "ruby": "ruby 4.0.5 (2026-05-20 revision 64336ffd0e) +PRISM [arm64-darwin25]"
+      },
+      "build_command": null,
+      "test_commands": [
+        "pnpm install --frozen-lockfile",
+        "pnpm run build",
+        "pnpm run lint",
+        "pnpm run typecheck",
+        "pnpm exec vitest run --reporter=default --reporter=json --outputFile=/Users/andrey/dev/openlfcp/openlfcp-rc/logs/obsidian-vitest.json"
+      ],
+      "gate_status": "PASS",
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "examples",
+      "repository_or_deployment": "git@github.com:openlfcp/examples.git",
+      "commit_or_image_digest": "1bfd20e7b7ea9df97775bc70c80c9182334f1aab",
+      "version": null,
+      "lockfile_hash": {
+        "pnpm-lock.yaml": "438f14bb4e05be822edcc9f6df0eb6e065178425ad70500fb11876ad742335d2"
+      },
+      "toolchain": {
+        "python": "3.14.6",
+        "node": "v24.4.0",
+        "pnpm": "10.34.1",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+        "ruby": "ruby 4.0.5 (2026-05-20 revision 64336ffd0e) +PRISM [arm64-darwin25]"
+      },
+      "build_command": null,
+      "test_commands": [
+        "pnpm install --frozen-lockfile",
+        "npm ci --prefix qualification/legacy-0.1.3 --no-audit --no-fund",
+        "pnpm --dir ../obsidian install --frozen-lockfile",
+        "pnpm build",
+        "pnpm typecheck",
+        "pnpm lint",
+        "pnpm test",
+        "node conformance/dist/run.js --strict"
+      ],
+      "gate_status": "PASS",
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "website_source_to_resolve",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "organization_profile_source_to_confirm",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": "demo_deployment_to_resolve",
+      "repository_or_deployment": null,
+      "commit_or_image_digest": null,
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": null,
+      "build_command": null,
+      "test_commands": [],
+      "artifact_checksums": {},
+      "owner": null
+    },
+    {
+      "component": ".github",
+      "repository_or_deployment": "git@github.com:openlfcp/.github.git",
+      "commit_or_image_digest": "b0b2ac146f9ff74a8568c58143eee5ec68a3a68a",
+      "version": null,
+      "lockfile_hash": null,
+      "toolchain": {
+        "python": "3.14.6",
+        "node": "v24.4.0",
+        "pnpm": "10.34.1",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+        "ruby": "ruby 4.0.5 (2026-05-20 revision 64336ffd0e) +PRISM [arm64-darwin25]"
+      },
+      "build_command": null,
+      "test_commands": [
+        "./scripts/validate.sh"
+      ],
+      "gate_status": "PASS",
+      "artifact_checksums": {},
+      "owner": null
+    }
+  ],
+  "environments": [
+    {
+      "id": "E-MAC-ARM",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    },
+    {
+      "id": "E-WIN-X64",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    },
+    {
+      "id": "E-LINUX-X64",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    },
+    {
+      "id": "E-HEADLESS",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    },
+    {
+      "id": "E-SERVER",
+      "status": "UNPINNED",
+      "hardware": null,
+      "os_build": null,
+      "architecture": null,
+      "display_system": null,
+      "runtime_versions": {},
+      "obsidian_build": null,
+      "tasks_build": null,
+      "tested_modes": [],
+      "configuration_evidence": null
+    },
+    {
+      "id": "rc-verify-host",
+      "status": "PINNED",
+      "os_build": "Darwin 25.5.0 arm64",
+      "architecture": "arm64",
+      "runtime_versions": {
+        "python": "3.14.6",
+        "git": "git version 2.54.0",
+        "node": "v24.4.0",
+        "pnpm": "10.34.1",
+        "rustc": "rustc 1.99.0 (b940084d7 2026-09-28)",
+        "cargo": "cargo 1.99.0 (5f94df478 2026-08-27)",
+        "ruby": "ruby 4.0.5 (2026-05-20 revision 64336ffd0e) +PRISM [arm64-darwin25]"
+      }
+    }
+  ],
+  "budgets": {
+    "status": "PROPOSED_NOT_FROZEN",
+    "source": "MVP-0.2-TEST-AND-RELEASE-PLAN.md section 10",
+    "frozen_values": null,
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "change_history": []
+  },
+  "semantics_audit": {
+    "server_acceptance_evidence": null,
+    "server_persistence_guarantee": null,
+    "catch_up_checkpoint": null,
+    "local_commit_receipt": null,
+    "limits": null,
+    "evidence": []
+  },
+  "gates": [
+    {
+      "id": "G01",
+      "name": "Baseline",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G02",
+      "name": "Contracts",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G03",
+      "name": "Onboarding",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G04",
+      "name": "Content",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G05",
+      "name": "Identity",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G06",
+      "name": "Concurrency",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G07",
+      "name": "Durability",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G08",
+      "name": "Privacy",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G09",
+      "name": "Access",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G10",
+      "name": "UX",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G11",
+      "name": "Compatibility",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    },
+    {
+      "id": "G12",
+      "name": "Release",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "blockers": [],
+      "reviewer": null
+    }
+  ],
+  "families": [
+    {
+      "id": "T01",
+      "name": "Baseline security/regression",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T02",
+      "name": "Section model",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T03",
+      "name": "Independent interoperability",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T04",
+      "name": "Markdown ownership",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T05",
+      "name": "Native projection",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T06",
+      "name": "Secure section E2E",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T07",
+      "name": "Durability/races",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T08",
+      "name": "Access/compatibility",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T09",
+      "name": "Status/UX/accessibility",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T10",
+      "name": "Privacy/clipboard/diagnostics",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T11",
+      "name": "Scale/performance/limits",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    },
+    {
+      "id": "T12",
+      "name": "Packaging/operations/pilot",
+      "status": "NOT_RUN",
+      "build_inputs": [],
+      "environments": [],
+      "commands": [],
+      "report_locations": [],
+      "not_run_items": [],
+      "reuse_rationale": null
+    }
+  ],
+  "case_inventory": {
+    "SS01-SS28": {
+      "target": "production SDK and independent interoperability",
+      "status": "NOT_RUN"
+    },
+    "Markdown fixture manifest, 29 fixtures": {
+      "target": "production parser/reconciler and native integration",
+      "status": "NOT_RUN"
+    },
+    "CM01-CM14": {
+      "status": "NOT_RUN"
+    },
+    "UX01-UX18": {
+      "status": "NOT_RUN"
+    },
+    "SI01-SI20": {
+      "status": "NOT_RUN"
+    }
+  },
+  "performance_runs": [],
+  "pilot": {
+    "status": "NOT_RUN",
+    "pair_count": 0,
+    "days_observed": 0,
+    "onboarding_attempts": 0,
+    "unassisted_completions": 0,
+    "comprehension_checks": 0,
+    "successful_comprehension_checks": 0,
+    "outcomes_evidence": null,
+    "privacy_policy_for_feedback": null
+  },
+  "issues": [],
+  "release_operations": {
+    "distribution_path": null,
+    "distribution_requirements_checked_at": null,
+    "upgrade_evidence": null,
+    "last_good_section_capable_build": null,
+    "rollback_compatibility": null,
+    "restore_rehearsal": null,
+    "demo_change_required": null,
+    "deployment_smoke_evidence": null,
+    "public_claims_review": null
+  },
+  "excluded_capabilities": [
+    "full LFCP-WIRE conformance claim",
+    "federation/P2P",
+    "ownership transfer and server migration",
+    "presence/read receipts",
+    "per-node ACL",
+    "arbitrary full-document Markdown",
+    "attachment upload",
+    "mobile certification"
+  ],
+  "pins_consistent": true,
+  "rc_gates": [
+    {
+      "gate": "spec",
+      "status": "PASS",
+      "seconds": 267.0,
+      "log": "logs/spec.log"
+    },
+    {
+      "gate": ".github",
+      "status": "PASS",
+      "seconds": 0.3,
+      "log": "logs/github.log"
+    },
+    {
+      "gate": "docs",
+      "status": "PASS",
+      "seconds": 0.8,
+      "log": "logs/docs.log"
+    },
+    {
+      "gate": "sdk-rs",
+      "status": "PASS",
+      "seconds": 82.6,
+      "log": "logs/sdk-rs.log"
+    },
+    {
+      "gate": "server",
+      "status": "PASS",
+      "seconds": 79.0,
+      "log": "logs/server.log"
+    },
+    {
+      "gate": "sdk-ts",
+      "status": "PASS",
+      "seconds": 200.6,
+      "log": "logs/sdk-ts.log"
+    },
+    {
+      "gate": "examples",
+      "status": "PASS",
+      "seconds": 170.3,
+      "log": "logs/examples.log"
+    },
+    {
+      "gate": "obsidian",
+      "status": "PASS",
+      "seconds": 30.6,
+      "log": "logs/obsidian.log"
+    }
+  ]
+}
