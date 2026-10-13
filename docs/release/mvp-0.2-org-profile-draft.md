@@ -96,8 +96,10 @@ what was verified and what is still open.
 
 ## Not yet
 
-- Shared sections on mobile: read-only, or marked unsupported.
-  `<TBD: as implemented, LFCP-02-095>`
+- Shared sections on mobile are read-only: they arrive and are shown, and
+  edits made there stay on the device. Sharing, inviting and removing access
+  are offered on desktop only (LFCP-02-095).
+- Rejoining a section you were removed from.
 - Moving a collaboration to another server.
 - Comments and discussion threads inside a section.
 - A full LFCP-WIRE-01 implementation. MVP 0.2 implements its MVP subset.
