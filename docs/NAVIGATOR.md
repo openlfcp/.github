@@ -19,6 +19,7 @@ catalogs every artifact across the repositories, with its status.
 | [conformance/compatibility-matrix.md](conformance/compatibility-matrix.md) | release | The generated sdk-rs ⇄ sdk-ts conformance snapshot at a baseline |
 | [release/mvp-0.1-release-notes.md](release/mvp-0.1-release-notes.md) | release | MVP 0.1.0 release notes (final, 2026-10-06) |
 | [release/mvp-0.2-release-notes.md](release/mvp-0.2-release-notes.md) | release | MVP 0.2 release notes (draft): shared sections, the component versions (V1), limits, known limitations, upgrading |
+| [release/mvp-0.2-tag-commands.md](release/mvp-0.2-tag-commands.md) | owner, release | MVP 0.2 tag commands (draft, LFCP-02-093): the owner's annotated-tag and push list — v0.2.0 on spec/sdk-rs/examples/.github, plugin 0.4.0 by its own tag, server only if changed |
 | [release/mvp-0.2-owner-checklist.md](release/mvp-0.2-owner-checklist.md) | owner | Everything the owner does from the first beta to the public MVP 0.2 release, in order: betas, manual checks, public server, pilot, release decision, release |
 | [release/mvp-0.2-org-profile-draft.md](release/mvp-0.2-org-profile-draft.md) | owner | Proposed organization profile for MVP 0.2 (draft, LFCP-02-079): the text to put into profile/README.md at the release |
 | [release/server-0.2.0-release-notes.md](release/server-0.2.0-release-notes.md) | release, operators | Server 0.2.0 release notes: abuse limits, quotas, memory bounds, upgrade notes |
