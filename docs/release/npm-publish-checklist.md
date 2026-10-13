@@ -542,3 +542,47 @@ npm 11.21 or later; it is not set up.
    first package usually means the trusted-publisher settings of that
    package (setup document, section 2). Fix them and **Re-run failed
    jobs**: published versions are skipped.
+
+## Release 0.2.0
+
+The MVP 0.2 SDK release: `0.2.0` on `latest` (moving it from 0.1.5).
+Prepared on `sdk-ts: rw/sdk-ts-0.2.0-prep` (2026-10-13): the eight
+versions and `publishConfig.tag` "latest", `CHANGELOG.md` "0.2.0"
+(dated when tagged), the README's publication note. The code is
+`0.2.0-beta.8`'s. Checked locally on that branch: `pnpm release:check`
+(version 0.2.0, dist-tag latest, 396.7 KiB in 8 packages) and
+`npm publish --dry-run --tag latest` of each tarball.
+
+1. The prep commit is merged to sdk-ts `main` at go, with
+   `CHANGELOG.md`'s heading dated (`## 0.2.0 — YYYY-MM-DD`), and CI is green.
+2. The dry run on `main` (as in "A release" above). Its log must say
+   `version 0.2.0 would be published under the dist-tag latest`.
+3. The tag on that commit, by the owner:
+
+   ```sh
+   git -C ~/dev/openlfcp/sdk-ts tag -a v0.2.0 <commit> -m "OpenLFCP sdk-ts 0.2.0"
+   git -C ~/dev/openlfcp/sdk-ts push origin v0.2.0
+   ```
+
+4. Approve the publish job (environment `npm-publish`).
+5. Verify, as a user with nothing cached:
+
+   ```sh
+   npm view @openlfcp/client dist-tags   # latest: 0.2.0, beta: 0.2.0-beta.8, next: 0.1.3
+   d=$(mktemp -d) && cd "$d" && npm init -y >/dev/null
+   npm install @openlfcp/client @openlfcp/shared-objects @openlfcp/storage-idb
+   node -e 'import("@openlfcp/client").then(m => console.log(Object.keys(m).length > 0))'
+   npm ls @openlfcp/core   # one 0.2.0, deduplicated
+   ```
+
+   The publish job's `registry-check.mjs` does the same for all eight;
+   the commands above are the second, independent look.
+6. Consumers: the Obsidian plugin pins `@openlfcp/*` exactly; its move
+   from `0.2.0-beta.8` to `0.2.0` is a plugin commit of its own.
+
+POST-012 (the `0.0.0-stage` placeholders of `@openlfcp/crypto` and
+`@openlfcp/storage-idb`) needs nothing here: both are deprecated already
+(`npm view @openlfcp/<pkg>@0.0.0-stage deprecated` prints "placeholder,
+not a release", checked 2026-10-13). Were it ever open again:
+`npm deprecate @openlfcp/<pkg>@0.0.0-stage "placeholder, not a release"`
+for each, a manual npm operation the owner confirms per package.
