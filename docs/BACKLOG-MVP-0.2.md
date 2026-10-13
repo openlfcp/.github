@@ -371,7 +371,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts (companion: obsidian)  
 **Milestone / group:** M02-0 / RP00  
-**Type / priority / status:** release / P0 / IN_PROGRESS — Owner approved 2026-10-10. D1 confirmed on the released 0.1.4 (bd); the 0.2 line refuses tables by SHARED-OBJECTS-PROFILE-01 §11.4 R10 (spec 74bdae1, sdk-rs c0bc828).  
+**Type / priority / status:** release / P0 / DONE — Released: npm @openlfcp/* 0.1.5 (sdk-ts v0.1.5 on 7f43561, latest) and Shared Tasks 0.3.4 (obsidian tag 0.3.4 on c93476e).  
 **Depends on:** LFCP-02-113  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/npm-publish-checklist.md  
 **Gate / test trace:** G11 / T08
@@ -683,7 +683,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** spec  
 **Milestone / group:** M02-1 / RP01  
-**Type / priority / status:** release / P0 / DONE — For N=2: spec tag mvp-0.2-baseline.2 (4198c43); spec.lock moved: sdk-rs c05309b, server 7f7eb99, sdk-ts b92f701, obsidian 6b1aa45; examples pins b4cbc61; .github c5e491a (compatibility matrix). rc-verify --from-heads --consistency-only (2026-10-09, report 20261009T051056Z): pins consistent at mvp-0.2-baseline.2; spec 4aa9491 awaits baseline.3. For N=3: spec tag mvp-0.2-baseline.3 (8076d89); spec.lock moved: sdk-rs 76609e5, server 4040a6d (then e49f595), sdk-ts bc2fb76 (server.lock e49f595 in 65c6f00), obsidian 1249db5; examples pins cc71c9b (strict run green); .github 8f1a508 (compatibility matrix). Each lock commit gated on a fresh clone at its neighbours' locks. For N=4: spec tag mvp-0.2-baseline.4 (1e548f7: the expansion bombs SS61 to SS63, a refused change named only from a type 1 chunk); spec.lock moved: sdk-rs 7edbd5f, server 79c240e, sdk-ts 7771fe0 and 32e801f (with the naming fix), obsidian aeddf37; examples pins 88477d3 (strict run green); .github 44b6a25 (compatibility matrix). For N=5: spec tag mvp-0.2-baseline.5 (45e5aad: §11.3 rule 8 start-op bound, §11.4 R8 to R10, SS64 a table and SS65 ready=false, both refused); spec.lock moved: sdk-rs 390214b, server dd61092, sdk-ts 016559e, obsidian e9aed9c; examples pins ab7254f (strict run green); .github 8a32329 (compatibility matrix). For N=6: spec tag mvp-0.2-baseline.6 (73c0e80: the differential-fuzzing convergence — §11.3 rule 2 bounds a change's sequence number and time below 2^53 (D2), §14.1 allows an Automerge author only in an actor's first change (D5), A5 refuses Text in any undefined field (D3), SS66 to SS75); spec.lock moved: sdk-rs 044d246, server d3a8630, sdk-ts 302e38d then 974359f (the 0.2.0-beta.2 release commit); examples pins dc44d771 (strict run green); .github edec38c (compatibility matrix, rust 286/286); obsidian 8ea8872 (spec.lock .6, server.lock d3a8630, plugin 0.2.0-beta.2 from npm; live 1175/1175, 0 pending, native 13/13). For N=7: spec tag mvp-0.2-baseline.7 (3cc025c: §14.1 names a refused change only when its checksum matches, so SS45's refusal loses its name and SS76 to SS78 add the intact copy after a broken one, a dependent held behind it and a wrong-checksum copy (finding C1)); spec.lock moved: sdk-rs a3b78c8, server 359ee22, sdk-ts c29d4e1 (the 0.2.0-beta.3 release commit, which also lands sdk-ts finding C3 — a change chunk whose inner header length runs past its end is still named, with checkChange refusing it); examples pins 356545d (strict run green, rust 288/288; on top of the baseline.6 pin dc44d77); .github cea1503 (compatibility matrix, rust 288/288); obsidian pending the 0.2.0-beta.3 npm publish. For N=8: spec tag mvp-0.2-baseline.8 (a38fb27: SS79 adds the header-past-end refusal — a change whose inner header length runs past its end, refused and named (finding C3) — and SS80 to SS82 add a move (a write to a node's placement register, §8) concurrent with a deletion of the node or of an effective ancestor, surfaced as a retained concurrent edit (EDIT_UNDER_DELETED_ANCESTOR, §9)); spec.lock moved: sdk-rs ee65033, server 7188674, sdk-ts 86ae2c9 (the baseline.8 pin on 0.2.0-beta.3, carrying the §9 move fix 63f5622); examples pins 019bb79 (strict run green, rust 291/291); .github 2d3ce14 (compatibility matrix, rust 291/291); obsidian aa26313 (spec.lock .8, server.lock 7188674, plugin 0.2.0-beta.3 from npm; live 1209/1209, 0 pending, fixtures 48/48, native 1.13.4 58/0). For N=9: spec tag mvp-0.2-baseline.9 (369c22b: SS83 to SS87 refine §9 — a retained concurrent edit counts only against the deletions the lifecycle register still holds, so re-deleting a node clears the attention a concurrent edit or move raised, while two concurrent deletions both count); spec.lock moved: sdk-rs 82901af, server 4ea72f0, sdk-ts f04703f (the 0.2.0-beta.4 release commit, carrying the §9 re-delete fix f765671); examples pins e38184e (strict run green, rust 295/295); .github 055ad18 (compatibility matrix, rust 295/295); obsidian 60ef2f7 (spec.lock .9, server.lock 4ea72f0, plugin 0.2.0-beta.4 from npm, with a Keep-it-deleted button on the re-delete rule; live 1214/1214, 0 pending, fixtures 48/48, typed-eslint clean; the native UX09 window-focus failure pre-exists on 8ed8d9c and is unrelated to .9). For N=10: spec tag mvp-0.2-baseline.10 (a3161f7: SS88 to SS91 make SHARED-SECTIONS-PROFILE-01 §14.1 and A5 explicit — the sequence checks count every change of the document, so a change at a taken sequence number is held before the structural rules (finding E1); A5 refuses a scalar written to a node's `text` whatever the node's kind, even where the merge shows a Text (finding E2); and a chunk whose dependencies or actor do not read is named (finding F1); no vector value changes); spec.lock moved: sdk-rs 74c3a71, server 814e913, sdk-ts a40347c (the 0.2.0-beta.5 release commit — the sdk-ts production already met all three rules, so only its conformance adapter changed for SS88's held-at-taken-seq, d28ed50; the chaos interop timers were also determinized, d2a68d6); examples pins 1bfd20e (strict run green, rust 299/299); .github a1ebb8e (compatibility matrix, rust 299/299); obsidian c4bd7e8 (deps @openlfcp/* 0.2.0-beta.5, spec.lock a3161f7, server.lock 814e913), head 3780ca3 (plugin 0.4.0-beta.5 on manifest-beta.json, not yet tagged).  
+**Type / priority / status:** release / P0 / DONE — For N=2: spec tag mvp-0.2-baseline.2 (4198c43); spec.lock moved: sdk-rs c05309b, server 7f7eb99, sdk-ts b92f701, obsidian 6b1aa45; examples pins b4cbc61; .github c5e491a (compatibility matrix). rc-verify --from-heads --consistency-only (2026-10-09, report 20261009T051056Z): pins consistent at mvp-0.2-baseline.2; spec 4aa9491 awaits baseline.3. For N=3: spec tag mvp-0.2-baseline.3 (8076d89); spec.lock moved: sdk-rs 76609e5, server 4040a6d (then e49f595), sdk-ts bc2fb76 (server.lock e49f595 in 65c6f00), obsidian 1249db5; examples pins cc71c9b (strict run green); .github 8f1a508 (compatibility matrix). Each lock commit gated on a fresh clone at its neighbours' locks. For N=4: spec tag mvp-0.2-baseline.4 (1e548f7: the expansion bombs SS61 to SS63, a refused change named only from a type 1 chunk); spec.lock moved: sdk-rs 7edbd5f, server 79c240e, sdk-ts 7771fe0 and 32e801f (with the naming fix), obsidian aeddf37; examples pins 88477d3 (strict run green); .github 44b6a25 (compatibility matrix).  
 **Depends on:** LFCP-02-007, LFCP-02-008, LFCP-02-010, LFCP-02-084  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/rc-verification.md; SHARED-SECTIONS-PROFILE-01.md  
 **Gate / test trace:** G02 / T02
@@ -2229,7 +2229,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-4 / RP09  
-**Type / priority / status:** qualification / P0 / IN_PROGRESS — Native acceptance under way.  
+**Type / priority / status:** qualification / P0 / IN_PROGRESS — Native suite 32 specs on Obsidian 1.13.4 and 1.14.4 green at beta.15 (obsidian 369b344), Platform smoke on macOS/Windows/Linux; owner manual acceptance on beta.16 pending.  
 **Depends on:** LFCP-02-056, LFCP-02-060, LFCP-02-061, LFCP-02-062, LFCP-02-063, LFCP-02-064, LFCP-02-065, LFCP-02-096, LFCP-02-100  
 **Read first:** OBSIDIAN-SYNC-INDICATORS-01.md; OBSIDIAN-SHARED-SECTIONS-UX-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G09, G10, G11 / T05, T08, T09, T10
@@ -2380,7 +2380,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / IN_PROGRESS — .github 1c0e4c8 (rc-verify assembles checksummed candidate artifacts), 7d11fea; the rehearsal passed.  
+**Type / priority / status:** qualification / P0 / IN_PROGRESS — .github 1c0e4c8, 7d11fea; rc12 (2026-10-12) at baseline.10. rc13 at baseline.12 with SDK 0.2.0-beta.8 and plugin beta.16 is next.  
 **Depends on:** LFCP-02-006, LFCP-02-018, LFCP-02-022, LFCP-02-024, LFCP-02-066, LFCP-02-069, LFCP-02-070, LFCP-02-071, LFCP-02-072, LFCP-02-098, LFCP-02-099, LFCP-02-102  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G12 / T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12
@@ -2509,7 +2509,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P1 / NOT_STARTED  
+**Type / priority / status:** qualification / P1 / IN_PROGRESS — Owner dogfood on BRAT betas 0.4.0-beta.5 to beta.15 (2026-10-12/13); findings fixed through beta.15 (obsidian 369b344). Next round on beta.16.  
 **Depends on:** LFCP-02-048, LFCP-02-049, LFCP-02-052, LFCP-02-087, LFCP-02-091, LFCP-02-094  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G03, G12 / T12
@@ -2551,7 +2551,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** implementation / P1 / NOT_STARTED — Owner decision (a) on 112, 2026-10-10.  
+**Type / priority / status:** implementation / P1 / DONE — obsidian ff89826: the card shows the section's history size and suggests a new section past about 200,000 characters; released in 0.4.0-beta.5 onwards.  
 **Depends on:** LFCP-02-112  
 **Read first:** OBSIDIAN-SHARED-SECTIONS-UX-01.md; OBSIDIAN-SYNC-INDICATORS-01.md  
 **Gate / test trace:** G10 / T10
