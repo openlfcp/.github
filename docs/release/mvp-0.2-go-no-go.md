@@ -1,0 +1,136 @@
+# MVP 0.2 go / no-go record (draft)
+
+**Status:** DRAFT (LFCP-02-077), unsigned. This is the record the release
+owner signs to release MVP 0.2 or to hold it. It gathers the gate evidence,
+the pilot outcome and the known issues into one decision. `<…>` marks what
+the owner or a pending step settles. Nothing here is a release approval until
+the final decision line is signed.
+
+## Candidate under review
+
+Latest automated evidence: **rc12** (LFCP-02-073,
+[candidate report](mvp-0.2-candidate-report.md),
+[evidence JSON](mvp-0.2-release-evidence-rc12.json), pins
+[rc12-manifest.json](rc12-manifest.json)). rc12's recorded status is
+`NOT_QUALIFIED` / `decision: NOT_REVIEWED`: the automated gates are green for
+one pinned commit set; the scope verdicts, the owner checks and the pilot are
+people's to review here.
+
+| Repository | rc12 commit | Version / tag |
+| --- | --- | --- |
+| spec | `a3161f7` | mvp-0.2-baseline.10 |
+| sdk-rs | `74c3a71` | — |
+| server | `814e913` | 0.3.1 |
+| sdk-ts | `a40347c` | 0.2.0-beta.5 (npm, `beta`) |
+| examples | `1bfd20e` | — |
+| obsidian | `3780ca3` | plugin 0.4.0-beta.5 |
+| .github | `b0b2ac1` | — |
+
+> **Re-pin at release.** The project has since moved to spec
+> `mvp-0.2-baseline.12`, sdk-ts `0.2.0-beta.8` and server `0.3.2`, and the
+> plugin to `0.4.0-beta.15`. The owner re-pins the final candidate and
+> re-runs rc-verify before signing; the commits above are replaced with that
+> final set. `<final candidate id and manifest>`
+
+## rc-verify gates (automated)
+
+All eight rc-verify gates PASS for rc12 on the first full run
+(`report-20261012T063313Z`), `LFCP_REQUIRE_LIVE=1`, no patched-tool rerun:
+spec, .github, docs, sdk-rs, server, sdk-ts, examples, obsidian. sdk-ts
+2396/2396, obsidian 1215/1215, examples `--strict` (rust 299/299, ts 128/128
++ 31/31), all 0 skips. See the [candidate report](mvp-0.2-candidate-report.md).
+
+## Scope gates G01–G12
+
+Automated evidence is green (below); the **owner verdict** is each gate's to
+set here as **PASS / OPEN / WAIVED** with a reason. Evidence is reviewed by
+people — the evidence record's `decision` is `NOT_REVIEWED`.
+
+| Gate | Name | Evidence | Owner verdict | Blocker |
+| --- | --- | --- | --- | --- |
+| G01 | Baseline | spec gate at baseline.10; SDK/server baseline tests ([candidate report](mvp-0.2-candidate-report.md)) | `<PASS/OPEN/WAIVED>` | `<…>` |
+| G02 | Contracts | both SDKs pass the vectors and cross-consume ([sections conformance](mvp-0.2-sdk-ts-sections-conformance.md), [compatibility matrix](../conformance/compatibility-matrix.md)) | `<…>` | `<…>` |
+| G03 | Onboarding | invitation/claim/handshake: sdk-ts live interop + examples E2E | `<…>` | `<…>` |
+| G04 | Content | Shared Objects + Shared Sections through baseline.10 ([sections conformance](mvp-0.2-sdk-ts-sections-conformance.md)) | `<…>` | `<…>` |
+| G05 | Identity | principal/actor derivation, control chain: sdk-ts, sdk-rs gates | `<…>` | `<…>` |
+| G06 | Concurrency | convergence under faults: sdk-ts live chaos/access recovery | `<…>` | `<…>` |
+| G07 | Durability | storage, crash/restart, snapshots ([restore rehearsal](mvp-0.2-restore-rehearsal.json), [integrated recovery](mvp-0.2-integrated-recovery-qualification.md)) | `<…>` | `<…>` |
+| G08 | Privacy | zero plaintext/keys on the wire: examples two-vault wire-tap; sdk-ts crypto | `<…>` | `<…>` |
+| G09 | Access | grants, revocation, access recovery: sdk-ts access-recovery (6/6), examples | `<…>` | `<…>` |
+| G10 | UX | obsidian gate 1215/1215; native harness run separately (LFCP-02-096) | `<…>` | `<…>` |
+| G11 | Compatibility | compatibility matrix and the released 0.1.3 client ([two-vault](mvp-0.2-two-vault-qualification.md)) | `<…>` | `<…>` |
+| G12 | Release | rc-verify green, `release:check` (pack+install+import), npm published; this record | `<…>` | `<…>` |
+
+**Owner checks not covered by rc-verify** (from
+[mvp-0.2-owner-checklist.md](mvp-0.2-owner-checklist.md)):
+
+- Obsidian native acceptance harness (LFCP-02-096): `<NOT RUN / result>`.
+- Manual desktop matrix, Windows/Linux smoke (B12), IME (B13): `<…>`.
+- Immutable candidate artifacts assembled (`--assemble --repro`): `<…>`.
+
+## Pilot outcome (LFCP-02-075)
+
+Against the frozen thresholds of
+[MVP-0.2-TEST-AND-RELEASE-PLAN.md](../MVP-0.2-TEST-AND-RELEASE-PLAN.md) §13
+and the pilot protocol (`docs/release/pilot/pilot-protocol.md`,
+LFCP-02-103). Pilot: `<NOT RUN>`.
+
+| Threshold | Target | Observed | Met? |
+| --- | --- | --- | --- |
+| End-to-end onboarding attempts | ≥10 | `<…>` | `<…>` |
+| …without developer intervention | ≥8 | `<…>` | `<…>` |
+| Pairs completing edit/reconnect | all | `<…>` | `<…>` |
+| Comprehension checks correct | ≥8/10 | `<…>` | `<…>` |
+| Unresolved blocker/major; private-content publication; data loss | none | `<…>` | `<…>` |
+
+Report: the sanitised pilot report (`docs/release/pilot/pilot-report-template.md`)
+when run. Unmet targets are explicit blockers (LFCP-02-076).
+
+## Known issues carried into GA
+
+Accepted as documented limits of 0.2, not blockers unless the owner says so.
+
+From the [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md)
+limits and the 0.4.0-beta "Good to know":
+
+- **Size / performance.** ~200 tasks per section is the qualified size; a much
+  larger section (2,000) works but blocks the editor for seconds per edit;
+  performance measured on macOS only (Windows/Linux functional, not
+  performance-qualified).
+- **Long history.** A section slows after many thousands of edits; past
+  ~200,000 characters the card suggests a new section (no automatic action;
+  history growth policy deferred, LFCP-02-112).
+- **Mobile.** Shared sections are read-only on mobile.
+- **Rare:** typing in the first moment after sharing can still leave a section
+  at "needs your attention"; a fix is in progress.
+- **Project server quotas** (sync.openlfcp.org): 200 collaborations, 50 new/day
+  per network, 256 MiB total, 128 MiB per collaboration `<B15 final values>`.
+
+MVP 0.3 open decisions (not addressed in 0.2):
+
+- **Rejoin after removal.** A removed member cannot rejoin; the plugin says
+  so. Design note:
+  [rejoin-after-removal.md](../devel/design/rejoin-after-removal.md).
+- **MS14 freeze scope.** The frozen conflict scope for the Markdown-sections
+  cases (MS14 "remote parent cycle": preserve last safe source, show a
+  conflict); anything beyond the frozen set is MVP 0.3. `<owner confirms the
+  exact frozen scope>`
+- **Invitation expiry.** Time-based invitation expiry is server policy and is
+  not enforced in 0.2 (WIRE-01: expiry MAY be enforced by servers; Resource
+  state is ordered by Control Sequence, not timestamps). `<owner decision for
+  0.3>`
+
+## Final decision
+
+The release owner records the decision for the final candidate:
+
+- **Candidate:** `<final candidate id / manifest>`
+- **Decision:** `<GO / NO-GO>`
+- **Conditions or waivers:** `<…>`
+- **Open blockers at decision:** `<none / list>`
+- **Release owner:** `<name>`  **Date:** `<date>`
+
+A GO authorises the public release steps
+([owner checklist](mvp-0.2-owner-checklist.md) §6, and the tag commands in
+`docs/release/mvp-0.2-tag-commands.md`, LFCP-02-093); close-out follows in
+[mvp-0.2-release-close.md](mvp-0.2-release-close.md).
