@@ -178,6 +178,14 @@ Python 3, git, Node 24 with pnpm, a Rust toolchain, and Ruby with bundler
 for the spec's CDDL check. The spec gate reuses the main checkout's
 `vendor/bundle` gems when they are there.
 
+On Linux, run with `BUNDLE_FROZEN=true`. A Bundler installed as a gem,
+not as Ruby's default gem, adds its own checksum to the spec's
+`Gemfile.lock` on `bundle check`, and the gate then fails on a changed
+tracked file; frozen, Bundler leaves the lock as committed. Without the
+gems, install them once in the spec checkout (`bundle install`, into
+`vendor/bundle` as its `.bundle/config` says) and restore `Gemfile.lock`
+(`git checkout -- Gemfile.lock`).
+
 ## Runs
 
 | RC | Manifest | Result |
