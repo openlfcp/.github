@@ -158,8 +158,8 @@ evidence is the release evidence record exported by rc-verify (LFCP-02-073).
   needed, so the link still works after updating. `<TBD: a 0.3.x and a 0.4
   device sharing the same 0.1 tasks, not yet recorded as tested>`
 - **SDK users.** `@openlfcp/*` 0.2.0 reads and writes the storage of 0.1.x,
-  and upgrades it to database version 2, which 0.1.x cannot open.
-  `<TBD: confirm against the sdk-ts 0.2.0 changelog>`
+  and upgrades it to `storage-idb` database version 2, which 0.1.x cannot
+  open (per the sdk-ts 0.2.0 CHANGELOG).
 - **Pins.** Pins are explicit everywhere:
   - `spec.lock` in each implementation;
   - `sdk-ts.lock` in the plugin during development, exact npm versions at
