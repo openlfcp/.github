@@ -19,7 +19,7 @@ As in MVP 0.1:
 - the shared tasks of MVP 0.1 keep working unchanged, beside the sections.
 
 It implements the OpenLFCP MVP 0.2 subset of LFCP-WIRE-01 at
-`spec: mvp-0.2-baseline.<N>` `<TBD: N, currently 3>`. That is MVP 0.1's
+`spec: mvp-0.2-baseline.<N>` `<TBD: N, currently 12>`. That is MVP 0.1's
 `mvp-0.1-baseline.10` unchanged, plus the shared sections profile. MVP 0.2
 adds no Wire feature. The specifications remain Working Drafts; the deferred
 Wire features are in
@@ -31,12 +31,12 @@ Wire features are in
 
 | Repository | Version | What it provides |
 | --- | --- | --- |
-| `spec` | `mvp-0.2-baseline.<N>` (`<TBD: commit>`) | SHARED-SECTIONS-PROFILE-01 (ADR 0009), MARKDOWN-SECTIONS-01, SDK-SECTIONS-INTEGRATION-01, the canonical change encoding and operation references (ADR 0010), the shared sections corpus and the Markdown fixtures; MVP 0.1's files unchanged |
-| `sdk-ts` | npm `0.2.0` (`<TBD: commit>`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
-| `sdk-rs` | `v0.2.0` (`<TBD: commit>`) | The shared sections profile (feature `shared-sections`), the canonical change and reference checks, admission fuzzers |
-| `obsidian` | Shared Tasks `0.4.0` (`<TBD: commit>`) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md) |
-| `examples` | `v0.2.0` (`<TBD: commit>`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
-| `server` | `<TBD: 0.3.0 unchanged, or 0.3.1>` | The reference server. It never decodes sections. Since 0.3.0 its only code change is LFCP-02-116: it refuses a store written by a newer server instead of opening it (server e49f595). Whether that ships as 0.3.1 with MVP 0.2 is the owner's question (V1: "server only if changed") |
+| `spec` | `mvp-0.2-baseline.12`, tagged `v0.2.0` (`<v0.2.0 commit>`) | SHARED-SECTIONS-PROFILE-01 (ADR 0009), MARKDOWN-SECTIONS-01, SDK-SECTIONS-INTEGRATION-01, the canonical change encoding and operation references (ADR 0010), the shared sections corpus and the Markdown fixtures; MVP 0.1's files unchanged |
+| `sdk-ts` | npm `0.2.0` (dist-tag `latest`; currently `0.2.0-beta.8` on `beta`, `<v0.2.0 commit>`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
+| `sdk-rs` | `v0.2.0` (`<v0.2.0 commit>`; currently `0a8239b`) | The shared sections profile (feature `shared-sections`), the canonical change and reference checks, admission fuzzers |
+| `server` | `0.3.2` (deployed; reference server `7afa509`, on sdk-rs `d31d4d8`) | The reference server. It never decodes sections. 0.3.2 adds two wire fixes over 0.3.1 ([notes](server-0.3.2-release-notes.md)); the store format is unchanged. `main` (`138030a`) is 0.3.2 plus a pin-only commit, so a separate `v0.2.0`/`v0.3.x` server tag is not expected (V1: "server only if changed") |
+| `obsidian` | Shared Tasks `0.4.0` (`<v0.4.0 commit>`; currently `0.4.0-beta.15`, beta.16 pending) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md). The plugin carries its own version tag, not `v0.2.0` |
+| `examples` | `v0.2.0` (`<v0.2.0 commit>`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
 
 The pins of the final candidate are in `<TBD: rcN-manifest.json>`. Its
 evidence is the release evidence record exported by rc-verify (LFCP-02-073).
@@ -113,10 +113,13 @@ evidence is the release evidence record exported by rc-verify (LFCP-02-073).
   Linux are functional but not performance-qualified (V4).
 - **No nested headings** in a section in 0.2: sharing offers to split it.
 - **Two moves into one parent** stay a conflict for a person to resolve (P5).
-- **Public server quotas.** The public sync server limits each identity to
-  20 collaborations, and 10 new ones per IP address per day. With one
-  collaboration per section, this bounds how many sections one person
-  shares there. `<TBD: B15, the owner sets or states the limits>`
+- **Project server quotas.** The project sync server (`sync.openlfcp.org`)
+  currently lets one identity host up to 200 collaborations (each shared
+  section is one), up to 50 new ones a day from one network, 256 MiB of
+  stored data in all and 128 MiB per collaboration. Past a limit the action
+  is refused with "quota exceeded"; nothing already shared is lost. A server
+  you run yourself sets its own. `<TBD: B15, the owner confirms the final
+  values>`
 
 ## Known limitations
 
