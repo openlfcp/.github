@@ -3,7 +3,7 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 119 tasks in 13 epics, across seven milestones  
+**Size:** 120 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
@@ -120,7 +120,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 
 | Epic | Tasks | Focus | Review milestone |
 | --- | --- | --- | --- |
-| E00 | 086, 087, 088, 089, 113, 119 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
+| E00 | 086, 087, 088, 089, 113, 119, 120 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
 | E01 | 001, 002, 003, 004, 005, 006, 101 | Baseline and inherited obligations | M02-0 |
 | E02 | 007, 008, 009, 010, 083, 084, 090, 107, 108, 118 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085, 114 | TypeScript section model | M02-1 |
@@ -257,6 +257,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-117 | Show a section's history size and suggest a new section | obsidian | P1 | 112 |
 | LFCP-02-118 | Automatic compaction of a section's history after 0.2 | spec (companions: sdk-ts, sdk-rs) | P2 | 112 |
 | LFCP-02-119 | Patch release 0.1.5 and plugin 0.3.4 with the D1 fix | sdk-ts (companion: obsidian) | P0 | 113 |
+| LFCP-02-120 | storage-idb: wait on a blocked open, close on versionchange | sdk-ts (companion: obsidian) | P2 | — |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -387,6 +388,28 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** The D1 reproducer against the released 0.1.4 (fails) and 0.1.5 (passes); the release gates of the 0.1 line.
 
 **Deliverables:** The patch, the version commits and the owner command list.
+
+### LFCP-02-120 — storage-idb: wait on a blocked open, close on versionchange
+
+**Primary repository:** sdk-ts (companion: obsidian)  
+**Milestone / group:** M02-6 / RP00  
+**Type / priority / status:** implementation / P2 / NOT_STARTED — Found 2026-10-14 by the native upgrade matrix (069): updating Shared Tasks 0.3.4 to 0.4 in one window could leave the runtime unstarted (IndexedDB blocked). The plugin works around it (lock before open, retry of a blocked start). After 0.2.  
+**Depends on:** None  
+**Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions)  
+**Gate / test trace:** G10 / T10
+
+**Goal:** An IndexedDB open that another connection blocks completes once that connection closes, instead of failing at once; a connection asked to give way does so.
+
+**Acceptance:**
+
+1. A blocked open waits (bounded, with the caller's timeout) and completes when the other connection closes; the result is the same storage as an unblocked open.
+2. Every connection storage-idb opens closes itself on versionchange, after its running transactions, so a newer client's upgrade is never kept waiting by an idle older one.
+3. Tests with fake-indexeddb: a blocked open completing; a held connection closing on versionchange; a rejected or abandoned open leaking no connection.
+4. The plugin's retry of a blocked start (obsidian) can then go; its native upgrade spec still passes.
+
+**Required checks:** The storage contract suite on storage-idb; the obsidian native upgrade spec on both Obsidian versions.
+
+**Deliverables:** The storage-idb change in an SDK release, and the plugin's workaround removed.
 
 ## E01. Baseline and inherited obligations
 
