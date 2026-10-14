@@ -22,8 +22,9 @@ evidence record (rc-verify `--assemble --repro`; the record of
       main is 0.3.2 + pin-only>`
 - [ ] The git tags point at the candidate commits
       (`git -C <repo> rev-list -n1 <tag>` = the commit in
-      [rc13-manifest.json](rc13-manifest.json)) for spec, sdk-rs, examples
-      and .github, and the plugin tag on its 0.4.0 commit. `<…>`
+      [rc14-manifest.json](rc14-manifest.json)) for spec, sdk-rs and
+      examples; .github's on the commit with the published release notes;
+      the plugin tag on its 0.4.0 commit. `<…>`
 
 ## 2. Public links
 
