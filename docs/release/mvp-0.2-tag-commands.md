@@ -20,9 +20,10 @@ release settles.
 ## Version tags: `v0.2.0`
 
 `spec`, `sdk-rs`, `examples` and `.github` take `v0.2.0` on the candidate's
-commit: the rc13 commits ([rc13-manifest.json](rc13-manifest.json)). The
-`.github` commit is the one rc13 verified (b4fa6e7); the rc13 records and
-the published release notes come after it.
+commit: the rc13 commits ([rc13-manifest.json](rc13-manifest.json)) for
+`spec`, `sdk-rs` and `examples`. `.github` takes it on the commit that holds
+the published MVP 0.2 release notes: the `main` head at release, after the
+notes are merged.
 
 ```sh
 # spec (content is mvp-0.2-baseline.12; v0.2.0 is the release tag)
@@ -38,7 +39,7 @@ git -C <repos>/examples tag -a v0.2.0 -m "OpenLFCP MVP 0.2" 338a1d54a114b8803fca
 git -C <repos>/examples push origin v0.2.0
 
 # .github
-git -C <repos>/.github tag -a v0.2.0 -m "OpenLFCP MVP 0.2" b4fa6e7256a206968d8f39efa3bc23024ba32aea
+git -C <repos>/.github tag -a v0.2.0 -m "OpenLFCP MVP 0.2" <.github main head at release, after the release notes merge>
 git -C <repos>/.github push origin v0.2.0
 ```
 
