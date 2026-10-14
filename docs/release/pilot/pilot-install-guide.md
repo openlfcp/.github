@@ -38,7 +38,7 @@ BRAT is a small helper that installs beta plugins.
 ## 3. Check your version
 
 - In **Settings → Community plugins**, find **Shared Tasks**. It should read
-  **`0.4.0-beta.<N>`** (the build the facilitator gave you).
+  **`0.4.0-beta.17`** (the build the facilitator gave you).
 - Write this version down — it is your **build ID** for the feedback form.
 
 ### If it shows an older beta (unpinning)
