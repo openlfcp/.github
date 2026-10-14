@@ -20,7 +20,7 @@ release settles.
 ## Version tags: `v0.2.0`
 
 `spec`, `sdk-rs`, `examples` and `.github` take `v0.2.0` on the candidate's
-commit: the rc15 commits ([rc15-manifest.json](rc15-manifest.json)) for
+commit: the rc16 commits ([rc16-manifest.json](rc16-manifest.json)) for
 `spec`, `sdk-rs` and `examples`. `.github` takes it on the commit that holds
 the published MVP 0.2 release notes: the `main` head at release, after the
 notes are merged.
@@ -74,7 +74,7 @@ happen in the same step, or catalog users never receive the update.
 
 ```sh
 # plugin release tag (scheme per obsidian docs/devel/release.md)
-git -C <repos>/obsidian tag -a 0.4.0 -m "Shared Tasks 0.4.0" <obsidian 0.4.0 commit: rc15 43c7ce2 + the 0.4.0 version commits (rw/plugin-0.4.0-prep) + the @openlfcp/* 0.2.0 pin commit>
+git -C <repos>/obsidian tag -a 0.4.0 -m "Shared Tasks 0.4.0" <obsidian 0.4.0 commit: rc16 4ce8e77 + the 0.4.0 version commits (rw/plugin-0.4.0-prep) + the @openlfcp/* 0.2.0 pin commit>
 git -C <repos>/obsidian push origin 0.4.0
 ```
 
