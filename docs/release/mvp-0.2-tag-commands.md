@@ -20,22 +20,22 @@ release settles.
 ## Version tags: `v0.2.0`
 
 `spec`, `sdk-rs`, `examples` and `.github` take `v0.2.0` on the candidate's
-commit: the rc17 commits (`<rc17-manifest.json>`) for `spec`, `sdk-rs`
+commit: the rc17 commits ([rc17-manifest.json](rc17-manifest.json)) for `spec`, `sdk-rs`
 and `examples`. `.github` takes it on the commit that holds
 the published MVP 0.2 release notes: the `main` head at release, after the
 notes are merged.
 
 ```sh
 # spec (content is mvp-0.2-baseline.12; v0.2.0 is the release tag)
-git -C <repos>/spec    tag -a v0.2.0 -m "OpenLFCP MVP 0.2" <rc17 spec commit>
+git -C <repos>/spec    tag -a v0.2.0 -m "OpenLFCP MVP 0.2" bf1c78c596eef85e272c04a8a35661f814c23a40
 git -C <repos>/spec    push origin v0.2.0
 
 # sdk-rs
-git -C <repos>/sdk-rs  tag -a v0.2.0 -m "OpenLFCP MVP 0.2" <rc17 sdk-rs commit>
+git -C <repos>/sdk-rs  tag -a v0.2.0 -m "OpenLFCP MVP 0.2" 0a8239bc86f64d07fc0fcddca8d03d6ec0a9fd94
 git -C <repos>/sdk-rs  push origin v0.2.0
 
 # examples
-git -C <repos>/examples tag -a v0.2.0 -m "OpenLFCP MVP 0.2" <rc17 examples commit>
+git -C <repos>/examples tag -a v0.2.0 -m "OpenLFCP MVP 0.2" e7c3d2764a3a1cf17ca87a97e72bb0c235f1c7b0
 git -C <repos>/examples push origin v0.2.0
 
 # .github
@@ -45,7 +45,7 @@ git -C <repos>/.github push origin v0.2.0
 
 ## sdk-ts: npm, not a `v0.2.0` git tag here
 
-`@openlfcp/*` `0.2.0` (rc17's sdk-ts commit, `<rc17 sdk-ts commit>`) is
+`@openlfcp/*` `0.2.0` (rc17's sdk-ts commit, `2a34beb`, tagged `v0.2.0`) is
 published under the dist-tag **`latest`** from `sdk-ts` through its own
 release flow (the `npm-publish` environment, owner-approved),
 driven by the tag that repository's release process expects. It is listed
@@ -57,7 +57,7 @@ the npm approval step.
 
 MVP 0.2 ships the deployed reference server `0.3.2`
 ([notes](server-0.3.2-release-notes.md)). rc17's server commit
-(`<rc17 server commit>`) is `0.3.2` plus pin-only commits, so **no new server tag is expected** (V1: "server
+(`138030a`) is `0.3.2` plus pin-only commits, so **no new server tag is expected** (V1: "server
 only if it changed"). Tag the server only if the candidate pins a server
 commit past `v0.3.2`:
 
@@ -75,7 +75,7 @@ happen in the same step, or catalog users never receive the update.
 
 ```sh
 # plugin release tag (scheme per obsidian docs/devel/release.md)
-git -C <repos>/obsidian tag -a 0.4.0 -m "Shared Tasks 0.4.0" <rc17 obsidian commit: Shared Tasks 0.4.0 on @openlfcp/* 0.2.0>
+git -C <repos>/obsidian tag -a 0.4.0 -m "Shared Tasks 0.4.0" ce0660a519cdce089630e63e1d390009c6148284
 git -C <repos>/obsidian push origin 0.4.0
 ```
 

@@ -31,16 +31,16 @@ Wire features are in
 
 | Repository | Version | What it provides |
 | --- | --- | --- |
-| `spec` | `mvp-0.2-baseline.12`, tagged `v0.2.0` (`<rc17 commit>`) | SHARED-SECTIONS-PROFILE-01 (ADR 0009), MARKDOWN-SECTIONS-01, SDK-SECTIONS-INTEGRATION-01, the canonical change encoding and operation references (ADR 0010), the shared sections corpus and the Markdown fixtures; MVP 0.1's files unchanged |
-| `sdk-ts` | `@openlfcp/*` `0.2.0` on npm, dist-tag `latest` (`<rc17 commit>`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
-| `sdk-rs` | `v0.2.0` (`<rc17 commit>`) | The shared sections profile (feature `shared-sections`), the canonical change and reference checks, admission fuzzers |
-| `server` | `0.3.2` (deployed; reference server `7afa509`, on sdk-rs `d31d4d8`) | The reference server. It never decodes sections. 0.3.2 adds two wire fixes over 0.3.1 ([notes](server-0.3.2-release-notes.md)); the store format is unchanged. `main` (`<rc17 commit>`) is 0.3.2 plus pin-only commits, so a separate `v0.2.0`/`v0.3.x` server tag is not expected (V1: "server only if changed") |
-| `obsidian` | Shared Tasks `0.4.0`, on `@openlfcp/*` 0.2.0 (`<rc17 commit>`) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md). The plugin carries its own version tag, not `v0.2.0` |
-| `examples` | `v0.2.0` (`<rc17 commit>`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
+| `spec` | `mvp-0.2-baseline.12`, tagged `v0.2.0` (`bf1c78c`) | SHARED-SECTIONS-PROFILE-01 (ADR 0009), MARKDOWN-SECTIONS-01, SDK-SECTIONS-INTEGRATION-01, the canonical change encoding and operation references (ADR 0010), the shared sections corpus and the Markdown fixtures; MVP 0.1's files unchanged |
+| `sdk-ts` | `@openlfcp/*` `0.2.0` on npm, dist-tag `latest` (`2a34beb`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
+| `sdk-rs` | `v0.2.0` (`0a8239b`) | The shared sections profile (feature `shared-sections`), the canonical change and reference checks, admission fuzzers |
+| `server` | `0.3.2` (deployed; reference server `7afa509`, on sdk-rs `d31d4d8`) | The reference server. It never decodes sections. 0.3.2 adds two wire fixes over 0.3.1 ([notes](server-0.3.2-release-notes.md)); the store format is unchanged. rc17's server commit (`138030a`) is 0.3.2 plus pin-only commits (`main`, `b96721f`, adds only the deploy configuration), so a separate `v0.2.0`/`v0.3.x` server tag is not expected (V1: "server only if changed") |
+| `obsidian` | Shared Tasks `0.4.0`, on `@openlfcp/*` 0.2.0 (`ce0660a`) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md). The plugin carries its own version tag, not `v0.2.0` |
+| `examples` | `v0.2.0` (`e7c3d27`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
 
-The pins of the final candidate, rc17, are in `<rc17-manifest.json>`. Its
+The pins of the final candidate, rc17, are in [rc17-manifest.json](rc17-manifest.json). Its
 evidence is the release evidence record exported by rc-verify (LFCP-02-073):
-`<mvp-0.2-release-evidence-rc17.json>`.
+[mvp-0.2-release-evidence-rc17.json](mvp-0.2-release-evidence-rc17.json).
 
 ## Highlights
 
@@ -129,8 +129,8 @@ Shared Tasks 0.4.0 (0.4.0-beta.20) and the SDK 0.2.0 (0.2.0-beta.10):
 ## Evidence
 
 The final candidate, rc17: every release-blocking gate green on one pinned
-set of commits (`<rc17 report>`; the previous candidate rc16:
-[mvp-0.2-candidate-report.md](mvp-0.2-candidate-report.md)). The release
+set of commits ([mvp-0.2-candidate-report.md](mvp-0.2-candidate-report.md);
+the previous candidates are in [rc-verification.md](rc-verification.md)). The release
 decision and its waivers are in [mvp-0.2-go-no-go.md](mvp-0.2-go-no-go.md).
 The reports before it, at the pins they name:
 

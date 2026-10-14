@@ -9,32 +9,34 @@ the final decision line is signed.
 
 ## Candidate under review
 
-Final candidate: **`<rc17>`** (LFCP-02-073), pins `<rc17-manifest.json>`,
-evidence `<mvp-0.2-release-evidence-rc17.json>`. rc17 carries the release
+Final candidate: **rc17** (LFCP-02-073), pins [rc17-manifest.json](rc17-manifest.json),
+evidence [mvp-0.2-release-evidence-rc17.json](mvp-0.2-release-evidence-rc17.json). rc17 carries the release
 versions: sdk-ts `@openlfcp/*` **0.2.0** (npm, `latest`) and Shared Tasks
 **0.4.0**. The previous candidate, rc16
-([candidate report](mvp-0.2-candidate-report.md),
+([rc-verification.md](rc-verification.md),
 [evidence JSON](mvp-0.2-release-evidence-rc16.json),
 [rc16-manifest.json](rc16-manifest.json)), had the same code at
 0.2.0-beta.10 and 0.4.0-beta.20.
 
 | Repository | rc17 commit | Version / tag |
 | --- | --- | --- |
-| spec | `<…>` | mvp-0.2-baseline.12 |
-| sdk-rs | `<…>` | — |
-| server | `<…>` | 0.3.2 plus a pin-only commit |
-| sdk-ts | `<…>` | 0.2.0 (npm, `latest`) |
-| examples | `<…>` | — |
-| obsidian | `<…>` | Shared Tasks 0.4.0 |
-| .github | `<…>` | — |
+| spec | `bf1c78c` | mvp-0.2-baseline.12 |
+| sdk-rs | `0a8239b` | — |
+| server | `138030a` | 0.3.2 plus a pin-only commit (`main` `b96721f` adds only the deploy configuration) |
+| sdk-ts | `2a34beb` | 0.2.0 (npm, `latest`), tag `v0.2.0` |
+| examples | `e7c3d27` | — |
+| obsidian | `ce0660a` | Shared Tasks 0.4.0 (branch `rw/plugin-0.4.0`) |
+| .github | `1be6b96` | — |
 
 ## rc-verify gates (automated)
 
-rc17: `<report>`. rc16 passed all eight rc-verify gates on the first full
-run (`report-20261014T162853Z`, Linux), `LFCP_REQUIRE_LIVE=1`: spec,
+rc17 passed all eight rc-verify gates on the first full run
+(`report-20261014T191116Z`, Darwin arm64), `LFCP_REQUIRE_LIVE=1`: spec,
 .github, docs, sdk-rs, server, sdk-ts, examples, obsidian. Pins consistent
-with no lag. sdk-ts 2470/2470, obsidian 1652/1652, examples `--strict` 282
-PASS, 2 N/A, all 0 skips. See the
+(server `main` is one deploy-configuration commit past the pin). sdk-ts
+2470/2470, obsidian 1652/1652, both 0 skips; `release:check` at 0.2.0 under
+`latest`; examples `--strict` 282 PASS, 2 N/A. rc16 had passed them too
+(`report-20261014T162853Z`, Linux). See the
 [candidate report](mvp-0.2-candidate-report.md).
 
 ## Scope gates G01–G12
@@ -135,7 +137,7 @@ MVP 0.3 open decisions (not addressed in 0.2; the owner decides them for
 
 The release owner records the decision for the final candidate:
 
-- **Candidate:** `<rc17>` (`<rc17-manifest.json>`), with sdk-ts `@openlfcp/*` 0.2.0 and Shared Tasks 0.4.0
+- **Candidate:** rc17 ([rc17-manifest.json](rc17-manifest.json)), with sdk-ts `@openlfcp/*` 0.2.0 and Shared Tasks 0.4.0
 - **Decision:** **GO** (owner, 2026-10-14), pending the signature below
 - **Conditions or waivers:** B12 and B13 WAIVED (Platform smoke green in CI on three operating systems); the pilot (LFCP-02-075) WAIVED for the release, run after it on 0.4.0; G10 PASS with Windows and macOS covered by Platform smoke only
 - **Open blockers at decision:** none

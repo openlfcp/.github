@@ -90,7 +90,7 @@ deployed instance.
 
 The server binary and code have not changed since `0.3.2`. Only the
 deploy configuration changed: server `deploy/server.toml`
-(`<server deploy commit>`) now sets as its defaults the limits deployed on
+(`b96721f`) now sets as its defaults the limits deployed on
 sync.openlfcp.org (B15: quotas, connection and message limits, storage
 total). A configuration change is not a release, so no new server tag is
 needed.
