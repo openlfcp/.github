@@ -31,16 +31,16 @@ Wire features are in
 
 | Repository | Version | What it provides |
 | --- | --- | --- |
-| `spec` | `mvp-0.2-baseline.12`, tagged `v0.2.0` (`bf1c78c`) | SHARED-SECTIONS-PROFILE-01 (ADR 0009), MARKDOWN-SECTIONS-01, SDK-SECTIONS-INTEGRATION-01, the canonical change encoding and operation references (ADR 0010), the shared sections corpus and the Markdown fixtures; MVP 0.1's files unchanged |
-| `sdk-ts` | npm `0.2.0` (dist-tag `latest`, `<v0.2.0 commit>`; the final candidate rc16 is `0.2.0-beta.10` on `beta`, `d473907`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
-| `sdk-rs` | `v0.2.0` (`0a8239b`) | The shared sections profile (feature `shared-sections`), the canonical change and reference checks, admission fuzzers |
-| `server` | `0.3.2` (deployed; reference server `7afa509`, on sdk-rs `d31d4d8`) | The reference server. It never decodes sections. 0.3.2 adds two wire fixes over 0.3.1 ([notes](server-0.3.2-release-notes.md)); the store format is unchanged. `main` (`138030a`) is 0.3.2 plus a pin-only commit, so a separate `v0.2.0`/`v0.3.x` server tag is not expected (V1: "server only if changed") |
-| `obsidian` | Shared Tasks `0.4.0` (`<v0.4.0 commit>`; the final candidate rc16 is `0.4.0-beta.20`, `4ce8e77`) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md). The plugin carries its own version tag, not `v0.2.0` |
-| `examples` | `v0.2.0` (`ae36811`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
+| `spec` | `mvp-0.2-baseline.12`, tagged `v0.2.0` (`<rc17 commit>`) | SHARED-SECTIONS-PROFILE-01 (ADR 0009), MARKDOWN-SECTIONS-01, SDK-SECTIONS-INTEGRATION-01, the canonical change encoding and operation references (ADR 0010), the shared sections corpus and the Markdown fixtures; MVP 0.1's files unchanged |
+| `sdk-ts` | `@openlfcp/*` `0.2.0` on npm, dist-tag `latest` (`<rc17 commit>`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
+| `sdk-rs` | `v0.2.0` (`<rc17 commit>`) | The shared sections profile (feature `shared-sections`), the canonical change and reference checks, admission fuzzers |
+| `server` | `0.3.2` (deployed; reference server `7afa509`, on sdk-rs `d31d4d8`) | The reference server. It never decodes sections. 0.3.2 adds two wire fixes over 0.3.1 ([notes](server-0.3.2-release-notes.md)); the store format is unchanged. `main` (`<rc17 commit>`) is 0.3.2 plus pin-only commits, so a separate `v0.2.0`/`v0.3.x` server tag is not expected (V1: "server only if changed") |
+| `obsidian` | Shared Tasks `0.4.0`, on `@openlfcp/*` 0.2.0 (`<rc17 commit>`) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md). The plugin carries its own version tag, not `v0.2.0` |
+| `examples` | `v0.2.0` (`<rc17 commit>`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
 
-The pins of the final candidate are in [rc16-manifest.json](rc16-manifest.json). Its
+The pins of the final candidate, rc17, are in `<rc17-manifest.json>`. Its
 evidence is the release evidence record exported by rc-verify (LFCP-02-073):
-[mvp-0.2-release-evidence-rc16.json](mvp-0.2-release-evidence-rc16.json).
+`<mvp-0.2-release-evidence-rc17.json>`.
 
 ## Highlights
 
@@ -128,8 +128,10 @@ Shared Tasks 0.4.0 (0.4.0-beta.20) and the SDK 0.2.0 (0.2.0-beta.10):
 
 ## Evidence
 
-The final candidate, rc16: every release-blocking gate green on one pinned
-set of commits ([mvp-0.2-candidate-report.md](mvp-0.2-candidate-report.md)).
+The final candidate, rc17: every release-blocking gate green on one pinned
+set of commits (`<rc17 report>`; the previous candidate rc16:
+[mvp-0.2-candidate-report.md](mvp-0.2-candidate-report.md)). The release
+decision and its waivers are in [mvp-0.2-go-no-go.md](mvp-0.2-go-no-go.md).
 The reports before it, at the pins they name:
 
 - Secure two-vault qualification, headless, at `mvp-0.2-baseline.2`: plan
@@ -148,7 +150,10 @@ The reports before it, at the pins they name:
 - The desktop matrix (LFCP-02-069): install and upgrade, themes and views,
   split view, the Tasks plugin, the clipboard (obsidian
   `docs/devel/testing/support-matrix-0.2.md`).
-- `<TBD>` The restore rehearsal (LFCP-02-074) and the pilot (LFCP-02-075).
+- A manual check of two Obsidian vaults by the owner, steps 0–13.
+- `<TBD>` The restore rehearsal (LFCP-02-074).
+- The pair pilot (LFCP-02-075) runs after the release, on Shared Tasks
+  0.4.0; its results feed 0.2.x and MVP 0.3.
 
 ## Limits
 
@@ -168,12 +173,13 @@ The reports before it, at the pins they name:
 - **No nested headings** in a section in 0.2: sharing offers to split it.
 - **Two moves into one parent** stay a conflict for a person to resolve (P5).
 - **Project server quotas.** The project sync server (`sync.openlfcp.org`)
-  currently lets one identity host up to 200 collaborations (each shared
-  section is one), up to 50 new ones a day from one network, 256 MiB of
+  currently lets one identity host up to `<200>` collaborations (each shared
+  section is one), up to `<50>` new ones a day from one network, 256 MiB of
   stored data in all and 128 MiB per collaboration. Past a limit the action
   is refused with "quota exceeded"; nothing already shared is lost. A server
-  you run yourself sets its own. `<TBD: B15, the owner confirms the final
-  values>`
+  you run yourself sets its own. `<TBD: B15 — the server's deploy
+  configuration sets no quota, so its defaults would be 20 and 10; the
+  owner confirms the values deployed on sync.openlfcp.org>`
 
 ## Known limitations
 
@@ -185,8 +191,9 @@ The reports before it, at the pins they name:
 - **Gaps still open in the register**
   ([mvp-0.2-baseline-gaps.md](mvp-0.2-baseline-gaps.md)), `<TBD: status at
   release>`:
-  - B12: manual smoke on Windows and Linux;
-  - B13: IME input in sections, manual checklist;
+  - B12: manual smoke on Windows and Linux — waived: Platform smoke is
+    green in CI on Windows, macOS and Linux;
+  - B13: IME input in sections, manual checklist — waived, as B12;
   - B14: the plugin's beta channel;
   - B15: public server quotas;
   - B16: the restore test of the public server;
@@ -194,7 +201,9 @@ The reports before it, at the pins they name:
   - B18: remaining section vectors;
   - B19: cross-language check of the epoch cutoff.
 - The pair pilot is a small product check, not a statistical one
-  (LFCP-02-075).
+  (LFCP-02-075). It runs after this release, on Shared Tasks 0.4.0.
+- **Not in 0.2, for MVP 0.3:** the conflict scope of a section beyond the
+  frozen set (MS14) and invitation expiry; the owner decides them for 0.3.
 
 ## Upgrading
 
