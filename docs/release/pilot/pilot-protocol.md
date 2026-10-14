@@ -27,7 +27,7 @@ substitute for independent usability evidence.
 
 ## Build and window
 
-- **Build:** a BRAT pre-release `0.4.0-beta.19` (LFCP-02-094), installed as
+- **Build:** a BRAT pre-release `0.4.0-beta.20` (LFCP-02-094), installed as
   in [pilot-install-guide.md](pilot-install-guide.md). The community
   directory and Obsidian's own updates keep offering 0.3.x; `manifest.json`
   on `main` moves to `0.4.0` only at the public release.
@@ -99,7 +99,7 @@ Anonymised and minimal (see [pilot-consent.md](pilot-consent.md) and
 [pilot-feedback-form.md](pilot-feedback-form.md)):
 
 - **Anonymised pair ID** (e.g. `P1`, `P2`), and a per-person tag within it.
-- **Build ID**: the exact build each person ran (`0.4.0-beta.19`, or a later
+- **Build ID**: the exact build each person ran (`0.4.0-beta.20`, or a later
   beta if the facilitator gave one).
 - **OS and Obsidian version** per person.
 - Per workflow: outcome, elapsed time, whether intervention was needed, and
