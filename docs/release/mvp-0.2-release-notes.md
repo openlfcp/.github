@@ -32,15 +32,15 @@ Wire features are in
 | Repository | Version | What it provides |
 | --- | --- | --- |
 | `spec` | `mvp-0.2-baseline.12`, tagged `v0.2.0` (`bf1c78c`) | SHARED-SECTIONS-PROFILE-01 (ADR 0009), MARKDOWN-SECTIONS-01, SDK-SECTIONS-INTEGRATION-01, the canonical change encoding and operation references (ADR 0010), the shared sections corpus and the Markdown fixtures; MVP 0.1's files unchanged |
-| `sdk-ts` | npm `0.2.0` (dist-tag `latest`, `<v0.2.0 commit>`; the final candidate rc14 is `0.2.0-beta.9` on `beta`, `695cd08`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
+| `sdk-ts` | npm `0.2.0` (dist-tag `latest`, `<v0.2.0 commit>`; the final candidate rc15 is `0.2.0-beta.10` on `beta`, `d473907`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
 | `sdk-rs` | `v0.2.0` (`0a8239b`) | The shared sections profile (feature `shared-sections`), the canonical change and reference checks, admission fuzzers |
 | `server` | `0.3.2` (deployed; reference server `7afa509`, on sdk-rs `d31d4d8`) | The reference server. It never decodes sections. 0.3.2 adds two wire fixes over 0.3.1 ([notes](server-0.3.2-release-notes.md)); the store format is unchanged. `main` (`138030a`) is 0.3.2 plus a pin-only commit, so a separate `v0.2.0`/`v0.3.x` server tag is not expected (V1: "server only if changed") |
-| `obsidian` | Shared Tasks `0.4.0` (`<v0.4.0 commit>`; the final candidate rc14 is `0.4.0-beta.18`, `af16007`) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md). The plugin carries its own version tag, not `v0.2.0` |
-| `examples` | `v0.2.0` (`2345c56`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
+| `obsidian` | Shared Tasks `0.4.0` (`<v0.4.0 commit>`; the final candidate rc15 is `0.4.0-beta.19`, `43c7ce2`) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md). The plugin carries its own version tag, not `v0.2.0` |
+| `examples` | `v0.2.0` (`ae36811`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
 
-The pins of the final candidate are in [rc14-manifest.json](rc14-manifest.json). Its
+The pins of the final candidate are in [rc15-manifest.json](rc15-manifest.json). Its
 evidence is the release evidence record exported by rc-verify (LFCP-02-073):
-[mvp-0.2-release-evidence-rc14.json](mvp-0.2-release-evidence-rc14.json).
+[mvp-0.2-release-evidence-rc15.json](mvp-0.2-release-evidence-rc15.json).
 
 ## Highlights
 
@@ -83,7 +83,7 @@ evidence is the release evidence record exported by rc-verify (LFCP-02-073):
 Faults found while verifying the final candidate (its native tests, a
 soak of three plugin peers with offline periods, server restarts and a
 removal, and 10,000 runs of two vaults editing at once), all fixed in
-Shared Tasks 0.4.0 (0.4.0-beta.18) and the SDK 0.2.0 (0.2.0-beta.9):
+Shared Tasks 0.4.0 (0.4.0-beta.19) and the SDK 0.2.0 (0.2.0-beta.10):
 
 - **Updating from Shared Tasks 0.3.4 always starts syncing.** Updated in
   the same Obsidian window, as Obsidian's own plugin update and BRAT do,
@@ -103,6 +103,14 @@ Shared Tasks 0.4.0 (0.4.0-beta.18) and the SDK 0.2.0 (0.2.0-beta.9):
 - **Memory stays flat as a section's history grows.** The SDK kept an old
   copy of a section's document for every unchanged task: about 1.6 GB at
   2,000 changes of a 170-task section. It now keeps one.
+- **A section with deleted tasks stays fast as its history grows.** Each
+  read of its tree compared every change with all its ancestors: after a
+  few thousand changes, a change took a second or more to appear. The SDK
+  now decides it with vector clocks and derives the tree once per
+  revision.
+- **New tasks next to an unresolved conflict are saved** (they failed with
+  "Local save failed"), and a new member who can't insert a section yet
+  because of a conflict is told what to do.
 - **Moving a task by cut and paste no longer deletes it for
   collaborators** when the paste came while a change was still being
   written into the note.
@@ -117,7 +125,7 @@ Shared Tasks 0.4.0 (0.4.0-beta.18) and the SDK 0.2.0 (0.2.0-beta.9):
 
 ## Evidence
 
-The final candidate, rc14: every release-blocking gate green on one pinned
+The final candidate, rc15: every release-blocking gate green on one pinned
 set of commits ([mvp-0.2-candidate-report.md](mvp-0.2-candidate-report.md)).
 The reports before it, at the pins they name:
 
