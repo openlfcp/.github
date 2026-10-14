@@ -8,37 +8,36 @@ the final decision line is signed.
 
 ## Candidate under review
 
-Latest automated evidence: **rc12** (LFCP-02-073,
+Final automated evidence: **rc13** (LFCP-02-073,
 [candidate report](mvp-0.2-candidate-report.md),
-[evidence JSON](mvp-0.2-release-evidence-rc12.json), pins
-[rc12-manifest.json](rc12-manifest.json)). rc12's recorded status is
+[evidence JSON](mvp-0.2-release-evidence-rc13.json), pins
+[rc13-manifest.json](rc13-manifest.json)). rc13's recorded status is
 `NOT_QUALIFIED` / `decision: NOT_REVIEWED`: the automated gates are green for
 one pinned commit set; the scope verdicts, the owner checks and the pilot are
 people's to review here.
 
-| Repository | rc12 commit | Version / tag |
+| Repository | rc13 commit | Version / tag |
 | --- | --- | --- |
-| spec | `a3161f7` | mvp-0.2-baseline.10 |
-| sdk-rs | `74c3a71` | — |
-| server | `814e913` | 0.3.1 |
-| sdk-ts | `a40347c` | 0.2.0-beta.5 (npm, `beta`) |
-| examples | `1bfd20e` | — |
-| obsidian | `3780ca3` | plugin 0.4.0-beta.5 |
-| .github | `b0b2ac1` | — |
+| spec | `bf1c78c` | mvp-0.2-baseline.12 |
+| sdk-rs | `0a8239b` | — |
+| server | `138030a` | 0.3.2 plus a pin-only commit |
+| sdk-ts | `091f1a9` | 0.2.0-beta.8 (npm, `beta`) |
+| examples | `338a1d5` | — |
+| obsidian | `b59c651` | plugin 0.4.0-beta.17, the 0.4.0 candidate |
+| .github | `b4fa6e7` | — |
 
-> **Re-pin at release.** The project has since moved to spec
-> `mvp-0.2-baseline.12`, sdk-ts `0.2.0-beta.8` and server `0.3.2`, and the
-> plugin to `0.4.0-beta.15`. The owner re-pins the final candidate and
-> re-runs rc-verify before signing; the commits above are replaced with that
-> final set. `<final candidate id and manifest>`
+> **At release.** sdk-ts publishes `0.2.0` from rc13's code, and the plugin
+> moves to `0.4.0` (its version commits and the `@openlfcp/*` 0.2.0 pin
+> commit). These commits come after rc13: `<sdk-ts 0.2.0 commit>`,
+> `<obsidian 0.4.0 commit>`.
 
 ## rc-verify gates (automated)
 
-All eight rc-verify gates PASS for rc12 on the first full run
-(`report-20261012T063313Z`), `LFCP_REQUIRE_LIVE=1`, no patched-tool rerun:
-spec, .github, docs, sdk-rs, server, sdk-ts, examples, obsidian. sdk-ts
-2396/2396, obsidian 1215/1215, examples `--strict` (rust 299/299, ts 128/128
-+ 31/31), all 0 skips. See the [candidate report](mvp-0.2-candidate-report.md).
+All eight rc-verify gates PASS for rc13 on the first full run
+(`report-20261014T011503Z`, Linux), `LFCP_REQUIRE_LIVE=1`: spec, .github,
+docs, sdk-rs, server, sdk-ts, examples, obsidian. Pins consistent with no
+lag. sdk-ts 2458/2458, obsidian 1609/1609, examples `--strict` 282 PASS,
+2 N/A, all 0 skips. See the [candidate report](mvp-0.2-candidate-report.md).
 
 ## Scope gates G01–G12
 
@@ -48,24 +47,29 @@ people — the evidence record's `decision` is `NOT_REVIEWED`.
 
 | Gate | Name | Evidence | Owner verdict | Blocker |
 | --- | --- | --- | --- | --- |
-| G01 | Baseline | spec gate at baseline.10; SDK/server baseline tests ([candidate report](mvp-0.2-candidate-report.md)) | `<PASS/OPEN/WAIVED>` | `<…>` |
-| G02 | Contracts | both SDKs pass the vectors and cross-consume ([sections conformance](mvp-0.2-sdk-ts-sections-conformance.md), [compatibility matrix](../conformance/compatibility-matrix.md)) | `<…>` | `<…>` |
-| G03 | Onboarding | invitation/claim/handshake: sdk-ts live interop + examples E2E | `<…>` | `<…>` |
-| G04 | Content | Shared Objects + Shared Sections through baseline.10 ([sections conformance](mvp-0.2-sdk-ts-sections-conformance.md)) | `<…>` | `<…>` |
+| G01 | Baseline | spec gate at baseline.12 (official vectors, 49 fixtures); SDK/server baseline tests ([candidate report](mvp-0.2-candidate-report.md#scope-gates-g01g12)) | `<PASS/OPEN/WAIVED>` | `<…>` |
+| G02 | Contracts | both SDKs pass the vectors and cross-consume: examples `--strict` 282 PASS, 2 N/A ([compatibility matrix](../conformance/compatibility-matrix.md), [sections conformance](mvp-0.2-sdk-ts-sections-conformance.md)) | `<…>` | `<…>` |
+| G03 | Onboarding | invitation/claim/handshake: sdk-ts live interop + examples E2E ([candidate report](mvp-0.2-candidate-report.md#scope-gates-g01g12)) | `<…>` | `<…>` |
+| G04 | Content | Shared Objects + Shared Sections through baseline.12 (equal concurrent values agree; 94 vector cases): sdk-ts sections conformance, obsidian gate and native suite ([sections conformance](mvp-0.2-sdk-ts-sections-conformance.md)) | `<…>` | `<…>` |
 | G05 | Identity | principal/actor derivation, control chain: sdk-ts, sdk-rs gates | `<…>` | `<…>` |
-| G06 | Concurrency | convergence under faults: sdk-ts live chaos/access recovery | `<…>` | `<…>` |
-| G07 | Durability | storage, crash/restart, snapshots ([restore rehearsal](mvp-0.2-restore-rehearsal.json), [integrated recovery](mvp-0.2-integrated-recovery-qualification.md)) | `<…>` | `<…>` |
+| G06 | Concurrency | convergence under faults: sdk-ts live chaos/access recovery (2458/2458); obsidian peer-structure property test (seeds 1–5000) and its divergence detector | `<…>` | `<…>` |
+| G07 | Durability | storage, crash/restart, snapshots ([restore rehearsal](mvp-0.2-restore-rehearsal.json), [integrated recovery](mvp-0.2-integrated-recovery-qualification.md)); obsidian restart-mid-pass and stale-epoch re-apply (native) | `<…>` | `<…>` |
 | G08 | Privacy | zero plaintext/keys on the wire: examples two-vault wire-tap; sdk-ts crypto | `<…>` | `<…>` |
-| G09 | Access | grants, revocation, access recovery: sdk-ts access-recovery (6/6), examples | `<…>` | `<…>` |
-| G10 | UX | obsidian gate 1215/1215; native harness run separately (LFCP-02-096) | `<…>` | `<…>` |
-| G11 | Compatibility | compatibility matrix and the released 0.1.3 client ([two-vault](mvp-0.2-two-vault-qualification.md)) | `<…>` | `<…>` |
-| G12 | Release | rc-verify green, `release:check` (pack+install+import), npm published; this record | `<…>` | `<…>` |
+| G09 | Access | grants, revocation, access recovery: sdk-ts live access recovery, examples; offline work across an access change re-applied (§19.1, §26.2) | `<…>` | `<…>` |
+| G10 | UX | obsidian gate 1609/1609, 0 skips; native 68/68 on Obsidian 1.13.4 and 1.14.4; the desktop support matrix (obsidian `docs/devel/testing/support-matrix-0.2.md`) | `<…>` | `<…>` |
+| G11 | Compatibility | compatibility matrix and the released 0.1.3 client ([two-vault](mvp-0.2-two-vault-qualification.md)); plugin upgrade-install: 0.3.4 and 0.4.0-beta.15 updated to the candidate | `<…>` | `<…>` |
+| G12 | Release | rc-verify green, `release:check` (0.2.0-beta.8: pack+install+import), npm published under `beta`; this record | `<…>` | `<…>` |
 
 **Owner checks not covered by rc-verify** (from
 [mvp-0.2-owner-checklist.md](mvp-0.2-owner-checklist.md)):
 
-- Obsidian native acceptance harness (LFCP-02-096): `<NOT RUN / result>`.
-- Manual desktop matrix, Windows/Linux smoke (B12), IME (B13): `<…>`.
+- Obsidian native acceptance harness (LFCP-02-096): the plugin's native suite
+  at the candidate (`b59c651`), all 34 specs on Obsidian 1.13.4 and 1.14.4,
+  68/68 runs green on the first pass (run by the plugin author, Linux).
+- Desktop matrix (LFCP-02-069), Linux, native: install and upgrade, themes
+  and views, split view, the Tasks plugin, the clipboard (obsidian
+  `docs/devel/testing/support-matrix-0.2.md`). Windows/macOS: Platform smoke
+  in CI; manual smoke (B12) and IME (B13): `<…>`.
 - Immutable candidate artifacts assembled (`--assemble --repro`): `<…>`.
 
 ## Pilot outcome (LFCP-02-075)
@@ -101,8 +105,6 @@ limits and the 0.4.0-beta "Good to know":
   ~200,000 characters the card suggests a new section (no automatic action;
   history growth policy deferred, LFCP-02-112).
 - **Mobile.** Shared sections are read-only on mobile.
-- **Rare:** typing in the first moment after sharing can still leave a section
-  at "needs your attention"; a fix is in progress.
 - **Project server quotas** (sync.openlfcp.org): 200 collaborations, 50 new/day
   per network, 256 MiB total, 128 MiB per collaboration `<B15 final values>`.
 
@@ -124,7 +126,7 @@ MVP 0.3 open decisions (not addressed in 0.2):
 
 The release owner records the decision for the final candidate:
 
-- **Candidate:** `<final candidate id / manifest>`
+- **Candidate:** rc13 ([rc13-manifest.json](rc13-manifest.json)), with sdk-ts 0.2.0 and Shared Tasks 0.4.0 at `<their release commits>`
 - **Decision:** `<GO / NO-GO>`
 - **Conditions or waivers:** `<…>`
 - **Open blockers at decision:** `<none / list>`
