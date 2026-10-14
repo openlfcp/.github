@@ -50,10 +50,14 @@ at baseline.10.
       newer server, reports a damaged store; same store format, rollback
       to 0.3.0 is safe):
       [release/server-0.3.1-release-notes.md](server-0.3.1-release-notes.md).
-- [ ] Confirm the quotas the beta notes state (gap B15): 200
+- [x] Confirm the quotas the beta notes state (gap B15): the deployed
+      configuration of sync.openlfcp.org (2026-10-14) has 200
       collaborations per identity, 50 new per network per day, 256 MiB
-      per identity, 128 MiB per collaboration. They match the deployed
-      `server.toml`; change the notes if the server differs.
+      per identity, 128 MiB per collaboration; 3 GiB of storage in all
+      with at least 2 GiB of disk free; 8 open and 20 new connections a
+      minute per network address; 50 messages a second per connection
+      (burst 200); messages up to 1 MiB. The server's
+      `deploy/server.toml` carries the same values as its defaults.
 - [ ] **Restore test** on the public server, at least once before 0.4.0
       (gap B16), three cases, about 30 minutes:
       [operations/sync-server-restore-test.md](../operations/sync-server-restore-test.md).

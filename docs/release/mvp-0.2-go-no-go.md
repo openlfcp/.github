@@ -111,13 +111,12 @@ limits and the 0.4.0-beta "Good to know":
   ~200,000 characters the card suggests a new section (no automatic action;
   history growth policy deferred, LFCP-02-112).
 - **Mobile.** Shared sections are read-only on mobile.
-- **Project server quotas** (sync.openlfcp.org, B15): the release notes
-  state 200 collaborations per identity, 50 new/day per network, 256 MiB
-  per identity, 128 MiB per collaboration. The server repository's deploy
-  configuration (`deploy/server.toml`) sets no quota, so it runs the server
-  defaults: 20 collaborations per identity, 10 new/day per network,
-  256 MiB per identity, 128 MiB per collaboration. `<owner confirms the
-  values deployed on sync.openlfcp.org>`
+- **Project server limits** (sync.openlfcp.org, B15, the deployed
+  configuration): 200 collaborations per identity, 50 new/day per network
+  address, 256 MiB per identity, 128 MiB per collaboration; 3 GiB of storage in all,
+  keeping at least 2 GiB of disk free; 8 open connections and 20 new
+  connections a minute per network address; 50 messages a second per
+  connection (bursts of 200); messages up to 1 MiB.
 
 MVP 0.3 open decisions (not addressed in 0.2; the owner decides them for
 0.3):

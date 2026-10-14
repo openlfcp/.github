@@ -85,3 +85,12 @@ pins and docs, so it would behave the same.
 
 The owner's beta and pilot checks on sync.openlfcp.org cover the
 deployed instance.
+
+## Deploy configuration
+
+The server binary and code have not changed since `0.3.2`. Only the
+deploy configuration changed: server `deploy/server.toml`
+(`<server deploy commit>`) now sets as its defaults the limits deployed on
+sync.openlfcp.org (B15: quotas, connection and message limits, storage
+total). A configuration change is not a release, so no new server tag is
+needed.

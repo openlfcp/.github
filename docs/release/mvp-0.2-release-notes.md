@@ -173,13 +173,15 @@ The reports before it, at the pins they name:
 - **No nested headings** in a section in 0.2: sharing offers to split it.
 - **Two moves into one parent** stay a conflict for a person to resolve (P5).
 - **Project server quotas.** The project sync server (`sync.openlfcp.org`)
-  currently lets one identity host up to `<200>` collaborations (each shared
-  section is one), up to `<50>` new ones a day from one network, 256 MiB of
-  stored data in all and 128 MiB per collaboration. Past a limit the action
-  is refused with "quota exceeded"; nothing already shared is lost. A server
-  you run yourself sets its own. `<TBD: B15 — the server's deploy
-  configuration sets no quota, so its defaults would be 20 and 10; the
-  owner confirms the values deployed on sync.openlfcp.org>`
+  lets one identity host up to 200 collaborations (each shared section is
+  one), up to 50 new ones a day from one network, 256 MiB of stored data
+  per identity and 128 MiB per collaboration. Past a limit the action is
+  refused with "quota exceeded"; nothing already shared is lost. It also
+  allows 8 open connections and 20 new connections a minute from one
+  network address, 50 messages a second per connection (bursts of 200)
+  and messages up to 1 MiB, within 3 GiB of storage in all. A server you
+  run yourself sets its own; the reference server's `deploy/server.toml`
+  ships these values as its defaults.
 
 ## Known limitations
 
