@@ -19,7 +19,7 @@ As in MVP 0.1:
 - the shared tasks of MVP 0.1 keep working unchanged, beside the sections.
 
 It implements the OpenLFCP MVP 0.2 subset of LFCP-WIRE-01 at
-`spec: mvp-0.2-baseline.<N>` `<TBD: N, currently 12>`. That is MVP 0.1's
+`spec: mvp-0.2-baseline.12`. That is MVP 0.1's
 `mvp-0.1-baseline.10` unchanged, plus the shared sections profile. MVP 0.2
 adds no Wire feature. The specifications remain Working Drafts; the deferred
 Wire features are in
@@ -31,15 +31,16 @@ Wire features are in
 
 | Repository | Version | What it provides |
 | --- | --- | --- |
-| `spec` | `mvp-0.2-baseline.12`, tagged `v0.2.0` (`<v0.2.0 commit>`) | SHARED-SECTIONS-PROFILE-01 (ADR 0009), MARKDOWN-SECTIONS-01, SDK-SECTIONS-INTEGRATION-01, the canonical change encoding and operation references (ADR 0010), the shared sections corpus and the Markdown fixtures; MVP 0.1's files unchanged |
-| `sdk-ts` | npm `0.2.0` (dist-tag `latest`; currently `0.2.0-beta.8` on `beta`, `<v0.2.0 commit>`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
-| `sdk-rs` | `v0.2.0` (`<v0.2.0 commit>`; currently `0a8239b`) | The shared sections profile (feature `shared-sections`), the canonical change and reference checks, admission fuzzers |
+| `spec` | `mvp-0.2-baseline.12`, tagged `v0.2.0` (`bf1c78c`) | SHARED-SECTIONS-PROFILE-01 (ADR 0009), MARKDOWN-SECTIONS-01, SDK-SECTIONS-INTEGRATION-01, the canonical change encoding and operation references (ADR 0010), the shared sections corpus and the Markdown fixtures; MVP 0.1's files unchanged |
+| `sdk-ts` | npm `0.2.0` (dist-tag `latest`, `<v0.2.0 commit>`; the final candidate rc13 is `0.2.0-beta.8` on `beta`, `091f1a9`) | The shared sections profile (`@openlfcp/shared-objects/sections`), batches with durable receipts and statuses (`SyncClient.commit`), status events and access state, local state encrypted at rest |
+| `sdk-rs` | `v0.2.0` (`0a8239b`) | The shared sections profile (feature `shared-sections`), the canonical change and reference checks, admission fuzzers |
 | `server` | `0.3.2` (deployed; reference server `7afa509`, on sdk-rs `d31d4d8`) | The reference server. It never decodes sections. 0.3.2 adds two wire fixes over 0.3.1 ([notes](server-0.3.2-release-notes.md)); the store format is unchanged. `main` (`138030a`) is 0.3.2 plus a pin-only commit, so a separate `v0.2.0`/`v0.3.x` server tag is not expected (V1: "server only if changed") |
-| `obsidian` | Shared Tasks `0.4.0` (`<v0.4.0 commit>`; currently `0.4.0-beta.15`, beta.16 pending) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md). The plugin carries its own version tag, not `v0.2.0` |
-| `examples` | `v0.2.0` (`<v0.2.0 commit>`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
+| `obsidian` | Shared Tasks `0.4.0` (`<v0.4.0 commit>`; the final candidate rc13 is `0.4.0-beta.17`, `b59c651`) | Shared sections in notes, beside 0.3's shared tasks: [0.4.0 notes](https://github.com/openlfcp/obsidian/blob/main/docs/releases/0.4.0.md). The plugin carries its own version tag, not `v0.2.0` |
+| `examples` | `v0.2.0` (`338a1d5`) | `lfcp-todo` with section commands, the secure two-vault qualification, the two-vault demonstration and its reviewer checklist, the cross-language conformance run |
 
-The pins of the final candidate are in `<TBD: rcN-manifest.json>`. Its
-evidence is the release evidence record exported by rc-verify (LFCP-02-073).
+The pins of the final candidate are in [rc13-manifest.json](rc13-manifest.json). Its
+evidence is the release evidence record exported by rc-verify (LFCP-02-073):
+[mvp-0.2-release-evidence-rc13.json](mvp-0.2-release-evidence-rc13.json).
 
 ## Highlights
 
@@ -77,9 +78,28 @@ evidence is the release evidence record exported by rc-verify (LFCP-02-073).
   refer only to its own history (SPEC-PATCH-10, ADR 0010). Both SDKs refuse
   the rest, and the corpus checks it.
 
+## Fixed before release
+
+Two faults found while verifying the final candidate, both fixed in Shared
+Tasks 0.4.0 (0.4.0-beta.17):
+
+- **Updating from Shared Tasks 0.3.4 always starts syncing.** Updated in
+  the same Obsidian window, as Obsidian's own plugin update and BRAT do,
+  0.4 could find 0.3.4's data still in use and not start, about half of
+  the time: nothing synced and nothing said why until Obsidian was
+  restarted. It now takes the vault's lock before opening its data, and
+  waits for the old version to finish.
+- **A note open only in Reading view shows a collaborator's changes.** They
+  used to be written where Obsidian never saved them: the Reading view kept
+  the old text while the section said it was up to date, and switching
+  back to editing lost them from the note. Such a note is now synced
+  through its file.
+
 ## Evidence
 
-`<TBD: final candidate>` The reports so far, at the pins they name:
+The final candidate, rc13: every release-blocking gate green on one pinned
+set of commits ([mvp-0.2-candidate-report.md](mvp-0.2-candidate-report.md)).
+The reports before it, at the pins they name:
 
 - Secure two-vault qualification, headless, at `mvp-0.2-baseline.2`: plan
   §7 steps 1–11, the negatives, server opacity
@@ -92,9 +112,12 @@ evidence is the release evidence record exported by rc-verify (LFCP-02-073).
   ([mvp-0.2-sdk-ts-sections-conformance.md](mvp-0.2-sdk-ts-sections-conformance.md)).
 - Plugin performance, headless, on macOS: W200 meets every budget of plan
   §10 (obsidian `docs/devel/reports/section-performance-headless.md`, §5).
-- `<TBD>` Native acceptance in Obsidian (LFCP-02-066), the desktop matrix
-  (LFCP-02-069), the restore rehearsal (LFCP-02-074) and the pilot
-  (LFCP-02-075): results of the final candidate.
+- Native acceptance in Obsidian (LFCP-02-066): the plugin's native suite on
+  Obsidian 1.13.4 and 1.14.4 at the candidate, 68/68 runs green.
+- The desktop matrix (LFCP-02-069): install and upgrade, themes and views,
+  split view, the Tasks plugin, the clipboard (obsidian
+  `docs/devel/testing/support-matrix-0.2.md`).
+- `<TBD>` The restore rehearsal (LFCP-02-074) and the pilot (LFCP-02-075).
 
 ## Limits
 
