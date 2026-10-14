@@ -3,21 +3,26 @@
 **Status:** DRAFT (LFCP-02-103, materials for LFCP-02-075), not run. The
 thresholds below are the frozen values of
 [MVP-0.2-TEST-AND-RELEASE-PLAN.md](../../MVP-0.2-TEST-AND-RELEASE-PLAN.md)
-§13; the counts drafted there for 5–10 pairs are re-derived for 3–5 pairs by
-LFCP-02-005 before the pilot. `<…>` marks a value the owner settles.
+§13, unchanged. `<…>` marks a value the owner settles.
+
+> **Owner decision, 2026-10-14.** The pilot is **WAIVED for the MVP 0.2
+> release** and runs after it: about two weeks later, on the GA build
+> Shared Tasks **0.4.0**, with employees of the owner's company. Its
+> thresholds do not change. Its findings feed 0.2.x and MVP 0.3.
 
 ## Purpose
 
 Collect ordinary-user evidence that the approved MVP 0.2 flow — sharing a
 section, joining, co-editing, offline, conflicts and access — works and is
-understood, before the public release. This is a small product check, not
+understood, on the released build. This is a small product check, not
 statistical proof of market fit. Repeated attempts by one expert do not
 substitute for independent usability evidence.
 
 ## Participants
 
-- **3–5 opt-in pairs** (decision V2), at least **two pairs with
-  non-developer users**.
+- **5 opt-in pairs** (10 people), so that the pilot reaches the frozen
+  **10 onboarding attempts**; at least **two pairs with non-developer
+  users**.
 - At least **two pairs** use **W100/W200-scale real workflows**: a section
   of about **100–200 tasks** with their notes.
 - An earlier dogfood of 2–3 pairs precedes this pilot (LFCP-02-105); it is
@@ -27,13 +32,11 @@ substitute for independent usability evidence.
 
 ## Build and window
 
-- **Build:** a BRAT pre-release `0.4.0-beta.20` (LFCP-02-094), installed as
-  in [pilot-install-guide.md](pilot-install-guide.md). The community
-  directory and Obsidian's own updates keep offering 0.3.x; `manifest.json`
-  on `main` moves to `0.4.0` only at the public release.
+- **Build:** Shared Tasks **0.4.0** (GA), installed from Obsidian's
+  community plugin directory as in
+  [pilot-install-guide.md](pilot-install-guide.md). No BRAT and no beta.
 - **Window:** at least **7 days** of ordinary usage per pair.
-- **Server:** `<the project server sync.openlfcp.org, or a server the owner
-  names for the pilot>`.
+- **Server:** the project server `sync.openlfcp.org`.
 
 ## Daily workflows each pair runs
 
@@ -73,9 +76,9 @@ conflict in valuable notes. Suggested script:
 
 ## Frozen outcome thresholds
 
-From the test plan §13. `<LFCP-02-005 re-derives the exact counts for 3–5
-pairs; the owner freezes them at M02-0/M02-1. Never adjust a threshold
-silently to turn a failing result green.>`
+From the test plan §13, unchanged by the owner's 2026-10-14 decision. Ten
+attempts need all 5 pairs (two people each). Never adjust a threshold
+silently to turn a failing result green.
 
 - At least **10 observed end-to-end onboarding attempts** across the pilot;
   at least **8 completed without developer intervention** using the supplied
@@ -99,8 +102,8 @@ Anonymised and minimal (see [pilot-consent.md](pilot-consent.md) and
 [pilot-feedback-form.md](pilot-feedback-form.md)):
 
 - **Anonymised pair ID** (e.g. `P1`, `P2`), and a per-person tag within it.
-- **Build ID**: the exact build each person ran (`0.4.0-beta.20`, or a later
-  beta if the facilitator gave one).
+- **Build ID**: the exact build each person ran (`0.4.0`, or a later 0.4.x
+  if one is released during the window).
 - **OS and Obsidian version** per person.
 - Per workflow: outcome, elapsed time, whether intervention was needed, and
   an issue code if any.
@@ -114,11 +117,15 @@ vault upload.
 
 ## Roles and support
 
-- **Facilitator:** `<owner or named helper>` runs onboarding, records
+- **Facilitator:** `<…>` runs onboarding, records
   observations, and gives help only when a pair is blocked (recording that
   help counts against the "without developer intervention" target).
-- **Support channel:** `<support contact placeholder>` (see
-  pilot-install-guide.md).
+- **Support channel:** [GitHub Discussions of the openlfcp
+  organization](https://github.com/orgs/openlfcp/discussions), category **Pilot** (see
+  [pilot-install-guide.md](pilot-install-guide.md)). "Export diagnostics…"
+  output is never posted there: it goes to the facilitator privately.
+- **Retention:** pilot records are deleted **90 days after the pilot ends**
+  (see [pilot-consent.md](pilot-consent.md)).
 - **Safety:** on any suspected unsafe projection or publication, stop the
   affected path with a tested mechanism and show an honest blocked state;
   do not wipe caches or regenerate identity to make the UI look healthy
@@ -128,4 +135,5 @@ vault upload.
 
 A **sanitised pilot report** per
 [pilot-report-template.md](pilot-report-template.md), plus actionable
-findings. Completion records observation, not release approval.
+findings for 0.2.x and MVP 0.3. Completion records observation, not release
+approval.

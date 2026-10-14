@@ -9,7 +9,7 @@ per person per pair. Keep answers free of note content, links and keys.
 
 - **Pair ID:** `<Pn>` **Person tag:** `<a|b>`
 - **Developer or non-developer:** `<…>`
-- **Build ID:** `0.4.0-beta.20`  **OS:** `<…>`  **Obsidian version:** `<…>`
+- **Build ID:** `0.4.0`  **OS:** `<…>`  **Obsidian version:** `<…>`
 
 ## Questions
 

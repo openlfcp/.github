@@ -16,18 +16,17 @@ names, paths, invitation links or keys. The thresholds are those frozen in
 ## 2. Scope and builds
 
 - **Pilot window:** `<start>` – `<end>` (`<days>` days per pair).
-- **Build IDs used:** `0.4.0-beta.20` `<list every build; note any
-  mid-pilot update>`.
-- **Server:** `<project server / named pilot server>`.
-- **Distribution:** BRAT pre-release (`openlfcp/obsidian`, "Latest
-  version"); `manifest.json` on `main` stayed at `<version>` (no catalog
-  release during the pilot).
+- **Build IDs used:** `0.4.0` `<list every build; note any mid-pilot
+  0.4.x update>`.
+- **Server:** `sync.openlfcp.org`.
+- **Distribution:** Obsidian's community plugin directory (Shared Tasks
+  0.4.0, GA).
 
 ## 3. Participants (anonymised)
 
 | Pair | Person | Developer? | OS | Obsidian | Build ID |
 | --- | --- | --- | --- | --- | --- |
-| P1 | a | `<y/n>` | `<…>` | `<…>` | `0.4.0-beta.20` |
+| P1 | a | `<y/n>` | `<…>` | `<…>` | `0.4.0` |
 | P1 | b | `<…>` | `<…>` | `<…>` | `<…>` |
 | … | | | | | |
 

@@ -5,14 +5,15 @@ participants. `<…>` marks a value the owner settles.
 
 ## What this is
 
-You are invited to try **Shared Tasks for Obsidian** (version
-`0.4.0-beta.20`, a pre-release) with one other person for about **7 days**,
+You are invited to try **Shared Tasks for Obsidian** (version `0.4.0`,
+from Obsidian's community plugins) with one other person for about **7
+days**, on the project server `sync.openlfcp.org`,
 and to tell us how it went. Taking part is voluntary. You can stop at any
 time, for any reason, without giving a reason.
 
 ## What you will do
 
-Install a beta of the plugin, share a section of a note with your partner,
+Install the plugin, share a section of a note with your partner,
 edit it together, try it offline, resolve one practice conflict on made-up
 content, and answer a few short questions. A short guide walks you through
 it.
@@ -28,7 +29,8 @@ Only the minimum needed to learn whether the flow works and is understood:
 - your answers to a few comprehension questions;
 - any **sanitised feedback you choose to write**;
 - if a problem needs detail, the output of **"Export diagnostics…"**, which
-  you preview in full and send **only if you choose to**.
+  you preview in full and send **only if you choose to**, privately to the
+  facilitator — never in a public post.
 
 ## What we never collect
 
@@ -41,9 +43,9 @@ Only the minimum needed to learn whether the flow works and is understood:
 invitation links**, and it shows you the whole report before anything leaves
 your device.
 
-## Beta risks — please read
+## Risks — please read
 
-- This is **pre-release software**. The specifications are still drafts.
+- This is **early MVP software**. The specifications are still drafts.
   **Do not use it for data you need to protect.**
 - **Keep a copy of your vault** before you start, or use a test vault.
 - **There is no way back to 0.3.x on a device once 0.4 has started**: the
@@ -55,24 +57,26 @@ your device.
 
 ## Withdrawal
 
-Tell `<support contact placeholder>` that you want to stop. You can withdraw
+Tell the facilitator (`<…>`) that you want to stop. You can withdraw
 at any time. On withdrawal we stop collecting anything new from you and, if
 you ask, remove the feedback you have given, except anything already
 aggregated anonymously into a summary where it can no longer be singled out.
 
 ## Retention
 
-- Collected feedback and records are kept **`<retention period, owner
-  sets>`** and then deleted.
+- Collected feedback and records are kept **90 days after the pilot
+  ends** and then deleted.
 - The sanitised pilot report may quote **anonymised, aggregated** results;
   it contains nothing that identifies you or your notes.
 
 ## Your agreement
 
 By taking part you confirm that you have read this, that you are taking part
-voluntarily, and that you understand this is pre-release software to be used
+voluntarily, and that you understand this is early MVP software to be used
 with a backup or a test vault.
 
 - Participant (anonymised ID): `<Pn>`
 - Date: `<date>`
-- Contact for questions and withdrawal: `<support contact placeholder>`
+- Facilitator: `<…>`
+- Questions: [GitHub Discussions of the openlfcp organization](https://github.com/orgs/openlfcp/discussions),
+  category **Pilot**; withdrawal: the facilitator
