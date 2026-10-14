@@ -6,7 +6,7 @@ participants. `<…>` marks a value the owner settles.
 ## What this is
 
 You are invited to try **Shared Tasks for Obsidian** (version
-`0.4.0-beta.<N>`, a pre-release) with one other person for about **7 days**,
+`0.4.0-beta.17`, a pre-release) with one other person for about **7 days**,
 and to tell us how it went. Taking part is voluntary. You can stop at any
 time, for any reason, without giving a reason.
 
