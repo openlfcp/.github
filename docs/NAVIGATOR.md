@@ -45,7 +45,8 @@ catalogs every artifact across the repositories, with its status.
 | [release/rc12-manifest.json](release/rc12-manifest.json) | release | The pins of rc12, superseded by rc13 (spec baseline.10, sdk-ts 0.2.0-beta.5, server 814e913, obsidian 0.4.0-beta.5) |
 | [release/rc13-manifest.json](release/rc13-manifest.json) | release | The pins of rc13, superseded by rc14 (spec baseline.12, sdk-ts 0.2.0-beta.8, server 138030a, obsidian 0.4.0-beta.17) |
 | [release/rc14-manifest.json](release/rc14-manifest.json) | release | The pins of rc14, superseded by rc15 (spec baseline.12, sdk-ts 0.2.0-beta.9, server 138030a, obsidian 0.4.0-beta.18) |
-| [release/rc15-manifest.json](release/rc15-manifest.json) | release | The pins of rc15, the MVP 0.2 final candidate (spec baseline.12, sdk-ts 0.2.0-beta.10, server 138030a, obsidian 0.4.0-beta.19) |
+| [release/rc15-manifest.json](release/rc15-manifest.json) | release | The pins of rc15, superseded by rc16 (spec baseline.12, sdk-ts 0.2.0-beta.10, server 138030a, obsidian 0.4.0-beta.19) |
+| [release/rc16-manifest.json](release/rc16-manifest.json) | release | The pins of rc16, the MVP 0.2 final candidate and the pilot's (spec baseline.12, sdk-ts 0.2.0-beta.10, server 138030a, obsidian 0.4.0-beta.20) |
 | [release/mvp-0.2-baseline-inventory.md](release/mvp-0.2-baseline-inventory.md) | release, contributors | MVP 0.2 baseline (LFCP-02-001): components, versions, locks, artifacts, build and release paths, sources, superseded documents |
 | [release/mvp-0.2-baseline-manifest.json](release/mvp-0.2-baseline-manifest.json) | release | The commits of the MVP 0.2 baseline inventory |
 | [release/mvp-0.2-client-baseline.md](release/mvp-0.2-client-baseline.md) | release, contributors | MVP 0.2 client baseline (LFCP-02-002): the inherited sdk-ts security and durability checks, by area |
@@ -57,12 +58,13 @@ catalogs every artifact across the repositories, with its status.
 | [release/mvp-0.2-integrated-recovery-qualification.json](release/mvp-0.2-integrated-recovery-qualification.json) | release | LFCP-02-070 machine-readable evidence: commits, server binary hash, per-test results, recorded facts |
 | [release/mvp-0.2-restore-rehearsal.json](release/mvp-0.2-restore-rehearsal.json) | release | LFCP-02-074 machine-readable evidence of the restore rehearsal: commits, image ID, backup hash, phase results, recorded facts |
 | [release/mvp-0.2-release-evidence-template.json](release/mvp-0.2-release-evidence-template.json) | release | The unfilled MVP 0.2 RELEASE-EVIDENCE template that rc-verify fills (test and release plan §16; LFCP-02-073) |
-| [release/mvp-0.2-candidate-report.md](release/mvp-0.2-candidate-report.md) | release | LFCP-02-073: the MVP 0.2 final-candidate (rc15) verification report — candidate commits, gates, scope gates G01–G12, what did not run, issues found |
+| [release/mvp-0.2-candidate-report.md](release/mvp-0.2-candidate-report.md) | release | LFCP-02-073: the MVP 0.2 final-candidate (rc16) verification report — candidate commits, gates, scope gates G01–G12, what did not run, issues found |
 | [release/mvp-0.2-release-evidence-rc11.json](release/mvp-0.2-release-evidence-rc11.json) | release | LFCP-02-073: the filled RELEASE-EVIDENCE record for rc11 (components, pins, rc-verify gates) |
 | [release/mvp-0.2-release-evidence-rc12.json](release/mvp-0.2-release-evidence-rc12.json) | release | LFCP-02-073: the filled RELEASE-EVIDENCE record for rc12 (components, pins, rc-verify gates) |
 | [release/mvp-0.2-release-evidence-rc13.json](release/mvp-0.2-release-evidence-rc13.json) | release | LFCP-02-073: the filled RELEASE-EVIDENCE record for rc13 (components, pins, rc-verify gates) |
 | [release/mvp-0.2-release-evidence-rc14.json](release/mvp-0.2-release-evidence-rc14.json) | release | LFCP-02-073: the filled RELEASE-EVIDENCE record for rc14 (components, pins, rc-verify gates) |
 | [release/mvp-0.2-release-evidence-rc15.json](release/mvp-0.2-release-evidence-rc15.json) | release | LFCP-02-073: the filled RELEASE-EVIDENCE record for rc15 (components, pins, rc-verify gates) |
+| [release/mvp-0.2-release-evidence-rc16.json](release/mvp-0.2-release-evidence-rc16.json) | release | LFCP-02-073: the filled RELEASE-EVIDENCE record for rc16 (components, pins, rc-verify gates) |
 | [release/mvp-0.2-baseline-gaps.md](release/mvp-0.2-baseline-gaps.md) | release, owner | MVP 0.2 baseline gaps (LFCP-02-006): gap register with owning tasks, blocking predicates for beta, integration and release |
 | [release/security-review-mvp-0.1.md](release/security-review-mvp-0.1.md) | release | The MVP 0.1 pre-release security review: findings, fixes, known limitations |
 | [release/open-decision-actor-seq-collision.md](release/open-decision-actor-seq-collision.md) | owner | Open decision: two Automerge changes with the same actor and sequence number; options, recommendation, and what shipping as is means |

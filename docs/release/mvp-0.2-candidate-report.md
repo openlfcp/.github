@@ -1,4 +1,4 @@
-# MVP 0.2 release-candidate report (rc15)
+# MVP 0.2 release-candidate report (rc16)
 
 **Task:** LFCP-02-073 (end-to-end verification of the final candidate).
 **Date:** 2026-10-14. **Host:** Linux 7.0.0-38-generic x86_64.
@@ -7,16 +7,14 @@ checks and the pilot are reviewed by people; this report is the local,
 automated evidence that every release-blocking gate is green for one pinned
 set of commits.
 
-**Supersession:** rc15 is the final candidate, at spec `mvp-0.2-baseline.12`.
-It supersedes **rc14** (same spec, server and sdk-rs). Since rc14: sdk-ts
-0.2.0-beta.10 (a section with deleted tasks stays fast as its history grows)
-and the plugin's 0.4.0 candidate, 0.4.0-beta.19 (new tasks next to an
-unresolved conflict are saved; a new member is told what to do when a
-conflict blocks inserting a section). 0.4.0-beta.18, rc14's plugin, was never
-released; 0.4.0-beta.17 (rc13's) was.
+**Supersession:** rc16 is the final candidate, at spec `mvp-0.2-baseline.12`,
+and the candidate for the pilot. It supersedes **rc15** (the same spec,
+server, sdk-rs, sdk-ts 0.2.0-beta.10 and examples). Since rc15: the plugin's
+0.4.0 candidate, 0.4.0-beta.20 (moving a task by cut and paste keeps it
+whole; deleting a selected task line removes it cleanly).
 
-Pins: [rc15-manifest.json](rc15-manifest.json). Evidence record:
-[mvp-0.2-release-evidence-rc15.json](mvp-0.2-release-evidence-rc15.json).
+Pins: [rc16-manifest.json](rc16-manifest.json). Evidence record:
+[mvp-0.2-release-evidence-rc16.json](mvp-0.2-release-evidence-rc16.json).
 Tooling: [rc-verification.md](rc-verification.md).
 
 ## Candidate commits
@@ -28,38 +26,37 @@ Tooling: [rc-verification.md](rc-verification.md).
 | server | `138030a` | — |
 | sdk-ts | `d473907` | 0.2.0-beta.10 (npm, dist-tag `beta`) |
 | examples | `ae36811` | — |
-| obsidian | `43c7ce2` | plugin 0.4.0-beta.19 (manifest-beta.json), the 0.4.0 candidate |
-| .github | `e02f6d1` | — |
+| obsidian | `4ce8e77` | plugin 0.4.0-beta.20 (manifest-beta.json), the 0.4.0 candidate |
+| .github | `97895d1` | — |
 
 Pins are **consistent**, with no lag: every `spec.lock`, `server.lock`,
 `sdk-rs.lock` and `conformance/pins.json` names the candidate commit, and each
 obsidian `@openlfcp/*` dependency is sdk-ts's `0.2.0-beta.10`, published on
 npm. Spec HEAD is the baseline.12 tag commit. examples' release sdk-ts pin was
-moved to `d473907` for this candidate (examples `ae36811`, branch
-`rw/rc15-examples-pin`; the strict run green with it).
+moved to `d473907` for rc15 (examples `ae36811`); unchanged for rc16.
 
 ## Gates
 
-All eight rc-verify gates are **green** for rc15 on the first full run,
-`report-20261014T134136Z`.
+All eight rc-verify gates are **green** for rc16 on the first full run,
+`report-20261014T162853Z`.
 
 | Gate | Result | Duration |
 | --- | --- | --- |
-| spec | PASS | 228.4 s |
+| spec | PASS | 226.2 s |
 | .github | PASS | 0.1 s |
 | docs | PASS | 0.1 s |
-| sdk-rs | PASS | 76.6 s |
-| server | PASS | 89.2 s |
-| sdk-ts | PASS | 206.5 s |
-| examples | PASS | 148.3 s |
-| obsidian | PASS | 49.5 s |
+| sdk-rs | PASS | 76.1 s |
+| server | PASS | 87.2 s |
+| sdk-ts | PASS | 196.2 s |
+| examples | PASS | 147.4 s |
+| obsidian | PASS | 46.3 s |
 
 Every gate ran with `LFCP_REQUIRE_LIVE=1` (live tests may not skip),
 `CARGO_BUILD_JOBS=2`, two Rust test threads and `BUNDLE_FROZEN=true` (the spec
 gate on Linux, see [rc-verification.md](rc-verification.md#requirements)).
 rc-verify builds `lfcp-server` once at the server commit and passes
 `LFCP_SERVER_BIN` to the sdk-ts and obsidian gates. sdk-ts ran 2470/2470 (140
-files, 0 skips) and `release:check`; obsidian ran 1642/1642 (156 files, 0
+files, 0 skips) and `release:check`; obsidian ran 1652/1652 (157 files, 0
 skips); examples `--strict` passed with 282 PASS, 2 N/A (known gaps), 0 FAIL;
 sdk-rs (both feature sets) and server tests all passed.
 
@@ -67,8 +64,8 @@ sdk-rs (both feature sets) and server tests all passed.
 
 - **obsidian native harness** (real Obsidian, LFCP-02-096): run separately by
   the plugin author, not part of the default rc-verify gates (desktop
-  session, long). At `43c7ce2`: all 35 native specs on Obsidian 1.13.4 and
-  1.14.4, 70/70 runs green on the first pass; the desktop support matrix
+  session, long). At `4ce8e77`: all 37 native specs on Obsidian 1.13.4 and
+  1.14.4, 74/74 runs green on the first pass; the desktop support matrix
   (LFCP-02-069) is in obsidian `docs/devel/testing/support-matrix-0.2.md`.
 - **Owner manual checks** (`mvp-0.2-owner-checklist.md`): NOT RUN — the owner's.
 - **Pilot** (real two-vault field use): NOT RUN — the owner's.
@@ -84,7 +81,7 @@ sdk-rs (both feature sets) and server tests all passed.
 These are reviewed by people (the evidence record's `decision` is
 `NOT_REVIEWED`). The automated evidence this candidate supplies:
 
-| Gate | Name | Automated evidence (rc15) |
+| Gate | Name | Automated evidence (rc16) |
 | --- | --- | --- |
 | G01 | Baseline | spec gate at mvp-0.2-baseline.12 (official vectors, 49 fixtures); sdk-rs/sdk-ts/server baseline tests green |
 | G02 | Contracts | both SDKs pass the vectors and cross-consume: examples `--strict` (282 PASS, 2 N/A), sdk-ts/sdk-rs gates |
@@ -95,39 +92,38 @@ These are reviewed by people (the evidence record's `decision` is
 | G07 | Durability | storage, crash/restart, snapshot catch-up: sdk-ts storage + live restart; obsidian restart-mid-pass (native), the stale-epoch re-apply; the section replica's memory flat as the history grows (0.2.0-beta.9) and its passes fast with deleted tasks (0.2.0-beta.10) |
 | G08 | Privacy | zero plaintext/keys on the wire: examples two-vault wire-tap; sdk-ts crypto |
 | G09 | Access | grants, revocation, access recovery: sdk-ts live access recovery; offline work across an access change re-applied (§19.1, §26.2); a Snapshot of the new epoch after a removal (obsidian) |
-| G10 | UX | the Obsidian plugin: obsidian gate 1642/1642, 0 skips; native 70/70 on 1.13.4 and 1.14.4; the desktop support matrix |
+| G10 | UX | the Obsidian plugin: obsidian gate 1652/1652, 0 skips; native 74/74 on 1.13.4 and 1.14.4, with real keyboard and mouse moves (Shift+Down, a line selected with the mouse); the desktop support matrix |
 | G11 | Compatibility | compatibility matrix and the released 0.1.3 client: examples; obsidian upgrade-install (0.3.4 and 0.4.0-beta.15 updated to the candidate) |
 | G12 | Release | rc-verify green, `release:check` (0.2.0-beta.10, dist-tag `beta`, pack+install+import), npm published; this report and manifest |
 
 ## Issues found and resolved
 
-All eight gates passed on the first full run of rc15. Before it: examples'
-release sdk-ts pin named the beta.9 commit (`695cd08`); moved to `d473907`
-with the strict run green (examples `ae36811`). The spec worktree's Ruby
-gems (`vendor/bundle`) were copied from rc14's, at the same `Gemfile.lock`.
+All eight gates passed on the first full run of rc16; the spec worktree's
+Ruby gems (`vendor/bundle`) were copied from rc15's, at the same
+`Gemfile.lock`.
 
-Found by the plugin's acceptance soak of 0.4.0-beta.18 and fixed for this
-candidate:
+Found by the owner's manual round on 0.4.0-beta.19 and fixed for this
+candidate (obsidian, in 0.4.0-beta.20):
 
-- **A section with deleted tasks got slower as its history grew**: each
-  read of its tree compared every change with all its ancestors (pass p50
-  ~1 s and p95 4–6 s after ~3,000 changes). sdk-ts 0.2.0-beta.10 (`35b4c7f`)
-  decides concurrency with vector clocks, reuses the decoded history between
-  revisions and derives the tree once per revision: at 6,000 changes with
-  300 deleted tasks, a pass takes 200 ms against 746 ms, and a status read
-  no longer derives the tree again. The results are identical to beta.9's
-  (300 random histories).
-- **New tasks next to an unresolved conflict failed to save** ("Local save
-  failed", INVALID_PREDECESSOR): the batch is now planned around a
-  predecessor the SDK refuses (obsidian `01231e4`).
-- **A new member could not tell why a section would not insert** while it
-  had a conflict: the notice now says who can resolve it and how
-  (`0c87bc3`; LFCP-02-123 lifts the refusal itself).
+- **Moving a task by cut and paste could damage its binding line.** In
+  Live Preview, Shift+Down from a task's line start ends after the next
+  line's indentation when that task is nested: the cut took the
+  indentation, and the paste gave it to the line it landed on, both
+  bindings damaged (`f04c5e3`). A task's line selected with the mouse
+  exactly (its hidden binding line below it) was cut without that line,
+  left alone and damaged (`a9f14dd`). Both now keep the task whole; a
+  delete of such a selection removes the task.
+- Native specs `section-shift-down-cut` and `section-whole-line-cut` (real
+  keys and mouse): before the fixes they show the owner's damage, with them
+  they pass on 1.13.4 and 1.14.4.
 
-The fixes of rc14 (a newcomer after a removal, the stuck "waiting", the
-reconnect, the false "needs attention", cut and paste, a hidden node,
-memory flat with history, the Review conflicts dead end) are in this
-candidate too; see rc14's row in [rc-verification.md](rc-verification.md).
+The plugin's final acceptance soak of 0.4.0-beta.19 (two hours, offline
+periods, server restarts, a removal and a new member) kept pass p50 flat at
+98–126 ms through 4,979 changes and every reconnect under 13 s (obsidian
+`docs/devel/reports/soak-0.4.0-beta.17.md` §7).
+
+The fixes of rc14 and rc15 are in this candidate too; see their rows in
+[rc-verification.md](rc-verification.md).
 
 ## Open items
 
@@ -138,5 +134,6 @@ candidate too; see rc14's row in [rc-verification.md](rc-verification.md).
   pins moving to it come with the release, after this candidate.
 - LFCP-02-120 (storage-idb waits on a blocked open) is after 0.2; the plugin
   works around it on start. LFCP-02-121 (serialise receipt release in
-  sdk-ts), LFCP-02-122 (no idle IndexedDB work per resource) and LFCP-02-123
-  (insert a section that has an open conflict) are after 0.2.
+  sdk-ts), LFCP-02-122 (no idle IndexedDB work per resource), LFCP-02-123
+  (insert a section that has an open conflict) and LFCP-02-124 (Repair
+  re-renders bindings) are after 0.2.
