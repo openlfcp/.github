@@ -8,35 +8,35 @@ the final decision line is signed.
 
 ## Candidate under review
 
-Final automated evidence: **rc14** (LFCP-02-073,
+Final automated evidence: **rc15** (LFCP-02-073,
 [candidate report](mvp-0.2-candidate-report.md),
-[evidence JSON](mvp-0.2-release-evidence-rc14.json), pins
-[rc14-manifest.json](rc14-manifest.json)). rc14's recorded status is
+[evidence JSON](mvp-0.2-release-evidence-rc15.json), pins
+[rc15-manifest.json](rc15-manifest.json)). rc15's recorded status is
 `NOT_QUALIFIED` / `decision: NOT_REVIEWED`: the automated gates are green for
 one pinned commit set; the scope verdicts, the owner checks and the pilot are
 people's to review here.
 
-| Repository | rc14 commit | Version / tag |
+| Repository | rc15 commit | Version / tag |
 | --- | --- | --- |
 | spec | `bf1c78c` | mvp-0.2-baseline.12 |
 | sdk-rs | `0a8239b` | — |
 | server | `138030a` | 0.3.2 plus a pin-only commit |
-| sdk-ts | `695cd08` | 0.2.0-beta.9 (npm, `beta`) |
-| examples | `2345c56` | — |
-| obsidian | `af16007` | plugin 0.4.0-beta.18, the 0.4.0 candidate |
-| .github | `83e5f87` | — |
+| sdk-ts | `d473907` | 0.2.0-beta.10 (npm, `beta`) |
+| examples | `ae36811` | — |
+| obsidian | `43c7ce2` | plugin 0.4.0-beta.19, the 0.4.0 candidate |
+| .github | `e02f6d1` | — |
 
-> **At release.** sdk-ts publishes `0.2.0` from rc14's code, and the plugin
+> **At release.** sdk-ts publishes `0.2.0` from rc15's code, and the plugin
 > moves to `0.4.0` (its version commits and the `@openlfcp/*` 0.2.0 pin
-> commit). These commits come after rc14: `<sdk-ts 0.2.0 commit>`,
+> commit). These commits come after rc15: `<sdk-ts 0.2.0 commit>`,
 > `<obsidian 0.4.0 commit>`.
 
 ## rc-verify gates (automated)
 
-All eight rc-verify gates PASS for rc14 in one full run
-(`report-20261014T082452Z`, Linux), `LFCP_REQUIRE_LIVE=1`: spec, .github,
+All eight rc-verify gates PASS for rc15 on the first full run
+(`report-20261014T134136Z`, Linux), `LFCP_REQUIRE_LIVE=1`: spec, .github,
 docs, sdk-rs, server, sdk-ts, examples, obsidian. Pins consistent with no
-lag. sdk-ts 2465/2465, obsidian 1638/1638, examples `--strict` 282 PASS,
+lag. sdk-ts 2470/2470, obsidian 1642/1642, examples `--strict` 282 PASS,
 2 N/A, all 0 skips. See the [candidate report](mvp-0.2-candidate-report.md).
 
 ## Scope gates G01–G12
@@ -52,21 +52,20 @@ people — the evidence record's `decision` is `NOT_REVIEWED`.
 | G03 | Onboarding | invitation/claim/handshake: sdk-ts live interop + examples E2E ([candidate report](mvp-0.2-candidate-report.md#scope-gates-g01g12)) | `<…>` | `<…>` |
 | G04 | Content | Shared Objects + Shared Sections through baseline.12 (equal concurrent values agree; 94 vector cases): sdk-ts sections conformance, obsidian gate and native suite ([sections conformance](mvp-0.2-sdk-ts-sections-conformance.md)) | `<…>` | `<…>` |
 | G05 | Identity | principal/actor derivation, control chain: sdk-ts, sdk-rs gates | `<…>` | `<…>` |
-| G06 | Concurrency | convergence under faults: sdk-ts live chaos/access recovery (2465/2465); obsidian peer-structure property test (seeds 1–10000), its divergence detector, and a soak of three plugin peers (offline periods, server restarts, a removal) | `<…>` | `<…>` |
+| G06 | Concurrency | convergence under faults: sdk-ts live chaos/access recovery (2470/2470); obsidian peer-structure property test (seeds 1–10000), its divergence detector, and a soak of three plugin peers (offline periods, server restarts, a removal) | `<…>` | `<…>` |
 | G07 | Durability | storage, crash/restart, snapshots ([restore rehearsal](mvp-0.2-restore-rehearsal.json), [integrated recovery](mvp-0.2-integrated-recovery-qualification.md)); obsidian restart-mid-pass and stale-epoch re-apply (native) | `<…>` | `<…>` |
 | G08 | Privacy | zero plaintext/keys on the wire: examples two-vault wire-tap; sdk-ts crypto | `<…>` | `<…>` |
 | G09 | Access | grants, revocation, access recovery: sdk-ts live access recovery, examples; offline work across an access change re-applied (§19.1, §26.2) | `<…>` | `<…>` |
-| G10 | UX | obsidian gate 1638/1638, 0 skips; native 70/70 on Obsidian 1.13.4 and 1.14.4; the desktop support matrix (obsidian `docs/devel/testing/support-matrix-0.2.md`) | `<…>` | `<…>` |
+| G10 | UX | obsidian gate 1642/1642, 0 skips; native 70/70 on Obsidian 1.13.4 and 1.14.4; the desktop support matrix (obsidian `docs/devel/testing/support-matrix-0.2.md`) | `<…>` | `<…>` |
 | G11 | Compatibility | compatibility matrix and the released 0.1.3 client ([two-vault](mvp-0.2-two-vault-qualification.md)); plugin upgrade-install: 0.3.4 and 0.4.0-beta.15 updated to the candidate | `<…>` | `<…>` |
-| G12 | Release | rc-verify green, `release:check` (0.2.0-beta.9: pack+install+import), npm published under `beta`; this record | `<…>` | `<…>` |
+| G12 | Release | rc-verify green, `release:check` (0.2.0-beta.10: pack+install+import), npm published under `beta`; this record | `<…>` | `<…>` |
 
 **Owner checks not covered by rc-verify** (from
 [mvp-0.2-owner-checklist.md](mvp-0.2-owner-checklist.md)):
 
 - Obsidian native acceptance harness (LFCP-02-096): the plugin's native suite
-  at the candidate (`af16007`), all 35 specs on Obsidian 1.13.4 and 1.14.4,
-  70/70 runs green (69 on the first pass, one spec green on its rerun
-  under load; run by the plugin author, Linux).
+  at the candidate (`43c7ce2`), all 35 specs on Obsidian 1.13.4 and 1.14.4,
+  70/70 runs green on the first pass (run by the plugin author, Linux).
 - Desktop matrix (LFCP-02-069), Linux, native: install and upgrade, themes
   and views, split view, the Tasks plugin, the clipboard (obsidian
   `docs/devel/testing/support-matrix-0.2.md`). Windows/macOS: Platform smoke
@@ -127,7 +126,7 @@ MVP 0.3 open decisions (not addressed in 0.2):
 
 The release owner records the decision for the final candidate:
 
-- **Candidate:** rc14 ([rc14-manifest.json](rc14-manifest.json)), with sdk-ts 0.2.0 and Shared Tasks 0.4.0 at `<their release commits>`
+- **Candidate:** rc15 ([rc15-manifest.json](rc15-manifest.json)), with sdk-ts 0.2.0 and Shared Tasks 0.4.0 at `<their release commits>`
 - **Decision:** `<GO / NO-GO>`
 - **Conditions or waivers:** `<…>`
 - **Open blockers at decision:** `<none / list>`
