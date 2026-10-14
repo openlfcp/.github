@@ -2341,7 +2341,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-4 / RP09  
-**Type / priority / status:** qualification / P0 / IN_PROGRESS — Native suite 32 specs on Obsidian 1.13.4 and 1.14.4 green at beta.15 (obsidian 369b344), Platform smoke on macOS/Windows/Linux; owner manual acceptance on beta.16 pending.  
+**Type / priority / status:** qualification / P0 / DONE — Native suite 37 specs on Obsidian 1.13.4 and 1.14.4, 74/74 at obsidian 4ce8e77 (rc16, 0.4.0-beta.20); the owner's manual check of two vaults on beta.20 (steps 0-13) PASS; B13 (IME) waived (.github 53a6433, go/no-go).  
 **Depends on:** LFCP-02-056, LFCP-02-060, LFCP-02-061, LFCP-02-062, LFCP-02-063, LFCP-02-064, LFCP-02-065, LFCP-02-096, LFCP-02-100  
 **Read first:** OBSIDIAN-SYNC-INDICATORS-01.md; OBSIDIAN-SHARED-SECTIONS-UX-01.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md  
 **Gate / test trace:** G09, G10, G11 / T05, T08, T09, T10
@@ -2407,7 +2407,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / DONE — The desktop matrix in obsidian docs/devel/testing/support-matrix-0.2.md (Linux native; Platform smoke in CI on macOS, Windows, Linux); B12 waived by the owner (.github 53a6433, go/no-go).  
 **Depends on:** LFCP-02-005, LFCP-02-055, LFCP-02-063, LFCP-02-064, LFCP-02-066, LFCP-02-068, LFCP-02-095, LFCP-02-096  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G12 / T05, T08, T09, T10, T11, T12
@@ -2429,7 +2429,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** examples  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / IN_REVIEW — Headless: examples 5f51aa0; .github d665051 (release/mvp-0.2-integrated-recovery-qualification.md). The native items belong to 066.  
+**Type / priority / status:** qualification / P0 / DONE — Headless: examples 5f51aa0; .github d665051 (release/mvp-0.2-integrated-recovery-qualification.md); the native items closed with 066; G07 PASS at rc17.  
 **Depends on:** LFCP-02-024, LFCP-02-030, LFCP-02-033, LFCP-02-054, LFCP-02-055, LFCP-02-056, LFCP-02-066, LFCP-02-106  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G06, G07, G08, G09, G11, G12 / T01, T06, T07, T08, T10
@@ -2492,7 +2492,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / IN_PROGRESS — .github 1c0e4c8, 7d11fea; rc12 (2026-10-12) at baseline.10. rc13 at baseline.12 with SDK 0.2.0-beta.8 and plugin beta.16 is next.  
+**Type / priority / status:** qualification / P0 / DONE — rc17: all eight rc-verify gates PASS (.github release/rc17-manifest.json, mvp-0.2-release-evidence-rc17.json); --assemble --repro waived: npm 0.2.0 built in CI (sdk-ts release.yml run 38616796278), the plugin files by its tag workflow (dry run 38618407889).  
 **Depends on:** LFCP-02-006, LFCP-02-018, LFCP-02-022, LFCP-02-024, LFCP-02-066, LFCP-02-069, LFCP-02-070, LFCP-02-071, LFCP-02-072, LFCP-02-098, LFCP-02-099, LFCP-02-102  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md; MVP-0.2-ROADMAP.md  
 **Gate / test trace:** G12 / T01, T02, T03, T04, T05, T06, T07, T08, T09, T10, T11, T12
@@ -2514,7 +2514,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** server  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P0 / IN_REVIEW — Headless: examples 7e7b8fc, 357b005; .github 65be1c6 (operations/mvp-0.2-rollback-and-restore.md, release/mvp-0.2-restore-rehearsal.json). The native items belong to 066.  
+**Type / priority / status:** qualification / P0 / DONE — Rehearsal PASS 2026-10-09 on a local staging copy: examples 7e7b8fc, 357b005; .github 65be1c6 (operations/mvp-0.2-rollback-and-restore.md, release/mvp-0.2-restore-rehearsal.json). The restore test of sync.openlfcp.org itself is B16, the owner's.  
 **Depends on:** LFCP-02-032, LFCP-02-055, LFCP-02-073, LFCP-02-088  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-COMPATIBILITY-AND-MIGRATION.md; OBSIDIAN-SECTIONS-ARCHITECTURE-02.md; LFCP-WIRE-01.md  
 **Gate / test trace:** G12 / T11, T12
@@ -2557,7 +2557,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** release / P0 / DONE — obsidian a61d6c3: X.Y.Z-beta.N tags are published as pre-releases for BRAT; the owner's steps in docs/devel/release.md "Betas (pre-releases)". No beta released yet; the first tag is the owner's.  
+**Type / priority / status:** release / P0 / DONE — obsidian a61d6c3: X.Y.Z-beta.N tags are published as pre-releases for BRAT; betas 0.4.0-beta.1 to beta.20 went out this way before 0.4.0.  
 **Depends on:** LFCP-02-087  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); obsidian: docs/devel/release.md  
 **Gate / test trace:** G12 / T12
@@ -2621,7 +2621,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-5 / RP10  
-**Type / priority / status:** qualification / P1 / IN_PROGRESS — Owner dogfood on BRAT betas 0.4.0-beta.5 to beta.15 (2026-10-12/13); findings fixed through beta.15 (obsidian 369b344). Next round on beta.16.  
+**Type / priority / status:** qualification / P1 / BLOCKED — Deferred after GA (owner, 2026-10-14): the owner's dogfood on betas 0.4.0-beta.5 to beta.20 and the manual check on beta.20 fed the release; the pair dogfood folds into the pilot on 0.4.0 (075).  
 **Depends on:** LFCP-02-048, LFCP-02-049, LFCP-02-052, LFCP-02-087, LFCP-02-091, LFCP-02-094  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G03, G12 / T12
@@ -2686,7 +2686,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-6 / RP11  
-**Type / priority / status:** qualification / P1 / NOT_STARTED  
+**Type / priority / status:** qualification / P1 / BLOCKED — Deferred after GA (owner, 2026-10-14): waived for the release; runs about two weeks later on Shared Tasks 0.4.0 with employees of the owner's company, 5 pairs, thresholds unchanged; results feed 0.2.x and MVP 0.3. Materials: .github docs/release/pilot/.  
 **Depends on:** LFCP-02-072, LFCP-02-073, LFCP-02-074, LFCP-02-091, LFCP-02-094, LFCP-02-103, LFCP-02-105  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-ROADMAP.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md  
 **Gate / test trace:** G12 / T12
@@ -2708,7 +2708,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-6 / RP11  
-**Type / priority / status:** qualification / P0 / NOT_STARTED  
+**Type / priority / status:** qualification / P0 / BLOCKED — Deferred after GA with the pilot (075): pilot defects go to 0.2.x and MVP 0.3.  
 **Depends on:** LFCP-02-075  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-ROADMAP.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md  
 **Gate / test trace:** G12 / T12
@@ -2729,7 +2729,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-6 / RP11  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / DONE — .github 53a6433: release/mvp-0.2-go-no-go.md signed GO, 2026-10-14 (G01-G12 PASS; B12, B13, the pilot and --assemble waived).  
 **Depends on:** LFCP-02-076  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-ROADMAP.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md  
 **Gate / test trace:** G12 / T12
@@ -2751,7 +2751,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** website  
 **Milestone / group:** M02-6 / RP12  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / DONE — website main 0141bd5 (openlfcp.org): MVP 0.2 landing page matched to the final release notes.  
 **Depends on:** LFCP-02-077, LFCP-02-080, LFCP-02-081, LFCP-02-104  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-ROADMAP.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md  
 **Gate / test trace:** G12 / T12
@@ -2773,7 +2773,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-6 / RP12  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / DONE — .github 53a6433: profile/README.md is the MVP 0.2 profile (release/mvp-0.2-org-profile-draft.md applied).  
 **Depends on:** LFCP-02-078  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-ROADMAP.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md  
 **Gate / test trace:** G12 / T12
@@ -2794,7 +2794,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** obsidian  
 **Milestone / group:** M02-6 / RP12  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / DONE — Shared Tasks 0.4.0: obsidian tag 0.4.0 on ce0660a, GitHub Release with its three files; main manifest.json 0.4.0 for the catalog.  
 **Depends on:** LFCP-02-074, LFCP-02-077, LFCP-02-092, LFCP-02-104, LFCP-02-081  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-ROADMAP.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md  
 **Gate / test trace:** G12 / T12
@@ -2816,7 +2816,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** server  
 **Milestone / group:** M02-6 / RP12  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / DONE — No server change: 0.3.2 deployed; .github release/mvp-0.2-server-no-change.md; only the deploy configuration (server b96721f, the sync.openlfcp.org limits as defaults); no new server tag.  
 **Depends on:** LFCP-02-074, LFCP-02-077  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-ROADMAP.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md  
 **Gate / test trace:** G12 / T12
@@ -2838,7 +2838,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-6 / RP12  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / DONE — .github branch rw/mvp-0.2-close: release/mvp-0.2-release-close.md closed with the release facts and the follow-up owners.  
 **Depends on:** LFCP-02-078, LFCP-02-079, LFCP-02-080, LFCP-02-081, LFCP-02-093  
 **Read first:** MVP-0.2-TEST-AND-RELEASE-PLAN.md; MVP-0.2-ROADMAP.md; MVP-0.2-REPOSITORY-IMPLEMENTATION-PLAN.md  
 **Gate / test trace:** G12 / T12
@@ -2860,7 +2860,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** sdk-ts  
 **Milestone / group:** M02-6 / RP11  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / DONE — npm @openlfcp/* 0.2.0 on latest, all 8 packages (sdk-ts tag v0.2.0 on 2a34beb, release.yml run 38616796278); pinned in obsidian 0.4.0 (ce0660a).  
 **Depends on:** LFCP-02-077  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/npm-publish-checklist.md  
 **Gate / test trace:** G12 / T12
@@ -2881,7 +2881,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github  
 **Milestone / group:** M02-6 / RP11  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / DONE — v0.2.0 tags: spec bf1c78c, sdk-rs 0a8239b, examples e7c3d27, .github 53a6433 (with the release notes), sdk-ts 2a34beb.  
 **Depends on:** LFCP-02-077, LFCP-02-092  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); .github: docs/release/rc-verification.md; .github: docs/release/mvp-0.1-release-notes.md  
 **Gate / test trace:** G12 / T12
@@ -2902,7 +2902,7 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 
 **Primary repository:** .github (owner)  
 **Milestone / group:** M02-6 / RP11  
-**Type / priority / status:** release / P1 / NOT_STARTED  
+**Type / priority / status:** release / P1 / BLOCKED — Deferred after GA (owner, 2026-10-14) with the pilot (075): materials ready in .github docs/release/pilot/ (sync.openlfcp.org, GitHub Discussions "Pilot", 90-day retention); the facilitator is still to be named.  
 **Depends on:** None  
 **Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions); MVP-0.2-TEST-AND-RELEASE-PLAN.md  
 **Gate / test trace:** G12 / T12
