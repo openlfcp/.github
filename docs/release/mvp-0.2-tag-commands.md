@@ -20,7 +20,7 @@ release settles.
 ## Version tags: `v0.2.0`
 
 `spec`, `sdk-rs`, `examples` and `.github` take `v0.2.0` on the candidate's
-commit: the rc14 commits ([rc14-manifest.json](rc14-manifest.json)) for
+commit: the rc15 commits ([rc15-manifest.json](rc15-manifest.json)) for
 `spec`, `sdk-rs` and `examples`. `.github` takes it on the commit that holds
 the published MVP 0.2 release notes: the `main` head at release, after the
 notes are merged.
@@ -35,7 +35,7 @@ git -C <repos>/sdk-rs  tag -a v0.2.0 -m "OpenLFCP MVP 0.2" 0a8239bc86f64d07fc0fc
 git -C <repos>/sdk-rs  push origin v0.2.0
 
 # examples
-git -C <repos>/examples tag -a v0.2.0 -m "OpenLFCP MVP 0.2" 2345c5660c8835d06b45bcbe0d667e435f58d804
+git -C <repos>/examples tag -a v0.2.0 -m "OpenLFCP MVP 0.2" ae368113c6f12334efcd4facf27c9c56f950e72f
 git -C <repos>/examples push origin v0.2.0
 
 # .github
@@ -74,7 +74,7 @@ happen in the same step, or catalog users never receive the update.
 
 ```sh
 # plugin release tag (scheme per obsidian docs/devel/release.md)
-git -C <repos>/obsidian tag -a 0.4.0 -m "Shared Tasks 0.4.0" <obsidian 0.4.0 commit: rc14 af16007 + the 0.4.0 version commits (rw/plugin-0.4.0-prep) + the @openlfcp/* 0.2.0 pin commit>
+git -C <repos>/obsidian tag -a 0.4.0 -m "Shared Tasks 0.4.0" <obsidian 0.4.0 commit: rc15 43c7ce2 + the 0.4.0 version commits (rw/plugin-0.4.0-prep) + the @openlfcp/* 0.2.0 pin commit>
 git -C <repos>/obsidian push origin 0.4.0
 ```
 
