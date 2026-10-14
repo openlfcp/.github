@@ -16,7 +16,7 @@ names, paths, invitation links or keys. The thresholds are those frozen in
 ## 2. Scope and builds
 
 - **Pilot window:** `<start>` – `<end>` (`<days>` days per pair).
-- **Build IDs used:** `0.4.0-beta.19` `<list every build; note any
+- **Build IDs used:** `0.4.0-beta.20` `<list every build; note any
   mid-pilot update>`.
 - **Server:** `<project server / named pilot server>`.
 - **Distribution:** BRAT pre-release (`openlfcp/obsidian`, "Latest
@@ -27,7 +27,7 @@ names, paths, invitation links or keys. The thresholds are those frozen in
 
 | Pair | Person | Developer? | OS | Obsidian | Build ID |
 | --- | --- | --- | --- | --- | --- |
-| P1 | a | `<y/n>` | `<…>` | `<…>` | `0.4.0-beta.19` |
+| P1 | a | `<y/n>` | `<…>` | `<…>` | `0.4.0-beta.20` |
 | P1 | b | `<…>` | `<…>` | `<…>` | `<…>` |
 | … | | | | | |
 
