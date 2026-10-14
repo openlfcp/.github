@@ -3,7 +3,7 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 122 tasks in 13 epics, across seven milestones  
+**Size:** 123 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
@@ -120,7 +120,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 
 | Epic | Tasks | Focus | Review milestone |
 | --- | --- | --- | --- |
-| E00 | 086, 087, 088, 089, 113, 119, 120, 121, 122 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
+| E00 | 086, 087, 088, 089, 113, 119, 120, 121, 122, 123 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
 | E01 | 001, 002, 003, 004, 005, 006, 101 | Baseline and inherited obligations | M02-0 |
 | E02 | 007, 008, 009, 010, 083, 084, 090, 107, 108, 118 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085, 114 | TypeScript section model | M02-1 |
@@ -260,6 +260,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-120 | storage-idb: wait on a blocked open, close on versionchange | sdk-ts (companion: obsidian) | P2 | — |
 | LFCP-02-121 | sdk-ts: serialise receipt release with the client's batch reports | sdk-ts | P2 | — |
 | LFCP-02-122 | SDK: no IndexedDB transaction per idle tick per resource | sdk-ts | P2 | — |
+| LFCP-02-123 | Newcomer inserts a section with an open structural conflict | obsidian | P3 | — |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -454,6 +455,28 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** sdk-ts unit and live suites; the plugin's live suite against the new SDK.
 
 **Deliverables:** The client change in an SDK release and the measurement.
+
+### LFCP-02-123 — Newcomer inserts a section with an open structural conflict
+
+**Primary repository:** obsidian  
+**Milestone / group:** M02-6 / RP00  
+**Type / priority / status:** implementation / P3 / NOT_STARTED — Found 2026-10-14 by the beta.18 acceptance soak: a newcomer could load but not insert a section with an unresolved structural conflict (insert preview "not-renderable"). For 0.4.0 the notice explains what to do. After 0.4.0.  
+**Depends on:** None  
+**Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions)  
+**Gate / test trace:** G10 / T10
+
+**Goal:** A member who joins while the section's model has an unresolved structural conflict can still insert it, with the conflicted subtree shown as the model has it and Review conflicts available.
+
+**Acceptance:**
+
+1. Preview and insert succeed with an open structural conflict: the block renders the non-conflicted part as usual and the conflicted nodes where the model places them, or at the top level with a review marker, with nothing lost.
+2. The new note's section shows ATTENTION and its details offer Review conflicts.
+3. Resolving on any member reaches the newcomer's note like any remote change.
+4. A section that cannot be rendered for another reason still refuses, with its notice.
+
+**Required checks:** A headless test with two members creating the conflict and a third joining and inserting; native acceptance-sections; the soak harness insert step.
+
+**Deliverables:** The plugin change and its tests.
 
 ## E01. Baseline and inherited obligations
 
