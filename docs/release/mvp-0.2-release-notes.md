@@ -1,8 +1,7 @@
 # OpenLFCP MVP 0.2: release notes
 
-**Status:** DRAFT (LFCP-02-093), not released. `<TBD>` marks what the final
-candidate (LFCP-02-073) and the owner still have to settle: commits, the
-spec tag, the server version and the release date.
+**Status:** final (LFCP-02-093). MVP 0.2, released with the `v0.2.0` tags
+on 2026-10-14.
 
 ## What this is
 
@@ -151,7 +150,14 @@ The reports before it, at the pins they name:
   split view, the Tasks plugin, the clipboard (obsidian
   `docs/devel/testing/support-matrix-0.2.md`).
 - A manual check of two Obsidian vaults by the owner, steps 0–13.
-- `<TBD>` The restore rehearsal (LFCP-02-074).
+- The restore rehearsal (LFCP-02-074), 2026-10-09, on a local staging
+  copy of the server's container deployment, never the public server, at
+  `mvp-0.2-baseline.2` and the commits of that day: populate, back up,
+  write after the backup, restore, reconcile. All three phases passed: the
+  restored server re-offered the unit written after the backup, and a new
+  member joined and received everything
+  ([record](mvp-0.2-restore-rehearsal.json)). It was not repeated at rc17,
+  and the restore test of `sync.openlfcp.org` itself (B16) is the owner's.
 - The pair pilot (LFCP-02-075) runs after the release, on Shared Tasks
   0.4.0; its results feed 0.2.x and MVP 0.3.
 
@@ -162,8 +168,10 @@ The reports before it, at the pins they name:
   notes (W200), on macOS. A section of 2,000 tasks works but blocks the
   editor for seconds per edit, and is not supported.
 - **Long history.** A section after many thousands of edits (W200-H) is
-  slower: an edit takes about half a second. The history growth policy is
-  the owner's decision `<TBD: LFCP-02-112>`.
+  slower: an edit takes about half a second. The section's card shows the
+  size of its history and, past about 200,000 characters, suggests
+  starting a new section (owner's decision, 2026-10-10, LFCP-02-112).
+  Automatic history compaction comes after 0.2.
 - **Mobile.** Sections are read-only on mobile (V3, LFCP-02-095): they are
   received and shown, and local edits stay on the device. Sharing, inviting
   and removing access are not offered there. The plugin stays available on
@@ -190,18 +198,22 @@ The reports before it, at the pins they name:
 - **Shared tasks of 0.3 are not converted.** Moving them into a section is an
   explicit copy: the copy gets new identities, and the old collaboration
   continues separately (P1).
-- **Gaps still open in the register**
-  ([mvp-0.2-baseline-gaps.md](mvp-0.2-baseline-gaps.md)), `<TBD: status at
-  release>`:
-  - B12: manual smoke on Windows and Linux — waived: Platform smoke is
-    green in CI on Windows, macOS and Linux;
-  - B13: IME input in sections, manual checklist — waived, as B12;
-  - B14: the plugin's beta channel;
-  - B15: public server quotas;
-  - B16: the restore test of the public server;
-  - B17: the deployed server version, observable from outside;
-  - B18: remaining section vectors;
-  - B19: cross-language check of the epoch cutoff.
+- **The gap register at release**
+  ([mvp-0.2-baseline-gaps.md](mvp-0.2-baseline-gaps.md)):
+  - B12, manual smoke on Windows and Linux: waived, because Platform smoke
+    is green in CI on Windows, macOS and Linux;
+  - B13, IME input in sections: waived, as B12;
+  - B14, the plugin's beta channel: fixed; the 0.4.0 betas went out as
+    pre-releases through BRAT;
+  - B15, public server quotas: closed; the limits of `sync.openlfcp.org`
+    are under "Limits" above;
+  - B16, the restore test of the public server: open, the owner's;
+  - B17, the deployed server version observable from outside: open, the
+    owner's;
+  - B18, remaining section vectors: fixed in the spec; the sdk-ts run is
+    pending;
+  - B19, the cross-language check of the epoch cutoff: open, still a known
+    gap in examples.
 - The pair pilot is a small product check, not a statistical one
   (LFCP-02-075). It runs after this release, on Shared Tasks 0.4.0.
 - **Not in 0.2, for MVP 0.3:** the conflict scope of a section beyond the
@@ -220,8 +232,8 @@ The reports before it, at the pins they name:
   again, and its data is intact.
 - **Mixed versions in a pair.** A 0.3.x device cannot join a shared section.
   It refuses before using the invitation and says a newer version is
-  needed, so the link still works after updating. `<TBD: a 0.3.x and a 0.4
-  device sharing the same 0.1 tasks, not yet recorded as tested>`
+  needed, so the link still works after updating. A 0.3.x and a 0.4 device
+  sharing the same 0.1 tasks: not tested in 0.2.
 - **SDK users.** `@openlfcp/*` 0.2.0 reads and writes the storage of 0.1.x,
   and upgrades it to `storage-idb` database version 2, which 0.1.x cannot
   open (per the sdk-ts 0.2.0 CHANGELOG).
