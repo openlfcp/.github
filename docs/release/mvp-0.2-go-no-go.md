@@ -1,11 +1,8 @@
-# MVP 0.2 go / no-go record (draft)
+# MVP 0.2 go / no-go record
 
-**Status:** DRAFT (LFCP-02-077), owner decisions of 2026-10-14 recorded;
-awaiting the owner's signature and date. This is the record the release
-owner signs to release MVP 0.2 or to hold it. It gathers the gate evidence,
-the pilot outcome and the known issues into one decision. `<…>` marks what
-the owner or a pending step settles. Nothing here is a release approval until
-the final decision line is signed.
+**Status:** SIGNED (LFCP-02-077), 2026-10-14: **GO**. This is the record
+the release owner signed to release MVP 0.2. It gathers the gate evidence,
+the pilot outcome and the known issues into one decision.
 
 ## Candidate under review
 
@@ -73,7 +70,11 @@ twelve gates PASS**, no blockers.
   in CI.
 - B12 (manual smoke on Windows) and B13 (IME): **WAIVED** — Platform smoke
   is green in CI on all three operating systems.
-- Immutable candidate artifacts assembled (`--assemble --repro`): `<…>`.
+- Immutable candidate artifacts assembled (`--assemble --repro`):
+  **WAIVED**. npm `@openlfcp/*` 0.2.0 was built and published in CI
+  (sdk-ts `release.yml`, run 38616796278); the plugin's 0.4.0 files are
+  built by its release workflow on the tag, and its dry run 38618407889
+  is green.
 
 ## Pilot outcome (LFCP-02-075)
 
@@ -88,11 +89,11 @@ MVP 0.3; the table is filled then.
 
 | Threshold | Target | Observed | Met? |
 | --- | --- | --- | --- |
-| End-to-end onboarding attempts | ≥10 | `<…>` | `<…>` |
-| …without developer intervention | ≥8 | `<…>` | `<…>` |
-| Pairs completing edit/reconnect | all | `<…>` | `<…>` |
-| Comprehension checks correct | ≥8/10 | `<…>` | `<…>` |
-| Unresolved blocker/major; private-content publication; data loss | none | `<…>` | `<…>` |
+| End-to-end onboarding attempts | ≥10 | WAIVED for the release; runs after GA, see Pilot outcome | WAIVED |
+| …without developer intervention | ≥8 | WAIVED for the release; runs after GA, see Pilot outcome | WAIVED |
+| Pairs completing edit/reconnect | all | WAIVED for the release; runs after GA, see Pilot outcome | WAIVED |
+| Comprehension checks correct | ≥8/10 | WAIVED for the release; runs after GA, see Pilot outcome | WAIVED |
+| Unresolved blocker/major; private-content publication; data loss | none | WAIVED for the release; runs after GA, see Pilot outcome | WAIVED |
 
 Report: the sanitised pilot report (`docs/release/pilot/pilot-report-template.md`)
 when run. Unmet targets become blockers for 0.2.x / MVP 0.3, not for this
@@ -138,10 +139,10 @@ MVP 0.3 open decisions (not addressed in 0.2; the owner decides them for
 The release owner records the decision for the final candidate:
 
 - **Candidate:** rc17 ([rc17-manifest.json](rc17-manifest.json)), with sdk-ts `@openlfcp/*` 0.2.0 and Shared Tasks 0.4.0
-- **Decision:** **GO** (owner, 2026-10-14), pending the signature below
-- **Conditions or waivers:** B12 and B13 WAIVED (Platform smoke green in CI on three operating systems); the pilot (LFCP-02-075) WAIVED for the release, run after it on 0.4.0; G10 PASS with Windows and macOS covered by Platform smoke only
+- **Decision:** **GO**
+- **Conditions or waivers:** B12 and B13 WAIVED (Platform smoke green in CI on three operating systems); the pilot (LFCP-02-075) WAIVED for the release, run after it on 0.4.0; immutable candidate artifacts (`--assemble --repro`) WAIVED, the release artifacts are built in CI; G10 PASS with Windows and macOS covered by Platform smoke only
 - **Open blockers at decision:** none
-- **Release owner:** `<name>`  **Date:** `<date>`
+- **Release owner:** OpenLFCP maintainers  **Date:** 2026-10-14
 
 A GO authorises the public release steps
 ([owner checklist](mvp-0.2-owner-checklist.md) §6, and the tag commands in
