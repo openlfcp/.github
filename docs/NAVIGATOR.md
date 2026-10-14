@@ -13,6 +13,9 @@ catalogs every artifact across the repositories, with its status.
 | [MVP-0.2-TEST-AND-RELEASE-PLAN.md](MVP-0.2-TEST-AND-RELEASE-PLAN.md) | contributors, release | MVP 0.2 test families T01–T12, workloads, budgets, pilot, release stages and rollback |
 | [BACKLOG-MVP-0.2.md](BACKLOG-MVP-0.2.md) | contributors | The MVP 0.2 tasks (LFCP-02-001 to 105), the owner decisions, waves and brief rules |
 | [BACKLOG-MVP-0.2-EXECUTION-MAP.md](BACKLOG-MVP-0.2-EXECUTION-MAP.md) | contributors | Routing, gate and test coverage, and dependency levels of the MVP 0.2 backlog |
+| [mvp-0.3/baseline-manifest.md](mvp-0.3/baseline-manifest.md) | contributors, release | MVP 0.3 baseline (LFCP-03-001): the released 0.2 commits (full SHAs), sibling locks, lockfile hashes, toolchain, host matrix, build and test commands, reused CI runs, waivers not to count as PASS, the researched beta.8 pins |
+| [mvp-0.3/authority-map.md](mvp-0.3/authority-map.md) | contributors | MVP 0.3 authority (LFCP-03-001): which spec or project document decides each area, the spec answers on raw blocks, comments and deletion, and the code providers of journals, status, registry and actions in obsidian and sdk-ts |
+| [mvp-0.3/gap-register.md](mvp-0.3/gap-register.md) | contributors, owner | MVP 0.3 gap register (LFCP-03-001): beta.8 → 0.4.0 delta, F-03/F-04/F-05 status with commits, content policy, whole-projection vs body deletion reproducer, gap owners, proposed new tasks |
 | [AGENT-OPERATING-GUIDE.md](AGENT-OPERATING-GUIDE.md) | contributors | How agents and contributors work across the repositories |
 | [engineering-conventions.md](engineering-conventions.md) | contributors | Branches, commits, validation commands, labels, versioning, the Working Draft change process |
 | [ARTIFACTS-INDEX.md](ARTIFACTS-INDEX.md) | everyone | Every artifact, where it lives and its status |
