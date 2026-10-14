@@ -3,7 +3,7 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 121 tasks in 13 epics, across seven milestones  
+**Size:** 122 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
@@ -120,7 +120,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 
 | Epic | Tasks | Focus | Review milestone |
 | --- | --- | --- | --- |
-| E00 | 086, 087, 088, 089, 113, 119, 120, 121 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
+| E00 | 086, 087, 088, 089, 113, 119, 120, 121, 122 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
 | E01 | 001, 002, 003, 004, 005, 006, 101 | Baseline and inherited obligations | M02-0 |
 | E02 | 007, 008, 009, 010, 083, 084, 090, 107, 108, 118 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085, 114 | TypeScript section model | M02-1 |
@@ -259,6 +259,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-119 | Patch release 0.1.5 and plugin 0.3.4 with the D1 fix | sdk-ts (companion: obsidian) | P0 | 113 |
 | LFCP-02-120 | storage-idb: wait on a blocked open, close on versionchange | sdk-ts (companion: obsidian) | P2 | — |
 | LFCP-02-121 | sdk-ts: serialise receipt release with the client's batch reports | sdk-ts | P2 | — |
+| LFCP-02-122 | SDK: no IndexedDB transaction per idle tick per resource | sdk-ts | P2 | — |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -432,6 +433,27 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** sdk-ts unit and conformance suites; the plugin's live-release-race test against the new SDK.
 
 **Deliverables:** The sdk-ts change in an SDK release; the plugin's SdkStatusTracker re-check may stay as a guard.
+
+### LFCP-02-122 — SDK: no IndexedDB transaction per idle tick per resource
+
+**Primary repository:** sdk-ts  
+**Milestone / group:** M02-6 / RP00  
+**Type / priority / status:** implementation / P2 / NOT_STARTED — Found 2026-10-14 in soak #2: each tick runs #flush for every LIVE resource, one IndexedDB read transaction each even with an empty queue; at the plugin's 250 ms tick that is 4 per second per resource (about 200/s with 50 sections). After 0.2.  
+**Depends on:** None  
+**Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions)  
+**Gate / test trace:** G10 / T10
+
+**Goal:** An idle vault with many shared sections costs no IndexedDB work per tick.
+
+**Acceptance:**
+
+1. SyncClient flushes a resource only when its outbound queue changed since the last flush (an enqueue, an ack or a release) or when a retry or backoff timer for it is due; periodic anti-entropy (CONTROL_HAVE) keeps its own interval.
+2. Measured before and after: Obsidian 1.14.4 idle with 1, 10 and 50 shared sections, renderer CPU% over 60 s.
+3. No change in delivery: an enqueued unit is still sent within one tick, and a due retry is not delayed.
+
+**Required checks:** sdk-ts unit and live suites; the plugin's live suite against the new SDK.
+
+**Deliverables:** The client change in an SDK release and the measurement.
 
 ## E01. Baseline and inherited obligations
 
