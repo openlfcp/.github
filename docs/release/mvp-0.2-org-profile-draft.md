@@ -1,10 +1,10 @@
-# Organization profile for MVP 0.2 (draft)
+# Organization profile for MVP 0.2
 
-**Status:** DRAFT for LFCP-02-079, not published. At the MVP 0.2 release,
-the owner replaces the body of `profile/README.md` with the text below the
-line, once the release, the website and the links it names exist.
-`profile/README.md` is what GitHub shows on the organization page, so it is
-not edited before then. `<TBD>` marks what the release settles.
+**Status:** APPLIED (LFCP-02-079), 2026-10-14. The text below the line is
+now the body of [`profile/README.md`](../../profile/README.md), with the
+release versions: Shared Tasks 0.4.0, `@openlfcp/*` 0.2.0 on npm under
+`latest`, the website [openlfcp.org](https://openlfcp.org). This page keeps
+the record of what changed.
 
 Changes from the current profile:
 
@@ -49,6 +49,9 @@ relays the changes and cannot read them.
 [Release notes](https://github.com/openlfcp/.github/blob/main/docs/release/mvp-0.2-release-notes.md)
 · [MVP 0.1](https://github.com/openlfcp/.github/blob/main/docs/release/mvp-0.1-release-notes.md)
 
+Shared Tasks **0.4.0** for Obsidian, `@openlfcp/*` **0.2.0** on npm, the
+specifications tagged `v0.2.0`.
+
 - **Share a task, or a whole section of a note**, with its tasks, subtasks,
   paragraphs and lists. What is added inside a section later is shared too,
   and the text around it stays private.
@@ -72,7 +75,7 @@ what was verified and what is still open.
 **Obsidian users:** [`obsidian`](https://github.com/openlfcp/obsidian), the
 **Shared Tasks** plugin.
 
-- Install it from Community plugins
+- Install Shared Tasks 0.4.0 from Community plugins
   ([directory page](https://obsidian.md/plugins?id=shared-tasks)).
 - Read the guides:
   - the [step-by-step guide](https://github.com/openlfcp/obsidian/blob/main/docs/guides/user-guide.md);
@@ -85,7 +88,8 @@ what was verified and what is still open.
 - [`spec`](https://github.com/openlfcp/spec): the LFCP protocol, the Shared
   Objects and Shared Sections profiles, and the test vectors.
 - [`sdk-ts`](https://github.com/openlfcp/sdk-ts), published as
-  [`@openlfcp/*`](https://www.npmjs.com/org/openlfcp) on npm, and
+  [`@openlfcp/*`](https://www.npmjs.com/org/openlfcp) 0.2.0 on npm
+  (`latest`), and
   [`sdk-rs`](https://github.com/openlfcp/sdk-rs).
 - [`server`](https://github.com/openlfcp/server): a self-hosted sync server
   (Docker and Caddy).
