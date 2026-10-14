@@ -3,7 +3,7 @@
 **Project:** OpenLFCP / Shared Tasks, by OpenLFCP  
 **Date:** 2026-10-08  
 **Status:** Reviewed, 2026-10-08: the planning batch of 2026-10-07 with the owner-approved review  
-**Size:** 120 tasks in 13 epics, across seven milestones  
+**Size:** 121 tasks in 13 epics, across seven milestones  
 **Machine-readable companion:** BACKLOG-MVP-0.2.json
 
 ## 1. How to execute this backlog
@@ -120,7 +120,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 
 | Epic | Tasks | Focus | Review milestone |
 | --- | --- | --- | --- |
-| E00 | 086, 087, 088, 089, 113, 119, 120 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
+| E00 | 086, 087, 088, 089, 113, 119, 120, 121 | Sustaining 0.1.x before 0.2 (wave W0) | M02-0 |
 | E01 | 001, 002, 003, 004, 005, 006, 101 | Baseline and inherited obligations | M02-0 |
 | E02 | 007, 008, 009, 010, 083, 084, 090, 107, 108, 118 | Pinned contracts and corpus | M02-1 |
 | E03 | 011, 012, 013, 014, 015, 016, 017, 018, 085, 114 | TypeScript section model | M02-1 |
@@ -258,6 +258,7 @@ No calendar durations, story-point estimates, assignee names or task completion 
 | LFCP-02-118 | Automatic compaction of a section's history after 0.2 | spec (companions: sdk-ts, sdk-rs) | P2 | 112 |
 | LFCP-02-119 | Patch release 0.1.5 and plugin 0.3.4 with the D1 fix | sdk-ts (companion: obsidian) | P0 | 113 |
 | LFCP-02-120 | storage-idb: wait on a blocked open, close on versionchange | sdk-ts (companion: obsidian) | P2 | — |
+| LFCP-02-121 | sdk-ts: serialise receipt release with the client's batch reports | sdk-ts | P2 | — |
 
 Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs are used in every card and JSON. The forward dependencies of 078 on 080/081 are intentional: public website claims follow actual distribution/demo verification.
 
@@ -410,6 +411,27 @@ Dependency numbers in the index abbreviate the same LFCP-02 namespace; full IDs 
 **Required checks:** The storage contract suite on storage-idb; the obsidian native upgrade spec on both Obsidian versions.
 
 **Deliverables:** The storage-idb change in an SDK release, and the plugin's workaround removed.
+
+### LFCP-02-121 — sdk-ts: serialise receipt release with the client's batch reports
+
+**Primary repository:** sdk-ts  
+**Milestone / group:** M02-6 / RP00  
+**Type / priority / status:** implementation / P2 / NOT_STARTED — Soak finding #1 on 0.4.0-beta.17 (2026-10-14): releaseReceipt (receipts.ts) commits outside SyncClient's #serial queue, and batchStatus reads receipt and status in two transactions, so an ACK during a release yielded a lasting stale "pending". Worked around in the plugin (obsidian 314fa7c). After 0.2.  
+**Depends on:** None  
+**Read first:** BACKLOG-MVP-0.2.md §3 (owner decisions)  
+**Gate / test trace:** G10 / T10
+
+**Goal:** A batch status report never mixes storage reads from before and after a receipt release.
+
+**Acceptance:**
+
+1. Release goes through the client (SyncClient.releaseReceipt serialised with ACK handling), or batchStatus reads receipt and status in one transaction; a report never says pending for a batch that is final or forgotten.
+2. A deterministic test of the interleaving (like obsidian test/core/sections/live-release-race.test.ts) fails before and passes after.
+3. The release stays atomic with its receipt mark, as today.
+
+**Required checks:** sdk-ts unit and conformance suites; the plugin's live-release-race test against the new SDK.
+
+**Deliverables:** The sdk-ts change in an SDK release; the plugin's SdkStatusTracker re-check may stay as a guard.
 
 ## E01. Baseline and inherited obligations
 
