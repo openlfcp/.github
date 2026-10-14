@@ -20,23 +20,25 @@ release settles.
 ## Version tags: `v0.2.0`
 
 `spec`, `sdk-rs`, `examples` and `.github` take `v0.2.0` on the candidate's
-commit.
+commit: the rc13 commits ([rc13-manifest.json](rc13-manifest.json)). The
+`.github` commit is the one rc13 verified (b4fa6e7); the rc13 records and
+the published release notes come after it.
 
 ```sh
 # spec (content is mvp-0.2-baseline.12; v0.2.0 is the release tag)
-git -C <repos>/spec    tag -a v0.2.0 -m "OpenLFCP MVP 0.2" <spec v0.2.0 commit>
+git -C <repos>/spec    tag -a v0.2.0 -m "OpenLFCP MVP 0.2" bf1c78c596eef85e272c04a8a35661f814c23a40
 git -C <repos>/spec    push origin v0.2.0
 
 # sdk-rs
-git -C <repos>/sdk-rs  tag -a v0.2.0 -m "OpenLFCP MVP 0.2" <sdk-rs v0.2.0 commit>
+git -C <repos>/sdk-rs  tag -a v0.2.0 -m "OpenLFCP MVP 0.2" 0a8239bc86f64d07fc0fcddca8d03d6ec0a9fd94
 git -C <repos>/sdk-rs  push origin v0.2.0
 
 # examples
-git -C <repos>/examples tag -a v0.2.0 -m "OpenLFCP MVP 0.2" <examples v0.2.0 commit>
+git -C <repos>/examples tag -a v0.2.0 -m "OpenLFCP MVP 0.2" 338a1d54a114b8803fcaf1ca5b688a4de4c2bc8b
 git -C <repos>/examples push origin v0.2.0
 
 # .github
-git -C <repos>/.github tag -a v0.2.0 -m "OpenLFCP MVP 0.2" <.github v0.2.0 commit>
+git -C <repos>/.github tag -a v0.2.0 -m "OpenLFCP MVP 0.2" b4fa6e7256a206968d8f39efa3bc23024ba32aea
 git -C <repos>/.github push origin v0.2.0
 ```
 
@@ -71,7 +73,7 @@ happen in the same step, or catalog users never receive the update.
 
 ```sh
 # plugin release tag (scheme per obsidian docs/devel/release.md)
-git -C <repos>/obsidian tag -a 0.4.0 -m "Shared Tasks 0.4.0" <obsidian 0.4.0 commit>
+git -C <repos>/obsidian tag -a 0.4.0 -m "Shared Tasks 0.4.0" <obsidian 0.4.0 commit: rc13 b59c651 + the 0.4.0 version commits (rw/plugin-0.4.0-prep) + the @openlfcp/* 0.2.0 pin commit>
 git -C <repos>/obsidian push origin 0.4.0
 ```
 
